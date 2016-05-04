@@ -1,2 +1,2 @@
-# mk.uk
-A personal link shortening service … just because I can. Published at http://mk.uk
+# Kearn.me
+A launchpad for everything related to Martin Kearn. Published at [Kearn.me](http://kearn.me)
