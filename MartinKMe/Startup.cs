@@ -97,6 +97,11 @@ namespace MartinKMe
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
+
+                routes.MapRoute(
+                    "redirect",
+                    "{tag}",
+                    new { controller = "Redirect", action = "Index" });
             });
         }
 
