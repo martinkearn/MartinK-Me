@@ -4,6 +4,7 @@ using Microsoft.AspNet.Mvc;
 using Microsoft.AspNet.Mvc.Rendering;
 using Microsoft.Data.Entity;
 using MartinKMe.Models;
+using Microsoft.AspNet.Authorization;
 
 namespace MartinKMe.Controllers
 {

@@ -13,17 +13,26 @@ namespace MartinKMe.Controllers
             return View();
         }
 
-        public IActionResult About()
-        {
-            ViewData["Message"] = "Your application description page.";
-
-            return View();
-        }
 
         public IActionResult Contact()
         {
             ViewData["Message"] = "Your contact page.";
 
+            return View();
+        }
+
+        public IActionResult Speaking()
+        {
+            return View();
+        }
+
+        public IActionResult Resources()
+        {
+            return View();
+        }
+
+        public IActionResult Blog()
+        {
             return View();
         }
 

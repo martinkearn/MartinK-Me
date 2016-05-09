@@ -33,7 +33,8 @@ namespace MartinKMe.Controllers
             }
             else
             {
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction(nameof(HomeController.Index), "Home");
+                //return RedirectToAction("Index", "Home");
             }
 
         }
