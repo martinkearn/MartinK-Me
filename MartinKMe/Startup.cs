@@ -100,7 +100,7 @@ namespace MartinKMe
 
                 routes.MapRoute(
                     "redirect",
-                    "{tag}",
+                    "{tagLabel}",
                     new { controller = "Redirect", action = "Index" });
             });
         }

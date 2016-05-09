@@ -11,6 +11,7 @@ namespace MartinKMe.Models
         [Key]
         public int Id { get; set; }
 
+        [Display(Description = "Tag Label")]
         public string TagLabel { get; set; }
 
         public string Url { get; set; }
