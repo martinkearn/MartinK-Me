@@ -1,0 +1,645 @@
+/*!
+ * Transition - vCard Theme
+ *
+ * Copyright 2013 
+ * Licensed under the Apache License v2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * Created by: Carlos Alvarez
+ * URL: http://www.basicoh.com
+ * Designed and built based on Twitter Bootstrap.
+ * Tags: multipurpose, agency theme, one page, single page, responsive, flat */
+
+
+@import url(http://fonts.googleapis.com/css?family=Lato:300,400,700);
+
+@font-face {
+	font-family: 'icomoon';
+	src:url('../fonts/icomoon.eot');
+	src:url('../fonts/icomoon.eot?#iefix') format('embedded-opentype'),
+		url('../fonts/icomoon.woff') format('woff'),
+		url('../fonts/icomoon.ttf') format('truetype'),
+		url('../fonts/icomoon.svg#icomoon') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+
+body, html { font-size: 100%; padding: 0; margin: 0; height: 100%;}
+
+*,
+*:after,
+*:before {
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}
+
+body {
+    font-family: 'Lato', Calibri, Arial, sans-serif;
+    color: #f2ede3;
+    background: #333;
+    font-size: 0.9em;
+    font-weight: 300;
+}
+
+a {
+	color: #f0f0f0;
+	text-decoration: none;
+	font-weight: 700;
+	letter-spacing: 2px;
+	padding: 0 5px;
+	text-transform: uppercase;
+	font-size: 80%;
+}
+
+a:hover {
+	color: #fff;
+}
+
+.container { height: 100%; }
+
+.bl-main {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+}
+
+.bl-main > section {
+	position: absolute;
+	width: 50%;
+	height: 50%;
+}
+
+.bl-main > section:first-child {
+	top: 0;
+	left: 0;
+	background: url('../images/back2.jpg') no-repeat; 
+	  -webkit-background-size: cover;
+	  -moz-background-size: cover;
+	  -o-background-size: cover;
+	  background-size: cover;
+}
+
+.bl-main > section:nth-child(2) {
+	top: 0;
+	left: 50%;
+	background: url('../images/back3.jpg') no-repeat; 
+	  -webkit-background-size: cover;
+	  -moz-background-size: cover;
+	  -o-background-size: cover;
+	  background-size: cover;
+}
+
+.bl-main > section:nth-child(3) {
+	top: 50%;
+	left: 0;
+	background: url('../images/back4.jpg') no-repeat; 
+	  -webkit-background-size: cover;
+	  -moz-background-size: cover;
+	  -o-background-size: cover;
+	  background-size: cover;
+}
+
+.bl-main > section:nth-child(4) {
+	top: 50%;
+	left: 50%;
+	background: url('../images/back5.jpg') no-repeat; 
+	  -webkit-background-size: cover;
+	  -moz-background-size: cover;
+	  -o-background-size: cover;
+	  background-size: cover;
+}
+
+.bl-box {
+	position: relative;
+	width: 100%;
+	height: 100%;
+	cursor: pointer;
+	opacity: 1;
+	/* Centering with flexbox */
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-direction: row;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    -webkit-flex-wrap: wrap;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    -webkit-box-pack: center;
+    -moz-box-pack: center;
+    -webkit-justify-content: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    -moz-box-align: center;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
+}
+
+.bl-box h2 {
+	text-align: center;
+	margin: 0;
+	padding: 20px;
+	width: 100%;
+	font-size: 1.8em;
+	letter-spacing: 2px;
+	font-weight: 700;
+	text-transform: uppercase;
+}
+
+.bl-icon {
+	font-family: 'icomoon';
+	speak: none;
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1;
+	cursor: pointer;
+	-webkit-font-smoothing: antialiased;
+}
+
+.bl-icon:before {
+	display: block;
+	font-size: 2em;
+	margin-bottom: 10px;
+}
+
+.bl-main > section .bl-icon-close {
+	position: absolute;
+	top: 20px;
+	right: 20px;
+	cursor: pointer;
+	z-index: 100;
+	opacity: 0;
+	pointer-events: none;
+}
+
+.bl-icon-close:before {
+	content: "\e005";
+}
+
+.bl-content, 
+div.bl-panel-items > div > div {
+	opacity: 0;
+	pointer-events: none;
+	position: absolute;
+	top: 60px;
+	left: 30px;
+	right: 30px;
+	bottom: 30px;
+	padding: 0 20px;
+	overflow: hidden;
+	overflow-y: auto;
+}
+
+/* Custom content */
+
+.bl-content p {
+	margin: 0 auto;
+	padding-bottom: 15px;
+	font-size: 1.7em;
+	line-height: 1.8;
+}
+
+.bl-content h2 {
+	font-size: 3em;
+	font-weight: 300;
+	margin: 0 0 20px 0;
+}
+
+.bl-content article {
+	padding: 20px 40px 20px 0px;
+}
+
+.bl-content article h3 {
+	font-weight: 700;
+	letter-spacing: 2px;
+	text-transform: uppercase;
+	margin: 0 0 10px 0;
+	padding-top: 20px;
+	font-size: 1.4em;
+}
+
+.bl-content article a {
+	color: rgba(0,0,0,0.2);
+}
+
+.bl-content > ul {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+} 
+
+.bl-content > ul li {
+	display: inline-block;
+	width: 20%;
+	margin: 1%;
+}
+
+.bl-content > ul li a {
+	display: block;
+	padding: 0;
+	border: 8px solid rgba(0,0,0,0.1);
+}
+
+.bl-content > ul li a img {
+	display: block;
+	max-width: 100%;
+}
+
+.skill {
+    text-align: center;
+}
+
+.span4 > ul {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+} 
+
+
+/* --------------------------------------------------------	*/
+/*  Progress Bar  */
+/* --------------------------------------------------------	*/
+
+.progress {
+  height:40px;
+  border-radius:0px;
+  background:transparent !important;
+  -webkit-box-shadow:rgba(0, 0, 0, 0) 0 0 0 inset;
+  margin-bottom:10px;
+}
+
+.bar {
+  height:35px;
+  font-size:14px !important;
+  line-height:40px;
+  background: #c9ab8b !important;   
+  border:0px;
+  -webkit-box-shadow:rgba(0, 0, 0, 0) 0 0 0 inset;
+  text-shadow: none !important;
+  text-align:left !important;
+  padding-left:30px !important;
+}
+
+/* --------------------------------------------------------	*/
+/*  About Us  */
+/* --------------------------------------------------------	*/
+
+.about-us h3{
+  font-size:16px;
+  color:#c9ab8b;
+  padding-bottom:10px;
+}
+
+.about-us i{
+  font-size:22px;
+  color:#ffffff;
+  padding-right:10px;
+}
+
+
+
+
+
+
+/* Panel Items */
+
+.tweak {
+	padding-right: 30px;
+}
+
+div.bl-panel-items,
+div.bl-panel-items > div {
+	width: 100%;
+	height: 100%;
+	top: 0;
+	left: 0;
+	position: absolute;
+}
+
+div.bl-panel-items > div > div {
+	width: 100%;
+	opacity: 1;
+	bottom: 90px;
+	top: 90px;
+	pointer-events: auto;
+}
+
+div.bl-panel-items > div > div h3 {
+	font-size: 2.4em;
+	font-weight: 300;
+}
+
+div.bl-panel-items > div > div p {
+	font-size: 1.3em;
+	margin-right: 10px;
+}
+
+div.bl-panel-items > div > div img {
+	width: 100%;
+	text-align: center;
+}
+
+div.bl-panel-items {
+	top: 100%;
+	z-index: 9999;
+}
+
+div.bl-panel-items > div {
+	background: #16a085;
+	z-index: 0;
+	opacity: 0;
+	-webkit-transform: translateY(0);
+	-webkit-transition: -webkit-transform 0.5s ease-in-out, opacity 0s linear 0.5s;
+	-moz-transform: translateY(0);
+	-moz-transition: -moz-transform 0.5s ease-in-out, opacity 0s linear 0.5s;
+	transform: translateY(0);
+	transition: transform 0.5s ease-in-out, opacity 0s linear 0.5s;
+	-ms-transform: translateY(0);
+}
+
+div.bl-panel-items nav {
+	position: absolute;
+	z-index: 9999;
+	width: 216px;
+	left: 50%;
+	top: 0px;
+	margin-left: -108px;
+	opacity: 0;
+	-webkit-transition: opacity 0.2s ease-in-out 0.5s;
+	-moz-transition: opacity 0.2s ease-in-out 0.5s;
+	transition: opacity 0.2s ease-in-out 0.5s;
+}
+
+div.bl-panel-items.bl-panel-items-show nav span {
+	float: left;
+	margin: 5px;
+}
+
+div.bl-panel-items nav span.bl-next-work {
+	font-weight: 700;
+	letter-spacing: 2px;
+	display: block;
+	text-transform: uppercase;
+	line-height: 2em;
+	cursor: pointer;
+	margin-right: 2em;
+}
+
+div.bl-panel-items.bl-panel-items-show nav {
+	opacity: 1;
+	top: -70px;
+}
+
+div.bl-panel-items > div.bl-show-work {
+	z-index: 1000;
+	opacity: 1;
+	-webkit-transform: translateY(-100%);
+	-webkit-transition: -webkit-transform 0.5s ease-in-out;
+	-moz-transform: translateY(-100%);
+	-moz-transition: -moz-transform 0.5s ease-in-out;
+	transform: translateY(-100%);
+	transition: transform 0.5s ease-in-out;
+	-ms-transform: translateY(-100%);
+}
+
+div.bl-panel-items > div.bl-hide-current-work {
+	opacity: 0;
+	-webkit-transition: -webkit-transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
+	-webkit-transform: translateY(-100%) scale(0.5);
+	-moz-transition: -moz-transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
+	-moz-transform: translateY(-100%) scale(0.5);
+	transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
+	transform: translateY(-100%) scale(0.5);
+	-ms-transform: translateY(-100%) scale(0.5);
+	z-index: 0;
+}
+
+/* Transition classes and properties */
+/* Separated for a better overview and control */
+
+.bl-main > section {
+	-webkit-transition: all 0.5s ease-in-out;
+	-moz-transition: all 0.5s ease-in-out;
+	transition: all 0.5s ease-in-out;
+}
+
+.bl-main > section.bl-expand {
+	width: 100%;
+	height: 100%;
+	top: 0;
+	left: 0;
+}
+
+.bl-main > section.bl-expand-top {
+	z-index: 100;
+}
+
+/* Section background colors */
+
+.bl-main > section:first-child.bl-expand {
+	background: #144057;
+}
+.bl-main > section:nth-child(2).bl-expand {
+	background: #2c2c2c;
+}
+.bl-main > section:nth-child(3).bl-expand {
+	background: #ee6557;
+}
+.bl-main > section:nth-child(4).bl-expand {
+	background: #bfbfbf;
+}
+
+.bl-main.bl-expand-item > section:not(.bl-expand),
+.bl-main.bl-expand-item > section.bl-scale-down {
+	-webkit-transform: scale(0.5);
+	-moz-transform: scale(0.5);
+	-ms-transform: scale(0.5);
+	transform: scale(0.5);
+	opacity: 0;
+}
+
+.bl-box {
+	-webkit-transition: opacity 0.2s linear 0.5s;
+	-moz-transition: opacity 0.2s linear 0.5s;
+	transition: opacity 0.2s linear 0.5s;
+}
+
+section.bl-expand .bl-box {
+	opacity: 0;
+	-webkit-transition: opacity 0s linear;
+	-moz-transition: opacity 0s linear;
+	transition: opacity 0s linear;
+}
+
+.bl-box h2 {
+	-webkit-transition: all 0.2s ease-in-out;
+	-moz-transition: all 0.2s ease-in-out;
+	transition: all 0.2s ease-in-out;
+}
+
+.no-touch section:not(.bl-expand) .bl-box:hover h2 {
+	-webkit-transform: translateY(-15px);
+	-moz-transform: translateY(-15px);
+	-ms-transform: translateY(-15px);
+	transform: translateY(-15px);
+}
+
+.bl-content,
+.bl-icon-close {
+	-webkit-transition: opacity 0.1s linear 0s;
+	-moz-transition: opacity 0.1s linear 0s;
+	transition: opacity 0.1s linear 0s;
+}
+
+section.bl-expand .bl-content,
+section.bl-expand .bl-icon-close {
+	pointer-events: auto;
+	opacity: 1;
+	-webkit-transition: opacity 0.3s linear 0.5s;
+	-moz-transition: opacity 0.3s linear 0.5s;
+	transition: opacity 0.3s linear 0.5s;
+}
+
+/* --------------------------------------------------------	*/
+/*	Social Networks Icons */
+/* --------------------------------------------------------	*/
+       
+.social-network { 
+	display:inline-block; 
+	background: url(../img/social-networks.png) no-repeat top left; 
+	width: 40px; 
+	height: 40px; 
+  margin: 0px 4px 0px 0px;
+	background-position-y: -40px; 
+	-webkit-transition:all 0.2s ease;
+	-moz-transition:all 0.2s ease;
+	-o-transition:all 0.2s ease;
+	-ms-transition:all 0.2s ease;
+	transition:all 0.2s ease;
+	cursor:pointer;
+}
+
+/* normal */
+.social-network.aim{ background-position: 0 0}
+.social-network.amazon{ background-position: -40px 0}
+.social-network.apple{ background-position: -80px 0}
+.social-network.behance{ background-position: -120px 0}
+.social-network.blogger{ background-position: -160px 0}
+.social-network.delicious{ background-position: -200px 0}
+.social-network.deviantart{ background-position: -240px 0}
+.social-network.digg{ background-position: -280px 0}
+.social-network.dribbble{ background-position: -320px 0}
+.social-network.ebay{ background-position: -360px 0}
+.social-network.evernote{ background-position: -400px 0}
+.social-network.facebook{ background-position: -440px 0}
+.social-network.feedburner{ background-position: -480px 0}
+.social-network.flickr{ background-position: -520px 0}
+.social-network.forrst{ background-position: -560px 0}
+.social-network.foursquare{ background-position: -600px 0}
+.social-network.github{ background-position: -640px 0}
+.social-network.google{ background-position: -680px 0}
+.social-network.gowalla{ background-position: -720px 0}
+.social-network.icq{ background-position: -760px 0}
+.social-network.itunes{ background-position: -800px 0}
+.social-network.lastfm{ background-position: -840px 0}
+.social-network.linkedin{ background-position: -880px 0}
+.social-network.meetup{ background-position: -920px 0}
+.social-network.ms{ background-position: -960px 0}
+.social-network.newsvine{ background-position: -1000px 0}
+.social-network.openid{ background-position: -1040px 0}
+.social-network.paypal{ background-position: -1080px 0}
+.social-network.picasa{ background-position: -1120px 0}
+.social-network.pinterest{ background-position: -1160px 0}
+.social-network.posterous{ background-position: -1200px 0}
+.social-network.reddit{ background-position: -1240px 0}
+.social-network.rss{ background-position: -1280px 0}
+.social-network.skype{ background-position: -1320px 0}
+.social-network.slashdot{ background-position: -1360px 0}
+.social-network.soundcloud{ background-position: -1400px 0}
+.social-network.stumbleupon{ background-position: -1440px 0}
+.social-network.technorati{ background-position: -1480px 0}
+.social-network.tumblr{ background-position: -1520px 0}
+.social-network.twitter{ background-position: -1560px 0}
+.social-network.viddler{ background-position: -1600px 0}
+.social-network.vimeo{ background-position: -1640px 0}
+.social-network.virb{ background-position: -1680px 0}
+.social-network.wordpress{ background-position: -1720px 0}
+.social-network.xing{ background-position: -1760px 0}
+.social-network.yahoo{ background-position: -1800px 0}
+.social-network.yelp{ background-position: -1840px 0}
+.social-network.youtube{ background-position: -1880px 0}
+.social-network.zerply{ background-position: -1920px 0}
+  
+/* mouseover */
+.social-network.aim:hover,.active .social-network.aim{ background-position: 0 -40px}
+.social-network.amazon:hover,.active .social-network.amazon{ background-position: -40px -40px}
+.social-network.apple:hover,.active .social-network.apple{ background-position: -80px -40px}
+.social-network.behance:hover,.active .social-network.behance{ background-position: -120px -40px}
+.social-network.blogger:hover,.active .social-network.blogger{ background-position: -160px -40px}
+.social-network.delicious:hover,.active .social-network.delicious{ background-position: -200px -40px}
+.social-network.deviantart:hover,.active .social-network.deviantart{ background-position: -240px -40px}
+.social-network.digg:hover,.active .social-network.digg{ background-position: -280px -40px}
+.social-network.dribbble:hover,.active .social-network.dribbble{ background-position: -320px -40px}
+.social-network.ebay:hover,.active .social-network.ebay{ background-position: -360px -40px}
+.social-network.evernote:hover,.active .social-network.evernote{ background-position: -400px -40px}
+.social-network.facebook:hover,.active .social-network.facebook{ background-position: -440px -40px}
+.social-network.feedburner:hover,.active .social-network.feedburner{ background-position: -480px -40px}
+.social-network.flickr:hover,.active .social-network.flickr{ background-position: -520px -40px}
+.social-network.forrst:hover,.active .social-network.forrst{ background-position: -560px -40px}
+.social-network.foursquare:hover,.active .social-network.foursquare{ background-position: -600px -40px}
+.social-network.github:hover,.active .social-network.github{ background-position: -640px -40px}
+.social-network.google:hover,.active .social-network.google{ background-position: -680px -40px}
+.social-network.gowalla:hover,.active .social-network.gowalla{ background-position: -720px -40px}
+.social-network.icq:hover,.active .social-network.icq{ background-position: -760px -40px}
+.social-network.itunes:hover,.active .social-network.itunes{ background-position: -800px -40px}
+.social-network.lastfm:hover,.active .social-network.lastfm{ background-position: -840px -40px}
+.social-network.linkedin:hover,.active .social-network.linkedin{ background-position: -880px -40px}
+.social-network.meetup:hover,.active .social-network.meetup{ background-position: -920px -40px}
+.social-network.ms:hover,.active .social-network.ms{ background-position: -960px -40px}
+.social-network.newsvine:hover,.active .social-network.newsvine{ background-position: -1000px -40px}
+.social-network.openid:hover,.active .social-network.openid{ background-position: -1040px -40px}
+.social-network.paypal:hover,.active .social-network.paypal{ background-position: -1080px -40px}
+.social-network.picasa:hover,.active .social-network.picasa{ background-position: -1120px -40px}
+.social-network.pinterest:hover,.active .social-network.pinterest{ background-position: -1160px -40px}
+.social-network.posterous:hover,.active .social-network.posterous{ background-position: -1200px -40px}
+.social-network.reddit:hover,.active .social-network.reddit{ background-position: -1240px -40px}
+.social-network.rss:hover,.active .social-network.rss{ background-position: -1280px -40px}
+.social-network.skype:hover,.active .social-network.skype{ background-position: -1320px -40px}
+.social-network.slashdot:hover,.active .social-network.slashdot{ background-position: -1360px -40px}
+.social-network.soundcloud:hover,.active .social-network.soundcloud{ background-position: -1400px -40px}
+.social-network.stumbleupon:hover,.active .social-network.stumbleupon{ background-position: -1440px -40px}
+.social-network.technorati:hover,.active .social-network.technorati{ background-position: -1480px -40px}
+.social-network.tumblr:hover,.active .social-network.tumblr{ background-position: -1520px -40px}
+.social-network.twitter:hover,.active .social-network.twitter{ background-position: -1560px -40px}
+.social-network.viddler:hover,.active .social-network.viddler{ background-position: -1600px -40px}
+.social-network.vimeo:hover,.active .social-network.vimeo{ background-position: -1640px -40px}
+.social-network.virb:hover,.active .social-network.virb{ background-position: -1680px -40px}
+.social-network.wordpress:hover,.active .social-network.wordpress{ background-position: -1720px -40px}
+.social-network.xing:hover,.active .social-network.xing{ background-position: -1760px -40px}
+.social-network.yahoo:hover,.active .social-network.yahoo{ background-position: -1800px -40px}
+.social-network.yelp:hover,.active .social-network.yelp{ background-position: -1840px -40px}
+.social-network.youtube:hover,.active .social-network.youtube{ background-position: -1880px -40px}
+.social-network.zerply:hover,.active .social-network.zerply{ background-position: -1920px -40px}
+
+@media screen and (max-width: 46.5em) {
+	.bl-content,
+	.bl-box {
+		font-size: 75%;
+	}
+
+	.bl-expand .bl-box {
+		height: 130px;
+	}
+
+	.bl-content > ul li {
+		width: 40%;
+	}
+	
+}
