@@ -7,7 +7,7 @@
         <title>@ViewData["Title"] - MartinKMe</title>
 
         <environment names="Development">
-            <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+            <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
             <link rel="stylesheet" href="~/css/site.css" />
         </environment>
         <environment names="Staging,Production">
@@ -16,6 +16,11 @@
                   asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
             <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
         </environment>
+
+        <link href='https://fonts.googleapis.com/css?family=Lato:400,700,900' rel='stylesheet' type='text/css'>
+
+        <script src="https://use.fontawesome.com/5ac6e5255d.js"></script>
+
     </head>
     <body>
         <div class="navbar navbar-inverse navbar-fixed-top">
@@ -27,27 +32,28 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a asp-controller="Home" asp-action="Index" class="navbar-brand">MartinKMe</a>
+                    <a asp-controller="Home" asp-action="Index" class="navbar-brand">MartinK.me</a>
                 </div>
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
-                        <li><a asp-controller="Home" asp-action="Index">Home</a></li>
-                        <li><a asp-controller="Home" asp-action="Contact">Contact</a></li>
                         <li><a asp-controller="Home" asp-action="Speaking">Speaking</a></li>
-                        <li><a asp-controller="Home" asp-action="Blog">Blog</a></li>
                         <li><a asp-controller="Home" asp-action="Resources">Resources</a></li>
+                        <li><a asp-controller="Home" asp-action="Blog">Blog</a></li>
                     </ul>
-                    @await Html.PartialAsync("_LoginPartial")
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="https://twitter.com/MartinKearn"><i class="fa fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+                        <li><a href="https://uk.linkedin.com/in/martin-kearn-204a681"><i class="fa fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+                        <li><a href="skype:martinkearn"><i class="fa fa-skype fa-lg" aria-hidden="true"></i></a></li>
+                        <li><a href="https://github.com/martinkearn"><i class="fa fa-github fa-lg" aria-hidden="true"></i></a></li>
+                        <li><a href="http://stackoverflow.com/users/1601158/martin-kearn"><i class="fa fa-stack-overflow fa-lg" aria-hidden="true"></i></a></li>
+                        <li><a href="mailto:martin.kearn@microsoft.com?Subject=Enquiry%20from%20Martink.me"><i class="fa fa-envelope-o fa-lg" aria-hidden="true"></i></a></li>
+                    </ul>
+                    @*@await Html.PartialAsync("_LoginPartial")*@
                 </div>
             </div>
         </div>
-        <div class="container body-content">
-            @RenderBody()
-            <hr />
-            <footer>
-                <p>&copy; 2016 - MartinKMe</p>
-            </footer>
-        </div>
+
+        @RenderBody()
 
         <environment names="Development">
             <script src="~/lib/jquery/dist/jquery.js"></script>

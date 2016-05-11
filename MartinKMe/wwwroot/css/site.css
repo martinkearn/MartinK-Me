@@ -1,13 +1,9 @@
 ﻿body {
     padding-top: 50px;
     padding-bottom: 20px;
-}
-
-/* Wrapping element */
-/* Set some basic padding to keep content from hitting the edges */
-.body-content {
-    padding-left: 15px;
-    padding-right: 15px;
+    font-family: 'Lato', sans-serif;
+    font-size: 14pt;
+    background-color: lightgray;
 }
 
 /* Set widths on the form inputs since otherwise they're 100% wide */
@@ -17,18 +13,46 @@ textarea {
     max-width: 280px;
 }
 
-/* Carousel */
-.carousel-caption {
-    z-index: 10 !important;
+@font-face {
+    font-family: 'blackoutmidnight';
+    src: url('fonts/blackout-midnight-webfont.eot');
+    src: url('fonts/blackout-midnight-webfont.eot?#iefix') format('embedded-opentype'),
+         url('fonts/blackout-midnight-webfont.woff2') format('woff2'),
+         url('fonts/blackout-midnight-webfont.woff') format('woff'),
+         url('fonts/blackout-midnight-webfont.ttf') format('truetype'),
+         url('fonts/blackout-midnight-webfont.svg#blackoutmidnight') format('svg');
+    font-weight: normal;
+    font-style: normal;
 }
 
-    .carousel-caption p {
-        font-size: 20px;
-        line-height: 1.4;
+
+.jumbotron {
+    color: darkorange;
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('../images/banner-wide.jpg');
+    background-position: center top;
+    margin-bottom: 0px;
+}
+
+    .jumbotron h1 {
+        /*font-family: 'Blackout Midnight', sans-serif;*/
+        font-weight: 900;
     }
 
-@media (min-width: 768px) {
-    .carousel-caption {
-        z-index: 10 !important;
+    .jumbotron p {
+        font-weight: 700;
+        font-size: 3rem;
     }
+
+.navbar-inverse .navbar-nav > li > a:focus, .navbar-inverse .navbar-nav > li > a:hover {
+    color: darkorange;
 }
+
+#home-intro {
+    font-size: 18pt;
+}
+
+#home-speaking-container {
+    background-color: darkgray;
+}
+
+
