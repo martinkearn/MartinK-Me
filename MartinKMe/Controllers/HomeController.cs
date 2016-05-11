@@ -14,24 +14,12 @@ namespace MartinKMe.Controllers
         }
 
 
-        public IActionResult Contact()
-        {
-            ViewData["Message"] = "Your contact page.";
-
-            return View();
-        }
-
         public IActionResult Speaking()
         {
             return View();
         }
 
         public IActionResult Resources()
-        {
-            return View();
-        }
-
-        public IActionResult Blog()
         {
             return View();
         }

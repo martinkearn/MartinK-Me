@@ -17,9 +17,9 @@
                 <h2>I'll come to your event</h2>
                 <p>I speak at events such as conferences, meet-ups, user groups, Microsoft events etc.</p>
                 <p>If you want me to come to your event, please <a href="mailto:martin.kearn@microsoft.com?Subject=Enquiry%20from%20Martink.me">email me</a> or <a href="https://twitter.com/MartinKearn">tweet me</a> and we can sort the details.</p>
-                
+
                 <h2>My Talks</h2>
-                <p>I’m happy to speak at pretty much any developer event. Here are a few topics that I’m talking about at the moment and can delivery with hardley any notice, but if you have a specific topic feel free to ask me.</p>
+                <p>I’m happy to speak at pretty much any developer event. Here are a few topics that I’m talking about at the moment and can delivery with hardly any notice, but if you have a specific topic feel free to ask me.</p>
                 <ul>
                     <li><a href="#" data-toggle="modal" data-target="#hybrid-modal">The Murky World of Hybrid Apps</a></li>
                     <li><a href="#" data-toggle="modal" data-target="#mlmuggles-modal">Machine Learning for Muggles</a></li>
@@ -32,24 +32,30 @@
                     <li><a href="#" data-toggle="modal" data-target="#functions-modal">Azure Functions</a></li>
                     <li><a href="#" data-toggle="modal" data-target="#taghelpers-modal">ASP.NET Tag Helpers</a></li>
                 </ul>
-                <!-- Hybrid Modal -->
-                <div class="modal fade" id="hybrid-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><i class="fa fa-times" aria-hidden="true"></i></span></button>
-                                <h3 class="modal-title" id="myModalLabel">The Murky World of Hybrid Apps</h3>
-                            </div>
-                            <div class="modal-body">                                
-                                Which is best … apps or web? Why not have both?   The lines are getting increasingly blurred between the web and native apps. Operating systems are able to execute JavaScript from a remote web server, web apps are able to reach into your documents and fiddle around with them, you can wrap your website with rich, native functionality. In this talk we'll look at the murky and confusing world of hosted hybrid web apps. We'll look at the different tools available for creating hosted hybrid apps on multiple platforms. We'll look at where hosted hybrid apps work well and where they don't.
-                                <hr />
-ManifoldJs, Windows 10 UWP, Office Add-ins, W3C Web App Manifest
-                                <hr />Web Developers, Mobile App Developers, all levels
-                                <hr />20 > 45 minutes
-                            </div>
-                        </div>
-                    </div>
-                </div>
+
+                <!-- hybrid Modal -->
+                @await Html.PartialAsync("_TalkModalPartial", new MartinKMe.ViewModels.Shared.TalkModalViewModel()
+{
+    ElementId = "hybrid-modal",
+    Title = "The Murky World of Hybrid Apps",
+    Abstract = "Which is best … apps or web? Why not have both?   The lines are getting increasingly blurred between the web and native apps. Operating systems are able to execute JavaScript from a remote web server, web apps are able to reach into your documents and fiddle around with them, you can wrap your website with rich, native functionality. In this talk we'll look at the murky and confusing world of hosted hybrid web apps. We'll look at the different tools available for creating hosted hybrid apps on multiple platforms. We'll look at where hosted hybrid apps work well and where they don't",
+    Technologies = "ManifoldJs, Windows 10 UWP, Office Add-ins, W3C Web App Manifest",
+    Audience = "Web Developers, Mobile App Developers, all levels",
+    Time = "20 > 45 minutes"
+})
+
+                <!-- mlmuggles Modal -->
+                @await Html.PartialAsync("_TalkModalPartial", new MartinKMe.ViewModels.Shared.TalkModalViewModel()
+           {
+               ElementId = "mlmuggles-modal",
+               Title = "Machine Learning for Muggles",
+               Abstract = "Artificial Intelligence is the latest hotness. We’ve heard how bots are going to be the new apps allowing natural conversational interfaces. Siri, Cortana and Google Now are no longer a gimmick and are becoming more useful every day. Machine Learning sits behind artificial intelligence and on the surface it may seem like a deeply technical, scientific topic. We are here to tell you that it is more accessible than you think. We’ll look at some of the basics around machine learning. We’ll also look some of the API services that make it very easy to implement artificial intelligence ‘smarts’ into your application with simple, standard REST calls",
+               Technologies = "Azure Machine Learning, Microsoft Cognitive Services",
+               Audience = "Web Developers, Mobile App Developers, all levels",
+               Time = "20 > 45 minutes"
+           })
+
+
 
                 <h2>My Bio</h2>
                 <p>Here is my bio in various formats:</p>
