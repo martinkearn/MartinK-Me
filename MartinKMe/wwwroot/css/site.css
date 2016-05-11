@@ -1,9 +1,26 @@
 ﻿body {
     padding-top: 50px;
-    padding-bottom: 20px;
     font-family: 'Lato', sans-serif;
     font-size: 14pt;
     background-color: lightgray;
+}
+
+a {
+    color: #333;
+}
+
+a:hover {
+    color: darkorange;
+}
+
+.btn {
+    border-radius: 0px;
+    border: 0px;
+}
+
+.btn:hover, .btn:focus {
+    background-color: darkorange;
+    color: white;
 }
 
 /* Set widths on the form inputs since otherwise they're 100% wide */
@@ -27,7 +44,7 @@ textarea {
 
 
 .jumbotron {
-    color: darkorange;
+    color: #FE940D;
     background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('../images/banner-wide.jpg');
     background-position: center top;
     margin-bottom: 0px;
@@ -40,7 +57,7 @@ textarea {
 
     .jumbotron p {
         font-weight: 700;
-        font-size: 3rem;
+        font-size: 2rem;
     }
 
 .navbar-inverse .navbar-nav > li > a:focus, .navbar-inverse .navbar-nav > li > a:hover {
@@ -51,8 +68,33 @@ textarea {
     font-size: 18pt;
 }
 
+.home-container {
+    margin-top: 50px;
+}
+
 #home-speaking-container {
-    background-color: darkgray;
+    background-color: #3AEAC8;
+}
+
+#home-resources-container {
+    background-color: #00D4E7;
+}
+
+#home-blog-container {
+    background-color: #008E9A;
+}
+
+footer {
+    background-color: #808080;
+    margin-top: 60px;
+    margin-bottom: 0px;
+
+    padding-top: 50px;
+    padding-bottom: 50px;
+}
+
+.footer-icon{
+    margin-right: 20px;
 }
 
 
