@@ -1,7 +1,71 @@
 ﻿@{
-    ViewData["Title"] = "Speaking";
+    ViewData["Title"] = "Home";
 }
-<h2>@ViewData["Title"].</h2>
-<h3>@ViewData["Message"]</h3>
 
-<p>Use this area to provide additional information.</p>
+<div class="jumbotron jumbotron-speaking">
+    <div class="container">
+        <h1>Speaking</h1>
+        <p>I speak at events of all sizes, it's pretty much my job.</p>
+        <p>Conferences, meet-ups, user groups, events.</p>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h2>I'll come to your event</h2>
+                <p>I speak at events such as conferences, meet-ups, user groups, Microsoft events etc.</p>
+                <p>If you want me to come to your event, please <a href="mailto:martin.kearn@microsoft.com?Subject=Enquiry%20from%20Martink.me">email me</a> or <a href="https://twitter.com/MartinKearn">tweet me</a> and we can sort the details.</p>
+                
+                <h2>My Talks</h2>
+                <p>I’m happy to speak at pretty much any developer event. Here are a few topics that I’m talking about at the moment and can delivery with hardley any notice, but if you have a specific topic feel free to ask me.</p>
+                <ul>
+                    <li><a href="#" data-toggle="modal" data-target="#hybrid-modal">The Murky World of Hybrid Apps</a></li>
+                    <li><a href="#" data-toggle="modal" data-target="#mlmuggles-modal">Machine Learning for Muggles</a></li>
+                    <li><a href="#" data-toggle="modal" data-target="#office-modal">The Office Developer Landscape</a></li>
+                    <li><a href="#" data-toggle="modal" data-target="#api-modal">APIs: The cogs behind the machine</a></li>
+                    <li><a href="#" data-toggle="modal" data-target="#webappsazure-modal">Running Web Apps in Azure</a></li>
+                    <li><a href="#" data-toggle="modal" data-target="#performance-modal">Web Performance</a></li>
+                    <li><a href="#" data-toggle="modal" data-target="#edge-modal">Microsoft Edge for Web Developers</a></li>
+                    <li><a href="#" data-toggle="modal" data-target="#jstaskrunners-modal">Gulping and Grunting with JavaScript Task Runners</a></li>
+                    <li><a href="#" data-toggle="modal" data-target="#functions-modal">Azure Functions</a></li>
+                    <li><a href="#" data-toggle="modal" data-target="#taghelpers-modal">ASP.NET Tag Helpers</a></li>
+                </ul>
+                <!-- Hybrid Modal -->
+                <div class="modal fade" id="hybrid-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><i class="fa fa-times" aria-hidden="true"></i></span></button>
+                                <h3 class="modal-title" id="myModalLabel">The Murky World of Hybrid Apps</h3>
+                            </div>
+                            <div class="modal-body">                                
+                                Which is best … apps or web? Why not have both?   The lines are getting increasingly blurred between the web and native apps. Operating systems are able to execute JavaScript from a remote web server, web apps are able to reach into your documents and fiddle around with them, you can wrap your website with rich, native functionality. In this talk we'll look at the murky and confusing world of hosted hybrid web apps. We'll look at the different tools available for creating hosted hybrid apps on multiple platforms. We'll look at where hosted hybrid apps work well and where they don't.
+                                <hr />
+ManifoldJs, Windows 10 UWP, Office Add-ins, W3C Web App Manifest
+                                <hr />Web Developers, Mobile App Developers, all levels
+                                <hr />20 > 45 minutes
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <h2>My Bio</h2>
+                <p>Here is my bio in various formats:</p>
+                <ul>
+                    <li><strong>Third Person</strong>: Martin is a technical evangelist for Microsoft based in the UK. In his role, Martin talks with customers, partners, start-ups and anyone who is willing to listen about developing applications on the Microsoft platform. This includes Windows, Office, Microsoft Azure and Web technologies including ASP.net and the Edge browser. Martin has been working with Microsoft development technologies since the late 90's and has been working for Microsoft directly since 2005.</li>
+                    <li><strong>First Person</strong>: I am a technical evangelist for Microsoft based in the UK. In my work, I talk with customers, partners, start-ups and anyone who is willing to listen about developing applications on the Microsoft platform. This includes Windows, Office, Microsoft Azure and Web technologies including ASP.net and the Edge browser. I have been working with Microsoft development technologies since the late 90's and has been working for Microsoft directly since 2005.</li>
+                    <li><strong>Short</strong>: Martin works for Microsoft as an evangelist. He's into Web, AI, Mobile Apps and Cloud.</li>
+                </ul>
+
+                <h2>Photos</h2>
+                <p>A few mug shots you can use to advertise your event</p>
+                <img src="~/images/Profile1.jpg" class="img-responsive profile-photo" alt="Responsive image">
+                <img src="~/images/Profile2.jpg" class="img-responsive profile-photo" alt="Responsive image">
+                <img src="~/images/Profile3.png" class="img-responsive profile-photo" alt="Responsive image">
+                <img src="~/images/Profile4.jpg" class="img-responsive profile-photo" alt="Responsive image">
+            </div>
+        </div>
+    </div>
+</div>

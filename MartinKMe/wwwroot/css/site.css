@@ -7,15 +7,24 @@
 
 a {
     color: #333;
+    text-decoration: underline;
 }
 
 a:hover {
     color: darkorange;
 }
 
+table {
+    font-size:1.5rem;
+}
+
 .btn {
     border-radius: 0px;
     border: 0px;
+}
+
+h4 {
+    font-size: 16pt;
 }
 
 .btn:hover, .btn:focus {
@@ -60,8 +69,20 @@ textarea {
         font-size: 2rem;
     }
 
+.jumbotron-speaking {
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('../images/banner-speaking.jpg');
+}
+
 .navbar-inverse .navbar-nav > li > a:focus, .navbar-inverse .navbar-nav > li > a:hover {
     color: darkorange;
+}
+
+.navbar > .container .navbar-brand, .navbar > .container-fluid .navbar-brand {
+        text-decoration: none;
+}
+
+.navbar-inverse .navbar-nav > li > a {
+    text-decoration: none;
 }
 
 #home-intro {
@@ -95,6 +116,10 @@ footer {
 
 .footer-icon{
     margin-right: 20px;
+}
+
+.profile-photo {
+    max-width: 320px;
 }
 
 
