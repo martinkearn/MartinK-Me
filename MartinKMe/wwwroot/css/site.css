@@ -90,7 +90,9 @@ textarea {
 }
 
 .home-container {
-    margin-top: 50px;
+    margin-top: 0px;
+    padding-top: 20px;
+    padding-bottom: 20px;
 }
 
 #home-speaking-container {
@@ -107,10 +109,10 @@ textarea {
 
 footer {
     background-color: #808080;
-    margin-top: 60px;
+
     margin-bottom: 0px;
 
-    padding-top: 50px;
+    padding-top: 30px;
     padding-bottom: 50px;
 }
 
