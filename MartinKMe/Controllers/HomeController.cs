@@ -24,6 +24,11 @@ namespace MartinKMe.Controllers
             return View();
         }
 
+        public IActionResult Blog()
+        {
+            return View();
+        }
+
         public IActionResult Error()
         {
             return View();

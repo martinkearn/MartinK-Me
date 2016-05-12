@@ -10,13 +10,9 @@ a {
     text-decoration: underline;
 }
 
-a:hover {
-    color: darkorange;
-}
-
-table {
-    font-size:1.5rem;
-}
+    a:hover {
+        color: darkorange;
+    }
 
 .btn {
     border-radius: 0px;
@@ -32,21 +28,10 @@ h4 {
     color: white;
 }
 
-/* Set widths on the form inputs since otherwise they're 100% wide */
-input,
-select,
-textarea {
-    max-width: 280px;
-}
-
 @font-face {
     font-family: 'blackoutmidnight';
     src: url('fonts/blackout-midnight-webfont.eot');
-    src: url('fonts/blackout-midnight-webfont.eot?#iefix') format('embedded-opentype'),
-         url('fonts/blackout-midnight-webfont.woff2') format('woff2'),
-         url('fonts/blackout-midnight-webfont.woff') format('woff'),
-         url('fonts/blackout-midnight-webfont.ttf') format('truetype'),
-         url('fonts/blackout-midnight-webfont.svg#blackoutmidnight') format('svg');
+    src: url('fonts/blackout-midnight-webfont.eot?#iefix') format('embedded-opentype'), url('fonts/blackout-midnight-webfont.woff2') format('woff2'), url('fonts/blackout-midnight-webfont.woff') format('woff'), url('fonts/blackout-midnight-webfont.ttf') format('truetype'), url('fonts/blackout-midnight-webfont.svg#blackoutmidnight') format('svg');
     font-weight: normal;
     font-style: normal;
 }
@@ -54,13 +39,14 @@ textarea {
 
 .jumbotron {
     color: #FE940D;
-    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('../images/banner-wide.jpg');
-    background-position: center top;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.4)), url('../images/banner-home.jpg');
+    background-position: center center;
     margin-bottom: 0px;
+    background-size: cover;
+    background-repeat: no-repeat;
 }
 
     .jumbotron h1 {
-        /*font-family: 'Blackout Midnight', sans-serif;*/
         font-weight: 900;
     }
 
@@ -70,7 +56,15 @@ textarea {
     }
 
 .jumbotron-speaking {
-    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('../images/banner-speaking.jpg');
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.1)), url('../images/banner-speaking.jpg');
+}
+
+.jumbotron-resources {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.5)), url('../images/banner-resources.jpg');
+}
+
+.jumbotron-blog {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.3)), url('../images/banner-blog.jpg');
 }
 
 .navbar-inverse .navbar-nav > li > a:focus, .navbar-inverse .navbar-nav > li > a:hover {
@@ -78,7 +72,7 @@ textarea {
 }
 
 .navbar > .container .navbar-brand, .navbar > .container-fluid .navbar-brand {
-        text-decoration: none;
+    text-decoration: none;
 }
 
 .navbar-inverse .navbar-nav > li > a {
@@ -89,39 +83,52 @@ textarea {
     font-size: 18pt;
 }
 
-.home-container {
+.container-fluid {
     margin-top: 0px;
     padding-top: 20px;
     padding-bottom: 20px;
 }
 
-#home-speaking-container {
+.green-background {
     background-color: #3AEAC8;
 }
 
-#home-resources-container {
+.blue-background {
+    background-color: #0DABFE;
+}
+
+.lightblue-background {
     background-color: #00D4E7;
 }
 
-#home-blog-container {
+.teal-background {
     background-color: #008E9A;
+}
+
+.copper-background {
+    background-color: #CB760A;
+}
+
+.mustard-background {
+    background-color: #CBA31F;
+}
+
+.darkblue-background {
+    background-color: #0074B1;
+    color: white;
 }
 
 footer {
     background-color: #808080;
-
     margin-bottom: 0px;
-
     padding-top: 30px;
     padding-bottom: 50px;
 }
 
-.footer-icon{
+.footer-icon {
     margin-right: 20px;
 }
 
 .profile-photo {
-    max-width: 320px;
+    max-width: 200px;
 }
-
-

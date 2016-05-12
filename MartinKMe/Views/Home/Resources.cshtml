@@ -1,7 +1,64 @@
 ﻿@{
-    ViewData["Title"] = "About";
+    ViewData["Title"] = "Resources";
 }
-<h2>@ViewData["Title"].</h2>
-<h3>@ViewData["Message"]</h3>
 
-<p>Use this area to provide additional information.</p>
+<div class="jumbotron jumbotron-resources">
+    <div class="container">
+        <h1>@ViewData["Title"]</h1>
+        <p>I create lots of stuff which you can use, copy, change, contribute to.</p>
+        <p>Slides, videos, repos, articles, apps.</p>
+    </div>
+</div>
+
+<div class="container-fluid green-background">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h2>HowHappy.co.uk</h2>
+                <p>An ASP.Net web application that uses the Cognitive Services Emotion API to asses various emotions shown in a group photo and put them in sequence. Yo can use this to find out who is the most and least happy, sad, angry etc in a group photo.</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4 hidden-xs">
+                <img src="~/images/HowHappy.png" class="img-responsive hidden-xs" alt="A screen shot of HowHappy.co.uk">
+            </div>
+            <div class="col-md-8">
+
+                <ul>
+                    <li><i class="fa fa-globe" aria-hidden="true"></i> <strong><a href="http://howhappy.co.uk">HowHappy.co.uk</a></strong> A live website you can explore and test with your own photos</li>
+                    <li><i class="fa fa-file-text-o" aria-hidden="true"></i> <strong><a href="https://blogs.msdn.microsoft.com/martinkearn/2016/03/22/introducing-howhappy-co-uk/">Introducing HowHappy.co.uk</a></strong> An article which talks through how HowHappy.co.uk was developed</li>
+                    <li><i class="fa fa-github" aria-hidden="true"></i> <strong><a href="https://github.com/martinkearn/How-Happy">How-Happy GitHub</a></strong> The GitHub repository contianing the source code behind the live HowHappy.co.uk website</li>
+                    <li><i class="fa fa-video-camera" aria-hidden="true"></i> <strong><a href="https://channel9.msdn.com/Shows/Web-Hack-Wednesday/How-happy-are-you">How happy are you?</a></strong> A Web hack Wednesday episode which explores how HowHappy.co.uk was built</li>
+                    <li><i class="fa fa-video-camera" aria-hidden="true"></i> <strong><a href="https://channel9.msdn.com/Shows/Web-Hack-Wednesday/How-Happy-Are-You-Cordova-Edition">How Happy Are You? Cordova Edition</a></strong> A Web hack Wednesday episode which explores how an app that is similar to HowHappy.co.uk was built as a mobile application using Cordova</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid mustard-background">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h2>Sentimental</h2>
+                <p>An ASP.Net web application that use the Cognitive Services Text Analysis API to analys sentiment and extract key phrases in text. This website is used to create hybrid application on Windows, IOS, Android and Office.</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4 hidden-xs">
+                <img src="~/images/Sentimental.png" class="img-responsive hidden-xs" alt="A screen shot of Sentimental">
+            </div>
+            <div class="col-md-8">
+                <ul>
+                    <li><i class="fa fa-globe" aria-hidden="true"></i> <strong><a href="http://sentimentalweb.azurewebsites.net/">SentimentalWeb.Azurewebsites.net</a></strong> A live website you can use to analyze text</li>
+                    <li><i class="fa fa-file-excel-o" aria-hidden="true"></i> <strong><a href="https://store.office.com/sentimental-WA104379510.aspx">Sentimental Office Add-in</a></strong> A live Office add-in that you can use to do text analysis within Office</li>
+                    <li><i class="fa fa-github" aria-hidden="true"></i> <strong><a href="https://github.com/martinkearn/SentimentalWeb">SentimentalWeb GitHub</a></strong> The GitHub repository containing the source code behind the Sentimentalweb site</li>
+                    <li><i class="fa fa-github" aria-hidden="true"></i> <strong><a href="https://github.com/martinkearn/Sentimental">Sentimental GitHub</a></strong> The GitHub repository containing the source code behind the Sentimental Office Add-in</li>
+                    <li><i class="fa fa-video-camera" aria-hidden="true"></i> <strong><a href="https://channel9.msdn.com/Shows/Web-Hack-Wednesday/Hybrid-Apps">Hybrid Apps</a></strong> A Web hack Wednesday episode which uses the Sentimental website to explore hybrid apps</li>
+                    <li><i class="fa fa-video-camera" aria-hidden="true"></i> <strong><a href="https://vimeo.com/154970773">NDC London 2016 Hybrid Apps</a></strong> A recording from an NDC London talk where the Sentimental website is used to explore hybrid apps</li>
+                    <li><i class="fa fa-file-powerpoint-o" aria-hidden="true"></i> <strong><a href="https://onedrive.live.com/redir?resid=999BE3B43DB18398!1804797&authkey=!AMYYW6ATyCLsCPE&ithint=file%2cpptx">Hybrid Apps Slides</a></strong> Slides from MSWebDay where the Sentimental website is used to explore hybrid apps</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
