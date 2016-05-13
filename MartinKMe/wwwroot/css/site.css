@@ -43,6 +43,9 @@ h4 {
     font-style: normal;
 }
 
+.container-fluid li {
+    margin-bottom: 10px;
+}
 
 .jumbotron {
     color: #FE940D;
@@ -126,6 +129,18 @@ h4 {
 
 .darkorange-background {
     background-color: #E76000;
+}
+
+.violet-background {
+    background-color: #C119FF;
+}
+
+.sage-background {
+    background-color: #6C9B00;
+}
+
+.orange-background {
+    background-color: #FFA027;
 }
 
 footer {
