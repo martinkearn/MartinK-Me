@@ -99,6 +99,11 @@ namespace MartinKMe
                     template: "{controller=Home}/{action=Index}/{id?}");
 
                 routes.MapRoute(
+                    "talk",
+                    "speaking/{talk}",
+                    new { controller = "Speaking", action = "Talk" });
+
+                routes.MapRoute(
                     "redirect",
                     "{tagLabel}",
                     new { controller = "Redirect", action = "Index" });

@@ -19,6 +19,12 @@ namespace MartinKMe.Controllers
             return View();
         }
 
+        public IActionResult Talk(string id = "")
+        {
+            ViewData["talk"] = id;
+            return View();
+        }
+
         public IActionResult Resources()
         {
             return View();

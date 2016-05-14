@@ -1,0 +1,69 @@
+﻿@model MartinKMe.ViewModels.Speaking.TalkViewModel
+
+@{
+    ViewData["Title"] = Model.Title;
+}
+
+<div class="jumbotron jumbotron-speaking">
+    <div class="container">
+        <h1>@Model.Title</h1>
+        <p>This is one of my talks.</p>
+        <p>I can pretty much just turn up and deliver this with very little notice.</p>
+    </div>
+</div>
+
+<div class="container-fluid green-background">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h2>Talk Title: @Model.Title</h2>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid lightblue-background">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h2>Talk Description</h2>
+                <p>@Model.Description</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid blue-background">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h2>Suitable Audience</h2>
+                <p>@Model.Audience</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid darkorange-background">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h2>Technologies Covered</h2>
+                <p>@Model.Technologies</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid teal-background">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h2>Typical Time Range</h2>
+                <p>This is just a typical time range, most talks can be adapted to suit any time frame so please ask if you need something different</p>
+                <p>@Model.Time</p>
+            </div>
+        </div>
+    </div>
+</div>
+

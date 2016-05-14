@@ -18,5 +18,6 @@ namespace MartinKMe.Models
             // Add your customizations after calling base.OnModelCreating(builder);
         }
         public DbSet<Tag> Tag { get; set; }
+        public DbSet<Talk> Talk { get; set; }
     }
 }
