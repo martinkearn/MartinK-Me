@@ -1,4 +1,6 @@
-﻿@{
+﻿@model MartinKMe.ViewModels.Speaking.IndexViewModel
+
+@{
     ViewData["Title"] = "Speaking";
 }
 
@@ -29,8 +31,12 @@
                 <h2>My Talks</h2>
                 <p>I’m happy to speak at pretty much any developer event. Here are a few topics that I’m talking about at the moment and can delivery with hardly any notice, but if you have a specific topic feel free to ask me.</p>
                 <ul>
-                    <li><a href="#" data-toggle="modal" data-target="#hybrid-modal">The Murky World of Hybrid Apps</a></li>
-                    <li><a href="#" data-toggle="modal" data-target="#mlmuggles-modal">Machine Learning for Muggles</a></li>
+                    @foreach (var talk in Model.Talks)
+                    {
+                        <li><a href="/speaking/@talk.Url.ToLower()" title="@talk.Description" >@talk.Title</a></li>
+                    }
+                </ul>
+                <ul>
                     <li><a href="#" data-toggle="modal" data-target="#office-modal">The Office Developer Landscape</a></li>
                     <li><a href="#" data-toggle="modal" data-target="#api-modal">APIs: The cogs behind the machine</a></li>
                     <li><a href="#" data-toggle="modal" data-target="#webappsazure-modal">Running Web Apps in Azure</a></li>

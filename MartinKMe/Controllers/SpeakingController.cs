@@ -4,31 +4,41 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Mvc;
 using MartinKMe.ViewModels.Speaking;
+using MartinKMe.Models;
+using Microsoft.Data.Entity;
 
 namespace MartinKMe.Controllers
 {
     public class SpeakingController : Controller
     {
-        public IActionResult Index()
+        private ApplicationDbContext _context;
+
+        public SpeakingController(ApplicationDbContext context)
         {
-            return View();
+            _context = context;
         }
 
-        public IActionResult Talk(string talk)
+        public async Task<IActionResult> Index()
         {
-            var title = "t";
-            var description = "t";
-            var audience = "t";
-            var technologies = "t";
-            var time = "t";
-                
+            var talks = await _context.Talk.ToListAsync();
+
+            var vm = new IndexViewModel()
+            {
+                Talks = talks
+            };
+     
+            return View(vm);
+        }
+
+        public async Task<IActionResult> Talk(string talk)
+        {
+            var talks = await _context.Talk.ToListAsync();
+            var t = talks.Where(o => o.Url.ToLower() == talk).FirstOrDefault();
+
             var vm = new TalkViewModel()
             {
-                Title = title,
-                Description = description,
-                Audience = audience,
-                Technologies = technologies,
-                Time = time
+                ThisTalk = t,
+                Talks = talks
             };
 
             return View(vm);

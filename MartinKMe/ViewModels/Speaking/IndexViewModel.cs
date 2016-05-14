@@ -6,10 +6,8 @@ using System.Threading.Tasks;
 
 namespace MartinKMe.ViewModels.Speaking
 {
-    public class TalkViewModel
+    public class IndexViewModel
     {
-        public Talk ThisTalk { get; set; }
-
         public List<Talk> Talks { get; set; }
     }
 }

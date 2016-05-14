@@ -1,12 +1,12 @@
 ﻿@model MartinKMe.ViewModels.Speaking.TalkViewModel
 
 @{
-    ViewData["Title"] = Model.Title;
+    ViewData["Title"] = Model.ThisTalk.Title;
 }
 
 <div class="jumbotron jumbotron-speaking">
     <div class="container">
-        <h1>@Model.Title</h1>
+        <h1>@Model.ThisTalk.Title</h1>
         <p>This is one of my talks.</p>
         <p>I can pretty much just turn up and deliver this with very little notice.</p>
     </div>
@@ -16,7 +16,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <h2>Talk Title: @Model.Title</h2>
+                <h2>Talk Title: @Model.ThisTalk.Title</h2>
             </div>
         </div>
     </div>
@@ -27,7 +27,7 @@
         <div class="row">
             <div class="col-md-12">
                 <h2>Talk Description</h2>
-                <p>@Model.Description</p>
+                <p>@Model.ThisTalk.Description</p>
             </div>
         </div>
     </div>
@@ -38,7 +38,7 @@
         <div class="row">
             <div class="col-md-12">
                 <h2>Suitable Audience</h2>
-                <p>@Model.Audience</p>
+                <p>@Model.ThisTalk.Audience</p>
             </div>
         </div>
     </div>
@@ -49,7 +49,7 @@
         <div class="row">
             <div class="col-md-12">
                 <h2>Technologies Covered</h2>
-                <p>@Model.Technologies</p>
+                <p>@Model.ThisTalk.Technologies</p>
             </div>
         </div>
     </div>
@@ -61,7 +61,7 @@
             <div class="col-md-12">
                 <h2>Typical Time Range</h2>
                 <p>This is just a typical time range, most talks can be adapted to suit any time frame so please ask if you need something different</p>
-                <p>@Model.Time</p>
+                <p>@Model.ThisTalk.Time</p>
             </div>
         </div>
     </div>
