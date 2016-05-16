@@ -1,4 +1,6 @@
-﻿@{
+﻿@model MartinKMe.ViewModels.Links.IndexViewModel
+
+@{
     ViewData["Title"] = "Links";
 }
 
@@ -9,6 +11,35 @@
         <p>Slides, videos, repos, articles, apps.</p>
     </div>
 </div>
+
+@foreach (var resourceGroup in Model.ResourceGroups)
+{
+    <div class="container-fluid @resourceGroup.CssClass">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h2>@resourceGroup.Title</h2>
+                    <p>@resourceGroup.Description</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4 hidden-xs">
+                    <img src="@resourceGroup.ImageUrl" class="img-responsive hidden-xs" alt="A picture of @resourceGroup.Title">
+                </div>
+                <div class="col-md-8">
+                    <ul class="list-unstyled">
+                        @foreach (var resource in resourceGroup.Resources)
+                        {
+                            <li><i class="fa fa-lg @resource.FAIconClass" aria-hidden="true"></i> <strong><a href="@resource.TargetUrl">@resource.Title</a></strong> @resource.Description</li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<hr />
 
 <div class="container-fluid green-background">
     <div class="container">

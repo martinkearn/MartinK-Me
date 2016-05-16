@@ -18,5 +18,7 @@ namespace MartinKMe.Models
         public string ImageUrl { get; set; }
 
         public string CssClass { get; set; }
+
+        public List<Resource> Resources { get; set; }
     }
 }

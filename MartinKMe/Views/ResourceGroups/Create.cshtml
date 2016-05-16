@@ -12,10 +12,10 @@
         <hr />
         <div asp-validation-summary="ValidationSummary.ModelOnly" class="text-danger"></div>
         <div class="form-group">
-            <label asp-for="CssClass" class="col-md-2 control-label"></label>
+            <label asp-for="Title" class="col-md-2 control-label"></label>
             <div class="col-md-10">
-                <input asp-for="CssClass" class="form-control" />
-                <span asp-validation-for="CssClass" class="text-danger" />
+                <input asp-for="Title" class="form-control" />
+                <span asp-validation-for="Title" class="text-danger" />
             </div>
         </div>
         <div class="form-group">
@@ -26,19 +26,20 @@
             </div>
         </div>
         <div class="form-group">
+            <label asp-for="CssClass" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="CssClass" class="form-control" />
+                <span asp-validation-for="CssClass" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
             <label asp-for="ImageUrl" class="col-md-2 control-label"></label>
             <div class="col-md-10">
                 <input asp-for="ImageUrl" class="form-control" />
                 <span asp-validation-for="ImageUrl" class="text-danger" />
             </div>
         </div>
-        <div class="form-group">
-            <label asp-for="Title" class="col-md-2 control-label"></label>
-            <div class="col-md-10">
-                <input asp-for="Title" class="form-control" />
-                <span asp-validation-for="Title" class="text-danger" />
-            </div>
-        </div>
+
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Create" class="btn btn-default" />

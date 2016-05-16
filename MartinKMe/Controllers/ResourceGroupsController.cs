@@ -22,23 +22,6 @@ namespace MartinKMe.Controllers
             return View(await _context.ResourceGroup.ToListAsync());
         }
 
-        // GET: ResourceGroups/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return HttpNotFound();
-            }
-
-            ResourceGroup resourceGroup = await _context.ResourceGroup.SingleAsync(m => m.Id == id);
-            if (resourceGroup == null)
-            {
-                return HttpNotFound();
-            }
-
-            return View(resourceGroup);
-        }
-
         // GET: ResourceGroups/Create
         public IActionResult Create()
         {
@@ -67,7 +50,7 @@ namespace MartinKMe.Controllers
                 return HttpNotFound();
             }
 
-            ResourceGroup resourceGroup = await _context.ResourceGroup.SingleAsync(m => m.Id == id);
+            ResourceGroup resourceGroup = await _context.ResourceGroup.Include(o => o.Resources).SingleAsync(m => m.Id == id);
             if (resourceGroup == null)
             {
                 return HttpNotFound();

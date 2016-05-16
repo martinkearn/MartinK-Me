@@ -13,7 +13,7 @@ namespace MartinKMe.Models
 
         public string Title { get; set; }
 
-        public string Type { get; set; }
+        public string FAIconClass { get; set; }
 
         public string Description { get; set; }
 
@@ -24,5 +24,6 @@ namespace MartinKMe.Models
         public bool VisibleOnSite { get; set; }
 
         public int ResourceGroupId { get; set; }
+
     }
 }

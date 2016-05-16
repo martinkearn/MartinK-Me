@@ -12,10 +12,7 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Description)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ResourceGroupId)
+            @Html.DisplayNameFor(model => model.Title)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.ShortUrl)
@@ -23,25 +20,14 @@
         <th>
             @Html.DisplayNameFor(model => model.TargetUrl)
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Title)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Type)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.VisibleOnSite)
-        </th>
         <th></th>
     </tr>
     
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.Description)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.ResourceGroupId)
+            <a asp-action="Edit" asp-route-id="@item.Id">@Html.DisplayFor(modelItem => item.Title)</a>
+            
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.ShortUrl)
@@ -50,17 +36,7 @@
             @Html.DisplayFor(modelItem => item.TargetUrl)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Title)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Type)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.VisibleOnSite)
-        </td>
-        <td>
             <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-            <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
             <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
         </td>
     </tr>

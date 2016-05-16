@@ -19,13 +19,6 @@
             </div>
         </div>
         <div class="form-group">
-            <label asp-for="ResourceGroupId" class="col-md-2 control-label"></label>
-            <div class="col-md-10">
-                <input asp-for="ResourceGroupId" class="form-control" />
-                <span asp-validation-for="ResourceGroupId" class="text-danger" />
-            </div>
-        </div>
-        <div class="form-group">
             <label asp-for="ShortUrl" class="col-md-2 control-label"></label>
             <div class="col-md-10">
                 <input asp-for="ShortUrl" class="form-control" />
@@ -47,10 +40,17 @@
             </div>
         </div>
         <div class="form-group">
-            <label asp-for="Type" class="col-md-2 control-label"></label>
+            <label asp-for="FAIconClass" class="col-md-2 control-label"></label>
             <div class="col-md-10">
-                <input asp-for="Type" class="form-control" />
-                <span asp-validation-for="Type" class="text-danger" />
+                <input asp-for="FAIconClass" class="form-control" />
+                <span asp-validation-for="FAIconClass" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="ResourceGroupId" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="ResourceGroupId" class="form-control" />
+                <span asp-validation-for="ResourceGroupId" class="text-danger" />
             </div>
         </div>
         <div class="form-group">

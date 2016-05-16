@@ -22,23 +22,6 @@ namespace MartinKMe.Controllers
             return View(await _context.Resource.ToListAsync());
         }
 
-        // GET: Resources/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return HttpNotFound();
-            }
-
-            Resource resource = await _context.Resource.SingleAsync(m => m.Id == id);
-            if (resource == null)
-            {
-                return HttpNotFound();
-            }
-
-            return View(resource);
-        }
-
         // GET: Resources/Create
         public IActionResult Create()
         {

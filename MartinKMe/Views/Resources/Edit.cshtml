@@ -1,10 +1,10 @@
 @model MartinKMe.Models.Resource
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Edit " +Model.Title;
 }
 
-<h2>Edit</h2>
+<h2>Edit @Model.Title</h2>
 
 <form asp-action="Edit">
     <div class="form-horizontal">
@@ -17,13 +17,6 @@
             <div class="col-md-10">
                 <input asp-for="Description" class="form-control" />
                 <span asp-validation-for="Description" class="text-danger" />
-            </div>
-        </div>
-        <div class="form-group">
-            <label asp-for="ResourceGroupId" class="col-md-2 control-label"></label>
-            <div class="col-md-10">
-                <input asp-for="ResourceGroupId" class="form-control" />
-                <span asp-validation-for="ResourceGroupId" class="text-danger" />
             </div>
         </div>
         <div class="form-group">
@@ -48,10 +41,17 @@
             </div>
         </div>
         <div class="form-group">
-            <label asp-for="Type" class="col-md-2 control-label"></label>
+            <label asp-for="FAIconClass" class="col-md-2 control-label"></label>
             <div class="col-md-10">
-                <input asp-for="Type" class="form-control" />
-                <span asp-validation-for="Type" class="text-danger" />
+                <input asp-for="FAIconClass" class="form-control" />
+                <span asp-validation-for="FAIconClass" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="ResourceGroupId" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="ResourceGroupId" class="form-control" />
+                <span asp-validation-for="ResourceGroupId" class="text-danger" />
             </div>
         </div>
         <div class="form-group">

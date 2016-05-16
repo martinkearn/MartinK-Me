@@ -8,9 +8,10 @@ using MartinKMe.Models;
 namespace MartinKMe.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20160516123146_RemovedGroupIdFromResource")]
+    partial class RemovedGroupIdFromResource
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "7.0.0-rc1-16348")
@@ -71,15 +72,13 @@ namespace MartinKMe.Migrations
 
                     b.Property<string>("Description");
 
-                    b.Property<string>("FAIconClass");
-
-                    b.Property<int>("ResourceGroupId");
-
                     b.Property<string>("ShortUrl");
 
                     b.Property<string>("TargetUrl");
 
                     b.Property<string>("Title");
+
+                    b.Property<string>("Type");
 
                     b.Property<bool>("VisibleOnSite");
 
@@ -202,13 +201,6 @@ namespace MartinKMe.Migrations
                     b.HasKey("UserId", "RoleId");
 
                     b.HasAnnotation("Relational:TableName", "AspNetUserRoles");
-                });
-
-            modelBuilder.Entity("MartinKMe.Models.Resource", b =>
-                {
-                    b.HasOne("MartinKMe.Models.ResourceGroup")
-                        .WithMany()
-                        .HasForeignKey("ResourceGroupId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNet.Identity.EntityFramework.IdentityRoleClaim<string>", b =>
