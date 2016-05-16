@@ -30,7 +30,10 @@
                     <ul class="list-unstyled">
                         @foreach (var resource in resourceGroup.Resources)
                         {
-                            <li><i class="fa fa-lg @resource.FAIconClass" aria-hidden="true"></i> <strong><a href="@resource.TargetUrl">@resource.Title</a></strong> @resource.Description (<a href="http://martink.me/@resource.ShortUrl">Short link</a>)</li>
+                            if (resource.VisibleOnSite)
+                            {
+                                <li><i class="fa fa-lg @resource.FAIconClass" aria-hidden="true"></i> <strong><a href="@resource.TargetUrl">@resource.Title</a></strong> @resource.Description (<a href="http://martink.me/@resource.ShortUrl">Short link</a>)</li>
+                            }
                         }
                     </ul>
                 </div>

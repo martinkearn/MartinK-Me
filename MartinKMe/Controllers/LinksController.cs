@@ -20,7 +20,10 @@ namespace MartinKMe.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var resourceGroups = await _context.ResourceGroup.Include(o => o.Resources).ToListAsync();
+            var resourceGroups = await _context.ResourceGroup
+                .Include(o => o.Resources)
+                .Where(o => o.VisibleOnSite == true)
+                .ToListAsync();
 
             var vm = new IndexViewModel()
             {

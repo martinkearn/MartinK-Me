@@ -73,7 +73,7 @@ h4 {
     background-image: linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.5)), url('../images/banner-resources.jpg');
 }
 
-.jumbotron-blog {
+.jumbotron-articles {
     background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.3)), url('../images/banner-blog.jpg');
 }
 

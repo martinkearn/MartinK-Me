@@ -20,5 +20,7 @@ namespace MartinKMe.Models
         public string CssClass { get; set; }
 
         public List<Resource> Resources { get; set; }
+
+        public bool VisibleOnSite { get; set; }
     }
 }

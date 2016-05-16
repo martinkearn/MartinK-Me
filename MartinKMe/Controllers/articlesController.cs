@@ -6,11 +6,11 @@ using Microsoft.AspNet.Mvc;
 
 namespace MartinKMe.Controllers
 {
-    public class BlogController : Controller
+    public class ArticlesController : Controller
     {
         public IActionResult Index()
         {
-            return View();
+            return Redirect("https://blogs.msdn.microsoft.com/martinkearn/");
         }
 
 
