@@ -10,7 +10,7 @@ namespace MartinKMe.Controllers
     {
         public IActionResult Index()
         {
-            return Redirect("https://blogs.msdn.microsoft.com/martinkearn/");
+            return View();
         }
 
 
