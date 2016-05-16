@@ -19,24 +19,24 @@ namespace MartinKMe.Controllers
             _context = context;
         }
 
-        // GET: /<controller>/
-        //public async Task<IActionResult> Index(string tagLabel)
-        //{
-            //var tags = await _context.Tag
-            //    .Where(m => m.TagLabel.ToLower() == tagLabel.ToLower())
-            //    .ToListAsync();
+        //GET: /<controller>/
+        public async Task<IActionResult> Index(string tagLabel)
+        {
+            var resources = await _context.Resource
+                .Where(m => m.ShortUrl.ToLower() == tagLabel.ToLower())
+                .ToListAsync();
 
-            //if (tags.Count > 0)
-            //{
-            //    return Redirect(tags.FirstOrDefault().Url);
-            //    //return Redirect($"http://www.bing.com/search?q={tag}");
-            //}
-            //else
-            //{
-            //    return RedirectToAction(nameof(HomeController.Index), "Home");
-            //    //return RedirectToAction("Index", "Home");
-            //}
+            if (resources.Count > 0)
+            {
+                return Redirect(resources.FirstOrDefault().TargetUrl);
+                //return Redirect($"http://www.bing.com/search?q={tag}");
+            }
+            else
+            {
+                return RedirectToAction(nameof(HomeController.Index), "Home");
+                //return RedirectToAction("Index", "Home");
+            }
 
-        //}
+        }
     }
 }

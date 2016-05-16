@@ -26,8 +26,7 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            <a asp-action="Edit" asp-route-id="@item.Id">@Html.DisplayFor(modelItem => item.Title)</a>
-            
+            <i class="fa fa-lg @item.FAIconClass" aria-hidden="true"></i> <a asp-action="Edit" asp-route-id="@item.Id">@Html.DisplayFor(modelItem => item.Title)</a>
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.ShortUrl)
