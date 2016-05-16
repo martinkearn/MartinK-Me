@@ -20,23 +20,23 @@ namespace MartinKMe.Controllers
         }
 
         // GET: /<controller>/
-        public async Task<IActionResult> Index(string tagLabel)
-        {
-            var tags = await _context.Tag
-                .Where(m => m.TagLabel.ToLower() == tagLabel.ToLower())
-                .ToListAsync();
+        //public async Task<IActionResult> Index(string tagLabel)
+        //{
+            //var tags = await _context.Tag
+            //    .Where(m => m.TagLabel.ToLower() == tagLabel.ToLower())
+            //    .ToListAsync();
 
-            if (tags.Count > 0)
-            {
-                return Redirect(tags.FirstOrDefault().Url);
-                //return Redirect($"http://www.bing.com/search?q={tag}");
-            }
-            else
-            {
-                return RedirectToAction(nameof(HomeController.Index), "Home");
-                //return RedirectToAction("Index", "Home");
-            }
+            //if (tags.Count > 0)
+            //{
+            //    return Redirect(tags.FirstOrDefault().Url);
+            //    //return Redirect($"http://www.bing.com/search?q={tag}");
+            //}
+            //else
+            //{
+            //    return RedirectToAction(nameof(HomeController.Index), "Home");
+            //    //return RedirectToAction("Index", "Home");
+            //}
 
-        }
+        //}
     }
 }

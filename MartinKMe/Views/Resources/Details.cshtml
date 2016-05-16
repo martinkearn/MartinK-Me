@@ -1,0 +1,60 @@
+@model MartinKMe.Models.Resource
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Resource</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ResourceGroupId)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ResourceGroupId)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ShortUrl)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ShortUrl)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.TargetUrl)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.TargetUrl)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Title)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Title)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Type)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Type)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.VisibleOnSite)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.VisibleOnSite)
+        </dd>
+    </dl>
+</div>
+<p>
+    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</p>

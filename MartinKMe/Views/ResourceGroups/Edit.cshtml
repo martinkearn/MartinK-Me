@@ -1,4 +1,4 @@
-@model MartinKMe.Models.Talk
+@model MartinKMe.Models.ResourceGroup
 
 @{
     ViewData["Title"] = "Edit";
@@ -8,15 +8,15 @@
 
 <form asp-action="Edit">
     <div class="form-horizontal">
-        <h4>Talk</h4>
+        <h4>ResourceGroup</h4>
         <hr />
         <div asp-validation-summary="ValidationSummary.ModelOnly" class="text-danger"></div>
         <input type="hidden" asp-for="Id" />
         <div class="form-group">
-            <label asp-for="Title" class="col-md-2 control-label"></label>
+            <label asp-for="CssClass" class="col-md-2 control-label"></label>
             <div class="col-md-10">
-                <input asp-for="Title" class="form-control" />
-                <span asp-validation-for="Title" class="text-danger" />
+                <input asp-for="CssClass" class="form-control" />
+                <span asp-validation-for="CssClass" class="text-danger" />
             </div>
         </div>
         <div class="form-group">
@@ -27,31 +27,17 @@
             </div>
         </div>
         <div class="form-group">
-            <label asp-for="Technologies" class="col-md-2 control-label"></label>
+            <label asp-for="ImageUrl" class="col-md-2 control-label"></label>
             <div class="col-md-10">
-                <input asp-for="Technologies" class="form-control" />
-                <span asp-validation-for="Technologies" class="text-danger" />
+                <input asp-for="ImageUrl" class="form-control" />
+                <span asp-validation-for="ImageUrl" class="text-danger" />
             </div>
         </div>
         <div class="form-group">
-            <label asp-for="Audience" class="col-md-2 control-label"></label>
+            <label asp-for="Title" class="col-md-2 control-label"></label>
             <div class="col-md-10">
-                <input asp-for="Audience" class="form-control" />
-                <span asp-validation-for="Audience" class="text-danger" />
-            </div>
-        </div>
-        <div class="form-group">
-            <label asp-for="Time" class="col-md-2 control-label"></label>
-            <div class="col-md-10">
-                <input asp-for="Time" class="form-control" />
-                <span asp-validation-for="Time" class="text-danger" />
-            </div>
-        </div>
-        <div class="form-group">
-            <label asp-for="Url" class="col-md-2 control-label"></label>
-            <div class="col-md-10">
-                <input asp-for="Url" class="form-control" />
-                <span asp-validation-for="Url" class="text-danger" />
+                <input asp-for="Title" class="form-control" />
+                <span asp-validation-for="Title" class="text-danger" />
             </div>
         </div>
         <div class="form-group">

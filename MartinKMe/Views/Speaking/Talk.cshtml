@@ -12,17 +12,18 @@
     </div>
 </div>
 
-<div class="container-fluid green-background">
+<div class="container-fluid ">
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <h2>Talk Title: @Model.ThisTalk.Title</h2>
+                <h2>Talk Title</h2>
+                <p>@Model.ThisTalk.Title</p>
             </div>
         </div>
     </div>
 </div>
 
-<div class="container-fluid lightblue-background">
+<div class="container-fluid ">
     <div class="container">
         <div class="row">
             <div class="col-md-12">
@@ -33,7 +34,7 @@
     </div>
 </div>
 
-<div class="container-fluid blue-background">
+<div class="container-fluid ">
     <div class="container">
         <div class="row">
             <div class="col-md-12">
@@ -44,7 +45,7 @@
     </div>
 </div>
 
-<div class="container-fluid darkorange-background">
+<div class="container-fluid ">
     <div class="container">
         <div class="row">
             <div class="col-md-12">
@@ -55,13 +56,23 @@
     </div>
 </div>
 
-<div class="container-fluid teal-background">
+<div class="container-fluid ">
     <div class="container">
         <div class="row">
             <div class="col-md-12">
                 <h2>Typical Time Range</h2>
                 <p>This is just a typical time range, most talks can be adapted to suit any time frame so please ask if you need something different</p>
                 <p>@Model.ThisTalk.Time</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid ">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <a asp-controller="Speaking" asp-action="Index" class="btn btn-primary" ><i class="fa fa-angle-double-left" aria-hidden="true"></i> See all talks</a>
             </div>
         </div>
     </div>

@@ -4,26 +4,25 @@ using Microsoft.AspNet.Mvc;
 using Microsoft.AspNet.Mvc.Rendering;
 using Microsoft.Data.Entity;
 using MartinKMe.Models;
-using Microsoft.AspNet.Authorization;
 
 namespace MartinKMe.Controllers
 {
-    public class TagsController : Controller
+    public class ResourceGroupsController : Controller
     {
         private ApplicationDbContext _context;
 
-        public TagsController(ApplicationDbContext context)
+        public ResourceGroupsController(ApplicationDbContext context)
         {
             _context = context;    
         }
 
-        // GET: Tags
+        // GET: ResourceGroups
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Tag.ToListAsync());
+            return View(await _context.ResourceGroup.ToListAsync());
         }
 
-        // GET: Tags/Details/5
+        // GET: ResourceGroups/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -31,36 +30,36 @@ namespace MartinKMe.Controllers
                 return HttpNotFound();
             }
 
-            Tag tag = await _context.Tag.SingleAsync(m => m.Id == id);
-            if (tag == null)
+            ResourceGroup resourceGroup = await _context.ResourceGroup.SingleAsync(m => m.Id == id);
+            if (resourceGroup == null)
             {
                 return HttpNotFound();
             }
 
-            return View(tag);
+            return View(resourceGroup);
         }
 
-        // GET: Tags/Create
+        // GET: ResourceGroups/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Tags/Create
+        // POST: ResourceGroups/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Tag tag)
+        public async Task<IActionResult> Create(ResourceGroup resourceGroup)
         {
             if (ModelState.IsValid)
             {
-                _context.Tag.Add(tag);
+                _context.ResourceGroup.Add(resourceGroup);
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
-            return View(tag);
+            return View(resourceGroup);
         }
 
-        // GET: Tags/Edit/5
+        // GET: ResourceGroups/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -68,29 +67,29 @@ namespace MartinKMe.Controllers
                 return HttpNotFound();
             }
 
-            Tag tag = await _context.Tag.SingleAsync(m => m.Id == id);
-            if (tag == null)
+            ResourceGroup resourceGroup = await _context.ResourceGroup.SingleAsync(m => m.Id == id);
+            if (resourceGroup == null)
             {
                 return HttpNotFound();
             }
-            return View(tag);
+            return View(resourceGroup);
         }
 
-        // POST: Tags/Edit/5
+        // POST: ResourceGroups/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Tag tag)
+        public async Task<IActionResult> Edit(ResourceGroup resourceGroup)
         {
             if (ModelState.IsValid)
             {
-                _context.Update(tag);
+                _context.Update(resourceGroup);
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
-            return View(tag);
+            return View(resourceGroup);
         }
 
-        // GET: Tags/Delete/5
+        // GET: ResourceGroups/Delete/5
         [ActionName("Delete")]
         public async Task<IActionResult> Delete(int? id)
         {
@@ -99,22 +98,22 @@ namespace MartinKMe.Controllers
                 return HttpNotFound();
             }
 
-            Tag tag = await _context.Tag.SingleAsync(m => m.Id == id);
-            if (tag == null)
+            ResourceGroup resourceGroup = await _context.ResourceGroup.SingleAsync(m => m.Id == id);
+            if (resourceGroup == null)
             {
                 return HttpNotFound();
             }
 
-            return View(tag);
+            return View(resourceGroup);
         }
 
-        // POST: Tags/Delete/5
+        // POST: ResourceGroups/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            Tag tag = await _context.Tag.SingleAsync(m => m.Id == id);
-            _context.Tag.Remove(tag);
+            ResourceGroup resourceGroup = await _context.ResourceGroup.SingleAsync(m => m.Id == id);
+            _context.ResourceGroup.Remove(resourceGroup);
             await _context.SaveChangesAsync();
             return RedirectToAction("Index");
         }

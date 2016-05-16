@@ -1,4 +1,4 @@
-@model IEnumerable<MartinKMe.Models.Talk>
+@model IEnumerable<MartinKMe.Models.ResourceGroup>
 
 @{
     ViewData["Title"] = "Index";
@@ -12,29 +12,33 @@
 <table class="table">
     <tr>
         <th>
+            @Html.DisplayNameFor(model => model.CssClass)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ImageUrl)
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.Title)
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Audience)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Technologies)
-        </th>
-
         <th></th>
     </tr>
     
 @foreach (var item in Model) {
     <tr>
         <td>
-            <a asp-action="Edit" asp-route-id="@item.Id">@Html.DisplayFor(modelItem => item.Title)</a>
-            
+            @Html.DisplayFor(modelItem => item.CssClass)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Audience)
+            @Html.DisplayFor(modelItem => item.Description)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Technologies)
+            @Html.DisplayFor(modelItem => item.ImageUrl)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Title)
         </td>
         <td>
             <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |

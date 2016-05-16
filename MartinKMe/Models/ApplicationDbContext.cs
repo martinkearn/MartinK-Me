@@ -17,7 +17,8 @@ namespace MartinKMe.Models
             // For example, you can rename the ASP.NET Identity table names and more.
             // Add your customizations after calling base.OnModelCreating(builder);
         }
-        public DbSet<Tag> Tag { get; set; }
         public DbSet<Talk> Talk { get; set; }
+        public DbSet<ResourceGroup> ResourceGroup { get; set; }
+        public DbSet<Resource> Resource { get; set; }
     }
 }

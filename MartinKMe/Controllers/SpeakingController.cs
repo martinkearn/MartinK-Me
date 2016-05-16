@@ -32,13 +32,11 @@ namespace MartinKMe.Controllers
 
         public async Task<IActionResult> Talk(string talk)
         {
-            var talks = await _context.Talk.ToListAsync();
-            var t = talks.Where(o => o.Url.ToLower() == talk).FirstOrDefault();
+            var thisTalk = await _context.Talk.Where(o => o.Url.ToLower() == talk).FirstOrDefaultAsync();
 
             var vm = new TalkViewModel()
             {
-                ThisTalk = t,
-                Talks = talks
+                ThisTalk = thisTalk
             };
 
             return View(vm);

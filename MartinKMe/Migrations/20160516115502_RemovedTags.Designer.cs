@@ -8,9 +8,10 @@ using MartinKMe.Models;
 namespace MartinKMe.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20160516115502_RemovedTags")]
+    partial class RemovedTags
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "7.0.0-rc1-16348")
@@ -62,44 +63,6 @@ namespace MartinKMe.Migrations
                         .HasAnnotation("Relational:Name", "UserNameIndex");
 
                     b.HasAnnotation("Relational:TableName", "AspNetUsers");
-                });
-
-            modelBuilder.Entity("MartinKMe.Models.Resource", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("Description");
-
-                    b.Property<int>("ResourceGroupId");
-
-                    b.Property<string>("ShortUrl");
-
-                    b.Property<string>("TargetUrl");
-
-                    b.Property<string>("Title");
-
-                    b.Property<string>("Type");
-
-                    b.Property<bool>("VisibleOnSite");
-
-                    b.HasKey("Id");
-                });
-
-            modelBuilder.Entity("MartinKMe.Models.ResourceGroup", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("CssClass");
-
-                    b.Property<string>("Description");
-
-                    b.Property<string>("ImageUrl");
-
-                    b.Property<string>("Title");
-
-                    b.HasKey("Id");
                 });
 
             modelBuilder.Entity("MartinKMe.Models.Talk", b =>
