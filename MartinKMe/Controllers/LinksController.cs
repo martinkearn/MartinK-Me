@@ -6,7 +6,7 @@ using Microsoft.AspNet.Mvc;
 
 namespace MartinKMe.Controllers
 {
-    public class ResourcesController : Controller
+    public class LinksController : Controller
     {
         public IActionResult Index()
         {
