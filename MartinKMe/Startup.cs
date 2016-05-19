@@ -11,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using MartinKMe.Models;
 using MartinKMe.Services;
+using Microsoft.AspNet.StaticFiles;
 
 namespace MartinKMe
 {
@@ -86,7 +87,10 @@ namespace MartinKMe
 
             app.UseIISPlatformHandler(options => options.AuthenticationDescriptions.Clear());
 
-            app.UseStaticFiles();
+            app.UseStaticFiles(new StaticFileOptions()
+            {
+                OnPrepareResponse = r => r.Context.Response.Headers.Add("Expires", DateTime.Now.AddDays(7).ToUniversalTime().ToString("r"))
+            });
 
             app.UseIdentity();
 
