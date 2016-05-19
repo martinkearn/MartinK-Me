@@ -91,6 +91,7 @@ namespace MartinKMe
             {
                 OnPrepareResponse = r => r.Context.Response.Headers.Add("Expires", DateTime.Now.AddDays(7).ToUniversalTime().ToString("r"))
             });
+            // need to work out how to add OnPrepareResponse = context => context.Context.Response.Headers.Add("Cache-Control", "public, max-age=2592000")
 
             app.UseIdentity();
 
