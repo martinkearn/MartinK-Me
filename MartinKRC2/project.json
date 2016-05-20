@@ -1,4 +1,4 @@
-﻿{
+{
   "userSecretsId": "aspnet-MartinKRC2-1b96d065-e7f9-4fb0-aaac-8fa53b97acc3",
 
   "dependencies": {
@@ -37,7 +37,8 @@
     "Microsoft.VisualStudio.Web.CodeGenerators.Mvc": {
       "version": "1.0.0-preview1-final",
       "type": "build"
-    }
+    },
+    "Microsoft.EntityFrameworkCore": "1.0.0-rc2-final"
   },
 
   "tools": {

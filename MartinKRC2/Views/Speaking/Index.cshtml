@@ -1,0 +1,74 @@
+﻿@model MartinKRC2.Models.SpeakingViewModels.IndexViewModel
+
+@{
+    ViewData["Title"] = "Speaking";
+}
+
+<div class="jumbotron jumbotron-speaking">
+    <div class="container">
+        <h1>@ViewData["Title"]</h1>
+        <p>I speak at events of all sizes, it's pretty much my job.</p>
+        <p>Conferences, meet-ups, user groups, events.</p>
+    </div>
+</div>
+
+<div class="container-fluid green-background">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h2>I'll come to your event</h2>
+                <p>I speak at events such as conferences, meet-ups, user groups, Microsoft events etc.</p>
+                <p>If you want me to come to your event, please <a href="mailto:martin.kearn@microsoft.com?Subject=Enquiry%20from%20Martink.me">email me</a> or <a href="https://twitter.com/MartinKearn">tweet me</a> and we can sort the details.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid lightblue-background">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h2>My Talks</h2>
+                <p>I’m happy to speak at pretty much any developer event. Here are a few topics that I’m talking about at the moment and can delivery with hardly any notice, but if you have a specific topic feel free to ask me.</p>
+                <ul>
+                    @foreach (var talk in Model.Talks)
+                    {
+                        <li><a href="/speaking/@talk.Url.ToLower()" title="@talk.Description" >@talk.Title</a></li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid blue-background">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h2>My Bio</h2>
+                <p>Here is my bio in various formats:</p>
+                <ul>
+                    <li><strong>Third Person</strong>: Martin is a technical evangelist for Microsoft based in the UK. In his role, Martin talks with customers, partners, start-ups and anyone who is willing to listen about developing applications on the Microsoft platform. This includes Windows, Office, Microsoft Azure and Web technologies including ASP.net and the Edge browser. Martin has been working with Microsoft development technologies since the late 90's and has been working for Microsoft directly since 2005.</li>
+                    <li><strong>First Person</strong>: I am a technical evangelist for Microsoft based in the UK. In my work, I talk with customers, partners, start-ups and anyone who is willing to listen about developing applications on the Microsoft platform. This includes Windows, Office, Microsoft Azure and Web technologies including ASP.net and the Edge browser. I have been working with Microsoft development technologies since the late 90's and has been working for Microsoft directly since 2005.</li>
+                    <li><strong>Short</strong>: Martin works for Microsoft as an evangelist. He's into Web, AI, Mobile Apps and Cloud.</li>
+                </ul>
+
+                <p>A few mug shots you can use to advertise your event</p>
+                <div class="row">
+                    <div class="col-md-3">
+                        <a href="~/images/MartinKearnProfile1.jpg" download><img src="~/images/MartinKearnProfile1.jpg" class="img-responsive profile-photo" alt="Martin Kearn profile picture 1"></a>
+                    </div>
+                    <div class="col-md-3">
+                        <a href="~/images/MartinKearnProfile2.jpg" download><img src="~/images/MartinKearnProfile2.jpg" class="img-responsive profile-photo" alt="Martin Kearn profile picture 2"></a>
+                    </div>
+                    <div class="col-md-3">
+                        <a href="~/images/MartinKearnProfile3.png" download><img src="~/images/MartinKearnProfile3.png" class="img-responsive profile-photo" alt="Martin Kearn profile picture 3"></a>
+                    </div>
+                    <div class="col-md-3">
+                        <a href="~/images/MartinKearnProfile4.jpg" download><img src="~/images/MartinKearnProfile4.jpg" class="img-responsive profile-photo" alt="Martin Kearn profile picture 4"></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -71,7 +71,10 @@ namespace MartinKRC2
                 app.UseExceptionHandler("/Home/Error");
             }
 
-            app.UseStaticFiles();
+            app.UseStaticFiles(new StaticFileOptions()
+            {
+                OnPrepareResponse = r => r.Context.Response.Headers.Add("Expires", DateTime.Now.AddDays(7).ToUniversalTime().ToString("r"))
+            });
 
             app.UseIdentity();
 
@@ -82,6 +85,16 @@ namespace MartinKRC2
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
+
+                routes.MapRoute(
+                    "talk",
+                    "speaking/{talk}",
+                    new { controller = "Speaking", action = "Talk" });
+
+                routes.MapRoute(
+                    "redirect",
+                    "{tagLabel}",
+                    new { controller = "Redirect", action = "Index" });
             });
         }
     }
