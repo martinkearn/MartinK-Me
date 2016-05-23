@@ -87,6 +87,11 @@ namespace MartinKRC2
                     template: "{controller=Home}/{action=Index}/{id?}");
 
                 routes.MapRoute(
+                    "admin",
+                    "admin",
+                    new { controller = "ResourceGroups", action = "Index" });
+
+                routes.MapRoute(
                     "talk",
                     "speaking/{talk}",
                     new { controller = "Speaking", action = "Talk" });
