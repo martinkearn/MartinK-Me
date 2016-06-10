@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MartinKRC2.Data;
 using MartinKRC2.Models;
+using MartinKRC2.Models.ResourcesViewModels;
 
 namespace MartinKRC2.Controllers
 {
@@ -25,27 +26,21 @@ namespace MartinKRC2.Controllers
             return View(await _context.Resource.ToListAsync());
         }
 
-        // GET: Resources/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var resource = await _context.Resource.SingleOrDefaultAsync(m => m.Id == id);
-            if (resource == null)
-            {
-                return NotFound();
-            }
-
-            return View(resource);
-        }
-
         // GET: Resources/Create
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
-            return View();
+            var resourceGroups = new List<SelectListItem>();
+            foreach (var item in await _context.ResourceGroup.ToListAsync())
+            {
+                resourceGroups.Add(new SelectListItem() { Text = item.Title, Value = item.Id.ToString() });
+            }
+
+            var vm = new CreateViewModel() {
+                Resource = new Resource(),
+                ResourceGroups = resourceGroups
+            };
+
+            return View(vm);
         }
 
         // POST: Resources/Create
@@ -77,7 +72,26 @@ namespace MartinKRC2.Controllers
             {
                 return NotFound();
             }
-            return View(resource);
+
+            var resourceGroups = new List<SelectListItem>();
+            foreach (var item in await _context.ResourceGroup.ToListAsync())
+            {
+                var selectListItem = new SelectListItem()
+                {
+                    Text = item.Title,
+                    Value = item.Id.ToString(),
+                    Selected = (item.Id == resource.ResourceGroupId)
+                };
+                resourceGroups.Add(selectListItem);
+            }
+
+            var vm = new EditViewModel()
+            {
+                Resource = resource,
+                ResourceGroups = resourceGroups
+            };
+
+            return View(vm);
         }
 
         // POST: Resources/Edit/5
