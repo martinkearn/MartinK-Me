@@ -19,8 +19,8 @@ namespace MartinKRC2.Models
 
         public string CssClass { get; set; }
 
-        public List<Resource> Resources { get; set; }
-
         public bool VisibleOnSite { get; set; }
+
+        public virtual ICollection<ResourceResourceGroup> ResourceResourceGroups { get; set; }
     }
 }

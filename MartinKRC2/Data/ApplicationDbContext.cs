@@ -21,6 +21,19 @@ namespace MartinKRC2.Data
             // Customize the ASP.NET Identity model and override the defaults if needed.
             // For example, you can rename the ASP.NET Identity table names and more.
             // Add your customizations after calling base.OnModelCreating(builder);
+
+            builder.Entity<ResourceResourceGroup>()
+                .HasKey(t => new { t.ResourceGroupId, t.ResourceId });
+
+            builder.Entity<ResourceResourceGroup>()
+                .HasOne(rg => rg.ResourceGroup)
+                .WithMany(r => r.ResourceResourceGroups)
+                .HasForeignKey(rg => rg.ResourceGroupId);
+
+            builder.Entity<ResourceResourceGroup>()
+                .HasOne(rg => rg.Resource)
+                .WithMany(r => r.ResourceResourceGroups)
+                .HasForeignKey(rg => rg.ResourceId);
         }
 
         public DbSet<ResourceGroup> ResourceGroup { get; set; }
@@ -28,5 +41,7 @@ namespace MartinKRC2.Data
         public DbSet<Resource> Resource { get; set; }
 
         public DbSet<Talk> Talk { get; set; }
+
+        public DbSet<ResourceResourceGroup> ResourceResourceGroup { get; set; }
     }
 }

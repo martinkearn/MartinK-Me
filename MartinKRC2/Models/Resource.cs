@@ -23,6 +23,6 @@ namespace MartinKRC2.Models
 
         public bool VisibleOnSite { get; set; }
 
-        public int ResourceGroupId { get; set; }
+        public virtual ICollection<ResourceResourceGroup> ResourceResourceGroups { get; set; }
     }
 }

@@ -8,9 +8,10 @@ using MartinKRC2.Data;
 namespace MartinKRC2.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20160713150248_MoveToBeta")]
+    partial class MoveToBeta
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.0.0-rc2-20901")
@@ -73,6 +74,8 @@ namespace MartinKRC2.Data.Migrations
 
                     b.Property<string>("FAIconClass");
 
+                    b.Property<int>("ResourceGroupId");
+
                     b.Property<string>("ShortUrl");
 
                     b.Property<string>("TargetUrl");
@@ -82,6 +85,8 @@ namespace MartinKRC2.Data.Migrations
                     b.Property<bool>("VisibleOnSite");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ResourceGroupId");
 
                     b.ToTable("Resource");
                 });
@@ -104,21 +109,6 @@ namespace MartinKRC2.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("ResourceGroup");
-                });
-
-            modelBuilder.Entity("MartinKRC2.Models.ResourceResourceGroup", b =>
-                {
-                    b.Property<int>("ResourceGroupId");
-
-                    b.Property<int>("ResourceId");
-
-                    b.HasKey("ResourceGroupId", "ResourceId");
-
-                    b.HasIndex("ResourceGroupId");
-
-                    b.HasIndex("ResourceId");
-
-                    b.ToTable("ResourceResourceGroup");
                 });
 
             modelBuilder.Entity("MartinKRC2.Models.Talk", b =>
@@ -250,16 +240,11 @@ namespace MartinKRC2.Data.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("MartinKRC2.Models.ResourceResourceGroup", b =>
+            modelBuilder.Entity("MartinKRC2.Models.Resource", b =>
                 {
                     b.HasOne("MartinKRC2.Models.ResourceGroup")
                         .WithMany()
                         .HasForeignKey("ResourceGroupId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("MartinKRC2.Models.Resource")
-                        .WithMany()
-                        .HasForeignKey("ResourceId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

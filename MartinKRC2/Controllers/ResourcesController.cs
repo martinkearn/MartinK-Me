@@ -74,16 +74,16 @@ namespace MartinKRC2.Controllers
             }
 
             var resourceGroups = new List<SelectListItem>();
-            foreach (var item in await _context.ResourceGroup.ToListAsync())
-            {
-                var selectListItem = new SelectListItem()
-                {
-                    Text = item.Title,
-                    Value = item.Id.ToString(),
-                    Selected = (item.Id == resource.ResourceGroupId)
-                };
-                resourceGroups.Add(selectListItem);
-            }
+            //foreach (var item in await _context.ResourceGroup.ToListAsync())
+            //{
+            //    var selectListItem = new SelectListItem()
+            //    {
+            //        Text = item.Title,
+            //        Value = item.Id.ToString(),
+            //        Selected = (item.Id == resource.ResourceGroupId)
+            //    };
+            //    resourceGroups.Add(selectListItem);
+            //}
 
             var vm = new EditViewModel()
             {
