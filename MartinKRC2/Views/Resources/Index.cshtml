@@ -27,9 +27,6 @@
                                 @Html.DisplayNameFor(model => model.ShortUrl)
                             </th>
                             <th>
-                                @Html.DisplayNameFor(model => model.ResourceGroupId)
-                            </th>
-                            <th>
                                 @Html.DisplayNameFor(model => model.VisibleOnSite)
                             </th>
                             <th></th>
@@ -45,9 +42,6 @@
                                 </td>
                                 <td>
                                     @Html.DisplayFor(modelItem => item.ShortUrl)
-                                </td>
-                                <td>
-                                    <a asp-action="Edit" asp-controller="ResourceGroups" asp-route-id="@item.ResourceGroupId">@Html.DisplayFor(modelItem => item.ResourceGroupId)</a>
                                 </td>
                                 <td>
                                     @Html.DisplayFor(modelItem => item.VisibleOnSite)

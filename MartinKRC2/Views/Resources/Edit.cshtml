@@ -1,4 +1,4 @@
-@model MartinKRC2.Models.ResourcesViewModels.EditViewModel
+@model MartinKRC2.ViewModels.ResourcesViewModels.EditViewModel
 
 @{
     Layout = "_LayoutAdmin";
@@ -42,13 +42,6 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label asp-for="Resource.ResourceGroupId" class="control-label col-md-2"></label>
-                            <div class="col-md-10">
-                                <select asp-for="Resource.ResourceGroupId" asp-items="@Model.ResourceGroups"  class="form-control"></select>
-                                <span asp-validation-for="Resource.ResourceGroupId" class="text-danger" />
-                            </div>
-                        </div>
-                        <div class="form-group">
                             <label asp-for="Resource.ShortUrl" class="col-md-2 control-label"></label>
                             <div class="col-md-10">
                                 <input asp-for="Resource.ShortUrl" class="form-control" />
@@ -70,6 +63,18 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-2">Resource Groups</label>
+                            <div class="col-md-10">
+                                @foreach (var rg in Model.ResourceGroups)
+                                {
+                                    <input type="checkbox" id="@rg.Value" name="ResourceGroupIds" value="@rg.Value" />
+                                    <small><label for="@rg.Value">@rg.Text</label></small>
+                                    <br />
+                                }
+                            </div>
+                        </div>
+                        
                         <div class="form-group">
                             <div class="col-md-offset-2 col-md-10">
                                 <input type="submit" value="Save" class="btn btn-default" />

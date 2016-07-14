@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using MartinKRC2.Data;
 using MartinKRC2.Models;
 using MartinKRC2.ViewModels.ResourcesViewModels;
+using Microsoft.AspNetCore.Http;
 
 namespace MartinKRC2.Controllers
 {
@@ -48,7 +49,7 @@ namespace MartinKRC2.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Description,FAIconClass,ResourceGroupId,ShortUrl,TargetUrl,Title,VisibleOnSite")] Resource resource)
+        public async Task<IActionResult> Create(Resource resource)
         {
             if (ModelState.IsValid)
             {
@@ -67,23 +68,22 @@ namespace MartinKRC2.Controllers
                 return NotFound();
             }
 
-            var resource = await _context.Resource.SingleOrDefaultAsync(m => m.Id == id);
+            var resource = await _context.Resource.Include(o => o.ResourceResourceGroups).SingleOrDefaultAsync(m => m.Id == id);
             if (resource == null)
             {
                 return NotFound();
             }
 
             var resourceGroups = new List<SelectListItem>();
-            //foreach (var item in await _context.ResourceGroup.ToListAsync())
-            //{
-            //    var selectListItem = new SelectListItem()
-            //    {
-            //        Text = item.Title,
-            //        Value = item.Id.ToString(),
-            //        Selected = (item.Id == resource.ResourceGroupId)
-            //    };
-            //    resourceGroups.Add(selectListItem);
-            //}
+            foreach (var item in await _context.ResourceGroup.ToListAsync())
+            {
+                var selectListItem = new SelectListItem()
+                {
+                    Text = item.Title,
+                    Value = item.Id.ToString()
+                };
+                resourceGroups.Add(selectListItem);
+            }
 
             var vm = new EditViewModel()
             {
@@ -99,7 +99,7 @@ namespace MartinKRC2.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Description,FAIconClass,ResourceGroupId,ShortUrl,TargetUrl,Title,VisibleOnSite")] Resource resource)
+        public async Task<IActionResult> Edit(int id, Resource resource)
         {
             if (id != resource.Id)
             {
@@ -111,6 +111,18 @@ namespace MartinKRC2.Controllers
                 try
                 {
                     _context.Update(resource);
+                    await _context.SaveChangesAsync();
+
+                    //add Resource <> ResourceGroup mappings
+                    var resourceGroupIds = Request.Form["ResourceGroupIds"];
+                    foreach (var resourceGroupId in resourceGroupIds)
+                    {
+                        _context.ResourceResourceGroup.Add(new ResourceResourceGroup()
+                        {
+                            ResourceId = id,
+                            ResourceGroupId = Convert.ToInt32(resourceGroupId)
+                        });
+                    }
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)

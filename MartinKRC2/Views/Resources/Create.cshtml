@@ -1,4 +1,4 @@
-@model MartinKRC2.Models.ResourcesViewModels.CreateViewModel
+@model MartinKRC2.ViewModels.ResourcesViewModels.CreateViewModel
 
 @{
     Layout = "_LayoutAdmin";
@@ -40,13 +40,13 @@
                                 <span asp-validation-for="Resource.FAIconClass" class="text-danger" />
                             </div>
                         </div>
-                        <div class="form-group">
+                        @*<div class="form-group">
                             <label asp-for="Resource.ResourceGroupId" class="col-md-2 control-label"></label>
                             <div class="col-md-10">
                                 <select asp-for="Resource.ResourceGroupId" asp-items="@Model.ResourceGroups" class="form-control"></select>
                                 <span asp-validation-for="Resource.ResourceGroupId" class="text-danger" />
                             </div>
-                        </div>
+                        </div>*@
                         <div class="form-group">
                             <label asp-for="Resource.ShortUrl" class="col-md-2 control-label"></label>
                             <div class="col-md-10">
