@@ -74,13 +74,21 @@ namespace MartinKRC2.Controllers
                 return NotFound();
             }
 
+            //get Resource <> Resource Group mappings for this Resource
+            var selectedResourceGroups = await _context.ResourceResourceGroup.Where(o => o.ResourceId == resource.Id).ToListAsync();
+
             var resourceGroups = new List<SelectListItem>();
             foreach (var item in await _context.ResourceGroup.ToListAsync())
             {
+                //figure out if this Resource Group is selected for this Resource
+                var isSelected = (selectedResourceGroups.Where(o => o.ResourceGroupId == item.Id).Count() > 0);
+
+                //construct and add Select List Item
                 var selectListItem = new SelectListItem()
                 {
                     Text = item.Title,
-                    Value = item.Id.ToString()
+                    Value = item.Id.ToString(),
+                    Selected = isSelected
                 };
                 resourceGroups.Add(selectListItem);
             }
@@ -110,10 +118,15 @@ namespace MartinKRC2.Controllers
             {
                 try
                 {
+                    //update Resource
                     _context.Update(resource);
                     await _context.SaveChangesAsync();
 
-                    //add Resource <> ResourceGroup mappings
+                    //clear all existing Resource <> ResourceGroup mappings for this resource
+                    _context.ResourceResourceGroup.RemoveRange(_context.ResourceResourceGroup.Where(o => o.ResourceId == id));
+                    await _context.SaveChangesAsync();
+
+                    //add Resource <> ResourceGroup mappings based on submitted form
                     var resourceGroupIds = Request.Form["ResourceGroupIds"];
                     foreach (var resourceGroupId in resourceGroupIds)
                     {
