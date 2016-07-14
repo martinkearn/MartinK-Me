@@ -25,23 +25,6 @@ namespace MartinKRC2.Controllers
             return View(await _context.ResourceGroup.ToListAsync());
         }
 
-        // GET: ResourceGroups/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var resourceGroup = await _context.ResourceGroup.SingleOrDefaultAsync(m => m.Id == id);
-            if (resourceGroup == null)
-            {
-                return NotFound();
-            }
-
-            return View(resourceGroup);
-        }
-
         // GET: ResourceGroups/Create
         public IActionResult Create()
         {

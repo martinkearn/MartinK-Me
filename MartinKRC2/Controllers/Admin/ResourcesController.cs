@@ -55,6 +55,10 @@ namespace MartinKRC2.Controllers
             {
                 _context.Add(resource);
                 await _context.SaveChangesAsync();
+
+                //update Resource Groups
+                await CreateUpdateResourceGroupMappings(resource.Id, Request.Form["ResourceGroupIds"].ToList());
+
                 return RedirectToAction("Index");
             }
             return View(resource);
@@ -122,21 +126,8 @@ namespace MartinKRC2.Controllers
                     _context.Update(resource);
                     await _context.SaveChangesAsync();
 
-                    //clear all existing Resource <> ResourceGroup mappings for this resource
-                    _context.ResourceResourceGroup.RemoveRange(_context.ResourceResourceGroup.Where(o => o.ResourceId == id));
-                    await _context.SaveChangesAsync();
-
-                    //add Resource <> ResourceGroup mappings based on submitted form
-                    var resourceGroupIds = Request.Form["ResourceGroupIds"];
-                    foreach (var resourceGroupId in resourceGroupIds)
-                    {
-                        _context.ResourceResourceGroup.Add(new ResourceResourceGroup()
-                        {
-                            ResourceId = id,
-                            ResourceGroupId = Convert.ToInt32(resourceGroupId)
-                        });
-                    }
-                    await _context.SaveChangesAsync();
+                    //update Resource Groups
+                    await CreateUpdateResourceGroupMappings(id, Request.Form["ResourceGroupIds"].ToList());
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -176,15 +167,61 @@ namespace MartinKRC2.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
+            //delete Resource <> Resource Group mappings first
+            await DeleteResourceGroupMappings(id);
+
+            //delete Resource
             var resource = await _context.Resource.SingleOrDefaultAsync(m => m.Id == id);
             _context.Resource.Remove(resource);
             await _context.SaveChangesAsync();
+
             return RedirectToAction("Index");
         }
 
         private bool ResourceExists(int id)
         {
             return _context.Resource.Any(e => e.Id == id);
+        }
+
+        private async Task<bool> CreateUpdateResourceGroupMappings(int resourceId, List<string> resourceGroupIds)
+        {
+            try
+            {
+                await DeleteResourceGroupMappings(resourceId);
+
+                //add Resource <> ResourceGroup mappings based on submitted form
+                foreach (var resourceGroupId in resourceGroupIds)
+                {
+                    _context.ResourceResourceGroup.Add(new ResourceResourceGroup()
+                    {
+                        ResourceId = resourceId,
+                        ResourceGroupId = Convert.ToInt32(resourceGroupId)
+                    });
+                }
+                await _context.SaveChangesAsync();
+
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+
+        }
+
+        private async Task<bool> DeleteResourceGroupMappings(int resourceId)
+        {
+            try
+            {
+                _context.ResourceResourceGroup.RemoveRange(_context.ResourceResourceGroup.Where(o => o.ResourceId == resourceId));
+                await _context.SaveChangesAsync();
+
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
     }
 }
