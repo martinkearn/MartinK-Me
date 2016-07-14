@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Net.Http;
 using System.Xml.Linq;
 using MartinKRC2.Models;
-using MartinKRC2.Models.ArticlesViewModels;
+using MartinKRC2.ViewModels.ArticlesViewModels;
 using System.Text.Encodings.Web;
 
 namespace MartinKRC2.Controllers
@@ -17,6 +17,7 @@ namespace MartinKRC2.Controllers
         public async Task<IActionResult> Index()
         {
             var articles = new List<FeedItem>();
+            //TO DO: This url needs to be an app setting
             var feedUrl = "https://blogs.msdn.microsoft.com/martinkearn/feed/";
             using (var client = new HttpClient())
             {

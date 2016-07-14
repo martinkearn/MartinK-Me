@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 
-namespace MartinKRC2.Models.ManageViewModels
+namespace MartinKRC2.ViewModels.ManageViewModels
 {
     public class IndexViewModel
     {

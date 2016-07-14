@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using MartinKRC2.Models;
-using MartinKRC2.Models.ManageViewModels;
+using MartinKRC2.ViewModels.ManageViewModels;
 using MartinKRC2.Services;
 
 namespace MartinKRC2.Controllers

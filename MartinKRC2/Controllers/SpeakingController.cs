@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using MartinKRC2.Data;
-using MartinKRC2.Models.SpeakingViewModels;
+using MartinKRC2.ViewModels.SpeakingViewModels;
 using Microsoft.EntityFrameworkCore;
 
 namespace MartinKRC2.Controllers

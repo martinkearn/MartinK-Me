@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Logging;
 using MartinKRC2.Models;
-using MartinKRC2.Models.AccountViewModels;
+using MartinKRC2.ViewModels.AccountViewModels;
 using MartinKRC2.Services;
 
 namespace MartinKRC2.Controllers

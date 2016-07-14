@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace MartinKRC2.Models.SpeakingViewModels
+namespace MartinKRC2.ViewModels.SpeakingViewModels
 {
     public class TalkViewModel
     {

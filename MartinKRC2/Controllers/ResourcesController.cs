@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MartinKRC2.Data;
 using MartinKRC2.Models;
-using MartinKRC2.Models.ResourcesViewModels;
+using MartinKRC2.ViewModels.ResourcesViewModels;
 
 namespace MartinKRC2.Controllers
 {
