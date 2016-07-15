@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MartinKRC2.Data;
 using MartinKRC2.Models;
+using MartinKRC2.ViewModels.ResourceGroupsViewModels;
 
 namespace MartinKRC2.Controllers
 {
@@ -55,12 +56,18 @@ namespace MartinKRC2.Controllers
                 return NotFound();
             }
 
-            var resourceGroup = await _context.ResourceGroup.SingleOrDefaultAsync(m => m.Id == id);
+            var resourceGroup = await _context.ResourceGroup.Include(o => o.ResourceResourceGroups).SingleOrDefaultAsync(m => m.Id == id);
             if (resourceGroup == null)
             {
                 return NotFound();
             }
-            return View(resourceGroup);
+
+            var vm = new EditViewModel()
+            {
+                ResourceGroup = resourceGroup
+            };
+
+            return View(vm);
         }
 
         // POST: ResourceGroups/Edit/5
