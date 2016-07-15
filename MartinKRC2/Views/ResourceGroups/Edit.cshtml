@@ -75,11 +75,28 @@
                                 </div>
                             </form>
 
+                            <hr />
+
                             <div>
                                 <a asp-action="Index">Back to List</a>
                             </div>
                         </div>
                         <div role="tabpanel" class="tab-pane" id="resources">
+                            @if (Model.Resources.Count() <= 0)
+                            {
+                                <p>There are no Resources in the Resource Group. <a asp-action="Create" asp-controller="Resources">Create one</a>.</p>
+                            }
+                            else
+                            {
+                                @foreach (var item in Model.Resources)
+                                {
+                                    <i class="fa @item.FAIconClass" aria-hidden="true"></i>
+                                    <a asp-action="Edit" asp-controller="Resources" asp-route-id="@item.Id">@Html.DisplayFor(modelItem => item.Title)</a>
+                                    <br />
+                                }
+                            }
+
+                            <hr />
 
                             <div>
                                 <a asp-action="Index">Back to List</a>

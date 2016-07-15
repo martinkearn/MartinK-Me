@@ -62,9 +62,21 @@ namespace MartinKRC2.Controllers
                 return NotFound();
             }
 
+            //get Resource <> Resource Group mappings for this Resource
+            var resourcesResourceGroupMappings = await _context.ResourceResourceGroup
+                .Include(o => o.Resource)
+                .Where(o => o.ResourceGroupId == id)
+                .ToListAsync();
+            var resources = new List<Resource>();
+            foreach (var rrg in resourcesResourceGroupMappings)
+            {
+                resources.Add(rrg.Resource);
+            }
+
             var vm = new EditViewModel()
             {
-                ResourceGroup = resourceGroup
+                ResourceGroup = resourceGroup,
+                Resources = resources
             };
 
             return View(vm);
