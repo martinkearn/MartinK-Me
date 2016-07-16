@@ -36,9 +36,16 @@ namespace MartinKRC2.Controllers
                 resourceGroups.Add(new SelectListItem() { Text = item.Title, Value = item.Id.ToString() });
             }
 
+            var talks = new List<SelectListItem>();
+            foreach (var item in await _context.Talk.ToListAsync())
+            {
+                talks.Add(new SelectListItem() { Text = item.Title, Value = item.Id.ToString() });
+            }
+
             var vm = new CreateViewModel() {
                 Resource = new Resource(),
-                ResourceGroups = resourceGroups
+                ResourceGroups = resourceGroups,
+                Talks = talks
             };
 
             return View(vm);
@@ -58,6 +65,9 @@ namespace MartinKRC2.Controllers
 
                 //update Resource Groups
                 await CreateUpdateResourceGroupMappings(resource.Id, Request.Form["ResourceGroupIds"].ToList());
+
+                //update Talks
+                await CreateUpdateTalkMappings(resource.Id, Request.Form["TalkIds"].ToList());
 
                 return RedirectToAction("Index");
             }
@@ -79,7 +89,7 @@ namespace MartinKRC2.Controllers
             }
 
             //get Resource <> Resource Group mappings for this Resource
-            var selectedResourceGroups = await _context.ResourceResourceGroup.Where(o => o.ResourceId == resource.Id).ToListAsync();
+            var selectedResourceGroups = await _context.ResourceResourceGroup.Where(o => o.ResourceId == id).ToListAsync();
 
             var resourceGroups = new List<SelectListItem>();
             foreach (var item in await _context.ResourceGroup.ToListAsync())
@@ -97,10 +107,30 @@ namespace MartinKRC2.Controllers
                 resourceGroups.Add(selectListItem);
             }
 
+            //get Resource <> Talk mappings for this Resource
+            var selectedTalks = await _context.ResourceTalk.Where(o => o.ResourceId == id).ToListAsync();
+
+            var talks = new List<SelectListItem>();
+            foreach (var item in await _context.Talk.ToListAsync())
+            {
+                //figure out if this Talk is selected for this Resource
+                var isSelected = (selectedTalks.Where(o => o.TalkId == item.Id).Count() > 0);
+
+                //construct and add Select List Item
+                var selectListItem = new SelectListItem()
+                {
+                    Text = item.Title,
+                    Value = item.Id.ToString(),
+                    Selected = isSelected
+                };
+                talks.Add(selectListItem);
+            }
+
             var vm = new EditViewModel()
             {
                 Resource = resource,
-                ResourceGroups = resourceGroups
+                ResourceGroups = resourceGroups,
+                Talks = talks
             };
 
             return View(vm);
@@ -128,6 +158,9 @@ namespace MartinKRC2.Controllers
 
                     //update Resource Groups
                     await CreateUpdateResourceGroupMappings(id, Request.Form["ResourceGroupIds"].ToList());
+
+                    //update Talks
+                    await CreateUpdateTalkMappings(id, Request.Form["TalkIds"].ToList());
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -167,8 +200,11 @@ namespace MartinKRC2.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            //delete Resource <> Resource Group mappings first
+            //delete Resource <> Resource Group mappings
             await DeleteResourceGroupMappings(id);
+
+            //delete Resource <> Talk mappings
+            await DeleteTalkMappings(id);
 
             //delete Resource
             var resource = await _context.Resource.SingleOrDefaultAsync(m => m.Id == id);
@@ -206,7 +242,6 @@ namespace MartinKRC2.Controllers
             {
                 return false;
             }
-
         }
 
         private async Task<bool> DeleteResourceGroupMappings(int resourceId)
@@ -215,7 +250,45 @@ namespace MartinKRC2.Controllers
             {
                 _context.ResourceResourceGroup.RemoveRange(_context.ResourceResourceGroup.Where(o => o.ResourceId == resourceId));
                 await _context.SaveChangesAsync();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
 
+        private async Task<bool> CreateUpdateTalkMappings(int resourceId, List<string> talkIds)
+        {
+            try
+            {
+                await DeleteTalkMappings(resourceId);
+
+                //add Resource <> Talk mappings based on submitted form
+                foreach (var talkId in talkIds)
+                {
+                    _context.ResourceTalk.Add(new ResourceTalk()
+                    {
+                        ResourceId = resourceId,
+                        TalkId = Convert.ToInt32(talkId)
+                    });
+                }
+                await _context.SaveChangesAsync();
+
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        private async Task<bool> DeleteTalkMappings(int resourceId)
+        {
+            try
+            {
+                _context.ResourceTalk.RemoveRange(_context.ResourceTalk.Where(o => o.ResourceId == resourceId));
+                await _context.SaveChangesAsync();
                 return true;
             }
             catch

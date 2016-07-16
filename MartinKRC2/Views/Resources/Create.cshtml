@@ -40,13 +40,6 @@
                                 <span asp-validation-for="Resource.FAIconClass" class="text-danger" />
                             </div>
                         </div>
-                        @*<div class="form-group">
-                            <label asp-for="Resource.ResourceGroupId" class="col-md-2 control-label"></label>
-                            <div class="col-md-10">
-                                <select asp-for="Resource.ResourceGroupId" asp-items="@Model.ResourceGroups" class="form-control"></select>
-                                <span asp-validation-for="Resource.ResourceGroupId" class="text-danger" />
-                            </div>
-                        </div>*@
                         <div class="form-group">
                             <label asp-for="Resource.ShortUrl" class="col-md-2 control-label"></label>
                             <div class="col-md-10">
@@ -76,6 +69,17 @@
                                 {
                                     <input type="checkbox" id="@rg.Value" name="ResourceGroupIds" value="@rg.Value" />
                                     <small><label for="@rg.Value">@rg.Text</label></small>
+                                    <br />
+                                }
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-2">Talks</label>
+                            <div class="col-md-10">
+                                @foreach (var t in Model.Talks)
+                                {
+                                    <input type="checkbox" id="@t.Value" name="TalkIds" value="@t.Value" />
+                                    <small><label for="@t.Value">@t.Text</label></small>
                                     <br />
                                 }
                             </div>

@@ -12,5 +12,7 @@ namespace MartinKRC2.ViewModels.ResourcesViewModels
         public Resource Resource { get; set; }
 
         public IEnumerable<SelectListItem> ResourceGroups { get; set; }
+
+        public IEnumerable<SelectListItem> Talks { get; set; }
     }
 }
