@@ -21,5 +21,7 @@ namespace MartinKRC2.Models
         public string Audience { get; set; }
 
         public string Time { get; set; }
+
+        public virtual ICollection<ResourceTalk> ResourceTalks { get; set; }
     }
 }

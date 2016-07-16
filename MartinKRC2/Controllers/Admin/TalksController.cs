@@ -25,23 +25,6 @@ namespace MartinKRC2.Controllers
             return View(await _context.Talk.ToListAsync());
         }
 
-        // GET: Talks/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var talk = await _context.Talk.SingleOrDefaultAsync(m => m.Id == id);
-            if (talk == null)
-            {
-                return NotFound();
-            }
-
-            return View(talk);
-        }
-
         // GET: Talks/Create
         public IActionResult Create()
         {
