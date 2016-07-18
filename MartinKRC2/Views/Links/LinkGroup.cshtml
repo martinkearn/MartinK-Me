@@ -4,9 +4,40 @@
     ViewData["Title"] = Model.ResourceGroup.Title;
 }
 
-<div class="jumbotron jumbotron-speaking">
+<div class="jumbotron jumbotron-resources">
     <div class="container">
         <h1>@Model.ResourceGroup.Title</h1>
+        <p>A set of links you might find useful.</p>
+    </div>
+</div>
+
+<div class="container-fluid ">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <p class="">@Model.ResourceGroup.Description</p>
+
+                    @if (Model.Resources.Count() <= 0)
+                    {
+                        <p>There are no links in the Link Group, <a asp-controller="Links" asp-action="Index">See other link groups</a></p>
+                    }
+                    else
+                    {
+                        <ul class="list-unstyled">
+                            @foreach (var item in Model.Resources)
+                            {
+                                <li>
+                                    <i class="fa @item.FAIconClass" aria-hidden="true"></i>
+                                    <a href="@item.TargetUrl">@item.Title</a> (<a href="http://martink.me/@item.ShortUrl">Short Link</a>)
+                                </li>
+                            }
+                        </ul>
+                    }
+            </div>
+            <div class="col-md-6">
+                <img src="@Model.ResourceGroup.ImageUrl" class="img-responsive hidden-xs" alt="A picture of @Model.ResourceGroup.Title">
+            </div>
+        </div>
     </div>
 </div>
 
