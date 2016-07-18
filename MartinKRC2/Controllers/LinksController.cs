@@ -21,7 +21,6 @@ namespace MartinKRC2.Controllers
         public async Task<IActionResult> Index()
         {
             var resourceGroups = await _context.ResourceGroup
-                //.Include(o => o.Resources)
                 .Where(o => o.VisibleOnSite == true)
                 .ToListAsync();
 
