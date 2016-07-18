@@ -21,6 +21,8 @@ namespace MartinKRC2.Models
 
         public bool VisibleOnSite { get; set; }
 
+        public string Url { get; set; }
+
         public virtual ICollection<ResourceResourceGroup> ResourceResourceGroups { get; set; }
     }
 }
