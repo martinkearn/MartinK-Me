@@ -1,0 +1,23 @@
+﻿@model MartinKRC2.ViewModels.LinksViewModels.LinkGroupViewModel
+
+@{
+    ViewData["Title"] = Model.ResourceGroup.Title;
+}
+
+<div class="jumbotron jumbotron-speaking">
+    <div class="container">
+        <h1>@Model.ResourceGroup.Title</h1>
+    </div>
+</div>
+
+
+<div class="container-fluid ">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <a asp-controller="Links" asp-action="Index" class="btn btn-primary" ><i class="fa fa-angle-double-left" aria-hidden="true"></i> See all links</a>
+            </div>
+        </div>
+    </div>
+</div>
+

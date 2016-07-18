@@ -97,6 +97,11 @@ namespace MartinKRC2
                     new { controller = "Speaking", action = "Talk" });
 
                 routes.MapRoute(
+                    "linkgroup",
+                    "links/{linkgroup}",
+                    new { controller = "Links", action = "LinkGroup" });
+
+                routes.MapRoute(
                     "redirect",
                     "{tagLabel}",
                     new { controller = "Redirect", action = "Index" });
