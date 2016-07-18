@@ -62,7 +62,7 @@ namespace MartinKRC2.Controllers
                 return NotFound();
             }
 
-            //get Resource <> Resource Group mappings for this Resource
+            //get Resource <> Resource Group mappings for this Resource Group
             var resourcesResourceGroupMappings = await _context.ResourceResourceGroup
                 .Include(o => o.Resource)
                 .Where(o => o.ResourceGroupId == id)

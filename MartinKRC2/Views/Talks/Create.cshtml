@@ -20,6 +20,13 @@
                         <hr />
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                         <div class="form-group">
+                            <label asp-for="Title" class="col-md-2 control-label"></label>
+                            <div class="col-md-10">
+                                <input asp-for="Title" class="form-control" />
+                                <span asp-validation-for="Title" class="text-danger" />
+                            </div>
+                        </div>
+                        <div class="form-group">
                             <label asp-for="Audience" class="col-md-2 control-label"></label>
                             <div class="col-md-10">
                                 <input asp-for="Audience" class="form-control" />
@@ -45,13 +52,6 @@
                             <div class="col-md-10">
                                 <input asp-for="Time" class="form-control" />
                                 <span asp-validation-for="Time" class="text-danger" />
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label asp-for="Title" class="col-md-2 control-label"></label>
-                            <div class="col-md-10">
-                                <input asp-for="Title" class="form-control" />
-                                <span asp-validation-for="Title" class="text-danger" />
                             </div>
                         </div>
                         <div class="form-group">

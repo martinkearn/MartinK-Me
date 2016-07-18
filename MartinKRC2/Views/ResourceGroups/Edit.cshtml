@@ -75,11 +75,6 @@
                                 </div>
                             </form>
 
-                            <hr />
-
-                            <div>
-                                <a asp-action="Index">Back to List</a>
-                            </div>
                         </div>
                         <div role="tabpanel" class="tab-pane" id="resources">
                             @if (Model.Resources.Count() <= 0)
@@ -96,16 +91,15 @@
                                 }
                             }
 
-                            <hr />
-
-                            <div>
-                                <a asp-action="Index">Back to List</a>
-                            </div>
                         </div>
                     </div>
                 </div>
 
+                <hr />
 
+                <div>
+                    <a asp-action="Index">Back to List</a>
+                </div>
 
             </div>
         </div>
