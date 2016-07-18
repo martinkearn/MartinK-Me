@@ -1,12 +1,12 @@
 ﻿@model MartinKRC2.ViewModels.SpeakingViewModels.TalkViewModel
 
 @{
-    ViewData["Title"] = Model.ThisTalk.Title;
+    ViewData["Title"] = Model.Talk.Title;
 }
 
 <div class="jumbotron jumbotron-speaking">
     <div class="container">
-        <h1>@Model.ThisTalk.Title</h1>
+        <h1>@Model.Talk.Title</h1>
         <p>This is one of my talks.</p>
         <p>I can pretty much just turn up and deliver this with very little notice.</p>
     </div>
@@ -17,7 +17,7 @@
         <div class="row">
             <div class="col-md-12">
                 <h2>Talk Title</h2>
-                <p>@Model.ThisTalk.Title</p>
+                <p>@Model.Talk.Title</p>
             </div>
         </div>
     </div>
@@ -28,7 +28,7 @@
         <div class="row">
             <div class="col-md-12">
                 <h2>Talk Description</h2>
-                <p>@Model.ThisTalk.Description</p>
+                <p>@Model.Talk.Description</p>
             </div>
         </div>
     </div>
@@ -39,7 +39,7 @@
         <div class="row">
             <div class="col-md-12">
                 <h2>Suitable Audience</h2>
-                <p>@Model.ThisTalk.Audience</p>
+                <p>@Model.Talk.Audience</p>
             </div>
         </div>
     </div>
@@ -50,7 +50,7 @@
         <div class="row">
             <div class="col-md-12">
                 <h2>Technologies Covered</h2>
-                <p>@Model.ThisTalk.Technologies</p>
+                <p>@Model.Talk.Technologies</p>
             </div>
         </div>
     </div>
@@ -62,11 +62,34 @@
             <div class="col-md-12">
                 <h2>Typical Time Range</h2>
                 <p>This is just a typical time range, most talks can be adapted to suit any time frame so please ask if you need something different</p>
-                <p>@Model.ThisTalk.Time</p>
+                <p>@Model.Talk.Time</p>
             </div>
         </div>
     </div>
 </div>
+
+@if (Model.Resources.Count() > 0)
+{
+<div class="container-fluid ">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h2>Associated Links</h2>
+                <p>These are links to articles, GitHub repos, videos, slides etc which are associated with this talk.</p>
+                <ul>
+                    @foreach (var r in Model.Resources)
+                    {
+                        <li class="list-unstyled">
+                            <i class="fa fa-lg @r.FAIconClass" aria-hidden="true"></i>
+                            <a href="@r.TargetUrl">@r.Title</a>
+                        </li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+}
 
 <div class="container-fluid ">
     <div class="container">

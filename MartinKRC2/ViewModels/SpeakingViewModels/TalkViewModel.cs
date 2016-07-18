@@ -8,6 +8,8 @@ namespace MartinKRC2.ViewModels.SpeakingViewModels
 {
     public class TalkViewModel
     {
-        public Talk ThisTalk { get; set; }
+        public Talk Talk { get; set; }
+
+        public IEnumerable<Resource> Resources { get; set; }
     }
 }

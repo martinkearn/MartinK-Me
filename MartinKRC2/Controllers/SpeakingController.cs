@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using MartinKRC2.Data;
 using MartinKRC2.ViewModels.SpeakingViewModels;
 using Microsoft.EntityFrameworkCore;
+using MartinKRC2.Models;
 
 namespace MartinKRC2.Controllers
 {
@@ -34,9 +35,21 @@ namespace MartinKRC2.Controllers
         {
             var thisTalk = await _context.Talk.Where(o => o.Url.ToLower() == talk).FirstOrDefaultAsync();
 
+            //get Resource <> Talk mappings for this Talk
+            var resourcesTalkMappings = await _context.ResourceTalk
+                .Include(o => o.Resource)
+                .Where(o => o.TalkId == thisTalk.Id)
+                .ToListAsync();
+            var resources = new List<Resource>();
+            foreach (var rt in resourcesTalkMappings)
+            {
+                resources.Add(rt.Resource);
+            }
+
             var vm = new TalkViewModel()
             {
-                ThisTalk = thisTalk
+                Talk = thisTalk,
+                Resources = resources
             };
 
             return View(vm);
