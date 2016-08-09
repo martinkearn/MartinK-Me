@@ -1,0 +1,154 @@
+﻿html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    padding-top: 50px;
+    font-family: 'Lato', sans-serif;
+    font-size: 14pt;
+    background-color: lightgray;
+    margin-bottom: 110px;
+}
+
+a {
+    color: #333;
+}
+
+    a:hover {
+        text-decoration: underline;
+        color: #333;
+    }
+
+.btn {
+    border-radius: 0px;
+    border: 0px;
+}
+
+h4 {
+    font-size: 16pt;
+}
+
+.btn:hover, .btn:focus {
+    background-color: darkorange;
+    color: white;
+}
+
+.container-fluid li {
+    margin-bottom: 10px;
+}
+
+.jumbotron {
+    color: #FE940D;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.4)), url('../images/banner-home.jpg');
+    background-position: center center;
+    margin-bottom: 0px;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+    .jumbotron h1 {
+        font-weight: 900;
+    }
+
+    .jumbotron p {
+        font-weight: 700;
+        font-size: 2rem;
+    }
+
+.jumbotron-speaking {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.1)), url('../images/banner-speaking.jpg');
+}
+
+.jumbotron-resources {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.6)), url('../images/banner-resources.jpg');
+}
+
+.jumbotron-articles {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.3)), url('../images/banner-blog.jpg');
+}
+
+.navbar-inverse .navbar-nav > li > a:focus, .navbar-inverse .navbar-nav > li > a:hover {
+    color: darkorange;
+}
+
+.navbar > .container .navbar-brand, .navbar > .container-fluid .navbar-brand {
+    text-decoration: none;
+}
+
+.navbar-inverse .navbar-nav > li > a {
+    text-decoration: none;
+}
+
+#home-intro {
+    font-size: 18pt;
+}
+
+.container-fluid {
+    margin-top: 0px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.green-background {
+    background-color: #3AEAC8;
+}
+
+.blue-background {
+    background-color: #0DABFE;
+}
+
+.lightblue-background {
+    background-color: #00D4E7;
+}
+
+.teal-background {
+    background-color: #008E9A;
+}
+
+.copper-background {
+    background-color: #CB760A;
+}
+
+.mustard-background {
+    background-color: #CBA31F;
+}
+
+.darkblue-background {
+    background-color: #0074B1;
+}
+
+.darkorange-background {
+    background-color: #E76000;
+}
+
+.violet-background {
+    background-color: #C119FF;
+}
+
+.sage-background {
+    background-color: #6C9B00;
+}
+
+.orange-background {
+    background-color: #FFA027;
+}
+
+footer {
+    background-color: #808080;
+    margin-bottom: 0px;
+    padding-top: 30px;
+    padding-bottom: 30px;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 110px;
+}
+
+.footer-icon {
+    margin-right: 20px;
+}
+
+.profile-photo {
+    max-width: 200px;
+}
