@@ -71,7 +71,10 @@ namespace EvangelistSiteWeb
                 app.UseExceptionHandler("/Home/Error");
             }
 
-            app.UseStaticFiles();
+            app.UseStaticFiles(new StaticFileOptions()
+            {
+                OnPrepareResponse = r => r.Context.Response.Headers.Add("Expires", DateTime.Now.AddDays(7).ToUniversalTime().ToString("r"))
+            });
 
             app.UseIdentity();
 
@@ -82,6 +85,26 @@ namespace EvangelistSiteWeb
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
+
+                routes.MapRoute(
+                    "admin",
+                    "admin",
+                    new { controller = "ResourceGroups", action = "Index" });
+
+                routes.MapRoute(
+                    "talk",
+                    "speaking/{talk}",
+                    new { controller = "Speaking", action = "Talk" });
+
+                routes.MapRoute(
+                    "linkgroup",
+                    "links/{linkgroup}",
+                    new { controller = "Links", action = "LinkGroup" });
+
+                routes.MapRoute(
+                    "redirect",
+                    "{tagLabel}",
+                    new { controller = "Redirect", action = "Index" });
             });
         }
     }
