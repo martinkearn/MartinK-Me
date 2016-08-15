@@ -71,10 +71,13 @@ namespace EvangelistSiteWeb
                 app.UseExceptionHandler("/Home/Error");
             }
 
+
+            //app.UseStaticFiles();
             app.UseStaticFiles(new StaticFileOptions()
             {
                 OnPrepareResponse = r => r.Context.Response.Headers.Add("Expires", DateTime.Now.AddDays(7).ToUniversalTime().ToString("r"))
             });
+
 
             app.UseIdentity();
 
