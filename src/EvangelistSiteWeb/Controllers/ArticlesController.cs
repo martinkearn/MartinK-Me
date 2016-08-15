@@ -9,20 +9,27 @@ using System.Xml.Linq;
 using EvangelistSiteWeb.Models;
 using EvangelistSiteWeb.Models.ArticlesViewModels;
 using System.Text.Encodings.Web;
+using Microsoft.Extensions.Options;
 
 namespace EvangelistSiteWeb.Controllers
 {
     public class ArticlesController : Controller
     {
+        private PersonaliseOptions _options;
+
+        public ArticlesController(IOptions<PersonaliseOptions> options)
+        {
+            _options = options.Value;
+        }
+
         public async Task<IActionResult> Index()
         {
             var articles = new List<FeedItem>();
-            //TO DO: This url needs to be an app setting
-            var feedUrl = "https://blogs.msdn.microsoft.com/martinkearn/feed/";
+
             using (var client = new HttpClient())
             {
-                client.BaseAddress = new Uri(feedUrl);
-                var responseMessage = await client.GetAsync(feedUrl);
+                client.BaseAddress = new Uri(_options.BlogFeed);
+                var responseMessage = await client.GetAsync(_options.BlogFeed);
                 var responseString = await responseMessage.Content.ReadAsStringAsync();
 
                 //extract feed items
@@ -36,7 +43,6 @@ namespace EvangelistSiteWeb.Controllers
                                     Title = item.Elements().First(i => i.Name.LocalName == "title").Value
                                 };
                 articles = feedItems.ToList();
-                //System.Web.HttpUtility.HtmlDecode
             }
 
             var vm = new IndexViewModel()

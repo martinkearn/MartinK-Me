@@ -15,6 +15,7 @@ using EvangelistSiteWeb.Services;
 
 namespace EvangelistSiteWeb
 {
+
     public class Startup
     {
         public Startup(IHostingEnvironment env)
@@ -39,6 +40,10 @@ namespace EvangelistSiteWeb
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddOptions();
+            services.Configure<PersonaliseOptions>(
+                options => Configuration.GetSection("Personalise").Bind(options));
+
             // Add framework services.
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
