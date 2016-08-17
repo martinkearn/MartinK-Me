@@ -1,4 +1,5 @@
-﻿@model EvangelistSiteWeb.Models.LinksViewModels.LinkGroupViewModel
+﻿@inject Microsoft.Extensions.Options.IOptions<PersonaliseOptions> opt
+@model EvangelistSiteWeb.Models.LinksViewModels.LinkGroupViewModel
 
 @{
     ViewData["Title"] = Model.ResourceGroup.Title;
@@ -28,7 +29,7 @@
                             {
                                 <li>
                                     <i class="fa @item.FAIconClass" aria-hidden="true"></i>
-                                    <a href="@item.TargetUrl">@item.Title</a> (<a href="http://martink.me/@item.ShortUrl">Short Link</a>)
+                                    <a href="@item.TargetUrl">@item.Title</a> (<a href="@string.Format("http://{0}/{1}", opt.Value.DomainName, item.ShortUrl)">Short Link</a>)
                                 </li>
                             }
                         </ul>

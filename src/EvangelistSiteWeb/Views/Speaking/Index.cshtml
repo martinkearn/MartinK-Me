@@ -1,4 +1,5 @@
-﻿@model EvangelistSiteWeb.Models.SpeakingViewModels.IndexViewModel
+﻿@inject Microsoft.Extensions.Options.IOptions<PersonaliseOptions> opt
+@model EvangelistSiteWeb.Models.SpeakingViewModels.IndexViewModel
 
 @{
     ViewData["Title"] = "Speaking";
@@ -18,7 +19,7 @@
             <div class="col-md-12">
                 <h2>I'll come to your event</h2>
                 <p>I speak at events such as conferences, meet-ups, user groups, Microsoft events etc.</p>
-                <p>If you want me to come to your event, please <a href="mailto:martin.kearn@microsoft.com?Subject=Enquiry%20from%20Martink.me">email me</a> or <a href="https://twitter.com/MartinKearn">tweet me</a> and we can sort the details.</p>
+                <p>If you want me to come to your event, please <a href="@string.Format("mailto:{0}?Subject=Enquiry%20from%20{1}", opt.Value.Email, opt.Value.DomainName)">email me</a> or <a href="@opt.Value.TwitterUrl">tweet me</a> and we can sort the details.</p>
             </div>
         </div>
     </div>
@@ -29,7 +30,7 @@
         <div class="row">
             <div class="col-md-12">
                 <h2>My Talks</h2>
-                <p>I’m happy to speak at pretty much any developer event. Here are a few topics that I’m talking about at the moment and can delivery with hardly any notice, but if you have a specific topic feel free to ask me.</p>
+                <p>I’m happy to speak at pretty much any developer event. Here are a few topics that I’m talking about at the moment and can deliver with hardly any notice, but if you have a specific topic feel free to <a href="@string.Format("mailto:{0}?Subject=Enquiry%20from%20{1}", opt.Value.Email, opt.Value.DomainName)">email me</a> or <a href="@opt.Value.TwitterUrl">tweet me</a>.</p>
                 <ul>
                     @foreach (var talk in Model.Talks)
                     {
@@ -48,27 +49,27 @@
                 <h2>My Bio</h2>
                 <p>Here is my bio in various formats:</p>
                 <ul>
-                    <li><strong>Third Person</strong>: Martin is a technical evangelist for Microsoft based in the UK. In his role, Martin talks with customers, partners, start-ups and anyone who is willing to listen about developing applications on the Microsoft platform. This includes Windows, Office, Microsoft Azure and Web technologies including ASP.net and the Edge browser. Martin has been working with Microsoft development technologies since the late 90's and has been working for Microsoft directly since 2005.</li>
-                    <li><strong>First Person</strong>: I am a technical evangelist for Microsoft based in the UK. In my work, I talk with customers, partners, start-ups and anyone who is willing to listen about developing applications on the Microsoft platform. This includes Windows, Office, Microsoft Azure and Web technologies including ASP.net and the Edge browser. I have been working with Microsoft development technologies since the late 90's and has been working for Microsoft directly since 2005.</li>
-                    <li><strong>Short</strong>: Martin works for Microsoft as an evangelist. He's into Web, AI, Mobile Apps and Cloud.</li>
+                    <li><strong>Third Person</strong>: @opt.Value.ThirdPersonBio</li>
+                    <li><strong>First Person</strong>: @opt.Value.FirstPersonBio</li>
+                    <li><strong>Short</strong>: @opt.Value.ShortBio</li>
                 </ul>
 
                 <p>A few mug shots you can use to advertise your event</p>
                 <div class="row">
                     <div class="col-md-2">
-                        <a href="~/images/MartinKearnProfile1.jpg" download><img src="~/images/MartinKearnProfile1.jpg" class="img-responsive profile-photo" alt="Martin Kearn profile picture 1"></a>
+                        <a href="@opt.Value.Picture1UrlFullSize" download><img src="@opt.Value.Picture1UrlThumbnail" class="img-responsive profile-photo" alt="@opt.Value.Name profile picture 1"></a>
                     </div>
                     <div class="col-md-2">
-                        <a href="~/images/MartinKearnProfile2.jpg" download><img src="~/images/MartinKearnProfile2.jpg" class="img-responsive profile-photo" alt="Martin Kearn profile picture 2"></a>
+                        <a href="@opt.Value.Picture2UrlFullSize" download><img src="@opt.Value.Picture2UrlThumbnail" class="img-responsive profile-photo" alt="@opt.Value.Name profile picture 1"></a>
                     </div>
                     <div class="col-md-2">
-                        <a href="~/images/MartinKearnProfile3.jpg" download><img src="~/images/MartinKearnProfile3.jpg" class="img-responsive profile-photo" alt="Martin Kearn profile picture 3"></a>
+                        <a href="@opt.Value.Picture3UrlFullSize" download><img src="@opt.Value.Picture3UrlThumbnail" class="img-responsive profile-photo" alt="@opt.Value.Name profile picture 1"></a>
                     </div>
                     <div class="col-md-2">
-                        <a href="~/images/MartinKearnProfile4.jpg" download><img src="~/images/MartinKearnProfile4.jpg" class="img-responsive profile-photo" alt="Martin Kearn profile picture 4"></a>
+                        <a href="@opt.Value.Picture4UrlFullSize" download><img src="@opt.Value.Picture4UrlThumbnail" class="img-responsive profile-photo" alt="@opt.Value.Name profile picture 1"></a>
                     </div>
                     <div class="col-md-2">
-                        <a href="~/images/MartinKearnProfile5.jpg" download><img src="~/images/MartinKearnProfile5.jpg" class="img-responsive profile-photo" alt="Martin Kearn profile picture 5"></a>
+                        <a href="@opt.Value.Picture5UrlFullSize" download><img src="@opt.Value.Picture5UrlThumbnail" class="img-responsive profile-photo" alt="@opt.Value.Name profile picture 1"></a>
                     </div>
                 </div>
             </div>
