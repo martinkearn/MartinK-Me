@@ -5,6 +5,7 @@
 
 body {
     padding-top: 50px;
+    /*font-family: 'Segoe UI Webfont', 'Segoe UI', 'Lato', sans-serif;*/
     font-family: 'Lato', sans-serif;
     font-size: 14pt;
     background-color: lightgray;
@@ -24,6 +25,19 @@ a {
     border-radius: 0px;
     border: 0px;
 }
+
+/*h1 {
+    font-family: 'Passion One', cursive;
+    font-weight: normal;
+}*/
+
+/*h1 {
+    font-family: 'EurostileLTStd-BoldEx2', 'EurostileLTStd-BoldCn', 'Lato', sans-serif;
+}
+
+h2, h3, h4, h5, h6 {
+    font-family: 'EurostileLTStd-BoldCn', 'Lato', sans-serif;
+}*/
 
 h4 {
     font-size: 16pt;
@@ -71,6 +85,10 @@ h4 {
 .navbar-inverse .navbar-nav > li > a:focus, .navbar-inverse .navbar-nav > li > a:hover {
     color: darkorange;
 }
+
+/*.navbar {
+        font-family: 'EurostileLTStd-BoldCn', 'Lato', sans-serif;
+}*/
 
 .navbar > .container .navbar-brand, .navbar > .container-fluid .navbar-brand {
     text-decoration: none;

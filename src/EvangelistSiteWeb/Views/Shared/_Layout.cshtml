@@ -18,8 +18,11 @@
     <meta name="msapplication-config" content="/images/favicon/browserconfig.xml">
     <meta name="theme-color" content="#ffffff">
 
-    <!--Fonts. Choose your own at https://fonts.google.com and edit the 'body' rule in site.css to reference it -->
+    <!--Fonts. Choose your own at https://fonts.google.com and edit the 'body' rule in site.css to reference it. Do not use the Eurostile fonts. They are personally licensed for use only by Martin Kearn -->
+    @*<link href="https://fonts.googleapis.com/css?family=Passion+One" rel="stylesheet">*@
     <link href="~/css/googlefonts-lato-400-700-900.min.css" rel="stylesheet" />
+    @*<link href="~/css/EurostileLTStd-BoldEx2.css" rel="stylesheet" />
+    <link href="~/css/EurostileLTStd-BoldCn.css" rel="stylesheet" />*@
 
     <!--CSS-->
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
@@ -38,7 +41,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a asp-controller="Home" asp-action="Index" class="navbar-brand">@opt.Value.DomainName</a>
+                <a asp-controller="Home" asp-action="Index" class="navbar-brand">@opt.Value.DomainName.ToUpper()</a>
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
