@@ -2,7 +2,7 @@
 A launchpad for everything related to Martin Kearn. Published at [MartinK.me](http://MartinK.me)
 
 ## Customisation
-This site is setup to be customisation by you. If you want to do this, first fork it to your own account and then start mdifying your version.
+This site is setup to be customisation by you. If you want to do this, first fork it to your own account and then start modifying your version.
 
 Here are some of the things you shoudl consider doing after you have your fork:
 * Update `AppSettings.json` with your details and all the personal stuff will be updated throughout the site
