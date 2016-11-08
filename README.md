@@ -1,5 +1,7 @@
-# MartinK.me
-A launchpad for everything related to Martin Kearn. Published at [MartinK.me](http://MartinK.me)
+# Evamgelist Site
+A template website written in ASP.net Core 1.0 that can be used to create a personal website for evangelists that can be used to promote articles, links, resources and talks. 
+
+My own personal exmaple is published at [MartinK.me](http://MartinK.me)
 
 ## Customisation
 This site is setup to be customisation by you. If you want to do this, first fork it to your own account and then start modifying your version.
