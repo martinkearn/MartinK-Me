@@ -1,7 +1,7 @@
-# Evamgelist Site
-A template website written in ASP.net Core 1.0 that can be used to create a personal website for evangelists that can be used to promote articles, links, resources and talks. 
+# Technical Evangelist Site
+A template website written in ASP.net Core 1.0 that can be used to create a personal website for technical evangelists that can be used to promote articles, links, resources and talks. 
 
-My own personal exmaple is published at [MartinK.me](http://MartinK.me)
+My own personal example is published at [MartinK.me](http://MartinK.me)
 
 ## Customisation
 This site is setup to be customisation by you. If you want to do this, first fork it to your own account and then start modifying your version.
