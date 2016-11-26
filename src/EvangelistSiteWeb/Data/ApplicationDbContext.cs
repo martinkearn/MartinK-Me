@@ -62,5 +62,7 @@ namespace EvangelistSiteWeb.Data
         public DbSet<ResourceResourceGroup> ResourceResourceGroup { get; set; }
 
         public DbSet<ResourceTalk> ResourceTalk { get; set; }
+
+        public DbSet<Event> Event { get; set; }
     }
 }
