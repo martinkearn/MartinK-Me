@@ -21,8 +21,8 @@ a {
     }
 
 .btn {
-    border-radius: 0px;
-    border: 0px;
+    border-radius: 0;
+    border: 0;
 }
 
 h4 {
@@ -42,7 +42,7 @@ h4 {
     color: #FE940D;
     background-image: linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.4)), url('../images/banner-home.jpg');
     background-position: center center;
-    margin-bottom: 0px;
+    margin-bottom: 0;
     background-size: cover;
     background-repeat: no-repeat;
 }
@@ -57,6 +57,10 @@ h4 {
     }
 
 .jumbotron-speaking {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.1)), url('../images/banner-speaking.jpg');
+}
+
+.jumbotron-calendar {
     background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.1)), url('../images/banner-speaking.jpg');
 }
 
@@ -85,7 +89,7 @@ h4 {
 }
 
 .container-fluid {
-    margin-top: 0px;
+    margin-top: 0;
     padding-top: 20px;
     padding-bottom: 20px;
 }
@@ -134,9 +138,73 @@ h4 {
     background-color: #FFA027;
 }
 
+.sequence-background-1 {
+    background-color: #3AEAC8;
+}
+
+.sequence-background-2 {
+    background-color: #00D4E7;
+}
+
+.sequence-background-3 {
+    background-color: #0DABFE;
+}
+
+.sequence-background-4 {
+    background-color: #0074B1;
+}
+
+.sequence-background-5 {
+    background-color: #3AEAC8;
+}
+
+.sequence-background-6 {
+    background-color: #00D4E7;
+}
+
+.sequence-background-7 {
+    background-color: #0DABFE;
+}
+
+.sequence-background-8 {
+    background-color: #0074B1;
+}
+
+.sequence-background-9 {
+    background-color: #3AEAC8;
+}
+
+.sequence-background-10 {
+    background-color: #00D4E7;
+}
+
+.sequence-background-11 {
+    background-color: #0DABFE;
+}
+
+.sequence-background-12 {
+    background-color: #0074B1;
+}
+
+.sequence-background-13 {
+    background-color: #3AEAC8;
+}
+
+.sequence-background-14 {
+    background-color: #00D4E7;
+}
+
+.sequence-background-15 {
+    background-color: #0DABFE;
+}
+
+.sequence-background-16 {
+    background-color: #0074B1;
+}
+
 footer {
     background-color: #808080;
-    margin-bottom: 0px;
+    margin-bottom: 0;
     padding-top: 30px;
     padding-bottom: 30px;
     position: absolute;

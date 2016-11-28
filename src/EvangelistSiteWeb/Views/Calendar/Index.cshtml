@@ -1,0 +1,36 @@
+@inject Microsoft.Extensions.Options.IOptions<PersonaliseOptions> opt
+@model EvangelistSiteWeb.Models.CalendarViewModels.IndexViewModel
+
+@{
+    ViewData["Title"] = "Calendar";
+}
+
+<div class="jumbotron jumbotron-calendar">
+    <div class="container">
+        <h1>@ViewData["Title"]</h1>
+        <p>I try to get to lots of events.</p>
+        <p>These are all the events that I'll be at in the future.</p>
+    </div>
+</div>
+
+@{ 
+    var backgroundCount = 1;
+}
+
+
+@foreach (var e in Model.Events)
+{
+    <div class="container-fluid sequence-background-@backgroundCount">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <ul>@e.Talk</ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    {
+        backgroundCount = backgroundCount + 1;
+    }
+
+}
