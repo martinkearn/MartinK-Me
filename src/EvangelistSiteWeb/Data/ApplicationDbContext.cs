@@ -51,6 +51,20 @@ namespace EvangelistSiteWeb.Data
                 .HasOne(r => r.Resource)
                 .WithMany(rt => rt.ResourceTalks)
                 .HasForeignKey(r => r.ResourceId);
+
+            //Event <> Talk many:many mapping table
+            builder.Entity<EventTalk>()
+                .HasKey(t => new { t.TalkId, t.EventId });
+
+            builder.Entity<EventTalk>()
+                .HasOne(t => t.Talk)
+                .WithMany(r => r.EventTalks)
+                .HasForeignKey(t => t.TalkId);
+
+            builder.Entity<EventTalk>()
+                .HasOne(r => r.Event)
+                .WithMany(rt => rt.EventTalks)
+                .HasForeignKey(r => r.EventId);
         }
 
         public DbSet<ResourceGroup> ResourceGroup { get; set; }
@@ -64,5 +78,7 @@ namespace EvangelistSiteWeb.Data
         public DbSet<ResourceTalk> ResourceTalk { get; set; }
 
         public DbSet<Event> Event { get; set; }
+
+        public DbSet<EventTalk> EventTalk { get; set; }
     }
 }

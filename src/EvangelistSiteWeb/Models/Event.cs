@@ -11,10 +11,10 @@ namespace EvangelistSiteWeb.Models
         [Key]
         public int Id { get; set; }
         public string Conference { get; set; }
-        public string Talk { get; set; }
         public string ExternalUrl { get; set; }
-        public string InternalUrl { get; set; }
 
         public DateTime Date { get; set; }
+
+        public virtual ICollection<EventTalk> EventTalks { get; set; }
     }
 }

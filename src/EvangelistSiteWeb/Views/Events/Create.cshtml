@@ -1,4 +1,4 @@
-@model EvangelistSiteWeb.Models.Event
+@model EvangelistSiteWeb.Models.EventsViewModels.CreateViewModel
 
 @{
     Layout = "_LayoutAdmin";
@@ -7,57 +7,67 @@
     ViewData["Title"] = "Create";
 }
 
-<h2>Create</h2>
+<div class="container-fluid">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h2>Create</h2>
 
-<form asp-action="Create">
-    <div class="form-horizontal">
-        <h4>Event</h4>
-        <hr />
-        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-        <div class="form-group">
-            <label asp-for="Conference" class="col-md-2 control-label"></label>
-            <div class="col-md-10">
-                <input asp-for="Conference" class="form-control" />
-                <span asp-validation-for="Conference" class="text-danger" />
-            </div>
-        </div>
-        <div class="form-group">
-            <label asp-for="Date" class="col-md-2 control-label"></label>
-            <div class="col-md-10">
-                <input asp-for="Date" class="form-control" />
-                <span asp-validation-for="Date" class="text-danger" />
-            </div>
-        </div>
-        <div class="form-group">
-            <label asp-for="ExternalUrl" class="col-md-2 control-label"></label>
-            <div class="col-md-10">
-                <input asp-for="ExternalUrl" class="form-control" />
-                <span asp-validation-for="ExternalUrl" class="text-danger" />
-            </div>
-        </div>
-        <div class="form-group">
-            <label asp-for="InternalUrl" class="col-md-2 control-label"></label>
-            <div class="col-md-10">
-                <input asp-for="InternalUrl" class="form-control" />
-                <span asp-validation-for="InternalUrl" class="text-danger" />
-            </div>
-        </div>
-        <div class="form-group">
-            <label asp-for="Talk" class="col-md-2 control-label"></label>
-            <div class="col-md-10">
-                <input asp-for="Talk" class="form-control" />
-                <span asp-validation-for="Talk" class="text-danger" />
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <form asp-action="Create">
+                    <div class="form-horizontal">
+                        <h4>Event</h4>
+                        <hr />
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="form-group">
+                            <label asp-for="Ev.Conference" class="col-md-2 control-label"></label>
+                            <div class="col-md-10">
+                                <input asp-for="Ev.Conference" class="form-control" />
+                                <span asp-validation-for="Ev.Conference" class="text-danger" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Ev.Date" class="col-md-2 control-label"></label>
+                            <div class="col-md-10">
+                                <input asp-for="Ev.Date" class="form-control" />
+                                <span asp-validation-for="Ev.Date" class="text-danger" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Ev.ExternalUrl" class="col-md-2 control-label"></label>
+                            <div class="col-md-10">
+                                <input asp-for="Ev.ExternalUrl" class="form-control" />
+                                <span asp-validation-for="Ev.ExternalUrl" class="text-danger" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-2">Talks</label>
+                            <div class="col-md-10">
+                                @foreach (var t in Model.Talks)
+                                {
+                                    <input type="checkbox" id="@t.Value" name="TalkIds" value="@t.Value" />
+                                    <small><label for="@t.Value">@t.Text</label></small>
+                                    <br />
+                                }
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-10">
+                                <input type="submit" value="Create" class="btn btn-default" />
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+                <div>
+                    <a asp-action="Index">Back to List</a>
+                </div>
             </div>
         </div>
     </div>
-</form>
-
-<div>
-    <a asp-action="Index">Back to List</a>
 </div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
 

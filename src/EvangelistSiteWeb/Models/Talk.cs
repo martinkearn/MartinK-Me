@@ -23,5 +23,7 @@ namespace EvangelistSiteWeb.Models
         public string Time { get; set; }
 
         public virtual ICollection<ResourceTalk> ResourceTalks { get; set; }
+
+        public virtual ICollection<EventTalk> EventTalks { get; set; }
     }
 }
