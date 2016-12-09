@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using EvangelistSiteWeb.Data;
 using EvangelistSiteWeb.Models;
+using EvangelistSiteWeb.Models.ConferencesViewModels;
 
 namespace EvangelistSiteWeb.Controllers.Admin
 {
@@ -43,9 +44,21 @@ namespace EvangelistSiteWeb.Controllers.Admin
         }
 
         // GET: Conferences/Create
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
-            return View();
+            var talks = new List<SelectListItem>();
+            foreach (var item in await _context.Talk.ToListAsync())
+            {
+                talks.Add(new SelectListItem() { Text = item.Title, Value = item.Id.ToString() });
+            }
+
+            var vm = new CreateViewModel()
+            {
+                Conference = new Conference(),
+                Talks = talks
+            };
+
+            return View(vm);
         }
 
         // POST: Conferences/Create
@@ -53,12 +66,16 @@ namespace EvangelistSiteWeb.Controllers.Admin
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,ConferenceTitle,Date,ExternalUrl")] Conference conference)
+        public async Task<IActionResult> Create(Conference conference)
         {
             if (ModelState.IsValid)
             {
                 _context.Add(conference);
                 await _context.SaveChangesAsync();
+
+                //update Talks
+                await CreateUpdateTalkMappings(conference.Id, Request.Form["TalkIds"].ToList());
+
                 return RedirectToAction("Index");
             }
             return View(conference);
@@ -146,6 +163,45 @@ namespace EvangelistSiteWeb.Controllers.Admin
         private bool ConferenceExists(int id)
         {
             return _context.Conference.Any(e => e.Id == id);
+        }
+
+        private async Task<bool> CreateUpdateTalkMappings(int conferenceId, List<string> talkIds)
+        {
+            try
+            {
+                await DeleteTalkMappings(conferenceId);
+
+                //add Resource <> Talk mappings based on submitted form
+                foreach (var talkId in talkIds)
+                {
+                    _context.ConferenceTalk.Add(new ConferenceTalk()
+                    {
+                        ConferenceId = conferenceId,
+                        TalkId = Convert.ToInt32(talkId)
+                    });
+                }
+                await _context.SaveChangesAsync();
+
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        private async Task<bool> DeleteTalkMappings(int conferenceId)
+        {
+            try
+            {
+                _context.ConferenceTalk.RemoveRange(_context.ConferenceTalk.Where(o => o.ConferenceId == conferenceId));
+                await _context.SaveChangesAsync();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
     }
 }

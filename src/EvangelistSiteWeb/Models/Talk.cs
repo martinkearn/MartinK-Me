@@ -24,8 +24,6 @@ namespace EvangelistSiteWeb.Models
 
         public virtual ICollection<ResourceTalk> ResourceTalks { get; set; }
 
-        public virtual ICollection<EventTalk> EventTalks { get; set; }
-
         public virtual ICollection<ConferenceTalk> ConferenceTalks { get; set; }
     }
 }

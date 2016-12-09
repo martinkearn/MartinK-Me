@@ -22,13 +22,13 @@ namespace EvangelistSiteWeb.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var events = await _context.Event
+            var conferences = await _context.Conference
                 .Where(o => o.Date > DateTime.Now)
                 .ToListAsync();
 
             var vm = new IndexViewModel()
             {
-                Events = events
+                Conferences = conferences
             };
 
             return View(vm);

@@ -7,6 +7,6 @@ namespace EvangelistSiteWeb.Models.CalendarViewModels
 {
     public class IndexViewModel
     {
-        public List<Event> Events { get; set; }
+        public List<Conference> Conferences { get; set; }
     }
 }
