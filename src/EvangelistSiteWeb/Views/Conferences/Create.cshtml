@@ -29,7 +29,7 @@
                             <label asp-for="Conference.Date" class="col-md-2 control-label"></label>
                             <div class="col-md-10">
                                 <input asp-for="Conference.Date" class="form-control" />
-                                <small>Format: YYYY-MM-DD</small>
+                                <small>Format: YYYY-MM-DD, time is optional</small>
                                 <span asp-validation-for="Conference.Date" class="text-danger" />
                             </div>
                         </div>
@@ -38,6 +38,13 @@
                             <div class="col-md-10">
                                 <input asp-for="Conference.ExternalUrl" class="form-control" />
                                 <span asp-validation-for="Conference.ExternalUrl" class="text-danger" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Conference.City" class="col-md-2 control-label"></label>
+                            <div class="col-md-10">
+                                <input asp-for="Conference.City" class="form-control" />
+                                <span asp-validation-for="Conference.City" class="text-danger" />
                             </div>
                         </div>
                         <div class="form-group">

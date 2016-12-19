@@ -16,6 +16,8 @@ namespace EvangelistSiteWeb.Models
         [DisplayFormat(DataFormatString = "{0:d}")]
         public DateTime Date { get; set; }
 
+        public string City { get; set; }
+
         public virtual ICollection<ConferenceTalk> ConferenceTalks { get; set; }
     }
 }

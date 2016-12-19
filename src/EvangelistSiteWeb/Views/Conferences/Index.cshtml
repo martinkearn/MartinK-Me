@@ -24,6 +24,9 @@
                                 @Html.DisplayNameFor(model => model.ConferenceTitle)
                             </th>
                             <th>
+                                @Html.DisplayNameFor(model => model.City)
+                            </th>
+                            <th>
                                 @Html.DisplayNameFor(model => model.Date)
                             </th>
                             <th></th>
@@ -34,6 +37,9 @@
                         <tr>
                             <td>
                                 @Html.DisplayFor(modelItem => item.ConferenceTitle)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.City)
                             </td>
                             <td>
                                 @Html.DisplayFor(modelItem => item.Date)
