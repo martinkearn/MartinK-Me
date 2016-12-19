@@ -13,6 +13,7 @@ namespace EvangelistSiteWeb.Models
         public string ConferenceTitle { get; set; }
         public string ExternalUrl { get; set; }
 
+        [DisplayFormat(DataFormatString = "{0:d}")]
         public DateTime Date { get; set; }
 
         public virtual ICollection<ConferenceTalk> ConferenceTalks { get; set; }

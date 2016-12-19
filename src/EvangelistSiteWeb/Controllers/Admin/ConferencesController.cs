@@ -26,23 +26,6 @@ namespace EvangelistSiteWeb.Controllers.Admin
             return View(await _context.Conference.ToListAsync());
         }
 
-        // GET: Conferences/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var conference = await _context.Conference.SingleOrDefaultAsync(m => m.Id == id);
-            if (conference == null)
-            {
-                return NotFound();
-            }
-
-            return View(conference);
-        }
-
         // GET: Conferences/Create
         public async Task<IActionResult> Create()
         {
@@ -52,9 +35,12 @@ namespace EvangelistSiteWeb.Controllers.Admin
                 talks.Add(new SelectListItem() { Text = item.Title, Value = item.Id.ToString() });
             }
 
+            var conference = new Conference();
+            conference.Date = DateTime.Now;
+
             var vm = new CreateViewModel()
             {
-                Conference = new Conference(),
+                Conference = conference,
                 Talks = talks
             };
 
@@ -94,7 +80,33 @@ namespace EvangelistSiteWeb.Controllers.Admin
             {
                 return NotFound();
             }
-            return View(conference);
+
+            //get Conference <> Talk mappings for this Conference
+            var selectedTalks = await _context.ConferenceTalk.Where(o => o.ConferenceId == id).ToListAsync();
+
+            var talks = new List<SelectListItem>();
+            foreach (var item in await _context.Talk.ToListAsync())
+            {
+                //figure out if this Talk is selected for this Conference
+                var isSelected = (selectedTalks.Where(o => o.TalkId == item.Id).Count() > 0);
+
+                //construct and add Select List Item
+                var selectListItem = new SelectListItem()
+                {
+                    Text = item.Title,
+                    Value = item.Id.ToString(),
+                    Selected = isSelected
+                };
+                talks.Add(selectListItem);
+            }
+
+            var vm = new EditViewModel()
+            {
+                Conference = conference,
+                Talks = talks
+            };
+
+            return View(vm);
         }
 
         // POST: Conferences/Edit/5
@@ -102,7 +114,7 @@ namespace EvangelistSiteWeb.Controllers.Admin
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,ConferenceTitle,Date,ExternalUrl")] Conference conference)
+        public async Task<IActionResult> Edit(int id, Conference conference)
         {
             if (id != conference.Id)
             {
@@ -113,8 +125,12 @@ namespace EvangelistSiteWeb.Controllers.Admin
             {
                 try
                 {
+                    //update Conference
                     _context.Update(conference);
                     await _context.SaveChangesAsync();
+
+                    //update Talks
+                    await CreateUpdateTalkMappings(id, Request.Form["TalkIds"].ToList());
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -154,9 +170,14 @@ namespace EvangelistSiteWeb.Controllers.Admin
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
+            //delete Resource <> Talk mappings
+            await DeleteTalkMappings(id);
+
+            //delete conference
             var conference = await _context.Conference.SingleOrDefaultAsync(m => m.Id == id);
             _context.Conference.Remove(conference);
             await _context.SaveChangesAsync();
+
             return RedirectToAction("Index");
         }
 
