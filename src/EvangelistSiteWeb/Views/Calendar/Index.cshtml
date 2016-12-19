@@ -18,17 +18,24 @@
 }
 
 
-@foreach (var e in Model.Events)
+@foreach (var e in Model.Conferences)
 {
     <div class="container-fluid sequence-background-@backgroundCount">
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    <ul>@e.Talk</ul>
+                    <h2>@e.ConferenceTitle</h2>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <p>@e.Date.ToString("dd MMMM yyyy"), <a href="/speaking/@e.ConferenceTalks.FirstOrDefault().Talk.Url.ToLower()">@e.ConferenceTalks.FirstOrDefault().Talk.Title</a>, </p>
+                    <a href="@e.ExternalUrl" class="btn btn-default btn-default">Learn more <i class="fa fa-angle-double-right" aria-hidden="false"></i></a>
                 </div>
             </div>
         </div>
     </div>
+
     {
         backgroundCount = backgroundCount + 1;
     }

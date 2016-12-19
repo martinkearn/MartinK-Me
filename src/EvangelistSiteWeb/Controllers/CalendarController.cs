@@ -24,6 +24,9 @@ namespace EvangelistSiteWeb.Controllers
         {
             var conferences = await _context.Conference
                 .Where(o => o.Date > DateTime.Now)
+                .Include(o => o.ConferenceTalks)
+                .ThenInclude(o => o.Talk)
+                .OrderBy(o => o.Date)
                 .ToListAsync();
 
             var vm = new IndexViewModel()
