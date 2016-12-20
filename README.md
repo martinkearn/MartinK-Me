@@ -12,7 +12,7 @@ Here are some of the things you should consider doing after you have your fork:
 * Make sure you use your own database. 
   * Create an Azure SQL database and grab the ADO.net connection string
   * Add the connection string (with your username password in it) as the value of the `DefaultConnection` in `AppSettings.json`
-  * Use the entity framework `add-migration Initial` and `update-database` from the Package Manager Console to add the model schema to your database
+  * Use the commands `dotnet ef migrations add YourMigrationNameHere` and `dotnet ef database update` from the console (naviagted ot the project root directory, same as `EvangelistSiteWeb.xproj`) to add the model schema and update your database
 * Experiment with your own fonts, colours, picture and copy - make it your own
   * The site is built using [Bootstrap](http://getbootstrap.com/) so familiarise yourself with the [Bootrap Grid System](http://getbootstrap.com/css/#grid) at the very least
   * The background colours are in a range of CSS styles entitled `.sequence-background-1` through to `.sequence-background-20`. In the template these are four base colours repeated 5 times, but you can add your own colours here and have 20 different colours if you want.
