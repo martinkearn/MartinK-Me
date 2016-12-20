@@ -19,12 +19,17 @@
     <meta name="theme-color" content="#ffffff">
 
     <!--Fonts. Choose your own at https://fonts.google.com and edit the 'body' rule in site.css to reference it. -->
-    <link href="~/css/googlefonts-lato-400-700-900.min.css" rel="stylesheet" />
+    @*<link href="~/css/googlefonts-lato-400-700-900.min.css" rel="stylesheet" />*@
+
+    <!--Fonts. Choose your own at https://fonts.google.com and edit the 'body' rule in site.css to reference it. Do not use the Eurostile fonts. They are personally licensed for use only by Martin Kearn -->
+    <link href="~/css/EurostileLTStd-BoldEx2.css" rel="stylesheet" />
+    <link href="~/css/EurostileLTStd-BoldCn.css" rel="stylesheet" />
 
     <!--CSS-->
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <environment names="Development">
         <link rel="stylesheet" href="~/css/site.css" />
+        <link rel="stylesheet" href="~/css/mk.css" />
     </environment>
     <environment names="Staging,Production">
         <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
