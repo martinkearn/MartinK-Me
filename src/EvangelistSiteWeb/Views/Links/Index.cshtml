@@ -12,10 +12,14 @@
     </div>
 </div>
 
+@{
+    var backgroundCount = 1;
+}
+
 @foreach (var resourceGroup in Model.ResourceGroups)
 {
     <a href="#" name="@resourceGroup.Title"></a>
-    <div class="container-fluid @resourceGroup.CssClass">
+    <div class="container-fluid sequence-background-@backgroundCount">
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
@@ -33,4 +37,8 @@
             </div>
         </div>
     </div>
+
+    {
+        backgroundCount = backgroundCount + 1;
+    }
 }
