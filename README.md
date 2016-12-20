@@ -1,7 +1,3 @@
-**WARNING**: The latest version is not stable and not a good candidate for forking/branching. Use https://github.com/martinkearn/Evangelist-Site/commit/2654e52ea6fa8dc94ac5317a6f4f4b9d5b0b34c8 instead (yes, yes, I know I should not code against the master branch, I have slapped my own wrist)
-
-* * *
-
 # Technical Evangelist Site
 A template website written in ASP.net Core 1.0 that can be used to create a personal website for technical evangelists that can be used to promote articles, links, resources and talks. 
 
