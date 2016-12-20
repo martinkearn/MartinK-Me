@@ -1,4 +1,5 @@
-﻿@model EvangelistSiteWeb.Models.SpeakingViewModels.TalkViewModel
+﻿@inject Microsoft.Extensions.Options.IOptions<PersonaliseOptions> opt
+@model EvangelistSiteWeb.Models.SpeakingViewModels.TalkViewModel
 
 @{
     ViewData["Title"] = Model.Talk.Title;
@@ -12,7 +13,7 @@
     </div>
 </div>
 
-<div class="container-fluid ">
+<div class="container-fluid  green-background">
     <div class="container">
         <div class="row">
             <div class="col-md-12">
@@ -20,44 +21,28 @@
                 <p>@Model.Talk.Title</p>
             </div>
         </div>
-    </div>
-</div>
 
-<div class="container-fluid ">
-    <div class="container">
         <div class="row">
             <div class="col-md-12">
                 <h2>Talk Description</h2>
                 <p>@Model.Talk.Description</p>
             </div>
         </div>
-    </div>
-</div>
 
-<div class="container-fluid ">
-    <div class="container">
         <div class="row">
             <div class="col-md-12">
                 <h2>Suitable Audience</h2>
                 <p>@Model.Talk.Audience</p>
             </div>
         </div>
-    </div>
-</div>
 
-<div class="container-fluid ">
-    <div class="container">
         <div class="row">
             <div class="col-md-12">
                 <h2>Technologies Covered</h2>
                 <p>@Model.Talk.Technologies</p>
             </div>
         </div>
-    </div>
-</div>
 
-<div class="container-fluid ">
-    <div class="container">
         <div class="row">
             <div class="col-md-12">
                 <h2>Typical Time Range</h2>
@@ -70,26 +55,61 @@
 
 @if (Model.Resources.Count() > 0)
 {
-<div class="container-fluid ">
+    <div class="container-fluid lightblue-background">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h2>Associated Links</h2>
+                    <p>These are links to articles, GitHub repos, videos, slides etc which are associated with this talk.</p>
+                    <ul>
+                        @foreach (var r in Model.Resources)
+                        {
+                            <li class="list-unstyled">
+                                <i class="fa fa-lg @r.FAIconClass" aria-hidden="true"></i>
+                                <a href="@r.TargetUrl">@r.Title</a>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<div class="container-fluid blue-background">
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <h2>Associated Links</h2>
-                <p>These are links to articles, GitHub repos, videos, slides etc which are associated with this talk.</p>
+                <h2>My Bio</h2>
+                <p>Here is my bio in various formats:</p>
                 <ul>
-                    @foreach (var r in Model.Resources)
-                    {
-                        <li class="list-unstyled">
-                            <i class="fa fa-lg @r.FAIconClass" aria-hidden="true"></i>
-                            <a href="@r.TargetUrl">@r.Title</a>
-                        </li>
-                    }
+                    <li><strong>Third Person</strong>: @opt.Value.ThirdPersonBio</li>
+                    <li><strong>First Person</strong>: @opt.Value.FirstPersonBio</li>
+                    <li><strong>Short</strong>: @opt.Value.ShortBio</li>
                 </ul>
+
+                <p>A few photos you can use to advertise your event</p>
+                <div class="row">
+                    <div class="col-md-2">
+                        <a href="@opt.Value.Picture1UrlFullSize" download><img src="@opt.Value.Picture1UrlThumbnail" class="img-responsive profile-photo" alt="@opt.Value.Name profile picture 1"></a>
+                    </div>
+                    <div class="col-md-2">
+                        <a href="@opt.Value.Picture2UrlFullSize" download><img src="@opt.Value.Picture2UrlThumbnail" class="img-responsive profile-photo" alt="@opt.Value.Name profile picture 1"></a>
+                    </div>
+                    <div class="col-md-2">
+                        <a href="@opt.Value.Picture3UrlFullSize" download><img src="@opt.Value.Picture3UrlThumbnail" class="img-responsive profile-photo" alt="@opt.Value.Name profile picture 1"></a>
+                    </div>
+                    <div class="col-md-2">
+                        <a href="@opt.Value.Picture4UrlFullSize" download><img src="@opt.Value.Picture4UrlThumbnail" class="img-responsive profile-photo" alt="@opt.Value.Name profile picture 1"></a>
+                    </div>
+                    <div class="col-md-2">
+                        <a href="@opt.Value.Picture5UrlFullSize" download><img src="@opt.Value.Picture5UrlThumbnail" class="img-responsive profile-photo" alt="@opt.Value.Name profile picture 1"></a>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </div>
-}
 
 <div class="container-fluid ">
     <div class="container">
