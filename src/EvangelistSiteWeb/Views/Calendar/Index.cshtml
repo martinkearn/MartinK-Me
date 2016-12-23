@@ -13,7 +13,7 @@
     </div>
 </div>
 
-@{ 
+@{
     var backgroundCount = 1;
 }
 
@@ -28,19 +28,23 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-12">
+                <div class="col-md-8">
                     <p><b>@e.Date.ToString("D")</b> in <b>@e.City</b></p>
-                    <p>Talking about 
-                    @foreach (var t in e.ConferenceTalks)
-                    {
-                        <b><a href="/speaking/@t.Talk.Url.ToLower()">@t.Talk.Title</a></b>
-                        if (!t.Equals(e.ConferenceTalks.Last()))
+                    <p>
+                        Talking about
+                        @foreach (var t in e.ConferenceTalks)
                         {
-                            <span> and </span>
+                            <b><a href="/speaking/@t.Talk.Url.ToLower()">@t.Talk.Title</a></b>
+                            if (!t.Equals(e.ConferenceTalks.Last()))
+                            {
+                                <span> and </span>
+                            }
                         }
-                    }
                     </p>
                     <a href="@e.ExternalUrl" class="btn btn-default btn-default">Learn more <i class="fa fa-angle-double-right" aria-hidden="false"></i></a>
+                </div>
+                <div class="col-md-4 hidden-sm hidden-xs">
+                    <img src="@e.ImageUrl" class="img-responsive conference-logo"  alt="@e.ConferenceTitle logo">
                 </div>
             </div>
         </div>

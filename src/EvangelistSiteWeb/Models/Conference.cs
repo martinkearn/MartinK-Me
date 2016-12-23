@@ -18,6 +18,8 @@ namespace EvangelistSiteWeb.Models
 
         public string City { get; set; }
 
+        public string ImageUrl { get; set; }
+
         public virtual ICollection<ConferenceTalk> ConferenceTalks { get; set; }
     }
 }
