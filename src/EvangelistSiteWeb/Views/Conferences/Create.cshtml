@@ -48,6 +48,13 @@
                             </div>
                         </div>
                         <div class="form-group">
+                            <label asp-for="Conference.ImageUrl" class="col-md-2 control-label"></label>
+                            <div class="col-md-10">
+                                <input asp-for="Conference.ImageUrl" class="form-control" />
+                                <span asp-validation-for="Conference.ImageUrl" class="text-danger" />
+                            </div>
+                        </div>
+                        <div class="form-group">
                             <label class="control-label col-md-2">Talks</label>
                             <div class="col-md-10">
                                 @foreach (var t in Model.Talks)

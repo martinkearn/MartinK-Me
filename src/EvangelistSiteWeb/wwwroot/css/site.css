@@ -192,3 +192,7 @@ footer {
 .profile-photo {
     max-width: 200px;
 }
+
+.conference-logo {
+    max-height:100px;
+}
