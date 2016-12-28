@@ -58,12 +58,30 @@
                     <li><a asp-controller="Articles" asp-action="Index">Articles</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right  hidden-xs">
-                    <li><a href="@opt.Value.TwitterUrl"><i class="fa fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-                    <li><a href="@opt.Value.LinkedInUrl"><i class="fa fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-                    <li><a href="@opt.Value.SkypeHandle"><i class="fa fa-skype fa-lg" aria-hidden="true"></i></a></li>
-                    <li><a href="@opt.Value.GitHubUrl"><i class="fa fa-github fa-lg" aria-hidden="true"></i></a></li>
-                    <li><a href="@opt.Value.StackOverflowUrl"><i class="fa fa-stack-overflow fa-lg" aria-hidden="true"></i></a></li>
-                    <li><a href="@string.Format("mailto:{0}?Subject=Enquiry%20from%20{1}", opt.Value.Email, opt.Value.DomainName)"><i class="fa fa-envelope-o fa-lg" aria-hidden="true"></i></a></li>
+                    @if (!string.IsNullOrEmpty(opt.Value.TwitterUrl))
+                    {
+                        <li><a href="@opt.Value.TwitterUrl"><i class="fa fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+                    }
+                    @if (!string.IsNullOrEmpty(opt.Value.LinkedInUrl))
+                    {
+                        <li><a href="@opt.Value.LinkedInUrl"><i class="fa fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+                    }
+                    @if (!string.IsNullOrEmpty(opt.Value.SkypeHandle))
+                    {
+                        <li><a href="@opt.Value.SkypeHandle"><i class="fa fa-skype fa-lg" aria-hidden="true"></i></a></li>
+                    }
+                    @if (!string.IsNullOrEmpty(opt.Value.GitHubUrl))
+                    {
+                        <li><a href="@opt.Value.GitHubUrl"><i class="fa fa-github fa-lg" aria-hidden="true"></i></a></li>
+                    }
+                    @if (!string.IsNullOrEmpty(opt.Value.StackOverflowUrl))
+                    {
+                        <li><a href="@opt.Value.StackOverflowUrl"><i class="fa fa-stack-overflow fa-lg" aria-hidden="true"></i></a></li>
+                    }
+                    @if (!string.IsNullOrEmpty(opt.Value.Email))
+                    {
+                        <li><a href="@string.Format("mailto:{0}?Subject=Enquiry%20from%20{1}", opt.Value.Email, opt.Value.DomainName)"><i class="fa fa-envelope-o fa-lg footer-icon" aria-hidden="true"></i></a></li>
+                    }
                 </ul>
                 @*@await Html.PartialAsync("_LoginPartial")*@
             </div>
@@ -77,12 +95,18 @@
             <div class="row">
                 <div class="col-sm-12">
                     <p>Don't be a stranger...</p>
-                    <a href="@opt.Value.TwitterUrl"><i class="fa fa-twitter fa-lg footer-icon" aria-hidden="true"></i></a>
-                    <a href="@opt.Value.LinkedInUrl"><i class="fa fa-linkedin fa-lg footer-icon" aria-hidden="true"></i></a>
-                    <a href="@opt.Value.SkypeHandle"><i class="fa fa-skype fa-lg footer-icon" aria-hidden="true"></i></a>
-                    <a href="@opt.Value.GitHubUrl"><i class="fa fa-github fa-lg footer-icon" aria-hidden="true"></i></a>
-                    <a href="@opt.Value.StackOverflowUrl"><i class="fa fa-stack-overflow fa-lg footer-icon" aria-hidden="true"></i></a>
-                    <a href="@string.Format("mailto:{0}?Subject=Enquiry%20from%20{1}", opt.Value.Email, opt.Value.DomainName)"><i class="fa fa-envelope-o fa-lg footer-icon" aria-hidden="true"></i></a>
+                    @if (!string.IsNullOrEmpty(opt.Value.TwitterUrl))
+                    {<a href="@opt.Value.TwitterUrl"><i class="fa fa-twitter fa-lg footer-icon" aria-hidden="true"></i></a>}
+                    @if (!string.IsNullOrEmpty(opt.Value.LinkedInUrl))
+                    {<a href="@opt.Value.LinkedInUrl"><i class="fa fa-linkedin fa-lg footer-icon" aria-hidden="true"></i></a>}
+                    @if (!string.IsNullOrEmpty(opt.Value.SkypeHandle))
+                    {<a href="@opt.Value.SkypeHandle"><i class="fa fa-skype fa-lg footer-icon" aria-hidden="true"></i></a>}
+                    @if (!string.IsNullOrEmpty(opt.Value.GitHubUrl))
+                    {<a href="@opt.Value.GitHubUrl"><i class="fa fa-github fa-lg footer-icon" aria-hidden="true"></i></a>}
+                    @if (!string.IsNullOrEmpty(opt.Value.StackOverflowUrl))
+                    {<a href="@opt.Value.StackOverflowUrl"><i class="fa fa-stack-overflow fa-lg footer-icon" aria-hidden="true"></i></a>}
+                    @if (!string.IsNullOrEmpty(opt.Value.Email))
+                    {<a href="@string.Format("mailto:{0}?Subject=Enquiry%20from%20{1}", opt.Value.Email, opt.Value.DomainName)"><i class="fa fa-envelope-o fa-lg footer-icon" aria-hidden="true"></i></a>}
                 </div>
             </div>
         </div>

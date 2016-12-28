@@ -35,5 +35,6 @@ namespace EvangelistSiteWeb.Models
         public string Picture4UrlThumbnail { get; set; }
         public string Picture5UrlFullSize { get; set; }
         public string Picture5UrlThumbnail { get; set; }
+        public string Technologies { get; set; }
     }
 }
