@@ -1,10 +1,10 @@
 # Technical Evangelist Site
-A template website written in ASP.net Core 1.0 that can be used to create a personal website for technical evangelists that can be used to promote articles, links, resources and talks. 
+A template website written in ASP.net Core 1.0 that can be used to create a personal website for technical evangelists which can be used to promote articles, links, resources and talks. 
 
 My own personal example is published at [MartinK.me](http://MartinK.me)
 
 ## Customisation
-This site is setup to be customisation by you. If you want to do this, first fork it to your own account and then start modifying your version.
+This site is setup to be customised by you. If you want to do this, first fork it to your own account and then start modifying your version.
 
 Here are some of the things you should consider doing after you have your fork:
 * Update `AppSettings.json` with your details and all the personal stuff will be updated throughout the site
@@ -17,3 +17,6 @@ Here are some of the things you should consider doing after you have your fork:
   * The site is built using [Bootstrap](http://getbootstrap.com/) so familiarise yourself with the [Bootrap Grid System](http://getbootstrap.com/css/#grid)
   * The background colours are in a range of CSS styles entitled `.sequence-background-1` through to `.sequence-background-20` in `site.css`. In the template these are four base colours repeated 5 times, but you can add your own colours here and have 20 different colours if you want.
   * The font is Lato from Google Fonts. Choose your own font at https://fonts.google.com and edit the `body` rule in site.css to reference it
+
+## Single Page
+There is a single page version of the site which is suitable for people that do not have many talks and just want a basic online business card style site. You can get to the single page version at `/home/singlepage`. See a live version of Martin Kearns at http://martink.me/home/singlepage
