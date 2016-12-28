@@ -18,6 +18,11 @@ namespace EvangelistSiteWeb.Controllers
             return RedirectToAction("Index", "ResourceGroups");
         }
 
+        public IActionResult SinglePage()
+        {
+            return View();
+        }
+
         public IActionResult Error()
         {
             return View();
