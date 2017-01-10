@@ -23,7 +23,7 @@ namespace EvangelistSiteWeb.Controllers
         public async Task<IActionResult> Index()
         {
             var conferences = await _context.Conference
-                .Where(o => o.Date > DateTime.Now)
+                .Where(o => o.Date >= DateTime.Now.Subtract(new TimeSpan(1,0,0,0)))
                 .Include(o => o.ConferenceTalks)
                 .ThenInclude(o => o.Talk)
                 .OrderBy(o => o.Date)
