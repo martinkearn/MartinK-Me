@@ -18,23 +18,18 @@
     <meta name="msapplication-config" content="/images/favicon/browserconfig.xml">
     <meta name="theme-color" content="#ffffff">
 
-    <!--Fonts. Choose your own at https://fonts.google.com and edit the 'body' rule in site.css to reference it. -->
-    @*<link href="~/css/googlefonts-lato-400-700-900.min.css" rel="stylesheet" />*@
-
-    <!--Fonts. Choose your own at https://fonts.google.com and edit the 'body' rule in site.css to reference it. Do not use the Eurostile fonts. They are personally licensed for use only by Martin Kearn -->
-    <link href="~/css/EurostileLTStd-BoldEx2.css" rel="stylesheet" />
-    <link href="~/css/EurostileLTStd-BoldCn.css" rel="stylesheet" />
-
     <!--CSS-->
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <environment names="Development">
+        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="~/css/EurostileLTStd-BoldEx2.css" />
+        <link rel="stylesheet" href="~/css/EurostileLTStd-BoldCn.css" />
+        <link rel="stylesheet" href="~/lib/font-awesome/css/font-awesome.min.css" />
         <link rel="stylesheet" href="~/css/site.css" />
         <link rel="stylesheet" href="~/css/mk.css" />
     </environment>
     <environment names="Staging,Production">
         <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
     </environment>
-    <link rel="stylesheet" href="~/lib/font-awesome/css/font-awesome.min.css" />
 
     @RenderSection("head", required: false)
 </head>
@@ -112,8 +107,8 @@
         </div>
     </footer>
 
-    <script src="~/lib/jquery/dist/jquery.min.js" defer></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.min.js" defer></script>
+    <!--JS-->
+    <script src="~/js/site.min.js" defer></script>
 
     <script defer>
         (function (i, s, o, g, r, a, m) {
