@@ -23,6 +23,8 @@ namespace EvangelistSiteWeb.Models
 
         public bool VisibleOnSite { get; set; }
 
+        public bool AlwaysOn { get; set; }
+
         public virtual ICollection<ResourceResourceGroup> ResourceResourceGroups { get; set; }
 
         public virtual ICollection<ResourceTalk> ResourceTalks { get; set; }
