@@ -20,3 +20,10 @@ Here are some of the things you should consider doing after you have your fork:
 
 ## Single Page
 There is a single page version of the site which is suitable for people that do not have many talks and just want a basic online business card style site. You can get to the single page version at `/home/singlepage`. See a live version of Martin Kearns at http://martink.me/home/singlepage
+
+## Settings
+There is a 'settings' section under `/admin`. This is used to simply store key/value pairs which can be used in any way you set fit for other applications and demo that you have running but need a simple storage layer for. There is an API under `/api/settings` which you can use to `GET` all settings or individual settings by id, for example `/api/settings/5`. 
+
+The settings have no bearing on this application, but can be usefull in other applications.
+
+To change the settings and data for this application, see `AppSettings.json`.
