@@ -80,5 +80,7 @@ namespace EvangelistSiteWeb.Data
         public DbSet<Conference> Conference { get; set; }
 
         public DbSet<ConferenceTalk> ConferenceTalk { get; set; }
+
+        public DbSet<Setting> Setting { get; set; }
     }
 }
