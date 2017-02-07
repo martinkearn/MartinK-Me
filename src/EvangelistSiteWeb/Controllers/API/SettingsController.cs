@@ -28,16 +28,22 @@ namespace EvangelistSiteWeb.Controllers.API
             return _context.Setting;
         }
 
-        // GET: api/Settings/5
+        // GET: api/Settings/5 or api/Settings/key
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetSetting([FromRoute] int id)
+        public async Task<IActionResult> GetSetting([FromRoute] string id)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            Setting setting = await _context.Setting.SingleOrDefaultAsync(m => m.Id == id);
+            //see if it is an int, if so try id first. If it can't be parsed, the idInt variable will be 0
+            int idInt = 0;
+            int.TryParse(id, out idInt);
+
+            Setting setting = (idInt == 0) ?
+                await _context.Setting.SingleOrDefaultAsync(m => m.Key == id) :
+                await _context.Setting.SingleOrDefaultAsync(m => m.Id == idInt);
 
             if (setting == null)
             {
