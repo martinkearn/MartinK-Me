@@ -53,6 +53,10 @@
                     <li><a asp-controller="Articles" asp-action="Index">Articles</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right  hidden-xs">
+                    @if (!string.IsNullOrEmpty(opt.Value.YouTube))
+                    {
+                        <li><a href="@opt.Value.YouTube"><i class="fa fa-youtube fa-lg" aria-hidden="true"></i></a></li>
+                    }
                     @if (!string.IsNullOrEmpty(opt.Value.TwitterUrl))
                     {
                         <li><a href="@opt.Value.TwitterUrl"><i class="fa fa-twitter fa-lg" aria-hidden="true"></i></a></li>
@@ -90,6 +94,8 @@
             <div class="row">
                 <div class="col-sm-12">
                     <p>Don't be a stranger...</p>
+                    @if (!string.IsNullOrEmpty(opt.Value.YouTube))
+                    {<a href="@opt.Value.YouTube"><i class="fa fa-youtube fa-lg footer-icon" aria-hidden="true"></i></a>}
                     @if (!string.IsNullOrEmpty(opt.Value.TwitterUrl))
                     {<a href="@opt.Value.TwitterUrl"><i class="fa fa-twitter fa-lg footer-icon" aria-hidden="true"></i></a>}
                     @if (!string.IsNullOrEmpty(opt.Value.LinkedInUrl))
