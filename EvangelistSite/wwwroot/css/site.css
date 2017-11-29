@@ -1,35 +1,198 @@
-﻿body {
+﻿html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
     padding-top: 50px;
+    font-family: 'Lato', sans-serif;
+    font-size: 14pt;
+    background-color: lightgray;
+    margin-bottom: 110px;
+}
+
+a {
+    color: #333;
+}
+
+    a:hover {
+        text-decoration: underline;
+        color: #333;
+    }
+
+.btn {
+    border-radius: 0;
+    border: 0;
+}
+
+h4 {
+    font-size: 16pt;
+}
+
+.btn:hover, .btn:focus {
+    background-color: darkorange;
+    color: white;
+}
+
+.container-fluid li {
+    margin-bottom: 10px;
+}
+
+.jumbotron {
+    color: #FE940D;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.4)), url('../images/banner-home.jpg');
+    background-position: center center;
+    margin-bottom: 0;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+    .jumbotron h1 {
+        font-weight: 900;
+    }
+
+    .jumbotron p {
+        font-weight: 700;
+        font-size: 2rem;
+    }
+
+.jumbotron-speaking {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.1)), url('../images/banner-speaking.jpg');
+}
+
+.jumbotron-calendar {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.1)), url('../images/banner-speaking.jpg');
+}
+
+.jumbotron-resources {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.6)), url('../images/banner-resources.jpg');
+}
+
+.jumbotron-articles {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.3)), url('../images/banner-blog.jpg');
+}
+
+.navbar-inverse .navbar-nav > li > a:focus, .navbar-inverse .navbar-nav > li > a:hover {
+    color: darkorange;
+}
+
+.navbar > .container .navbar-brand, .navbar > .container-fluid .navbar-brand {
+    text-decoration: none;
+}
+
+.navbar-inverse .navbar-nav > li > a {
+    text-decoration: none;
+}
+
+#home-intro {
+    font-size: 18pt;
+}
+
+.container-fluid {
+    margin-top: 0;
+    padding-top: 20px;
     padding-bottom: 20px;
 }
 
-/* Wrapping element */
-/* Set some basic padding to keep content from hitting the edges */
-.body-content {
-    padding-left: 15px;
-    padding-right: 15px;
+.sequence-background-1 {
+    background-color: #3AEAC8;
 }
 
-/* Carousel */
-.carousel-caption p {
-    font-size: 20px;
-    line-height: 1.4;
+.sequence-background-2 {
+    background-color: #00D4E7;
 }
 
-/* Make .svg files in the carousel display properly in older browsers */
-.carousel-inner .item img[src$=".svg"] {
+.sequence-background-3 {
+    background-color: #0DABFE;
+}
+
+.sequence-background-4 {
+    background-color: #0074B1;
+}
+
+.sequence-background-5 {
+    background-color: #3AEAC8;
+}
+
+.sequence-background-6 {
+    background-color: #00D4E7;
+}
+
+.sequence-background-7 {
+    background-color: #0DABFE;
+}
+
+.sequence-background-8 {
+    background-color: #0074B1;
+}
+
+.sequence-background-9 {
+    background-color: #3AEAC8;
+}
+
+.sequence-background-10 {
+    background-color: #00D4E7;
+}
+
+.sequence-background-11 {
+    background-color: #0DABFE;
+}
+
+.sequence-background-12 {
+    background-color: #0074B1;
+}
+
+.sequence-background-13 {
+    background-color: #3AEAC8;
+}
+
+.sequence-background-14 {
+    background-color: #00D4E7;
+}
+
+.sequence-background-15 {
+    background-color: #0DABFE;
+}
+
+.sequence-background-16 {
+    background-color: #0074B1;
+}
+
+.sequence-background-17 {
+    background-color: #3AEAC8;
+}
+
+.sequence-background-18 {
+    background-color: #00D4E7;
+}
+
+.sequence-background-19 {
+    background-color: #0DABFE;
+}
+
+.sequence-background-20 {
+    background-color: #0074B1;
+}
+
+footer {
+    background-color: #808080;
+    margin-bottom: 0;
+    padding-top: 30px;
+    padding-bottom: 30px;
+    position: absolute;
+    bottom: 0;
     width: 100%;
+    height: 110px;
 }
 
-/* QR code generator */
-#qrCode {
-    margin: 15px;
+.footer-icon {
+    margin-right: 20px;
 }
 
-/* Hide/rearrange for smaller screens */
-@media screen and (max-width: 767px) {
-    /* Hide captions */
-    .carousel-caption {
-        display: none;
-    }
+.profile-photo {
+    max-width: 200px;
+}
+
+.conference-logo {
+    max-height:100px;
 }

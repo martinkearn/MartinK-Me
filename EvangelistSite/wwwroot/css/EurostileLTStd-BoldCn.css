@@ -1,0 +1,12 @@
+@font-face {
+  font-family: 'EurostileLTStd-BoldCn';
+  src: url('EurostileLTStd-BoldCn.eot');
+  src: url('EurostileLTStd-BoldCn.woff2') format('woff2'),
+       url('EurostileLTStd-BoldCn.woff') format('woff'),
+       url('EurostileLTStd-BoldCn.ttf') format('truetype'),
+       url('EurostileLTStd-BoldCn.svg#EurostileLTStd-BoldCn') format('svg'),
+       url('EurostileLTStd-BoldCn.eot?#iefix') format('embedded-opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+

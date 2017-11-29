@@ -1,0 +1,138 @@
+﻿@inject Microsoft.Extensions.Options.IOptions<PersonaliseOptions> opt
+@{
+    ViewData["Title"] = string.Format("Hi, I'm {0}, an evangelist at Microsoft", opt.Value.Name);
+}
+
+
+@section head {
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@opt.Value.TwitterHandle">
+    <meta name="twitter:creator" content="@opt.Value.TwitterHandle">
+    <meta name="twitter:title" content="@opt.Value.DomainName - all of @opt.Value.FirstName's online stuff in one place">
+    <meta name="twitter:description" content="Find, read, download all of @opt.Value.Name's online Links, Articles, GitHubs, Videos, Demos, Speaking Information, Talks, Slides and shizzle in one place">
+    <meta name="twitter:image" content="/images/TwitterCard.PNG">
+    <meta property="og:url" content="@opt.Value.DomainName" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="@opt.Value.DomainName - all of @opt.Value.FirstName's online stuff in one place" />
+    <meta property="og:description" content="Find, read, download all of @opt.Value.Name's online Links, Articles, GitHubs, Videos, Demos, Speaking Information, Talks, Slides and shizzle in one place" />
+    <meta property="og:image" content="/images/TwitterCard.PNG" />
+    <link href="~/css/SinglePage.css" rel="stylesheet" />
+}
+
+
+
+<div class="jumbotron">
+    <div class="container">
+        <h1>Hi, I'm @opt.Value.Name</h1>
+        <p>I'm an evangelist at Microsoft</p>
+        <p class="hidden-xs">@opt.Value.Slogan</p>
+        <p class="hidden-xs">I'm based near @opt.Value.Location</p>
+    </div>
+</div>
+
+<div class="container-fluid sequence-background-1">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8">
+                <h2>I'll come to your event</h2>
+                <p>I speak at events such as conferences, meet-ups, user groups, Microsoft events etc.</p>
+                <p>I general speak about @opt.Value.Technologies</p>
+                <p>If you'd like me to speak at your event you can contact me on any of the following:</p>
+                <ul class="list-unstyled">
+                    @if (!string.IsNullOrEmpty(opt.Value.Email))
+                    {
+                        <li><a href="@string.Format("mailto:{0}?Subject=Enquiry%20from%20{1}", opt.Value.Email, opt.Value.DomainName)"><i class="fa fa-envelope-o" aria-hidden="true"></i> @opt.Value.Email</a></li> 
+                    }
+                    @if (!string.IsNullOrEmpty(opt.Value.TwitterHandle))
+                    {
+                        <li><a href="@opt.Value.TwitterUrl"><i class="fa fa-twitter" aria-hidden="true"></i> @opt.Value.TwitterHandle</a></li>                     
+                    }
+                    @if (!string.IsNullOrEmpty(opt.Value.SkypeHandle))
+                    {
+                        <li><a href="@opt.Value.SkypeHandle"><i class="fa fa-skype" aria-hidden="true"></i> @opt.Value.SkypeHandle</a></li> 
+                    }
+                </ul>
+            </div>
+            <div class="col-md-4">
+                <img src="~/images/audience.jpg" class="img-responsive hidden-xs" alt="Responsive image">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid sequence-background-2">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h2>About Me</h2>
+                <p>Here is my bio in various formats:</p>
+                <ul>
+                    @if (!string.IsNullOrEmpty(opt.Value.ThirdPersonBio))
+                    {
+                        <li><strong>Third Person</strong>: @opt.Value.ThirdPersonBio</li>
+                    }
+                    @if (!string.IsNullOrEmpty(opt.Value.FirstPersonBio))
+                    {
+                        <li><strong>First Person</strong>: @opt.Value.FirstPersonBio</li>
+                    }
+                    @if (!string.IsNullOrEmpty(opt.Value.ShortBio))
+                    {
+                        <li><strong>Short</strong>: @opt.Value.ShortBio</li>
+                    }
+                </ul>
+
+                <p>A few photos you can use to advertise your event</p>
+                <div class="row">
+                    @if (!string.IsNullOrEmpty(opt.Value.Picture1UrlFullSize))
+                    {
+                        <div class="col-md-2">
+                            <a href="@opt.Value.Picture1UrlFullSize" download><img src="@opt.Value.Picture1UrlThumbnail" class="img-responsive profile-photo" alt="@opt.Value.Name profile picture 1"></a>
+                        </div>
+                    }
+                    @if (!string.IsNullOrEmpty(opt.Value.Picture2UrlFullSize))
+                    {
+                        <div class="col-md-2">
+                            <a href="@opt.Value.Picture2UrlFullSize" download><img src="@opt.Value.Picture2UrlThumbnail" class="img-responsive profile-photo" alt="@opt.Value.Name profile picture 1"></a>
+                        </div>
+                    }
+                    @if (!string.IsNullOrEmpty(opt.Value.Picture3UrlFullSize))
+                    {
+                        <div class="col-md-2">
+                            <a href="@opt.Value.Picture3UrlFullSize" download><img src="@opt.Value.Picture3UrlThumbnail" class="img-responsive profile-photo" alt="@opt.Value.Name profile picture 1"></a>
+                        </div>
+                    }
+                    @if (!string.IsNullOrEmpty(opt.Value.Picture4UrlFullSize))
+                    {
+                        <div class="col-md-2">
+                            <a href="@opt.Value.Picture4UrlFullSize" download><img src="@opt.Value.Picture4UrlThumbnail" class="img-responsive profile-photo" alt="@opt.Value.Name profile picture 1"></a>
+                        </div>
+                    }
+                    @if (!string.IsNullOrEmpty(opt.Value.Picture5UrlFullSize))
+                    {
+                        <div class="col-md-2">
+                            <a href="@opt.Value.Picture5UrlFullSize" download><img src="@opt.Value.Picture5UrlThumbnail" class="img-responsive profile-photo" alt="@opt.Value.Name profile picture 1"></a>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid sequence-background-3">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8">
+                <h2><a href="http://aka.ms/technicalspeakers">My Colleagues</a></h2>
+                <p>I'm one of a broad team of Microsoft evangelists who just love talking about Microsoft technology.</p>
+                <p>We have a website that will help you find an evangelist near you who can talk about the technology you are interested in.</p>
+                <a href="http://aka.ms/technicalspeakers" class="btn btn-default btn-default">Learn more <i class="fa fa-angle-double-right" aria-hidden="true"></i></a>
+            </div>
+            <div class="col-md-4">
+                <img src="~/images/Evangelists.jpg" class="img-responsive hidden-xs" alt="Responsive image">
+            </div>
+        </div>
+    </div>
+</div>
+
+
