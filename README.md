@@ -1,10 +1,10 @@
-# Technical Evangelist Site
-A template website written in ASP.net Core 1.0 that can be used to create a personal website for technical evangelists which can be used to promote articles, links, resources and talks. 
+# MartinK.me Site
+A website written in ASP.net Core 1.0 that can be used to create a personal website for technical evangelists which can be used to promote articles, links, resources and talks. 
 
-My own personal example is published at [MartinK.me](http://MartinK.me)
+My own personal site is published at [MartinK.me](http://MartinK.me) which is published from this code base.
 
 ## Customisation
-This site is setup to be customised by you. If you want to do this, first fork it to your own account and then start modifying your version.
+This site is setup to be customised. If you want to do this, first fork it to your own account and then start modifying your version. Out of courtesy, please try to implement your own visual style and do not re-use the fonts and colours I've use don my own personal site.
 
 Here are some of the things you should consider doing after you have your fork:
 * Update `AppSettings.json` with your details and all the personal stuff will be updated throughout the site
@@ -17,9 +17,6 @@ Here are some of the things you should consider doing after you have your fork:
   * The site is built using [Bootstrap](http://getbootstrap.com/) so familiarise yourself with the [Bootrap Grid System](http://getbootstrap.com/css/#grid)
   * The background colours are in a range of CSS styles entitled `.sequence-background-1` through to `.sequence-background-20` in `site.css`. In the template these are four base colours repeated 5 times, but you can add your own colours here and have 20 different colours if you want.
   * The font is Lato from Google Fonts. Choose your own font at https://fonts.google.com and edit the `body` rule in site.css to reference it
-
-## Single Page
-There is a single page version of the site which is suitable for people that do not have many talks and just want a basic online business card style site. You can get to the single page version at `/home/singlepage`. See a live version of Martin Kearns at http://martink.me/home/singlepage
 
 ## Settings
 There is a 'settings' section under `/admin`. This is used to simply store key/value pairs which can be used in any way you set fit for other applications and demo that you have running but need a simple storage layer for. There is an API under `/api/settings` which you can use to `GET` all settings or individual settings by id, for example `/api/settings/5`. 
