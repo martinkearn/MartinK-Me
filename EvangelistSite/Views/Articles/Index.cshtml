@@ -1,0 +1,40 @@
+﻿@inject Microsoft.Extensions.Options.IOptions<PersonaliseOptions> opt
+@model EvangelistSite.Models.ArticlesViewModels.IndexViewModel
+
+@{
+    ViewData["Title"] = "Articles";
+}
+
+<div class="jumbotron jumbotron-articles">
+    <div class="container">
+        <h1>@ViewData["Title"]</h1>
+        <p>I adopt a 'learn in public' approach to blogging.</p>
+        <p>Whenever I learn something new, I try to capture it in a blog article.</p>
+        <p>This is just a snap-shot of my most recent articles. You can see all of them at <a href="@opt.Value.BlogUrl">my blog site</a></p>
+    </div>
+</div>
+
+@{
+    var backgroundCount = 1;
+}
+
+
+@foreach (var article in Model.Articles)
+{
+    <div class="container-fluid sequence-background-@backgroundCount">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12"> 
+                        <h2><a href="@article.Link">@article.Title</a></h2>
+                        <p><small>@article.PublishDate.ToString("dd MMM yyyy")</small></p>
+                        <p>@article.Description</p>
+                        <p><a href="@article.Link" class="btn btn-default btn-default" >Read More</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {
+        backgroundCount = backgroundCount + 1;
+    }
+}
