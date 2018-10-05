@@ -36,7 +36,7 @@ namespace MartinKMe
 
             services.Configure<AppSecretSettings>(Configuration);
 
-            services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(Configuration["DbConnectionString"]));
 
             services.Configure<CookiePolicyOptions>(options =>
             {
@@ -84,7 +84,7 @@ namespace MartinKMe
                 routes.MapRoute(
                     "admin",
                     "admin",
-                    new { controller = "ResourceGroups", action = "Index" });
+                    new { controller = "Talks", action = "Index" });
 
                 routes.MapRoute(
                     "talk",
