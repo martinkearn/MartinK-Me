@@ -10,9 +10,5 @@ namespace MartinKMe.Models.ResourcesViewModels
     public class EditViewModel
     {
         public Resource Resource { get; set; }
-
-        public IEnumerable<SelectListItem> ResourceGroups { get; set; }
-
-        public IEnumerable<SelectListItem> Talks { get; set; }
     }
 }

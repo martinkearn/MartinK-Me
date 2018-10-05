@@ -17,7 +17,7 @@ namespace MartinKMe.Controllers
 
         public IActionResult Admin()
         {
-            return RedirectToAction("Index", "ResourceGroups");
+            return RedirectToAction("Index", "Resources");
         }
 
         public IActionResult SinglePage()

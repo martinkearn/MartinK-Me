@@ -35,21 +35,9 @@ namespace MartinKMe.Controllers
         {
             var thisTalk = await _context.Talk.Where(o => o.Url.ToLower() == talk).FirstOrDefaultAsync();
 
-            //get Resource <> Talk mappings for this Talk
-            var resourcesTalkMappings = await _context.ResourceTalk
-                .Include(o => o.Resource)
-                .Where(o => o.TalkId == thisTalk.Id)
-                .ToListAsync();
-            var resources = new List<Resource>();
-            foreach (var rt in resourcesTalkMappings)
-            {
-                resources.Add(rt.Resource);
-            }
-
             var vm = new TalkViewModel()
             {
-                Talk = thisTalk,
-                Resources = resources
+                Talk = thisTalk
             };
 
             return View(vm);

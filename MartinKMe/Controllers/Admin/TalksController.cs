@@ -62,21 +62,9 @@ namespace MartinKMe.Controllers
                 return NotFound();
             }
 
-            //get Resource <> Talk mappings for this Talk
-            var resourcesTalkMappings = await _context.ResourceTalk
-                .Include(o => o.Resource)
-                .Where(o => o.TalkId == id)
-                .ToListAsync();
-            var resources = new List<Resource>();
-            foreach (var rt in resourcesTalkMappings)
-            {
-                resources.Add(rt.Resource);
-            }
-
             var vm = new EditViewModel()
             {
-                Talk = talk,
-                Resources = resources
+                Talk = talk
             };
 
             return View(vm);

@@ -21,9 +21,5 @@ namespace MartinKMe.Models
         public string Audience { get; set; }
 
         public string Time { get; set; }
-
-        public virtual ICollection<ResourceTalk> ResourceTalks { get; set; }
-
-        public virtual ICollection<ConferenceTalk> ConferenceTalks { get; set; }
     }
 }

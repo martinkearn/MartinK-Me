@@ -25,8 +25,5 @@ namespace MartinKMe.Models
 
         public bool AlwaysOn { get; set; }
 
-        public virtual ICollection<ResourceResourceGroup> ResourceResourceGroups { get; set; }
-
-        public virtual ICollection<ResourceTalk> ResourceTalks { get; set; }
     }
 }
