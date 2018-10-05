@@ -53,29 +53,6 @@
     </div>
 </div>
 
-@if (Model.Resources.Count() > 0)
-{
-    <div class="container-fluid sequence-background-2">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <h2>Associated Links</h2>
-                    <p>These are links to articles, GitHub repos, videos, slides etc which are associated with this talk.</p>
-                    <ul>
-                        @foreach (var r in Model.Resources)
-                        {
-                            <li class="list-unstyled">
-                                <i class="fa fa-lg @r.FAIconClass" aria-hidden="true"></i>
-                                <a href="@r.TargetUrl">@r.Title</a>
-                            </li>
-                        }
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-}
-
 <div class="container-fluid sequence-background-3">
     <div class="container">
         <div class="row">
