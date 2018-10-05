@@ -4,10 +4,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace MartinKMe.Models.LinksViewModels
+namespace MartinKMe.Interfaces
 {
-    public class IndexViewModel
+    public interface IStore
     {
-        public List<ResourceGroup> ResourceGroups { get; set; }
+        Task<List<Link>> GetLinks();
+
+        Task StoreLink(Link Link);
     }
 }

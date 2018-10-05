@@ -5,12 +5,11 @@ using System.Threading.Tasks;
 
 namespace MartinKMe.Models
 {
-    public class Setting
+    public class Link
     {
-        public int Id { get; set; }
+        public string Tag { get; set; }
 
-        public string Key { get; set; }
+        public string Url { get; set; }
 
-        public string Value { get; set; }
     }
 }
