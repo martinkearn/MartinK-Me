@@ -1,0 +1,119 @@
+@model MartinKMe.Models.TalksViewModels.EditViewModel
+
+@{
+    Layout = "_LayoutAdmin";
+}
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<div class="container-fluid">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h2>Edit</h2>
+                <h4>Talk</h4>
+                <hr />
+
+                <div>
+                    <!-- Nav tabs -->
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li role="presentation" class="active"><a href="#talk" aria-controls="talk" role="tab" data-toggle="tab">Talk</a></li>
+                        <li role="presentation"><a href="#resources" aria-controls="resources" role="tab" data-toggle="tab">Associated Resources</a></li>
+                    </ul>
+                    <!-- Tab panes -->
+                    <div class="tab-content">
+                        <div role="tabpanel" class="tab-pane active" id="talk">
+
+                            <form asp-action="Edit">
+                                <div class="form-horizontal">
+                                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                    <div class="form-group">
+                                        <label asp-for="Talk.Title" class="col-md-2 control-label"></label>
+                                        <div class="col-md-10">
+                                            <input asp-for="Talk.Title" class="form-control" />
+                                            <span asp-validation-for="Talk.Title" class="text-danger" />
+                                        </div>
+                                    </div>
+                                    <input type="hidden" asp-for="Talk.Id" />
+                                    <div class="form-group">
+                                        <label asp-for="Talk.Audience" class="col-md-2 control-label"></label>
+                                        <div class="col-md-10">
+                                            <input class="form-control" asp-for="Talk.Audience" />
+                                            <span asp-validation-for="Talk.Audience" class="text-danger" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label asp-for="Talk.Description" class="col-md-2 control-label"></label>
+                                        <div class="col-md-10">
+                                            <textarea class="form-control" asp-for="Talk.Description" rows=5></textarea>
+                                            <span asp-validation-for="Talk.Description" class="text-danger" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label asp-for="Talk.Technologies" class="col-md-2 control-label"></label>
+                                        <div class="col-md-10">
+                                            <input asp-for="Talk.Technologies" class="form-control" />
+                                            <span asp-validation-for="Talk.Technologies" class="text-danger" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label asp-for="Talk.Time" class="col-md-2 control-label"></label>
+                                        <div class="col-md-10">
+                                            <input asp-for="Talk.Time" class="form-control" />
+                                            <span asp-validation-for="Talk.Time" class="text-danger" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label asp-for="Talk.Url" class="col-md-2 control-label"></label>
+                                        <div class="col-md-10">
+                                            <input asp-for="Talk.Url" class="form-control" />
+                                            <span asp-validation-for="Talk.Url" class="text-danger" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-md-offset-2 col-md-10">
+                                            <input type="submit" value="Save" class="btn btn-default" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+
+
+                        </div>
+                        <div role="tabpanel" class="tab-pane" id="resources">
+                            @if (Model.Resources.Count() <= 0)
+                            {
+                                <p>There are no Resources in the Talk. <a asp-action="Create" asp-controller="Resources">Create one</a>.</p>
+                            }
+                            else
+                            {
+                                @foreach (var item in Model.Resources)
+                                {
+                                    <i class="fa @item.FAIconClass" aria-hidden="true"></i>
+                                    <a asp-action="Edit" asp-controller="Resources" asp-route-id="@item.Id">@Html.DisplayFor(modelItem => item.Title)</a>
+                                    <br />
+                                }
+                            }
+
+
+                        </div>
+                    </div>
+                </div>
+
+                <hr />
+
+                <div>
+                    <a asp-action="Index">Back to List</a>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
