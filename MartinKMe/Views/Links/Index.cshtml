@@ -1,0 +1,44 @@
+﻿@model MartinKMe.Models.LinksViewModels.IndexViewModel
+
+@{
+    ViewData["Title"] = "Links";
+}
+
+<div class="jumbotron jumbotron-resources">
+    <div class="container">
+        <h1>@ViewData["Title"]</h1>
+        <p>I create lots of stuff which you can use, copy, change, contribute to.</p>
+        <p>Slides, videos, repos, articles, apps.</p>
+    </div>
+</div>
+
+@{
+    var backgroundCount = 1;
+}
+
+@foreach (var resourceGroup in Model.ResourceGroups)
+{
+    <a href="#" name="@resourceGroup.Title"></a>
+    <div class="container-fluid sequence-background-@backgroundCount">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h2>@resourceGroup.Title</h2>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <p>@resourceGroup.Description</p>
+                    <p><a href="/links/@resourceGroup.Url" title="@resourceGroup.Title" class="btn btn-default btn-default">See all links <i class="fa fa-angle-double-right" aria-hidden="true"></i></a></p>
+                </div>
+                <div class="col-md-6">
+                    <img src="@resourceGroup.ImageUrl" class="img-responsive hidden-xs" alt="A picture of @resourceGroup.Title">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {
+        backgroundCount = backgroundCount + 1;
+    }
+}

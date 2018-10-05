@@ -1,0 +1,102 @@
+﻿@inject Microsoft.Extensions.Options.IOptions<PersonaliseOptions> opt
+@model MartinKMe.Models.SpeakingViewModels.IndexViewModel
+
+@{
+    ViewData["Title"] = "Speaking";
+}
+
+<div class="jumbotron jumbotron-speaking">
+    <div class="container">
+        <h1>@ViewData["Title"]</h1>
+        <p>I speak at events of all sizes, it's pretty much my job.</p>
+        <p>Conferences, meet-ups, user groups, events.</p>
+    </div>
+</div>
+
+<div class="container-fluid sequence-background-1">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h2>I'll come to your event</h2>
+                <p>I speak at events such as conferences, meet-ups, user groups, Microsoft events etc.</p>
+                <p>If you want me to come to your event, please <a href="@string.Format("mailto:{0}?Subject=Enquiry%20from%20{1}", opt.Value.Email, opt.Value.DomainName)">email me</a> or <a href="@opt.Value.TwitterUrl">tweet me</a> and we can sort the details.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid sequence-background-2">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h2>My Talks</h2>
+                <p>I’m happy to speak at pretty much any developer event. Here are a few topics that I’m talking about at the moment and can deliver with hardly any notice, but if you have a specific topic feel free to <a href="@string.Format("mailto:{0}?Subject=Enquiry%20from%20{1}", opt.Value.Email, opt.Value.DomainName)">email me</a> or <a href="@opt.Value.TwitterUrl">tweet me</a>.</p>
+                <ul>
+                    @foreach (var talk in Model.Talks)
+                    {
+                        <li><a href="/speaking/@talk.Url.ToLower()" title="@talk.Description">@talk.Title</a></li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid sequence-background-3">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h2>My Bio</h2>
+                <p>Here is my bio in various formats:</p>
+                <ul>
+                    @if (!string.IsNullOrEmpty(opt.Value.ThirdPersonBio))
+                    {
+                        <li><strong>Third Person</strong>: @opt.Value.ThirdPersonBio</li>
+                    }
+                    @if (!string.IsNullOrEmpty(opt.Value.FirstPersonBio))
+                    {
+                        <li><strong>First Person</strong>: @opt.Value.FirstPersonBio</li>
+                    }
+                    @if (!string.IsNullOrEmpty(opt.Value.ShortBio))
+                    {
+                        <li><strong>Short</strong>: @opt.Value.ShortBio</li>
+                    }
+                </ul>
+
+                <p>A few photos you can use to advertise your event</p>
+                <div class="row">
+                    @if (!string.IsNullOrEmpty(opt.Value.Picture1UrlFullSize))
+                    {
+                        <div class="col-md-2">
+                            <a href="@opt.Value.Picture1UrlFullSize" download><img src="@opt.Value.Picture1UrlThumbnail" class="img-responsive profile-photo" alt="@opt.Value.Name profile picture 1"></a>
+                        </div>
+                    }
+                    @if (!string.IsNullOrEmpty(opt.Value.Picture2UrlFullSize))
+                    {
+                        <div class="col-md-2">
+                            <a href="@opt.Value.Picture2UrlFullSize" download><img src="@opt.Value.Picture2UrlThumbnail" class="img-responsive profile-photo" alt="@opt.Value.Name profile picture 1"></a>
+                        </div>
+                    }
+                    @if (!string.IsNullOrEmpty(opt.Value.Picture3UrlFullSize))
+                    {
+                        <div class="col-md-2">
+                            <a href="@opt.Value.Picture3UrlFullSize" download><img src="@opt.Value.Picture3UrlThumbnail" class="img-responsive profile-photo" alt="@opt.Value.Name profile picture 1"></a>
+                        </div>
+                    }
+                    @if (!string.IsNullOrEmpty(opt.Value.Picture4UrlFullSize))
+                    {
+                        <div class="col-md-2">
+                            <a href="@opt.Value.Picture4UrlFullSize" download><img src="@opt.Value.Picture4UrlThumbnail" class="img-responsive profile-photo" alt="@opt.Value.Name profile picture 1"></a>
+                        </div>
+                    }
+                    @if (!string.IsNullOrEmpty(opt.Value.Picture5UrlFullSize))
+                    {
+                        <div class="col-md-2">
+                            <a href="@opt.Value.Picture5UrlFullSize" download><img src="@opt.Value.Picture5UrlThumbnail" class="img-responsive profile-photo" alt="@opt.Value.Name profile picture 1"></a>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,94 @@
+﻿@inject Microsoft.Extensions.Options.IOptions<PersonaliseOptions> opt
+@{
+    ViewData["Title"] = string.Format("Hi, I'm {0}, an evangelist at Microsoft", opt.Value.Name);
+}
+
+@section head {
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@opt.Value.TwitterHandle">
+<meta name="twitter:creator" content="@opt.Value.TwitterHandle">
+<meta name="twitter:title" content="@opt.Value.DomainName - all of @opt.Value.FirstName's online stuff in one place">
+<meta name="twitter:description" content="Find, read, download all of @opt.Value.Name's online Links, Articles, GitHubs, Videos, Demos, Speaking Information, Talks, Slides and shizzle in one place">
+<meta name="twitter:image" content="/images/TwitterCard.PNG">
+
+<meta property="og:url" content="@opt.Value.DomainName" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="@opt.Value.DomainName - all of @opt.Value.FirstName's online stuff in one place" />
+<meta property="og:description" content="Find, read, download all of @opt.Value.Name's online Links, Articles, GitHubs, Videos, Demos, Speaking Information, Talks, Slides and shizzle in one place" />
+<meta property="og:image" content="/images/TwitterCard.PNG" />
+ }
+
+<div class="jumbotron">
+    <div class="container">
+        <h1>Hi, I'm @opt.Value.Name</h1>
+        <p>I'm an evangelist at Microsoft</p>
+        <p class="hidden-xs">@opt.Value.Slogan</p>
+        <p class="hidden-xs">I'm based in @opt.Value.Location</p>
+    </div>
+</div>
+
+<div class="container-fluid sequence-background-1">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8">
+                <h2><a asp-controller="Speaking" asp-action="Index">Speaking</a></h2>
+                <p>I speak at events such as conferences, meet-ups, user groups, Microsoft events etc.</p>
+                <p>Find out where I'm speaking, what I speak about and how to get me to your event.</p>
+                <a asp-controller="Speaking" asp-action="Index" class="btn btn-default btn-default">Learn more <i class="fa fa-angle-double-right" aria-hidden="true"></i></a>
+            </div>
+            <div class="col-md-4">
+                <img src="~/images/audience.jpg" class="img-responsive hidden-xs" alt="Responsive image">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid sequence-background-2">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8">
+                <h2><a asp-controller="Links" asp-action="Index">Links</a></h2>
+                <p>I create lots of things which you can download, use, copy, change, or contribute to.</p>
+                <p>This includes sample projects, slide decks, videos, articles.</p>
+                <a asp-controller="Links" asp-action="Index" class="btn btn-default btn-default">Learn more <i class="fa fa-angle-double-right" aria-hidden="true"></i></a>
+            </div>
+            <div class="col-md-4">
+                <img src="~/images/code.jpg" class="img-responsive hidden-xs" alt="Responsive image">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid sequence-background-3">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8">
+                <h2><a asp-controller="Articles" asp-action="Index">Articles</a></h2>
+                <p>I adopt a 'learn in public' approach to blogging.</p>
+                <p>Whenever I learn something new, I try to capture it in a blog article.</p>
+                <a asp-controller="Articles" asp-action="Index" class="btn btn-default btn-default">Learn more <i class="fa fa-angle-double-right" aria-hidden="true"></i></a>
+            </div>
+            <div class="col-md-4">
+                <img src="~/images/blog.jpg" class="img-responsive hidden-xs" alt="Responsive image">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid sequence-background-4">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8">
+                <h2><a href="http://aka.ms/technicalspeakers">My Colleagues</a></h2>
+                <p>I'm one of a broad team of Microsoft evangelists who just love talking about Microsoft technology.</p>
+                <p>We have a website that will help you find an evangelist near you who can talk about the technology you are interested in.</p>
+                <a href="http://aka.ms/technicalspeakers" class="btn btn-default btn-default">Learn more <i class="fa fa-angle-double-right" aria-hidden="true"></i></a>
+            </div>
+            <div class="col-md-4">
+                <img src="~/images/Evangelists.jpg" class="img-responsive hidden-xs" alt="Responsive image">
+            </div>
+        </div>
+    </div>
+</div>
+
+
