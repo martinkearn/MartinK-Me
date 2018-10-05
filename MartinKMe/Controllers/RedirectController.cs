@@ -12,12 +12,10 @@ namespace MartinKMe.Controllers
 {
     public class RedirectController : Controller
     {
-        private ApplicationDbContext _context;
         private readonly IStore _store;
 
-        public RedirectController(ApplicationDbContext context, IStore store)
+        public RedirectController(IStore store)
         {
-            _context = context;
             _store = store;
         }
 
@@ -26,17 +24,7 @@ namespace MartinKMe.Controllers
             var links = await _store.GetLinks();
             var matchingLink = links.FirstOrDefault(o => o.Tag.ToLower() == tagLabel.ToLower());
 
-
-            var resources = await _context.Resource
-                .Where(m => m.ShortUrl.ToLower() == tagLabel.ToLower())
-                .ToListAsync();
-
-            if (resources.Count > 0)
-            {
-                return Redirect(resources.FirstOrDefault().TargetUrl);
-                //return Redirect($"http://www.bing.com/search?q={tag}");
-            }
-            else if (matchingLink != null)
+            if (matchingLink != null)
             {
                 return Redirect(matchingLink.Url);
             }
