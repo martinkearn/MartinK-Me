@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using MartinKMe.Data;
+using MartinKMe.Interfaces;
 using MartinKMe.Models;
+using MartinKMe.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -17,6 +19,7 @@ namespace MartinKMe
 {
     public class Startup
     {
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -28,8 +31,10 @@ namespace MartinKMe
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddOptions();
-            services.Configure<PersonaliseOptions>(
-                options => Configuration.GetSection("Personalise").Bind(options));
+
+            services.Configure<PersonaliseOptions>(options => Configuration.GetSection("Personalise").Bind(options));
+
+            services.Configure<AppSecretSettings>(Configuration);
 
             services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
@@ -40,6 +45,8 @@ namespace MartinKMe
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
+            // Add repositories
+            services.AddSingleton<IStore, Store>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
