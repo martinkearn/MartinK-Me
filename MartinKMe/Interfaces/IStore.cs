@@ -9,5 +9,7 @@ namespace MartinKMe.Interfaces
     public interface IStore
     {
         Task<List<Link>> GetLinks();
+
+        Task StoreLink(Link Link);
     }
 }
