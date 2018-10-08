@@ -6,11 +6,10 @@ using System.Threading.Tasks;
 
 namespace MartinKMe.Models
 {
-    public class Conference
+    public class Event
     {
-        [Key]
-        public int Id { get; set; }
-        public string ConferenceTitle { get; set; }
+        public string Title { get; set; }
+
         public string ExternalUrl { get; set; }
 
         [DisplayFormat(DataFormatString = "{0:d}")]
@@ -19,7 +18,5 @@ namespace MartinKMe.Models
         public string City { get; set; }
 
         public string ImageUrl { get; set; }
-
-        public virtual ICollection<ConferenceTalk> ConferenceTalks { get; set; }
     }
 }

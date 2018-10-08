@@ -11,5 +11,9 @@ namespace MartinKMe.Interfaces
         Task<List<Link>> GetLinks();
 
         Task StoreLink(Link Link);
+
+        Task<List<Event>> GetEvents(int take);
+
+        Task StoreEvent(Event Event);
     }
 }

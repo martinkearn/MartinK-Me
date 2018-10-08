@@ -12,10 +12,12 @@ namespace MartinKMe.Controllers
 {
     public class RedirectController : Controller
     {
+        private ApplicationDbContext _db;
         private readonly IStore _store;
 
-        public RedirectController(IStore store)
+        public RedirectController(ApplicationDbContext db, IStore store)
         {
+            _db = db;
             _store = store;
         }
 
@@ -33,5 +35,7 @@ namespace MartinKMe.Controllers
                 return RedirectToAction("Index", "Home");
             }
         }
+
+
     }
 }

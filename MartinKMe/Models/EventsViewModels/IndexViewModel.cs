@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace MartinKMe.Models.CalendarViewModels
+namespace MartinKMe.Models.EventsViewModels
 {
     public class IndexViewModel
     {
-        public List<Conference> Conferences { get; set; }
+        public List<Event> Events { get; set; }
     }
 }

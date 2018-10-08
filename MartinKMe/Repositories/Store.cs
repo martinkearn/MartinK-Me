@@ -6,6 +6,7 @@ using Microsoft.WindowsAzure.Storage.Table;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 
@@ -16,6 +17,8 @@ namespace MartinKMe.Repositories
         private readonly AppSecretSettings _appSecretSettings;
         private const string _linksContainer = "Links";
         private const string _linkPartitionkey = "Links";
+        private const string _eventContainer = "Events";
+        private const string _eventPartitionkey = "Events";
 
         public Store(IOptions<AppSecretSettings> appSecretSettings)
         {
@@ -38,34 +41,82 @@ namespace MartinKMe.Repositories
                 entities.AddRange(queryResult.Results);
                 token = queryResult.ContinuationToken;
             } while (token != null);
-
-            // create list of objects from the storage entities
-            var links = new List<Link>();
+            
+            var results = new List<Link>();
             foreach (var entity in entities)
             {
-                Link toBeAdded = entity.OriginalEntity;
-                links.Add(toBeAdded);
+                var resultToBeAdded = entity.OriginalEntity;
+                results.Add(resultToBeAdded);
             }
 
-            return links;
+            return results;
+        }
+
+
+        public async Task<List<Event>> GetEvents(int take = 100)
+        {
+            var table = await GetCloudTable(_appSecretSettings.StorageConnectionString, _eventContainer);
+
+            TableContinuationToken token = null;
+
+            var entities = new List<TableEntityAdapter<Event>>();
+
+            TableQuery<TableEntityAdapter<Event>> query = new TableQuery<TableEntityAdapter<Event>>();
+
+            do
+            {
+                var queryResult = await table.ExecuteQuerySegmentedAsync(query, token);
+                entities.AddRange(queryResult.Results);
+                token = queryResult.ContinuationToken;
+            } while (token != null);
+            
+            var results = new List<Event>();
+            foreach (var entity in entities)
+            {
+                var resultToBeAdded = entity.OriginalEntity;
+                results.Add(resultToBeAdded);
+            }
+
+            var sortedList = results.OrderByDescending(o => o.Date)
+                .Take(take)
+                .ToList();
+
+            return sortedList;
         }
 
         public async Task StoreLink(Link item)
         {
-            var table = await GetCloudTable(_appSecretSettings.StorageConnectionString, _linksContainer);
+            var table = await GetCloudTable(_appSecretSettings.StorageConnectionString, _eventContainer);
 
-            // Create the batch operation.
             TableBatchOperation batchOperation = new TableBatchOperation();
 
-            // Create a TableEntityAdapter based on the item
-            TableEntityAdapter<Link> entity = new TableEntityAdapter<Link>(item, _linkPartitionkey, GetRowKey(item.Tag));
+            var entity = new TableEntityAdapter<Link>(item, _eventPartitionkey, item.Tag.ToLower());
             batchOperation.InsertOrReplace(entity);
 
-            // Execute the batch operation.
             await table.ExecuteBatchAsync(batchOperation);
         }
 
-        private string GetRowKey(string id) => id.ToLower();
+        public async Task StoreEvent(Event item)
+        {
+            var table = await GetCloudTable(_appSecretSettings.StorageConnectionString, _eventContainer);
+
+            TableBatchOperation batchOperation = new TableBatchOperation();
+
+            var rowKey = $"{FormatForUrl(item.Title)}-{FormatForUrl(item.Date.ToShortDateString())}";
+            var entity = new TableEntityAdapter<Event>(item, _eventPartitionkey, rowKey);
+            batchOperation.InsertOrReplace(entity);
+
+            await table.ExecuteBatchAsync(batchOperation);
+        }
+
+        private static string FormatForUrl(string str)
+        {
+            var a = str.Replace(" ", "-");
+            var b = a.Replace("/", "-");
+            var c = Regex.Replace(b, "[^a-zA-Z0-9_.-]+", "", RegexOptions.Compiled);
+            var d = c.ToLower();
+            return d;
+        }
 
         private async Task<CloudTable> GetCloudTable(string tableConnectionString, string containerName)
         {
