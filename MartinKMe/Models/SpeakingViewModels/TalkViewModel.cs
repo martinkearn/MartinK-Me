@@ -9,7 +9,5 @@ namespace MartinKMe.Models.SpeakingViewModels
     public class TalkViewModel
     {
         public Talk Talk { get; set; }
-
-        public IEnumerable<Resource> Resources { get; set; }
     }
 }

@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using MartinKMe.Data;
 using MartinKMe.Interfaces;
 using MartinKMe.Models;
 using MartinKMe.Repositories;
@@ -35,8 +34,6 @@ namespace MartinKMe
             services.Configure<PersonaliseOptions>(options => Configuration.GetSection("Personalise").Bind(options));
 
             services.Configure<AppSecretSettings>(Configuration);
-
-            services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(Configuration["DbConnectionString"]));
 
             services.Configure<CookiePolicyOptions>(options =>
             {

@@ -3,21 +3,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using MartinKMe.Data;
 using Microsoft.EntityFrameworkCore;
 using MartinKMe.Interfaces;
 using MartinKMe.Models;
+using System.Text.RegularExpressions;
 
 namespace MartinKMe.Controllers
 {
     public class RedirectController : Controller
     {
-        private ApplicationDbContext _db;
         private readonly IStore _store;
 
-        public RedirectController(ApplicationDbContext db, IStore store)
+        public RedirectController(IStore store)
         {
-            _db = db;
             _store = store;
         }
 
@@ -35,7 +33,5 @@ namespace MartinKMe.Controllers
                 return RedirectToAction("Index", "Home");
             }
         }
-
-
     }
 }

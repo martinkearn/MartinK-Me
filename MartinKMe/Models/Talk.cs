@@ -8,11 +8,8 @@ namespace MartinKMe.Models
 {
     public class Talk
     {
-        [Key]
-        public int Id { get; set; }
-        public string Title { get; set; }
 
-        public string Url { get; set; }
+        public string Title { get; set; }
 
         public string Description { get; set; }
 
@@ -21,5 +18,7 @@ namespace MartinKMe.Models
         public string Audience { get; set; }
 
         public string Time { get; set; }
+
+        public string Url { get; set; }
     }
 }

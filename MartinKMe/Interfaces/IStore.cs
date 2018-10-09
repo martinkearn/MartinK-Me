@@ -15,5 +15,9 @@ namespace MartinKMe.Interfaces
         Task<List<Event>> GetEvents(int take);
 
         Task StoreEvent(Event Event);
+
+        Task<List<Talk>> GetTalks();
+
+        Task StoreTalk(Talk Talk);
     }
 }

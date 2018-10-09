@@ -19,6 +19,8 @@ namespace MartinKMe.Repositories
         private const string _linkPartitionkey = "Links";
         private const string _eventContainer = "Events";
         private const string _eventPartitionkey = "Events";
+        private const string _talkContainer = "Talks";
+        private const string _talkPartitionkey = "Talks";
 
         public Store(IOptions<AppSecretSettings> appSecretSettings)
         {
@@ -52,7 +54,6 @@ namespace MartinKMe.Repositories
             return results;
         }
 
-
         public async Task<List<Event>> GetEvents(int take = 100)
         {
             var table = await GetCloudTable(_appSecretSettings.StorageConnectionString, _eventContainer);
@@ -84,6 +85,36 @@ namespace MartinKMe.Repositories
             return sortedList;
         }
 
+        public async Task<List<Talk>> GetTalks()
+        {
+            var table = await GetCloudTable(_appSecretSettings.StorageConnectionString, _talkContainer);
+
+            TableContinuationToken token = null;
+
+            var entities = new List<TableEntityAdapter<Talk>>();
+
+            TableQuery<TableEntityAdapter<Talk>> query = new TableQuery<TableEntityAdapter<Talk>>();
+
+            do
+            {
+                var queryResult = await table.ExecuteQuerySegmentedAsync(query, token);
+                entities.AddRange(queryResult.Results);
+                token = queryResult.ContinuationToken;
+            } while (token != null);
+
+            var results = new List<Talk>();
+            foreach (var entity in entities)
+            {
+                var resultToBeAdded = entity.OriginalEntity;
+                results.Add(resultToBeAdded);
+            }
+
+            var sortedList = results
+                .ToList();
+
+            return sortedList;
+        }
+
         public async Task StoreLink(Link item)
         {
             var table = await GetCloudTable(_appSecretSettings.StorageConnectionString, _eventContainer);
@@ -104,6 +135,19 @@ namespace MartinKMe.Repositories
 
             var rowKey = $"{FormatForUrl(item.Title)}-{FormatForUrl(item.Date.ToShortDateString())}";
             var entity = new TableEntityAdapter<Event>(item, _eventPartitionkey, rowKey);
+            batchOperation.InsertOrReplace(entity);
+
+            await table.ExecuteBatchAsync(batchOperation);
+        }
+
+        public async Task StoreTalk(Talk item)
+        {
+            var table = await GetCloudTable(_appSecretSettings.StorageConnectionString, _talkContainer);
+
+            TableBatchOperation batchOperation = new TableBatchOperation();
+
+            var rowKey = $"{FormatForUrl(item.Title)}";
+            var entity = new TableEntityAdapter<Talk>(item, _talkPartitionkey, rowKey);
             batchOperation.InsertOrReplace(entity);
 
             await table.ExecuteBatchAsync(batchOperation);
