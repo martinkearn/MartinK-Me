@@ -31,34 +31,25 @@ namespace Functions
                 // get raw file and extract YAML
                 using (var client = new HttpClient())
                 {
-                    //setup HttpClient
+                    // setup HttpClient
                     client.BaseAddress = new Uri(url);
                     client.DefaultRequestHeaders.Add("User-Agent", "MartinK.me ExtractYAML Function");
 
-                    //setup httpContent object
-                    var response = await client.GetAsync(url);
+                    // get raw Markdown document
+                    var response = await client.GetStringAsync(url);
 
-                    //return null if not sucessfull
-                    if (response.IsSuccessStatusCode)
-                    {
-                        string rawFile = await response.Content.ReadAsStringAsync();
+                    // chop off the markdown, leaving just the YAML header
+                    var yaml = response.Substring(0, response.LastIndexOf("---"));
 
-                        var input = new StringReader(rawFile);
+                    // deserliase the YAML
+                    var deserializer = new DeserializerBuilder()
+                        .WithNamingConvention(new CamelCaseNamingConvention())
+                        .Build();
+                    var article = deserializer.Deserialize<Article>(yaml);
 
-                        var deserializer = new DeserializerBuilder()
-                            .WithNamingConvention(new CamelCaseNamingConvention())
-                            .Build();
-
-                        var article = deserializer.Deserialize<Article>(input);
-
-                        // respond
-                        return (ActionResult)new OkObjectResult(article);
-                    }
-                    else
-                    {
-                        // repsond with bad request
-                        return (ActionResult)new BadRequestObjectResult(response.ReasonPhrase);
-                    }
+                    // respond
+                    return (ActionResult)new OkObjectResult(article);
+                    
                 }
             }
             else
