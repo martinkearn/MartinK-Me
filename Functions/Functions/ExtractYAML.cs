@@ -45,11 +45,22 @@ namespace Functions
                     var deserializer = new DeserializerBuilder()
                         .WithNamingConvention(new CamelCaseNamingConvention())
                         .Build();
-                    var article = deserializer.Deserialize<Article>(yaml);
+                    var yamlHeader = deserializer.Deserialize<YamlHeader>(yaml);
+
+                    // build dto
+                    var dto = new MetadataDTO()
+                    {
+                        RowKey = yamlHeader.Title.Replace(" ", "-").ToLowerInvariant(),
+                        Title = yamlHeader.Title,
+                        Author = yamlHeader.Author,
+                        Description = yamlHeader.Description,
+                        Image = yamlHeader.Image,
+                        Published = yamlHeader.Published,
+                        Categories = string.Join(",", yamlHeader.Categories)
+                    };
 
                     // respond
-                    return (ActionResult)new OkObjectResult(article);
-                    
+                    return (ActionResult)new OkObjectResult(dto);         
                 }
             }
             else
@@ -60,10 +71,24 @@ namespace Functions
         }
     }
 
-public class Article
-{
-    public string Title { get; set; }
-    public string Author { get; set; }
-    public List<string> Categories { get; set; }
-}
+    public class YamlHeader
+    {
+        public string Title { get; set; }
+        public string Author { get; set; }
+        public string Description { get; set; }
+        public string Image { get; set; }
+        public DateTime Published { get; set; }
+        public List<string> Categories { get; set; }
+    }
+
+    public class MetadataDTO
+    {
+        public string RowKey { get; set; }
+        public string Title { get; set; }
+        public string Author { get; set; }
+        public string Description { get; set; }
+        public string Image { get; set; }
+        public DateTime Published { get; set; }
+        public string Categories { get; set; }
+    }
 }
