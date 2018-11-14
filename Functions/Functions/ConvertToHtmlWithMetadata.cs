@@ -24,42 +24,35 @@ namespace Functions
         {
             log.LogInformation("ConvertToHtmlWithMetadata function processed a request.");
 
-            // get payload
+            // get payload which is a URL to a Git Hub Repo API File object
             string requestBody = new StreamReader(req.Body).ReadToEnd();
             if (!string.IsNullOrEmpty(requestBody))
             {
-                // get url from request body
-                var url = requestBody;
-
                 // get raw file and extract YAML
                 using (var client = new HttpClient())
                 {
-                    // setup HttpClient
-                    client.BaseAddress = new Uri(url);
+                    // setup HttpClient and get GitHub API response JSON and decode the content from base 64
+                    client.BaseAddress = new Uri(requestBody);
                     client.DefaultRequestHeaders.Add("User-Agent", "MartinK.me ExtractYAML Function");
+                    var gitHubFileString = await client.GetStringAsync(requestBody);
 
-                    // get GitHub API response JSON and decode the content from base 64
-                    var gitHubFileString = await client.GetStringAsync(url);
+                    // deserialise JSON and decode Base64 content
                     dynamic gitHubFile = JsonConvert.DeserializeObject(gitHubFileString);
-                    var content = Helpers.Base64Decode((string)gitHubFile.content);
+                    var fileContent = Helpers.Base64Decode((string)gitHubFile.content);
 
-                    // chop off the markdown, leaving just the YAML header
-                    var yaml = content.Substring(0, content.LastIndexOf("---"));
-
-                    // deserliase the YAML
-                    var deserializer = new DeserializerBuilder()
+                    // deserliase the YAML with YamlDotNet
+                    var yamlString = fileContent.Substring(0, fileContent.LastIndexOf("---")); // chop off the markdown, leaving just the YAML header as YamlDotNet only deals with YAML documents
+                    var yamlDeserializer = new DeserializerBuilder()
                         .WithNamingConvention(new CamelCaseNamingConvention())
                         .Build();
-                    var yamlHeader = deserializer.Deserialize<YamlHeader>(yaml);
+                    var yamlHeader = yamlDeserializer.Deserialize<YamlHeader>(yamlString);
 
                     // parse markdown to html with MarkDig
-                    var pipeline = new MarkdownPipelineBuilder()
+                    var mdPipeline = new MarkdownPipelineBuilder()
                         .UseYamlFrontMatter()
                         .UseAdvancedExtensions()
                         .Build();
-                    var html = Markdown.ToHtml(content, pipeline);
-
-                    //the line endings are getting lsot when it is commited to storage
+                    var html = Markdown.ToHtml(fileContent, mdPipeline);
 
                     // build dto
                     var dto = new Dto()
@@ -71,10 +64,10 @@ namespace Functions
                         Image = yamlHeader.Image,
                         Published = yamlHeader.Published,
                         Categories = string.Join(",", yamlHeader.Categories),
-                        HtmlBase64 = Helpers.Base64Encode(html)
+                        HtmlBase64 = Helpers.Base64Encode(html) // Base64 required to make sure things like line endings are properly included
                     };
 
-                    // respond
+                    // respond with OK and the DTO object
                     return (ActionResult)new OkObjectResult(dto);         
                 }
             }

@@ -30,6 +30,7 @@ namespace Functions
 
             if (!string.IsNullOrEmpty(requestBody))
             {
+                // deserialise payload to dynamic object
                 dynamic payload = JsonConvert.DeserializeObject(requestBody);
 
                 // get commit details required to call API
@@ -41,30 +42,35 @@ namespace Functions
                 var markdownFilesInCommit = new List<string>();
                 using (var client = new HttpClient())
                 {
-                    //setup HttpClient
+                    //setup HttpClient and get Commit
                     var getCommitUrl = $"https://api.github.com/repos/{owner}/{repo}/commits/{commitId}";
                     client.BaseAddress = new Uri(getCommitUrl);
                     client.DefaultRequestHeaders.Add("User-Agent", "MartinK.me FilesList Function");
-
-                    //setup httpContent object
                     var getCommitResponse = await client.GetAsync(getCommitUrl);
 
-                    //return null if not sucessfull
+                    //return BadRequest if not sucessfull
                     if (getCommitResponse.IsSuccessStatusCode)
                     {
+                        // deserialise the commit JSON
                         var getCommitResponseString = await getCommitResponse.Content.ReadAsStringAsync();
                         dynamic commit = JsonConvert.DeserializeObject(getCommitResponseString);
 
-                        // get the file
+                        // get the files in the commit
                         foreach (dynamic file in commit.files)
                         {
                             var fileApiUrl = $"https://api.github.com/repos/{owner}/{repo}/contents/{file.filename}";
                             if (fileApiUrl.ToLower().EndsWith(".md"))
                             {
+                                //TO DO: Do we need ot look at file.status to check what type of update it was 'modified', 'added', 'deleted'
                                 //we have a markdown file
                                 markdownFilesInCommit.Add(fileApiUrl);
                             }
                         }
+                    }
+                    else
+                    {
+                        // repsond with bad request
+                        return (ActionResult)new BadRequestResult();
                     }
                 }
 
