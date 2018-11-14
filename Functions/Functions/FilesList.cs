@@ -42,27 +42,27 @@ namespace Functions
                 using (var client = new HttpClient())
                 {
                     //setup HttpClient
-                    var fullApiUrl = $"https://api.github.com/repos/{owner}/{repo}/commits/{commitId}";
-                    client.BaseAddress = new Uri(fullApiUrl);
+                    var getCommitUrl = $"https://api.github.com/repos/{owner}/{repo}/commits/{commitId}";
+                    client.BaseAddress = new Uri(getCommitUrl);
                     client.DefaultRequestHeaders.Add("User-Agent", "MartinK.me FilesList Function");
 
                     //setup httpContent object
-                    var response = await client.GetAsync(fullApiUrl);
+                    var getCommitResponse = await client.GetAsync(getCommitUrl);
 
                     //return null if not sucessfull
-                    if (response.IsSuccessStatusCode)
+                    if (getCommitResponse.IsSuccessStatusCode)
                     {
-                        var responseString = await response.Content.ReadAsStringAsync();
-                        dynamic commit = JsonConvert.DeserializeObject(responseString);
+                        var getCommitResponseString = await getCommitResponse.Content.ReadAsStringAsync();
+                        dynamic commit = JsonConvert.DeserializeObject(getCommitResponseString);
 
                         // get the file
                         foreach (dynamic file in commit.files)
                         {
-                            string fileRawUrl = file.raw_url.ToString();
-                            if (fileRawUrl.ToLower().EndsWith(".md"))
+                            var fileApiUrl = $"https://api.github.com/repos/{owner}/{repo}/contents/{file.filename}";
+                            if (fileApiUrl.ToLower().EndsWith(".md"))
                             {
                                 //we have a markdown file
-                                markdownFilesInCommit.Add(fileRawUrl);
+                                markdownFilesInCommit.Add(fileApiUrl);
                             }
                         }
                     }

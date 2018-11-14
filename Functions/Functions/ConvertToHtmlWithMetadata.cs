@@ -49,12 +49,12 @@ namespace Functions
                     var yamlHeader = deserializer.Deserialize<YamlHeader>(yaml);
 
                     // parse markdown to html with MarkDig
-var pipeline = new MarkdownPipelineBuilder()
-    .UseYamlFrontMatter()
-    .UseAdvancedExtensions()
-    .ConfigureNewLine("\r\n")
-    .Build();
-var html = Markdown.ToHtml(response, pipeline);
+                    var pipeline = new MarkdownPipelineBuilder()
+                        .UseYamlFrontMatter()
+                        .UseAdvancedExtensions()
+                        .ConfigureNewLine("\r\n")
+                        .Build();
+                    var html = Markdown.ToHtml(response, pipeline);
 
                     //// parse markdown to html with CommonMark.net
                     //var html = string.Empty;
@@ -112,5 +112,28 @@ var html = Markdown.ToHtml(response, pipeline);
         public DateTime Published { get; set; }
         public string Categories { get; set; }
         public string Html { get; set; }
+    }
+
+    public class GitHubFile
+    {
+            public string name { get; set; }
+            public string path { get; set; }
+            public string sha { get; set; }
+            public int size { get; set; }
+            public string url { get; set; }
+            public string html_url { get; set; }
+            public string git_url { get; set; }
+            public string download_url { get; set; }
+            public string type { get; set; }
+            public string content { get; set; }
+            public string encoding { get; set; }
+            public GitHubFileLinks _links { get; set; }
+    }
+
+    public class GitHubFileLinks
+    {
+        public string self { get; set; }
+        public string git { get; set; }
+        public string html { get; set; }
     }
 }
