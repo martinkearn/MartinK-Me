@@ -12,6 +12,8 @@ using System.Net.Http;
 using YamlDotNet.Serialization;
 using YamlDotNet.Serialization.NamingConventions;
 using Markdig;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.Text;
 
 namespace Functions
 {
@@ -36,11 +38,13 @@ namespace Functions
                     client.BaseAddress = new Uri(url);
                     client.DefaultRequestHeaders.Add("User-Agent", "MartinK.me ExtractYAML Function");
 
-                    // get raw Markdown document
-                    var response = await client.GetStringAsync(url);
+                    // get GitHub API response JSON and decode the content from base 64
+                    var gitHubFileString = await client.GetStringAsync(url);
+                    dynamic gitHubFile = JsonConvert.DeserializeObject(gitHubFileString);
+                    var content = Helpers.Base64Decode((string)gitHubFile.content);
 
                     // chop off the markdown, leaving just the YAML header
-                    var yaml = response.Substring(0, response.LastIndexOf("---"));
+                    var yaml = content.Substring(0, content.LastIndexOf("---"));
 
                     // deserliase the YAML
                     var deserializer = new DeserializerBuilder()
@@ -52,20 +56,10 @@ namespace Functions
                     var pipeline = new MarkdownPipelineBuilder()
                         .UseYamlFrontMatter()
                         .UseAdvancedExtensions()
-                        .ConfigureNewLine("\r\n")
                         .Build();
-                    var html = Markdown.ToHtml(response, pipeline);
+                    var html = Markdown.ToHtml(content, pipeline);
 
-                    //// parse markdown to html with CommonMark.net
-                    //var html = string.Empty;
-                    //using (var writer = new StringWriter())
-                    //{
-                    //    CommonMark.CommonMarkConverter.ProcessStage3(CommonMark.CommonMarkConverter.Parse(response), writer);
-                    //    html += writer.ToString();
-                    //}
-
-                    //// parse markdown to html with MarkdownSharp
-                    //var html = new MarkdownSharp.Markdown().Transform(response);
+                    //the line endings are getting lsot when it is commited to storage
 
                     // build dto
                     var dto = new Dto()
@@ -77,7 +71,7 @@ namespace Functions
                         Image = yamlHeader.Image,
                         Published = yamlHeader.Published,
                         Categories = string.Join(",", yamlHeader.Categories),
-                        Html = html
+                        HtmlBase64 = Helpers.Base64Encode(html)
                     };
 
                     // respond
@@ -111,29 +105,6 @@ namespace Functions
         public string Image { get; set; }
         public DateTime Published { get; set; }
         public string Categories { get; set; }
-        public string Html { get; set; }
-    }
-
-    public class GitHubFile
-    {
-            public string name { get; set; }
-            public string path { get; set; }
-            public string sha { get; set; }
-            public int size { get; set; }
-            public string url { get; set; }
-            public string html_url { get; set; }
-            public string git_url { get; set; }
-            public string download_url { get; set; }
-            public string type { get; set; }
-            public string content { get; set; }
-            public string encoding { get; set; }
-            public GitHubFileLinks _links { get; set; }
-    }
-
-    public class GitHubFileLinks
-    {
-        public string self { get; set; }
-        public string git { get; set; }
-        public string html { get; set; }
+        public string HtmlBase64 { get; set; }
     }
 }
