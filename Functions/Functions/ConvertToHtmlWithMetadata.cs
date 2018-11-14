@@ -11,15 +11,16 @@ using System.Collections.Generic;
 using System.Net.Http;
 using YamlDotNet.Serialization;
 using YamlDotNet.Serialization.NamingConventions;
+using Markdig;
 
 namespace Functions
 {
-    public static class ExtractYAML
+    public static class ConvertToHtmlWithMetadata
     {
-        [FunctionName("ExtractYAML")]
+        [FunctionName("ConvertToHtmlWithMetadata")]
         public static async Task<IActionResult> Run([HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = null)] HttpRequest req, ILogger log)
         {
-            log.LogInformation("ExtractYAML function processed a request.");
+            log.LogInformation("ConvertToHtmlWithMetadata function processed a request.");
 
             // get payload
             string requestBody = new StreamReader(req.Body).ReadToEnd();
@@ -47,8 +48,27 @@ namespace Functions
                         .Build();
                     var yamlHeader = deserializer.Deserialize<YamlHeader>(yaml);
 
+                    // parse markdown to html with MarkDig
+var pipeline = new MarkdownPipelineBuilder()
+    .UseYamlFrontMatter()
+    .UseAdvancedExtensions()
+    .ConfigureNewLine("\r\n")
+    .Build();
+var html = Markdown.ToHtml(response, pipeline);
+
+                    //// parse markdown to html with CommonMark.net
+                    //var html = string.Empty;
+                    //using (var writer = new StringWriter())
+                    //{
+                    //    CommonMark.CommonMarkConverter.ProcessStage3(CommonMark.CommonMarkConverter.Parse(response), writer);
+                    //    html += writer.ToString();
+                    //}
+
+                    //// parse markdown to html with MarkdownSharp
+                    //var html = new MarkdownSharp.Markdown().Transform(response);
+
                     // build dto
-                    var dto = new MetadataDTO()
+                    var dto = new Dto()
                     {
                         RowKey = yamlHeader.Title.Replace(" ", "-").ToLowerInvariant(),
                         Title = yamlHeader.Title,
@@ -56,7 +76,8 @@ namespace Functions
                         Description = yamlHeader.Description,
                         Image = yamlHeader.Image,
                         Published = yamlHeader.Published,
-                        Categories = string.Join(",", yamlHeader.Categories)
+                        Categories = string.Join(",", yamlHeader.Categories),
+                        Html = html
                     };
 
                     // respond
@@ -81,7 +102,7 @@ namespace Functions
         public List<string> Categories { get; set; }
     }
 
-    public class MetadataDTO
+    public class Dto
     {
         public string RowKey { get; set; }
         public string Title { get; set; }
@@ -90,5 +111,6 @@ namespace Functions
         public string Image { get; set; }
         public DateTime Published { get; set; }
         public string Categories { get; set; }
+        public string Html { get; set; }
     }
 }
