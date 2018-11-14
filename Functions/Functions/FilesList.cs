@@ -15,7 +15,7 @@ namespace Functions
     public static class FilesList
     {
         /// <summary>
-        /// Receives JSON from a GitHub Webhook Push event and extacts a list of changed, added or deleted *.md files
+        /// Receives JSON from a GitHub Webhook Push event and extacts a list of changed, added or deleted *.md files. Then works out the GitHub repo API endpoint for each one and adds to an array which is returned
         /// </summary>
         /// <param name="req"></param>
         /// <param name="log"></param>
