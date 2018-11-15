@@ -57,14 +57,16 @@ namespace Functions
                     // build dto
                     var dto = new Dto()
                     {
+                        Title = yamlHeader.Title ?? string.Empty,
                         RowKey = yamlHeader.Title.Replace(" ", "-").ToLowerInvariant(),
-                        Title = yamlHeader.Title,
-                        Author = yamlHeader.Author,
-                        Description = yamlHeader.Description,
-                        Image = yamlHeader.Image,
+                        Author = yamlHeader.Author ?? string.Empty,
+                        Description = yamlHeader.Description ?? string.Empty,
+                        Image = yamlHeader.Image.ToLowerInvariant() ?? string.Empty,
+                        Thumbnail = yamlHeader.Thumbnail.ToLowerInvariant() ?? string.Empty,
+                        Type = yamlHeader.Type.ToLowerInvariant() ?? string.Empty,
                         Published = yamlHeader.Published,
-                        Categories = string.Join(",", yamlHeader.Categories),
-                        HtmlBase64 = Helpers.Base64Encode(html) // Base64 required to make sure things like line endings are properly included
+                        Categories = (string.Join(",", yamlHeader.Categories)) ?? string.Empty,
+                        HtmlBase64 = (Helpers.Base64Encode(html)) ?? string.Empty // Base64 required to make sure things like line endings are properly included
                     };
 
                     // respond with OK and the DTO object
@@ -85,6 +87,8 @@ namespace Functions
         public string Author { get; set; }
         public string Description { get; set; }
         public string Image { get; set; }
+        public string Thumbnail { get; set; }
+        public string Type { get; set; }
         public DateTime Published { get; set; }
         public List<string> Categories { get; set; }
     }
@@ -96,6 +100,8 @@ namespace Functions
         public string Author { get; set; }
         public string Description { get; set; }
         public string Image { get; set; }
+        public string Thumbnail { get; set; }
+        public string Type { get; set; }
         public DateTime Published { get; set; }
         public string Categories { get; set; }
         public string HtmlBase64 { get; set; }
