@@ -10,40 +10,23 @@ using MartinKMe.Models;
 using MartinKMe.Models.ArticlesViewModels;
 using System.Text.Encodings.Web;
 using Microsoft.Extensions.Options;
+using MartinKMe.Interfaces;
 
 namespace MartinKMe.Controllers
 {
     public class ArticlesController : Controller
     {
-        private PersonaliseOptions _options;
 
-        public ArticlesController(IOptions<PersonaliseOptions> options)
+        private readonly IStore _store;
+
+        public ArticlesController(IStore store)
         {
-            _options = options.Value;
+            _store = store;
         }
 
         public async Task<IActionResult> Index()
         {
-            var articles = new List<FeedItem>();
-
-            using (var client = new HttpClient())
-            {
-                client.BaseAddress = new Uri(_options.BlogFeed);
-                var responseMessage = await client.GetAsync(_options.BlogFeed);
-                var responseString = await responseMessage.Content.ReadAsStringAsync();
-
-                //extract feed items
-                XDocument doc = XDocument.Parse(responseString);
-                var feedItems = from item in doc.Root.Descendants().First(i => i.Name.LocalName == "channel").Elements().Where(i => i.Name.LocalName == "item")
-                                select new FeedItem
-                                {
-                                    Description = QuickXmlDecode(item.Elements().First(i => i.Name.LocalName == "description").Value),
-                                    Link = item.Elements().First(i => i.Name.LocalName == "link").Value,
-                                    PublishDate = ParseDate(item.Elements().First(i => i.Name.LocalName == "pubDate").Value),
-                                    Title = item.Elements().First(i => i.Name.LocalName == "title").Value
-                                };
-                articles = feedItems.ToList();
-            }
+            var articles = await _store.GetContents();
 
             var vm = new IndexViewModel()
             {
@@ -51,26 +34,6 @@ namespace MartinKMe.Controllers
             };
 
             return View(vm);
-        }
-
-        private DateTime ParseDate(string date)
-        {
-            DateTime result;
-            if (DateTime.TryParse(date, out result))
-                return result;
-            else
-                return DateTime.MinValue;
-        }
-
-        private string QuickXmlDecode(string orginal)
-        {
-            var returnString = orginal.Replace("&#8217;", "'");
-            returnString = returnString.Replace("&#8216;", "‘");
-            returnString = returnString.Replace("&#8217;", "’");
-            returnString = returnString.Replace("&#8220;", "\"");
-            returnString = returnString.Replace("&#8220;", "\"");
-            returnString = returnString.Replace("&#160;", " ");
-            return returnString; 
         }
     }
 }

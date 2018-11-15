@@ -8,6 +8,6 @@ namespace MartinKMe.Models.ArticlesViewModels
 {
     public class IndexViewModel
     {
-        public List<FeedItem> Articles { get; set; }
+        public List<Content> Articles { get; set; }
     }
 }

@@ -21,6 +21,8 @@ namespace MartinKMe.Repositories
         private const string _eventPartitionkey = "Events";
         private const string _talkContainer = "Talks";
         private const string _talkPartitionkey = "Talks";
+        private const string _contentContainer = "Contents";
+        private const string _articlePartitionkey = "article";
 
         public Store(IOptions<AppSecretSettings> appSecretSettings)
         {
@@ -151,6 +153,38 @@ namespace MartinKMe.Repositories
             batchOperation.InsertOrReplace(entity);
 
             await table.ExecuteBatchAsync(batchOperation);
+        }
+
+
+        public async Task<List<Content>> GetContents()
+        {
+            var table = await GetCloudTable(_appSecretSettings.StorageConnectionString, _contentContainer);
+
+            TableContinuationToken token = null;
+
+            var entities = new List<TableEntityAdapter<Content>>();
+
+            TableQuery<TableEntityAdapter<Content>> query = new TableQuery<TableEntityAdapter<Content>>();
+
+            // possiblre issue with case of properties in table????
+            do
+            {
+                var queryResult = await table.ExecuteQuerySegmentedAsync(query, token);
+                entities.AddRange(queryResult.Results);
+                token = queryResult.ContinuationToken;
+            } while (token != null);
+
+            var results = new List<Content>();
+            foreach (var entity in entities)
+            {
+                var resultToBeAdded = entity.OriginalEntity;
+                results.Add(resultToBeAdded);
+            }
+
+            var sortedList = results
+                .ToList();
+
+            return sortedList;
         }
 
         private static string FormatForUrl(string str)
