@@ -55,10 +55,14 @@ namespace Functions
                     var html = Markdown.ToHtml(fileContent, mdPipeline);
 
                     // build dto
+                    var title = yamlHeader.Title ?? $"{DateTime.UtcNow.ToShortDateString()}-{DateTime.UtcNow.ToShortTimeString()}";
+                    var path = string.Join("-", title.Split(Path.GetInvalidFileNameChars()));
+                    path = path.Replace(" ", "-");
+                    path = path.ToLowerInvariant();
                     var dto = new Dto()
                     {
-                        Title = yamlHeader.Title ?? string.Empty,
-                        RowKey = yamlHeader.Title.Replace(" ", "-").ToLowerInvariant(),
+                        Key = yamlHeader.Key ?? $"AutoGen-{Guid.NewGuid().ToString()}",
+                        Title = title,
                         Author = yamlHeader.Author ?? string.Empty,
                         Description = yamlHeader.Description ?? string.Empty,
                         Image = yamlHeader.Image.ToLowerInvariant() ?? string.Empty,
@@ -66,7 +70,8 @@ namespace Functions
                         Type = yamlHeader.Type.ToLowerInvariant() ?? string.Empty,
                         Published = yamlHeader.Published,
                         Categories = (string.Join(",", yamlHeader.Categories)) ?? string.Empty,
-                        HtmlBase64 = (Helpers.Base64Encode(html)) ?? string.Empty // Base64 required to make sure things like line endings are properly included
+                        HtmlBase64 = (Helpers.Base64Encode(html)) ?? string.Empty, // Base64 required to make sure things like line endings are properly included
+                        Path = path
                     };
 
                     // respond with OK and the DTO object
@@ -83,6 +88,7 @@ namespace Functions
 
     public class YamlHeader
     {
+        public string Key { get; set; }
         public string Title { get; set; }
         public string Author { get; set; }
         public string Description { get; set; }
@@ -95,7 +101,7 @@ namespace Functions
 
     public class Dto
     {
-        public string RowKey { get; set; }
+        public string Key { get; set; }
         public string Title { get; set; }
         public string Author { get; set; }
         public string Description { get; set; }
@@ -105,5 +111,6 @@ namespace Functions
         public DateTime Published { get; set; }
         public string Categories { get; set; }
         public string HtmlBase64 { get; set; }
+        public string Path { get; set; }
     }
 }
