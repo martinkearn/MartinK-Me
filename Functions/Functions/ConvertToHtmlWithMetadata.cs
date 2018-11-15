@@ -54,15 +54,18 @@ namespace Functions
                         .Build();
                     var html = Markdown.ToHtml(fileContent, mdPipeline);
 
+                    // check we have required props
+                    if (string.IsNullOrEmpty(yamlHeader.Key)) return (ActionResult)new BadRequestObjectResult("Key required in Yaml header");
+                    if (string.IsNullOrEmpty(yamlHeader.Title)) return (ActionResult)new BadRequestObjectResult("Title required in Yaml header");
+
                     // build dto
-                    var title = yamlHeader.Title ?? $"{DateTime.UtcNow.ToShortDateString()}-{DateTime.UtcNow.ToShortTimeString()}";
-                    var path = string.Join("-", title.Split(Path.GetInvalidFileNameChars()));
+                    var path = string.Join("-", yamlHeader.Title.Split(Path.GetInvalidFileNameChars()));
                     path = path.Replace(" ", "-");
                     path = path.ToLowerInvariant();
                     var dto = new Dto()
                     {
-                        Key = yamlHeader.Key ?? $"AutoGen-{Guid.NewGuid().ToString()}",
-                        Title = title,
+                        Key = yamlHeader.Key,
+                        Title = yamlHeader.Title,
                         Author = yamlHeader.Author ?? string.Empty,
                         Description = yamlHeader.Description ?? string.Empty,
                         Image = yamlHeader.Image.ToLowerInvariant() ?? string.Empty,
