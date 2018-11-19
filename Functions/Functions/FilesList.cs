@@ -70,7 +70,7 @@ namespace Functions
                     else
                     {
                         // repsond with bad request
-                        return (ActionResult)new BadRequestResult();
+                        return (ActionResult)new BadRequestObjectResult($"GitHub API {getCommitUrl} returned a non-sucess status code.");
                     }
                 }
 
@@ -80,7 +80,7 @@ namespace Functions
             else
             {
                 // repsond with bad request
-                return (ActionResult)new BadRequestResult();
+                return (ActionResult)new BadRequestObjectResult("Empty body received in request");
             }
 
         }

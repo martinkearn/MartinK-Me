@@ -162,11 +162,10 @@ namespace MartinKMe.Repositories
 
             TableContinuationToken token = null;
 
-            var entities = new List<TableEntityAdapter<Content>>();
+            var entities = new List<TableEntityAdapter<ContentDto>>();
 
-            TableQuery<TableEntityAdapter<Content>> query = new TableQuery<TableEntityAdapter<Content>>();
+            TableQuery<TableEntityAdapter<ContentDto>> query = new TableQuery<TableEntityAdapter<ContentDto>>();
 
-            // possiblre issue with case of properties in table????
             do
             {
                 var queryResult = await table.ExecuteQuerySegmentedAsync(query, token);
@@ -174,17 +173,28 @@ namespace MartinKMe.Repositories
                 token = queryResult.ContinuationToken;
             } while (token != null);
 
+            // issue with case of properties in table so casting to my own object class
             var results = new List<Content>();
             foreach (var entity in entities)
             {
                 var resultToBeAdded = entity.OriginalEntity;
-                results.Add(resultToBeAdded);
+                results.Add(new Content()
+                {
+                    Author = resultToBeAdded.author,
+                    Categories = resultToBeAdded.categories,
+                    Description = resultToBeAdded.description,
+                    HtmlBase64 = resultToBeAdded.htmlBase64,
+                    Image = resultToBeAdded.image,
+                    Key = resultToBeAdded.key,
+                    Path = resultToBeAdded.path,
+                    Published = resultToBeAdded.published,
+                    Thumbnail = resultToBeAdded.thumbnail,
+                    Title = resultToBeAdded.title,
+                    Type = resultToBeAdded.type
+                });
             }
 
-            var sortedList = results
-                .ToList();
-
-            return sortedList;
+            return results;
         }
 
         private static string FormatForUrl(string str)

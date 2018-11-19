@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Text;
 
-namespace MartinKMe.Models
+namespace Functions.Models
 {
-    public class Content
+    public class YamlHeader
     {
         public string Key { get; set; }
         public string Title { get; set; }
@@ -14,9 +13,7 @@ namespace MartinKMe.Models
         public string Image { get; set; }
         public string Thumbnail { get; set; }
         public string Type { get; set; }
-        public string Published { get; set; }
-        public string Categories { get; set; }
-        public string HtmlBase64 { get; set; }
-        public string Path { get; set; }
+        public DateTime Published { get; set; }
+        public List<string> Categories { get; set; }
     }
 }
