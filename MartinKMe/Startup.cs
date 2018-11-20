@@ -84,6 +84,11 @@ namespace MartinKMe
                     new { controller = "Speaking", action = "Talk" });
 
                 routes.MapRoute(
+                    "article",
+                    "articles/{article}",
+                    new { controller = "Articles", action = "Article" });
+
+                routes.MapRoute(
                     "redirect",
                     "{tagLabel}",
                     new { controller = "Redirect", action = "Index" });

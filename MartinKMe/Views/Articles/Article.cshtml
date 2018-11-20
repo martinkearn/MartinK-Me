@@ -1,0 +1,13 @@
+﻿@inject Microsoft.Extensions.Options.IOptions<PersonaliseOptions> opt
+@model MartinKMe.Models.ArticlesViewModels.ArticleViewModel
+
+@{
+    ViewData["Title"] = Model.Article.Title;
+}
+
+<div class="jumbotron jumbotron-speaking">
+    <div class="container">
+        <h1>@Model.Article.Title</h1>
+        <p>@Model.Article.Description</p>
+    </div>
+</div>

@@ -24,11 +24,11 @@
     <div class="container-fluid sequence-background-@backgroundCount">
         <div class="container">
             <div class="row">
-                <div class="col-md-12"> 
-                        <h2><a href="@article.Path">@article.Title</a></h2>
-                        @*<p><small>@article.Published.ToString("dd MMM yyyy")</small></p>*@
-                        <p>@article.Description</p>
-                        <p><a href="@article.Path" class="btn btn-default btn-default" >Read More</a></p>
+                <div class="col-md-12">
+                    <h2><a href="/articles/@article.Path">@article.Title</a></h2>
+                    @*<p><small>@article.Published.ToString("dd MMM yyyy")</small></p>*@
+                    <p>@article.Description</p>
+                    <p><a href="/articles/@article.Path.ToLower()" title="@article.Description">@article.Title</a></p>
                 </div>
             </div>
         </div>

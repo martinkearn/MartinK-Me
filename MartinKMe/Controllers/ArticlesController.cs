@@ -35,5 +35,19 @@ namespace MartinKMe.Controllers
 
             return View(vm);
         }
+
+        public async Task<IActionResult> Article(string article)
+        {
+            var articles = await _store.GetContents();
+
+            var thisItem = articles.Where(o => o.Path.ToLower() == article.ToLower()).FirstOrDefault();
+
+            var vm = new ArticleViewModel()
+            {
+                Article = thisItem
+            };
+
+            return View(vm);
+        }
     }
 }
