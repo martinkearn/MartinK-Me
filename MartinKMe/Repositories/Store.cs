@@ -6,6 +6,7 @@ using Microsoft.WindowsAzure.Storage.Table;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
@@ -178,12 +179,20 @@ namespace MartinKMe.Repositories
             foreach (var entity in entities)
             {
                 var resultToBeAdded = entity.OriginalEntity;
+
+                // Convert cats into collection
+                var cats = resultToBeAdded.categories.Split(',').ToList();
+
+                // Decode html
+                var htmlBase64Bytes = Convert.FromBase64String(resultToBeAdded.htmlBase64);
+                var html = Encoding.UTF8.GetString(htmlBase64Bytes);
+
                 results.Add(new Content()
                 {
                     Author = resultToBeAdded.author,
-                    Categories = resultToBeAdded.categories,
+                    Categories = cats,
                     Description = resultToBeAdded.description,
-                    HtmlBase64 = resultToBeAdded.htmlBase64,
+                    Html = html,
                     Image = resultToBeAdded.image,
                     Key = resultToBeAdded.key,
                     Path = resultToBeAdded.path,

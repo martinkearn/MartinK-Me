@@ -15,8 +15,8 @@ namespace MartinKMe.Models
         public string Thumbnail { get; set; }
         public string Type { get; set; }
         public string Published { get; set; }
-        public string Categories { get; set; }
-        public string HtmlBase64 { get; set; }
+        public IEnumerable<string> Categories { get; set; }
+        public string Html { get; set; }
         public string Path { get; set; }
     }
 }
