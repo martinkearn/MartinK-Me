@@ -156,3 +156,8 @@ footer {
     .footer-icon:hover {
         color: #B4009E;
     }
+
+.article-container {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
