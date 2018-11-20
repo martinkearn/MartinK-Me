@@ -11,6 +11,7 @@ using MartinKMe.Models.ArticlesViewModels;
 using System.Text.Encodings.Web;
 using Microsoft.Extensions.Options;
 using MartinKMe.Interfaces;
+using Microsoft.AspNetCore.Html;
 
 namespace MartinKMe.Controllers
 {
@@ -44,7 +45,8 @@ namespace MartinKMe.Controllers
 
             var vm = new ArticleViewModel()
             {
-                Article = thisItem
+                Article = thisItem,
+                Html = new HtmlString(thisItem.Html)
             };
 
             return View(vm);
