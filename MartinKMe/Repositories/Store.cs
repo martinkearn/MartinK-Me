@@ -203,6 +203,9 @@ namespace MartinKMe.Repositories
                 });
             }
 
+            // sort by date
+            results.Sort((x, y) => y.Published.CompareTo(x.Published));
+
             return results;
         }
 
@@ -223,5 +226,21 @@ namespace MartinKMe.Repositories
             await table.CreateIfNotExistsAsync();
             return table;
         }
+
+    }
+
+    class ContentDto
+    {
+        public string key { get; set; }
+        public string title { get; set; }
+        public string author { get; set; }
+        public string description { get; set; }
+        public string image { get; set; }
+        public string thumbnail { get; set; }
+        public string type { get; set; }
+        public string published { get; set; }
+        public string categories { get; set; }
+        public string htmlBase64 { get; set; }
+        public string path { get; set; }
     }
 }

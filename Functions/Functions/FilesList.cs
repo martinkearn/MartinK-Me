@@ -9,6 +9,7 @@ using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Net.Http;
+using Functions.Models;
 
 namespace Functions
 {
@@ -34,12 +35,14 @@ namespace Functions
                 dynamic payload = JsonConvert.DeserializeObject(requestBody);
 
                 // get commit details required to call API
-                var commitId = payload.after;
+                var commitId = payload.head_commit.id;
                 var owner = payload.head_commit.author.username;
                 var repo = payload.repository.name;
 
                 // get commit files urls
-                var markdownFilesInCommit = new List<string>();
+                var addedFiles = new List<string>();
+                var removedFiles = new List<string>();
+                var modifiedFiles = new List<string>();
                 using (var client = new HttpClient())
                 {
                     //setup HttpClient and get Commit
@@ -53,17 +56,32 @@ namespace Functions
                     {
                         // deserialise the commit JSON
                         var getCommitResponseString = await getCommitResponse.Content.ReadAsStringAsync();
-                        dynamic commit = JsonConvert.DeserializeObject(getCommitResponseString);
+                        //dynamic commit = JsonConvert.DeserializeObject(getCommitResponseString);
+                        var commit = JsonConvert.DeserializeObject<GitHubCommitDto>(getCommitResponseString);
 
                         // get the files in the commit
-                        foreach (dynamic file in commit.files)
+                        foreach (var file in commit.files)
                         {
                             var fileApiUrl = $"https://api.github.com/repos/{owner}/{repo}/contents/{file.filename}";
                             if (fileApiUrl.ToLower().EndsWith(".md"))
                             {
-                                //TO DO: Do we need ot look at file.status to check what type of update it was 'modified', 'added', 'deleted'
                                 //we have a markdown file
-                                markdownFilesInCommit.Add(fileApiUrl);
+                                switch (file.status)
+                                {
+                                    case "added":
+                                        addedFiles.Add(fileApiUrl);
+                                        break;
+                                    case "modified":
+                                        modifiedFiles.Add(fileApiUrl);
+                                        break;
+                                    case "renamed":
+                                        modifiedFiles.Add(fileApiUrl);
+                                        break;
+                                    case "removed":
+                                        removedFiles.Add(fileApiUrl);
+                                        break;
+                                    default: break;
+                                }
                             }
                         }
                     }
@@ -74,13 +92,19 @@ namespace Functions
                     }
                 }
 
+                //construct response
+                var markdownFilesInCommit = new Dictionary<string, List<string>>();
+                markdownFilesInCommit.Add("added", addedFiles);
+                markdownFilesInCommit.Add("removed", removedFiles);
+                markdownFilesInCommit.Add("modified", modifiedFiles);
+
                 // respond with OK and response body
                 return (ActionResult)new OkObjectResult(markdownFilesInCommit);
             }
             else
             {
-                // repsond with bad request
-                return (ActionResult)new BadRequestObjectResult("Empty body received in request");
+                // repsond with ok and message about empty body. Bad request cause sthe logic app to fail
+                return (ActionResult)new BadRequestObjectResult("Empty body posted");
             }
 
         }
