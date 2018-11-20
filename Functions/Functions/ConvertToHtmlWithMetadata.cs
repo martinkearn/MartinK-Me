@@ -55,6 +55,9 @@ namespace Functions
                         .Build();
                     var html = Markdown.ToHtml(fileContent, mdPipeline);
 
+                    // trim leading <H1> ... Bit hacky as it assumes that the H1 is the first line of html
+                    var htmlNoH1 = html.Substring(html.IndexOf("</h1>") + 5);
+
                     // check we have required props
                     if (string.IsNullOrEmpty(yamlHeader.Key)) return (ActionResult)new BadRequestObjectResult("Key required in Yaml header");
                     if (string.IsNullOrEmpty(yamlHeader.Title)) return (ActionResult)new BadRequestObjectResult("Title required in Yaml header");
@@ -74,7 +77,7 @@ namespace Functions
                         Type = yamlHeader.Type.ToLowerInvariant() ?? string.Empty,
                         Published = yamlHeader.Published,
                         Categories = (string.Join(",", yamlHeader.Categories)) ?? string.Empty,
-                        HtmlBase64 = (Helpers.Base64Encode(html)) ?? string.Empty, // Base64 required to make sure things like line endings are properly included
+                        HtmlBase64 = (Helpers.Base64Encode(htmlNoH1)) ?? string.Empty, // Base64 required to make sure things like line endings are properly included
                         Path = path
                     };
 
