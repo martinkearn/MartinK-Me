@@ -26,9 +26,9 @@
             <div class="row">
                 <div class="col-md-12">
                     <h2><a href="/articles/@article.Path">@article.Title</a></h2>
-                    @*<p><small>@article.Published.ToString("dd MMM yyyy")</small></p>*@
+                    <p><small>@article.Published.ToString("dd MMM yyyy")</small></p>
                     <p>@article.Description</p>
-                    <p><a href="/articles/@article.Path.ToLower()" title="@article.Description">@article.Title</a></p>
+                    <p><a href="/articles/@article.Path.ToLower()" title="@article.Description" class="btn btn-default btn-default">Read now <i class="fa fa-angle-double-right" aria-hidden="true"></i></a></p>
                 </div>
             </div>
         </div>

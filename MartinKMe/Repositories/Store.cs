@@ -196,7 +196,7 @@ namespace MartinKMe.Repositories
                     Image = resultToBeAdded.image,
                     Key = resultToBeAdded.key,
                     Path = resultToBeAdded.path,
-                    Published = resultToBeAdded.published,
+                    Published = Convert.ToDateTime(resultToBeAdded.published),
                     Thumbnail = resultToBeAdded.thumbnail,
                     Title = resultToBeAdded.title,
                     Type = resultToBeAdded.type

@@ -14,7 +14,7 @@ namespace MartinKMe.Models
         public string Image { get; set; }
         public string Thumbnail { get; set; }
         public string Type { get; set; }
-        public string Published { get; set; }
+        public DateTime Published { get; set; }
         public IEnumerable<string> Categories { get; set; }
         public string Html { get; set; }
         public string Path { get; set; }
