@@ -10,6 +10,7 @@ using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Net.Http;
 using Functions.Models;
+using System.Net;
 
 namespace Functions
 {

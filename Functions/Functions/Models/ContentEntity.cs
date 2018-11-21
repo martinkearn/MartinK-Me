@@ -18,5 +18,6 @@ namespace Functions.Models
         public string Categories { get; set; }
         public string HtmlBase64 { get; set; }
         public string Path { get; set; }
+        public string GitHubPath { get; set; }
     }
 }
