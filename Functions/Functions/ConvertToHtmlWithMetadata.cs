@@ -59,7 +59,7 @@ namespace Functions
                     var htmlNoH1 = html.Substring(html.IndexOf("</h1>") + 5);
 
                     // check we have required props
-                    if (string.IsNullOrEmpty(yamlHeader.Key)) return (ActionResult)new BadRequestObjectResult("Key required in Yaml header");
+                    //if (string.IsNullOrEmpty(yamlHeader.Key)) return (ActionResult)new BadRequestObjectResult("Key required in Yaml header");
                     if (string.IsNullOrEmpty(yamlHeader.Title)) return (ActionResult)new BadRequestObjectResult("Title required in Yaml header");
 
                     // build dto
@@ -68,7 +68,7 @@ namespace Functions
                     path = path.ToLowerInvariant();
                     var contentEntity = new ContentEntity()
                     {
-                        Key = yamlHeader.Key,
+                        Key = Helpers.Base64Encode((string)gitHubFile.path),
                         Title = yamlHeader.Title,
                         Author = yamlHeader.Author ?? string.Empty,
                         Description = yamlHeader.Description ?? string.Empty,
@@ -79,8 +79,8 @@ namespace Functions
                         Categories = (string.Join(",", yamlHeader.Categories)) ?? string.Empty,
                         HtmlBase64 = (Helpers.Base64Encode(htmlNoH1)) ?? string.Empty, // Base64 required to make sure things like line endings are properly included
                         Path = path,
-                        GitHubPath = (string)gitHubFile.path,
-                        Status = yamlHeader.Status
+                        Status = yamlHeader.Status,
+                        GitHubPath = (string)gitHubFile.path
                     };
 
                     // respond with OK and the DTO object
