@@ -19,5 +19,6 @@ namespace Functions.Models
         public string HtmlBase64 { get; set; }
         public string Path { get; set; }
         public string GitHubPath { get; set; }
+        public string Status { get; set; }
     }
 }

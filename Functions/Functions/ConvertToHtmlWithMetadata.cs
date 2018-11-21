@@ -79,7 +79,8 @@ namespace Functions
                         Categories = (string.Join(",", yamlHeader.Categories)) ?? string.Empty,
                         HtmlBase64 = (Helpers.Base64Encode(htmlNoH1)) ?? string.Empty, // Base64 required to make sure things like line endings are properly included
                         Path = path,
-                        GitHubPath = (string)gitHubFile.path
+                        GitHubPath = (string)gitHubFile.path,
+                        Status = yamlHeader.Status
                     };
 
                     // respond with OK and the DTO object

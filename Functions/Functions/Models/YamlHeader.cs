@@ -15,5 +15,6 @@ namespace Functions.Models
         public string Type { get; set; }
         public DateTime Published { get; set; }
         public List<string> Categories { get; set; }
+        public string Status { get; set; }
     }
 }
