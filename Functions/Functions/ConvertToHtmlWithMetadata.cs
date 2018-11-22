@@ -59,7 +59,6 @@ namespace Functions
                     var htmlNoH1 = html.Substring(html.IndexOf("</h1>") + 5);
 
                     // check we have required props
-                    //if (string.IsNullOrEmpty(yamlHeader.Key)) return (ActionResult)new BadRequestObjectResult("Key required in Yaml header");
                     if (string.IsNullOrEmpty(yamlHeader.Title)) return (ActionResult)new BadRequestObjectResult("Title required in Yaml header");
 
                     // build dto
