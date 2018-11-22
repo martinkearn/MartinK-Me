@@ -27,6 +27,7 @@ namespace MartinKMe.Controllers
 
         public async Task<IActionResult> Index()
         {
+            // all published articles
             var articles = await _store.GetContents();
 
             var vm = new IndexViewModel()

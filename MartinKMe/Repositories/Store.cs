@@ -165,7 +165,12 @@ namespace MartinKMe.Repositories
 
             var entities = new List<TableEntityAdapter<ContentDto>>();
 
-            TableQuery<TableEntityAdapter<ContentDto>> query = new TableQuery<TableEntityAdapter<ContentDto>>();
+            //get published articles
+            TableQuery<TableEntityAdapter<ContentDto>> query = new TableQuery<TableEntityAdapter<ContentDto>>()
+                .Where(TableQuery.CombineFilters(
+                    TableQuery.GenerateFilterCondition("status", QueryComparisons.Equal, "published"),
+                    TableOperators.And,
+                    TableQuery.GenerateFilterCondition("PartitionKey", QueryComparisons.Equal, _articlePartitionkey)));
 
             do
             {
@@ -199,7 +204,8 @@ namespace MartinKMe.Repositories
                     Published = Convert.ToDateTime(resultToBeAdded.published),
                     Thumbnail = resultToBeAdded.thumbnail,
                     Title = resultToBeAdded.title,
-                    Type = resultToBeAdded.type
+                    Type = resultToBeAdded.type,
+                    Status = resultToBeAdded.status
                 });
             }
 
@@ -242,5 +248,7 @@ namespace MartinKMe.Repositories
         public string categories { get; set; }
         public string htmlBase64 { get; set; }
         public string path { get; set; }
+        public string status { get; set; }
+        public string gitHubPath { get; set; }
     }
 }

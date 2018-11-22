@@ -18,5 +18,6 @@ namespace MartinKMe.Models
         public IEnumerable<string> Categories { get; set; }
         public string Html { get; set; }
         public string Path { get; set; }
+        public string Status { get; set; }
     }
 }
