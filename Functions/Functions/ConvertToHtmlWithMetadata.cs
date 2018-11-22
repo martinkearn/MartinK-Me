@@ -55,7 +55,7 @@ namespace Functions
                         .Build();
                     var html = Markdown.ToHtml(fileContent, mdPipeline);
 
-                    // trim leading <H1> ... Bit hacky as it assumes that the H1 is the first line of html
+                    // trim leading <H1> ... Bit hacky as it assumes that the H1 is the first line of html after the Yaml whihc is convention
                     var htmlNoH1 = html.Substring(html.IndexOf("</h1>") + 5);
 
                     // check we have required props
@@ -67,7 +67,7 @@ namespace Functions
                     path = path.ToLowerInvariant();
                     var contentEntity = new ContentEntity()
                     {
-                        Key = Helpers.Base64Encode((string)gitHubFile.path),
+                        Key = Helpers.Base64Encode((string)gitHubFile.path), // Base64 required because the path may contain a backslash
                         Title = yamlHeader.Title,
                         Author = yamlHeader.Author ?? string.Empty,
                         Description = yamlHeader.Description ?? string.Empty,
@@ -82,7 +82,7 @@ namespace Functions
                         GitHubPath = (string)gitHubFile.path
                     };
 
-                    // respond with OK and the DTO object
+                    // respond with OK and the object
                     return (ActionResult)new OkObjectResult(contentEntity);         
                 }
             }
