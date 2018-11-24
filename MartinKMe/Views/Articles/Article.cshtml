@@ -9,6 +9,13 @@
     <div class="container">
         <h1>@Model.Article.Title</h1>
         <p>@Model.Article.Description</p>
+        <p>This article is about 
+        @foreach (var cat in Model.Article.Categories)
+        {
+            <span>@cat </span>
+        }
+        </p>
+        <p>Last updated on @Model.Article.Published.ToString("dddd dd MMM yyyy")</p>
     </div>
 </div>
 

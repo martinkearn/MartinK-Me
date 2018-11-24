@@ -6,6 +6,8 @@ using Microsoft.WindowsAzure.Storage.Table;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
+using System.Security.Policy;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -163,49 +165,55 @@ namespace MartinKMe.Repositories
 
             TableContinuationToken token = null;
 
-            var entities = new List<TableEntityAdapter<ContentDto>>();
+            var contentMetadataEntities = new List<TableEntityAdapter<ContentMetadata>>();
 
-            //get published articles
-            TableQuery<TableEntityAdapter<ContentDto>> query = new TableQuery<TableEntityAdapter<ContentDto>>()
+            //get published artucles metadata
+            var query = new TableQuery<TableEntityAdapter<ContentMetadata>>()
                 .Where(TableQuery.CombineFilters(
                     TableQuery.GenerateFilterCondition("status", QueryComparisons.Equal, "published"),
                     TableOperators.And,
                     TableQuery.GenerateFilterCondition("PartitionKey", QueryComparisons.Equal, _articlePartitionkey)));
-
             do
             {
                 var queryResult = await table.ExecuteQuerySegmentedAsync(query, token);
-                entities.AddRange(queryResult.Results);
+                contentMetadataEntities.AddRange(queryResult.Results);
                 token = queryResult.ContinuationToken;
             } while (token != null);
 
-            // issue with case of properties in table so casting to my own object class
             var results = new List<Content>();
-            foreach (var entity in entities)
+            foreach (var contentMetadataEntitity in contentMetadataEntities)
             {
-                var resultToBeAdded = entity.OriginalEntity;
+                var contentMetadata = contentMetadataEntitity.OriginalEntity;
+
+                // Get blob for each article
+                var html = string.Empty;
+                using (var httpBlobClient = new HttpClient())
+                {
+                    httpBlobClient.BaseAddress = new Uri(contentMetadata.htmlBlobPath);
+                    html = await httpBlobClient.GetStringAsync(contentMetadata.htmlBlobPath);
+                }
 
                 // Convert cats into collection
-                var cats = resultToBeAdded.categories.Split(',').ToList();
+                var cats = contentMetadata.categories.Split(',').ToList();
 
                 // Decode html
-                var htmlBase64Bytes = Convert.FromBase64String(resultToBeAdded.htmlBase64);
-                var html = Encoding.UTF8.GetString(htmlBase64Bytes);
+                //var htmlBase64Bytes = Convert.FromBase64String(contentMetadata.htmlBase64);
+                //var html = Encoding.UTF8.GetString(htmlBase64Bytes);
 
                 results.Add(new Content()
                 {
-                    Author = resultToBeAdded.author,
+                    Author = contentMetadata.author,
                     Categories = cats,
-                    Description = resultToBeAdded.description,
+                    Description = contentMetadata.description,
                     Html = html,
-                    Image = resultToBeAdded.image,
-                    Key = resultToBeAdded.key,
-                    Path = resultToBeAdded.path,
-                    Published = Convert.ToDateTime(resultToBeAdded.published),
-                    Thumbnail = resultToBeAdded.thumbnail,
-                    Title = resultToBeAdded.title,
-                    Type = resultToBeAdded.type,
-                    Status = resultToBeAdded.status
+                    Image = contentMetadata.image,
+                    Key = contentMetadata.key,
+                    Path = contentMetadata.path,
+                    Published = Convert.ToDateTime(contentMetadata.published),
+                    Thumbnail = contentMetadata.thumbnail,
+                    Title = contentMetadata.title,
+                    Type = contentMetadata.type,
+                    Status = contentMetadata.status
                 });
             }
 
@@ -233,22 +241,5 @@ namespace MartinKMe.Repositories
             return table;
         }
 
-    }
-
-    class ContentDto
-    {
-        public string key { get; set; }
-        public string title { get; set; }
-        public string author { get; set; }
-        public string description { get; set; }
-        public string image { get; set; }
-        public string thumbnail { get; set; }
-        public string type { get; set; }
-        public string published { get; set; }
-        public string categories { get; set; }
-        public string htmlBase64 { get; set; }
-        public string path { get; set; }
-        public string status { get; set; }
-        public string gitHubPath { get; set; }
     }
 }
