@@ -185,13 +185,13 @@ namespace MartinKMe.Repositories
             {
                 var contentMetadata = contentMetadataEntitity.OriginalEntity;
 
-                // Get blob for each article
-                var html = string.Empty;
-                using (var httpBlobClient = new HttpClient())
-                {
-                    httpBlobClient.BaseAddress = new Uri(contentMetadata.htmlBlobPath);
-                    html = await httpBlobClient.GetStringAsync(contentMetadata.htmlBlobPath);
-                }
+                //// Get blob for each article
+                //var html = string.Empty;
+                //using (var httpBlobClient = new HttpClient())
+                //{
+                //    httpBlobClient.BaseAddress = new Uri(contentMetadata.htmlBlobPath);
+                //    html = await httpBlobClient.GetStringAsync(contentMetadata.htmlBlobPath);
+                //}
 
                 // Convert cats into collection
                 var cats = contentMetadata.categories.Split(',').ToList();
@@ -205,7 +205,7 @@ namespace MartinKMe.Repositories
                     Author = contentMetadata.author,
                     Categories = cats,
                     Description = contentMetadata.description,
-                    Html = html,
+                    Html = contentMetadata.htmlBlobPath, // To yuse to get the HTML when the individual item is used
                     Image = contentMetadata.image,
                     Key = contentMetadata.key,
                     Path = contentMetadata.path,
@@ -221,6 +221,26 @@ namespace MartinKMe.Repositories
             results.Sort((x, y) => y.Published.CompareTo(x.Published));
 
             return results;
+        }
+
+        public async Task<Content> GetContent(string id)
+        {
+            var contents = await GetContents();
+
+            var thisItem = contents.Where(o => o.Path.ToLower() == id.ToLower()).FirstOrDefault();
+
+            // Get blob for each article
+            var html = string.Empty;
+            using (var httpBlobClient = new HttpClient())
+            {
+                httpBlobClient.BaseAddress = new Uri(thisItem.Html);
+                html = await httpBlobClient.GetStringAsync(thisItem.Html);
+            }
+
+            // overwrite the value from GetContents which is a path to HTML with the actual HTML from the blob
+            thisItem.Html = html;
+
+            return thisItem;
         }
 
         private static string FormatForUrl(string str)

@@ -1,17 +1,8 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Xml;
-using Microsoft.AspNetCore.Mvc;
-using System.Net.Http;
-using System.Xml.Linq;
-using MartinKMe.Models;
-using MartinKMe.Models.ArticlesViewModels;
-using System.Text.Encodings.Web;
-using Microsoft.Extensions.Options;
 using MartinKMe.Interfaces;
+using MartinKMe.Models.ArticlesViewModels;
 using Microsoft.AspNetCore.Html;
+using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace MartinKMe.Controllers
 {
@@ -40,9 +31,7 @@ namespace MartinKMe.Controllers
 
         public async Task<IActionResult> Article(string article)
         {
-            var articles = await _store.GetContents();
-
-            var thisItem = articles.Where(o => o.Path.ToLower() == article.ToLower()).FirstOrDefault();
+            var thisItem = await _store.GetContent(article);
 
             var vm = new ArticleViewModel()
             {
