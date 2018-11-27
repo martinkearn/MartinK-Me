@@ -206,7 +206,8 @@ namespace MartinKMe.Repositories
                     Thumbnail = contentMetadata.thumbnail,
                     Title = contentMetadata.title,
                     Type = contentMetadata.type,
-                    Status = contentMetadata.status
+                    Status = contentMetadata.status,
+                    GitHubPath = "https://github.com/martinkearn/Content/blob/master/" + contentMetadata.gitHubPath
                 });
             }
 
