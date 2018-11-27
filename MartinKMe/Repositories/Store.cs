@@ -6,6 +6,9 @@ using Microsoft.WindowsAzure.Storage.Table;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
+using System.Security.Policy;
+using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
@@ -21,6 +24,8 @@ namespace MartinKMe.Repositories
         private const string _eventPartitionkey = "Events";
         private const string _talkContainer = "Talks";
         private const string _talkPartitionkey = "Talks";
+        private const string _contentContainer = "Contents";
+        private const string _articlePartitionkey = "article";
 
         public Store(IOptions<AppSecretSettings> appSecretSettings)
         {
@@ -153,6 +158,82 @@ namespace MartinKMe.Repositories
             await table.ExecuteBatchAsync(batchOperation);
         }
 
+
+        public async Task<List<Content>> GetContents()
+        {
+            var table = await GetCloudTable(_appSecretSettings.StorageConnectionString, _contentContainer);
+
+            TableContinuationToken token = null;
+
+            var contentMetadataEntities = new List<TableEntityAdapter<ContentMetadata>>();
+
+            //get published artucles metadata
+            var query = new TableQuery<TableEntityAdapter<ContentMetadata>>()
+                .Where(TableQuery.CombineFilters(
+                    TableQuery.GenerateFilterCondition("status", QueryComparisons.Equal, "published"),
+                    TableOperators.And,
+                    TableQuery.GenerateFilterCondition("PartitionKey", QueryComparisons.Equal, _articlePartitionkey)));
+    
+            do
+            {
+                var queryResult = await table.ExecuteQuerySegmentedAsync(query, token);
+                contentMetadataEntities.AddRange(queryResult.Results);
+                token = queryResult.ContinuationToken;
+            } while (token != null);
+
+            // sort by date
+            contentMetadataEntities.Sort((x, y) => y.OriginalEntity.published.CompareTo(x.OriginalEntity.published));
+
+            // cast to results of type Content
+            var results = new List<Content>();
+            foreach (var contentMetadataEntitity in contentMetadataEntities)
+            {
+                var contentMetadata = contentMetadataEntitity.OriginalEntity;
+
+                // Convert cats into collection
+                var cats = contentMetadata.categories.Split(',').ToList();
+
+                results.Add(new Content()
+                {
+                    Author = contentMetadata.author,
+                    Categories = cats,
+                    Description = contentMetadata.description,
+                    Html = contentMetadata.htmlBlobPath, // To use to get the HTML when the individual item is used
+                    Image = contentMetadata.image,
+                    Key = contentMetadata.key,
+                    Path = contentMetadata.path,
+                    Published = Convert.ToDateTime(contentMetadata.published),
+                    Thumbnail = contentMetadata.thumbnail,
+                    Title = contentMetadata.title,
+                    Type = contentMetadata.type,
+                    Status = contentMetadata.status,
+                    GitHubPath = "https://github.com/martinkearn/Content/blob/master/" + contentMetadata.gitHubPath
+                });
+            }
+
+            return results;
+        }
+
+        public async Task<Content> GetContent(string id)
+        {
+            var contents = await GetContents();
+
+            var thisItem = contents.Where(o => o.Path.ToLower() == id.ToLower()).FirstOrDefault();
+
+            // Get blob for each article
+            var html = string.Empty;
+            using (var httpBlobClient = new HttpClient())
+            {
+                httpBlobClient.BaseAddress = new Uri(thisItem.Html);
+                html = await httpBlobClient.GetStringAsync(thisItem.Html);
+            }
+
+            // overwrite the value from GetContents which is a path to HTML with the actual HTML from the blob
+            thisItem.Html = html;
+
+            return thisItem;
+        }
+
         private static string FormatForUrl(string str)
         {
             var a = str.Replace(" ", "-");
@@ -170,5 +251,6 @@ namespace MartinKMe.Repositories
             await table.CreateIfNotExistsAsync();
             return table;
         }
+
     }
 }

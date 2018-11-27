@@ -19,5 +19,9 @@ namespace MartinKMe.Interfaces
         Task<List<Talk>> GetTalks();
 
         Task StoreTalk(Talk Talk);
+
+        Task<List<Content>> GetContents();
+
+        Task<Content> GetContent(string id);
     }
 }

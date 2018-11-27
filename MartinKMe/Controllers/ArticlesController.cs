@@ -1,76 +1,61 @@
+using MartinKMe.Interfaces;
+using MartinKMe.Models.ArticlesViewModels;
+using Microsoft.AspNetCore.Html;
+using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Xml;
-using Microsoft.AspNetCore.Mvc;
-using System.Net.Http;
-using System.Xml.Linq;
-using MartinKMe.Models;
-using MartinKMe.Models.ArticlesViewModels;
-using System.Text.Encodings.Web;
-using Microsoft.Extensions.Options;
 
 namespace MartinKMe.Controllers
 {
     public class ArticlesController : Controller
     {
-        private PersonaliseOptions _options;
+        private const int _itemsPerPage = 10;
+        private readonly IStore _store;
 
-        public ArticlesController(IOptions<PersonaliseOptions> options)
+        public ArticlesController(IStore store)
         {
-            _options = options.Value;
+            _store = store;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int page = 1)
         {
-            var articles = new List<FeedItem>();
+            // all published articles
+            var articles = await _store.GetContents();
 
-            using (var client = new HttpClient())
-            {
-                client.BaseAddress = new Uri(_options.BlogFeed);
-                var responseMessage = await client.GetAsync(_options.BlogFeed);
-                var responseString = await responseMessage.Content.ReadAsStringAsync();
+            // get page
+            var pageOfArticles = articles
+                .Skip((page-1) * _itemsPerPage)
+                .Take(_itemsPerPage)
+                .ToList();
 
-                //extract feed items
-                XDocument doc = XDocument.Parse(responseString);
-                var feedItems = from item in doc.Root.Descendants().First(i => i.Name.LocalName == "channel").Elements().Where(i => i.Name.LocalName == "item")
-                                select new FeedItem
-                                {
-                                    Description = QuickXmlDecode(item.Elements().First(i => i.Name.LocalName == "description").Value),
-                                    Link = item.Elements().First(i => i.Name.LocalName == "link").Value,
-                                    PublishDate = ParseDate(item.Elements().First(i => i.Name.LocalName == "pubDate").Value),
-                                    Title = item.Elements().First(i => i.Name.LocalName == "title").Value
-                                };
-                articles = feedItems.ToList();
-            }
+            // calculate number of pages
+            var pagesCount = (double)articles.Count / (double)_itemsPerPage;
+            int pageCountRounded = Convert.ToInt16(Math.Ceiling(pagesCount));
 
             var vm = new IndexViewModel()
             {
-                Articles = articles
+                Articles = pageOfArticles,
+                ItemsPerPage = _itemsPerPage,
+                Pages = pageCountRounded,
+                ThisPage = page,
+                TotalItems = articles.Count
             };
 
             return View(vm);
         }
 
-        private DateTime ParseDate(string date)
+        public async Task<IActionResult> Article(string article)
         {
-            DateTime result;
-            if (DateTime.TryParse(date, out result))
-                return result;
-            else
-                return DateTime.MinValue;
-        }
+            var thisItem = await _store.GetContent(article);
 
-        private string QuickXmlDecode(string orginal)
-        {
-            var returnString = orginal.Replace("&#8217;", "'");
-            returnString = returnString.Replace("&#8216;", "‘");
-            returnString = returnString.Replace("&#8217;", "’");
-            returnString = returnString.Replace("&#8220;", "\"");
-            returnString = returnString.Replace("&#8220;", "\"");
-            returnString = returnString.Replace("&#160;", " ");
-            return returnString; 
+            var vm = new ArticleViewModel()
+            {
+                Article = thisItem,
+                Html = new HtmlString(thisItem.Html)
+            };
+
+            return View(vm);
         }
     }
 }

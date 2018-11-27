@@ -18,6 +18,10 @@
     <meta name="msapplication-config" content="/images/favicon/browserconfig.xml">
     <meta name="theme-color" content="#ffffff">
 
+    <!--Metadata-->
+    <link rel="canonical" href="http://@Context.Request.Host@Context.Request.Path" />
+    @RenderSection("metadata", required: false)
+
     <!--CSS-->
     <environment names="Development">
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
@@ -47,9 +51,9 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li><a asp-controller="Speaking" asp-action="Index">Speaking</a></li>
-                    <li><a asp-controller="Events" asp-action="Index">Events</a></li>
-                    <li><a asp-controller="Articles" asp-action="Index">Articles</a></li>
+                    <li><a asp-controller="speaking" asp-action="Index">Speaking</a></li>
+                    <li><a asp-controller="events" asp-action="Index">Events</a></li>
+                    <li><a asp-controller="articles" asp-action="Index">Articles</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right  hidden-xs">
                     @if (!string.IsNullOrEmpty(opt.Value.YouTube))
