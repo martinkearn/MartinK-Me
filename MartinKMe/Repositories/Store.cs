@@ -173,6 +173,7 @@ namespace MartinKMe.Repositories
                     TableQuery.GenerateFilterCondition("status", QueryComparisons.Equal, "published"),
                     TableOperators.And,
                     TableQuery.GenerateFilterCondition("PartitionKey", QueryComparisons.Equal, _articlePartitionkey)));
+    
             do
             {
                 var queryResult = await table.ExecuteQuerySegmentedAsync(query, token);
@@ -180,32 +181,24 @@ namespace MartinKMe.Repositories
                 token = queryResult.ContinuationToken;
             } while (token != null);
 
+            // sort by date
+            contentMetadataEntities.Sort((x, y) => y.OriginalEntity.published.CompareTo(x.OriginalEntity.published));
+
+            // cast to results of type Content
             var results = new List<Content>();
             foreach (var contentMetadataEntitity in contentMetadataEntities)
             {
                 var contentMetadata = contentMetadataEntitity.OriginalEntity;
 
-                //// Get blob for each article
-                //var html = string.Empty;
-                //using (var httpBlobClient = new HttpClient())
-                //{
-                //    httpBlobClient.BaseAddress = new Uri(contentMetadata.htmlBlobPath);
-                //    html = await httpBlobClient.GetStringAsync(contentMetadata.htmlBlobPath);
-                //}
-
                 // Convert cats into collection
                 var cats = contentMetadata.categories.Split(',').ToList();
-
-                // Decode html
-                //var htmlBase64Bytes = Convert.FromBase64String(contentMetadata.htmlBase64);
-                //var html = Encoding.UTF8.GetString(htmlBase64Bytes);
 
                 results.Add(new Content()
                 {
                     Author = contentMetadata.author,
                     Categories = cats,
                     Description = contentMetadata.description,
-                    Html = contentMetadata.htmlBlobPath, // To yuse to get the HTML when the individual item is used
+                    Html = contentMetadata.htmlBlobPath, // To use to get the HTML when the individual item is used
                     Image = contentMetadata.image,
                     Key = contentMetadata.key,
                     Path = contentMetadata.path,
@@ -216,9 +209,6 @@ namespace MartinKMe.Repositories
                     Status = contentMetadata.status
                 });
             }
-
-            // sort by date
-            results.Sort((x, y) => y.Published.CompareTo(x.Published));
 
             return results;
         }

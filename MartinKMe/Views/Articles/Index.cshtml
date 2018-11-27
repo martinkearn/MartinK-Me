@@ -1,5 +1,6 @@
 ﻿@inject Microsoft.Extensions.Options.IOptions<PersonaliseOptions> opt
 @model MartinKMe.Models.ArticlesViewModels.IndexViewModel
+@addTagHelper *, Pioneer.Pagination
 
 @{
     ViewData["Title"] = "Articles";
@@ -38,3 +39,26 @@
         backgroundCount = backgroundCount + 1;
     }
 }
+
+<div class="container-fluid">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <p>@Model.TotalItems articles avaliable to enjoy dating back to 2005</p>
+                <p>
+                    @for (int i = 1; i <= Model.Pages; i++)
+                    {
+                        if (i == Model.ThisPage)
+                        {
+                            <span style="font-size: 12pt; font-weight: 400; margin-right: 20px;">@i</span>
+                        }
+                        else
+                        {
+                            <a asp-controller="Articles" asp-action="Index" asp-route-page="@i" class="btn btn-info" style="margin-right: 20px;">@i</a>
+                        }
+                    }
+                </p>
+            </div>
+        </div>
+    </div>
+</div>

@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Pioneer.Pagination;
 
 namespace MartinKMe
 {
@@ -41,6 +42,9 @@ namespace MartinKMe
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
+
+            // Add Pagination service
+            services.AddTransient<IPaginatedMetaService, PaginatedMetaService>();
 
             // Add repositories
             services.AddSingleton<IStore, Store>();
