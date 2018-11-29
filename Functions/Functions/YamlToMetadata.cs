@@ -47,11 +47,9 @@ namespace Functions
                     // check we have required props
                     if (string.IsNullOrEmpty(yamlHeader.Title)) return (ActionResult)new BadRequestObjectResult("Title required in Yaml header");
 
-                    if (string.IsNullOrEmpty(yamlHeader.Title))
-                    {
-                        return (ActionResult)new BadRequestObjectResult("BlobPath query param required");
-                    }
+
                     string blobPath = req.Query["BlobPath"];
+                    if (string.IsNullOrEmpty(blobPath)) return (ActionResult)new BadRequestObjectResult("BlobPath query param required");
 
                     // build dto
                     var path = string.Join("-", yamlHeader.Title.Split(Path.GetInvalidFileNameChars()));
