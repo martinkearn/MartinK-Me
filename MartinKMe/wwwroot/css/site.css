@@ -196,3 +196,7 @@ footer {
 .conference-logo {
     max-height:100px;
 }
+
+.article-thumbnail {
+    max-height: 200px;
+}
