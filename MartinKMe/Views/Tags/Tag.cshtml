@@ -1,0 +1,51 @@
+﻿@model MartinKMe.Models.TagsViewModels.TagViewModel
+
+@{
+    ViewData["Title"] = Model.Tag;
+}
+
+<div class="jumbotron jumbotron-articles">
+    <div class="container">
+        <h1>@ViewData["Title"]</h1>
+        <p>Everything I have about @Model.Tag</p>
+    </div>
+</div>
+
+@{
+    var backgroundCount = 1;
+}
+
+@foreach (var article in Model.Articles)
+{
+    <div class="container-fluid sequence-background-@backgroundCount">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h2><a href="/articles/@article.Path.ToLower()" title="@article.Description">@article.Title</a></h2>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-8">
+                    <p>@article.Published.ToString("dd MMM yyyy")</p>
+                    <p>
+                        <small>
+                            @foreach (var cat in article.Categories)
+                            {
+                                <span><a href="/tags/@cat.ToLower()">@cat</a> </span>
+                            }
+                        </small>
+                    </p>
+                    <p>@article.Description</p>
+                    <p><a href="/articles/@article.Path.ToLower()" title="@article.Description" class="btn btn-default btn-default">Read now <i class="fa fa-angle-double-right" aria-hidden="true"></i></a></p>
+                </div>
+                <div class="col-md-4 hidden-sm hidden-xs">
+                    <img src="@article.Thumbnail" class="img-responsive article-thumbnail" alt="@article.Title">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {
+        backgroundCount = backgroundCount + 1;
+    }
+}

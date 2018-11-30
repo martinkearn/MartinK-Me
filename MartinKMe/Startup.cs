@@ -93,6 +93,11 @@ namespace MartinKMe
                     new { controller = "Articles", action = "Article" });
 
                 routes.MapRoute(
+                    "tag",
+                    "tags/{tag}",
+                    new { controller = "Tags", action = "Tag" });
+
+                routes.MapRoute(
                     "redirect",
                     "{tagLabel}",
                     new { controller = "Redirect", action = "Index" });
