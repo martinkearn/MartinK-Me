@@ -2,7 +2,7 @@
 @model MartinKMe.Models.ArticlesViewModels.ArticleViewModel
 
 @section metadata
-    {
+{
     <meta name="twitter:card" content="summary" />
     <meta name="twitter:site" content="@string.Concat('@',opt.Value.TwitterHandle)" />
     <meta name="twitter:creator" content="@string.Concat('@',opt.Value.TwitterHandle)" />
@@ -18,6 +18,15 @@
     <meta name="description" content="@Model.Article.Description" />
 }
 
+@section head
+{
+    <style>
+        body {
+            background-color: white;
+        }
+    </style>
+}
+
 
 @{
     ViewData["Title"] = Model.Article.Title;
@@ -28,7 +37,7 @@
         <h1>@Model.Article.Title</h1>
         <p>@Model.Article.Description</p>
         <p>
-            This article is about 
+            This article is about
             @foreach (var cat in Model.Article.Categories)
             {
                 <span><a href="/tags/@cat.ToLower()">@cat</a> </span>
