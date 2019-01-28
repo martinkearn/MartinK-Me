@@ -169,10 +169,7 @@ namespace MartinKMe.Repositories
 
             //get published artucles metadata
             var query = new TableQuery<TableEntityAdapter<ContentMetadata>>()
-                .Where(TableQuery.CombineFilters(
-                    TableQuery.GenerateFilterCondition("status", QueryComparisons.Equal, "published"),
-                    TableOperators.And,
-                    TableQuery.GenerateFilterCondition("PartitionKey", QueryComparisons.Equal, _articlePartitionkey)));
+                .Where(TableQuery.GenerateFilterCondition("PartitionKey", QueryComparisons.Equal, _articlePartitionkey));
     
             do
             {

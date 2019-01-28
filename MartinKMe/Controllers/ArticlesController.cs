@@ -1,8 +1,10 @@
 using MartinKMe.Interfaces;
+using MartinKMe.Models;
 using MartinKMe.Models.ArticlesViewModels;
 using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -18,10 +20,13 @@ namespace MartinKMe.Controllers
             _store = store;
         }
 
-        public async Task<IActionResult> Index(int page = 1)
+        public async Task<IActionResult> Index(int page = 1, bool drafts = false)
         {
             // all published articles
-            var articles = await _store.GetContents();
+            var allArticles = await _store.GetContents();
+
+            //filter on status if drafts are false
+            List<Content> articles = drafts ? allArticles : allArticles.Where(o => o.Status == "published").ToList();
 
             // get page
             var pageOfArticles = articles
