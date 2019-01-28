@@ -44,7 +44,8 @@ namespace MartinKMe.Controllers
                 ItemsPerPage = _itemsPerPage,
                 Pages = pageCountRounded,
                 ThisPage = page,
-                TotalItems = articles.Count
+                TotalItems = articles.Count,
+                Drafts = drafts
             };
 
             return View(vm);

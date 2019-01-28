@@ -19,5 +19,7 @@ namespace MartinKMe.Models.ArticlesViewModels
 
         public int TotalItems { get; set; }
 
+        public bool Drafts { get; set; }
+
     }
 }
