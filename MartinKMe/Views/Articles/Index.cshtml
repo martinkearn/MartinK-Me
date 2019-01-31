@@ -11,7 +11,7 @@
         <h1>@ViewData["Title"]</h1>
         <p>I adopt a 'learn in public' approach to blogging.</p>
         <p>Whenever I learn something new, I try to capture it in a blog article.</p>
-        <p>This is just a snap-shot of my most recent articles. You can see all of them at <a href="@opt.Value.BlogUrl">my blog site</a></p>
+        <p>All my articles are written on <a href="https://github.com/martinkearn/Content/tree/master/Blogs"><i class="fa fa-github fa-lg" aria-hidden="true"></i> GitHub</a>. You can raise issues, create pull requests or even fork the content... its open source</p>
     </div>
 </div>
 
@@ -35,7 +35,7 @@
                     <p><small>
                         @foreach (var cat in article.Categories)
                         {
-                           <span><a href="/tags/@cat.ToLower()">@cat</a> </span>
+                           <span><a href="/tags/@cat.ToLower()">#@cat</a> </span>
                         }
                     </small></p>
                     <p>@article.Description</p>

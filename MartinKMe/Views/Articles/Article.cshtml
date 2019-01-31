@@ -37,13 +37,13 @@
         <h1>@Model.Article.Title</h1>
         <p>@Model.Article.Description</p>
         <p>
-            This article is about
             @foreach (var cat in Model.Article.Categories)
             {
-                <span><a href="/tags/@cat.ToLower()">@cat</a> </span>
+                <span class="badge badge-primary"><a href="/tags/@cat.ToLower()">#@cat</a> </span>
             }
         </p>
-        <p>Last updated on @Model.Article.Published.ToString("dddd dd MMM yyyy")</p>
+        <p><small>@Model.Article.Published.ToString("dddd dd MMM yyyy")</small></p>
+        <p><small>This article was written on <a href="@Model.Article.GitHubPath"><i class="fa fa-github fa-lg" aria-hidden="true"></i> GitHub</a>. You can raise issues, create pull requests or even fork the content... its open source</small></p>
     </div>
 </div>
 

@@ -184,3 +184,14 @@ footer {
         padding: .2em .4em;
         color: #24292e;
     }
+
+.badge {
+    border-radius: 3px;
+    font-weight: normal;
+    font-size: initial;
+}
+
+.badge-secondary {
+    background-color: lightgrey;
+
+}

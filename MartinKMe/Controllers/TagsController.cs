@@ -24,7 +24,10 @@ namespace MartinKMe.Controllers
         public async Task<IActionResult> Tag(string tag)
         {
             // all published articles
-            var articles = await _store.GetContents();
+            var allArticles = await _store.GetContents();
+
+            //filter for just published articles
+            List<Content> articles = allArticles.Where(o => o.Status == "published").ToList();
 
             // articles for tag
             var articlesInTag = new List<Content>();
