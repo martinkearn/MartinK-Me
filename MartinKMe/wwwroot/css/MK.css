@@ -195,3 +195,20 @@ footer {
     background-color: lightgrey;
 
 }
+
+#SearchTerm {
+    font-size: 1.5em;
+    height: 1.5em;
+    height: 1.5em;
+    border-radius: unset;
+}
+
+#Search-Button {
+    font-size: 1.2em;
+}
+
+@media (min-width: 768px) {
+    .form-inline .form-control {
+        width: 500px;
+    }
+}

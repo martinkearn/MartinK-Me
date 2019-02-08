@@ -10,5 +10,9 @@ namespace MartinKMe.Models
         public string StorageConnectionString { get; set; }
 
         public string DbConnectionString { get; set; }
+
+        public string SearchSubscriptionKey { get; set; }
+
+        public string SearchCustomConfigId { get; set; }
     }
 }

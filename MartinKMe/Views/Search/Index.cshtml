@@ -1,0 +1,56 @@
+﻿@inject Microsoft.Extensions.Options.IOptions<PersonaliseOptions> opt
+@model MartinKMe.Models.SearchViewModels.IndexViewModel
+
+@{
+    ViewData["Title"] = "Search";
+}
+
+<div class="jumbotron jumbotron-calendar">
+    <div class="container">
+        <h1>@ViewData["Title"]</h1>
+        <p>Search this site's contents for articles, links, events and everything else</p>
+        <p>Powered by <a href="https://azure.microsoft.com/en-gb/services/cognitive-services/bing-custom-search/">Cognitive Services Bing Custom Search</a></p>
+    </div>
+</div>
+
+
+
+
+<div class="container-fluid sequence-background-3">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <form class="form-inline" asp-action="Index">
+                    <div class="form-group">
+                        <input class="form-control" asp-for="@Model.SearchTerm" value="@Model.SearchTerm">
+                    </div>
+                    <button type="submit" class="btn btn-primary" id="Search-Button">Search</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    @if (Model.SearchResponse != null)
+    {
+        if (Model.SearchResponse.webPages != null)
+        {
+            <div class="container-fluid">
+                <div class="container">
+                    @foreach (var r in Model.SearchResponse.webPages.value)
+                    {
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h4><a href="@r.url">@r.name</a></h4>
+                                <p>@r.snippet</p>
+                                <a href="@r.url" class="btn btn-default">Show me <i class="fa fa-angle-double-right" aria-hidden="true"></i></a>
+                                <hr />
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        }
+    }
+
