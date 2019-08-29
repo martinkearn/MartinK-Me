@@ -38,7 +38,7 @@ namespace Functions
                     var fileContent = Helpers.Base64Decode((string)gitHubFile.content);
 
                     // deserliase the YAML with YamlDotNet
-                    var yamlString = fileContent.Substring(0, fileContent.LastIndexOf("---")); // chop off the markdown, leaving just the YAML header as YamlDotNet only deals with YAML documents
+                    var yamlString = fileContent.Substring(0, fileContent.LastIndexOf("---\n")); // chop off the markdown, leaving just the YAML header as YamlDotNet only deals with YAML documents. Assumes there is a space after the end of the YAML header
                     var yamlDeserializer = new DeserializerBuilder()
                         .WithNamingConvention(new CamelCaseNamingConvention())
                         .Build();
