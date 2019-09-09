@@ -1,0 +1,37 @@
+﻿@inject Microsoft.Extensions.Options.IOptions<PersonaliseOptions> opt
+@model MartinKMe.Models.ShortcutsViewModels.IndexViewModel
+
+@{
+    ViewData["Title"] = "Shortcuts";
+}
+
+@{
+    var backgroundCount = 1;
+}
+
+@foreach (var group in Model.Groups)
+{
+    <div class="container-fluid sequence-background-@backgroundCount">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h4 class="shortcut-header">@group.Key</h4>
+                    @foreach (var shortcut in group.ToList())
+                    {
+                        <a href="@shortcut.Url" title="@shortcut.Title" class="shortcut-link">@shortcut.Title</a>
+                        @if (shortcut.Title != group.Last().Title)
+                        {
+                            <span> - </span>
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {
+        backgroundCount = backgroundCount + 1;
+    }
+}
+
+

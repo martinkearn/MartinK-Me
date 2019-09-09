@@ -20,6 +20,8 @@ namespace MartinKMe.Repositories
         private readonly AppSecretSettings _appSecretSettings;
         private const string _linksContainer = "Links";
         private const string _linkPartitionkey = "Links";
+        private const string _shortcutsContainer = "Shortcuts";
+        private const string _shortcutsPartitionkey = "Shortcuts";
         private const string _eventContainer = "Events";
         private const string _eventPartitionkey = "Events";
         private const string _talkContainer = "Talks";
@@ -57,6 +59,89 @@ namespace MartinKMe.Repositories
             }
 
             return results;
+        }
+
+        public async Task<List<Shortcut>> GetShortcuts()
+        {
+            //temp mocked data for testing
+            var shortcuts = new List<Shortcut>
+            {
+
+                //Github
+                new Shortcut()
+                {
+                    Title = "Content Repo",
+                    Group = "GitHub",
+                    Position = 110,
+                    Url = "whatever"
+                },
+
+                new Shortcut()
+                {
+                    Title = "MartinK.me Repo",
+                    Group = "GitHub",
+                    Position = 111,
+                    Url = "whatever"
+                },
+
+                new Shortcut()
+                {
+                    Title = "Github",
+                    Group = "GitHub",
+                    Position = 112,
+                    Url = "whatever"
+                },
+
+                //ADO
+                new Shortcut()
+                {
+                    Title = "KPMG Active",
+                    Group = "ADO",
+                    Position = 20,
+                    Url = "whatever"
+                },
+
+                new Shortcut()
+                {
+                    Title = "My Tracked",
+                    Group = "ADO",
+                    Position = 21,
+                    Url = "whatever"
+                },
+
+                new Shortcut()
+                {
+                    Title = "Doc Rec",
+                    Group = "ADO",
+                    Position = 22,
+                    Url = "whatever"
+                },
+
+                //MSFT Internal
+                new Shortcut()
+                {
+                    Title = "HRweb",
+                    Group = "Microsoft Internal",
+                    Position = 23,
+                    Url = "whatever"
+                },
+                new Shortcut()
+                {
+                    Title = "Stock",
+                    Group = "Microsoft Internal",
+                    Position = 2,
+                    Url = "whatever"
+                },
+                new Shortcut()
+                {
+                    Title = "Connects",
+                    Group = "Microsoft Internal",
+                    Position = 1,
+                    Url = "whatever"
+                }
+            };
+
+            return shortcuts;
         }
 
         public async Task<List<Event>> GetEvents(int take = 100)

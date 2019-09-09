@@ -212,3 +212,15 @@ footer {
         width: 500px;
     }
 }
+
+.shortcut-header {
+    float: left;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    margin-right: 10px;
+    line-height: 1.4;
+}
+
+.shortcut-link {
+    line-height: 1.4;
+}
