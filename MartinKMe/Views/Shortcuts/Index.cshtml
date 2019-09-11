@@ -9,29 +9,62 @@
     var backgroundCount = 1;
 }
 
-@foreach (var group in Model.Groups)
-{
-    <div class="container-fluid sequence-background-@backgroundCount">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <h4 class="shortcut-header">@group.Key</h4>
-                    @foreach (var shortcut in group.ToList())
-                    {
-                        <a href="@shortcut.Url" title="@shortcut.Title" class="shortcut-link">@shortcut.Title</a>
-                        @if (shortcut.Title != group.Last().Title)
-                        {
-                            <span> - </span>
-                        }
-                    }
-                </div>
+@*<i class="fa fa-windows fa-lg"></i>*@
+
+<div class="container-fluid sequence-background-@backgroundCount">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                @{
+                    var searchGroup = Model.Groups.Where(o => o.Key == "Search").FirstOrDefault();
+                    backgroundCount = backgroundCount + 1;
+                }
+
+                <input type="text" id="query" name="query" value="" style="width:100%;margin-bottom:10px;color:#000000;">
+
+                @foreach (var shortcut in searchGroup)
+                {
+                    <button onclick="search('@shortcut.Url')" title="@shortcut.Title" class="btn btn-primary btn-lg">
+                        @shortcut.Title
+                    </button>
+                }
+
             </div>
         </div>
     </div>
+</div>
 
+@foreach (var group in Model.Groups)
+{
+    if (group.Key != "Search")
     {
-        backgroundCount = backgroundCount + 1;
+        <div class="container-fluid sequence-background-@backgroundCount">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h4 class="shortcut-header">@group.Key</h4>
+                        @foreach (var shortcut in group.ToList())
+                        {
+                            <a href="@shortcut.Url" title="@shortcut.Title" class="shortcut-link">@shortcut.Title</a>
+                            @if (shortcut.Title != group.Last().Title)
+                            {
+                                <span> - </span>
+                            }
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {
+            backgroundCount = backgroundCount + 1;
+        }
     }
+
 }
 
-
+<script>
+    function search(url) {
+        window.location = url + document.getElementById("query").value;
+    }
+</script>
