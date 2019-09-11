@@ -21,7 +21,6 @@ namespace MartinKMe.Repositories
         private const string _linksContainer = "Links";
         private const string _linkPartitionkey = "Links";
         private const string _shortcutsContainer = "Shortcuts";
-        private const string _shortcutsPartitionkey = "Shortcuts";
         private const string _eventContainer = "Events";
         private const string _eventPartitionkey = "Events";
         private const string _talkContainer = "Talks";
@@ -63,85 +62,29 @@ namespace MartinKMe.Repositories
 
         public async Task<List<Shortcut>> GetShortcuts()
         {
-            //temp mocked data for testing
-            var shortcuts = new List<Shortcut>
+            var table = await GetCloudTable(_appSecretSettings.StorageConnectionString, _shortcutsContainer);
+
+            TableContinuationToken token = null;
+
+            var entities = new List<TableEntityAdapter<Shortcut>>();
+
+            TableQuery<TableEntityAdapter<Shortcut>> query = new TableQuery<TableEntityAdapter<Shortcut>>();
+
+            do
             {
+                var queryResult = await table.ExecuteQuerySegmentedAsync(query, token);
+                entities.AddRange(queryResult.Results);
+                token = queryResult.ContinuationToken;
+            } while (token != null);
 
-                //Github
-                new Shortcut()
-                {
-                    Title = "Content Repo",
-                    Group = "GitHub",
-                    Position = 110,
-                    Url = "whatever"
-                },
+            var results = new List<Shortcut>();
+            foreach (var entity in entities)
+            {
+                var resultToBeAdded = entity.OriginalEntity;
+                results.Add(resultToBeAdded);
+            }
 
-                new Shortcut()
-                {
-                    Title = "MartinK.me Repo",
-                    Group = "GitHub",
-                    Position = 111,
-                    Url = "whatever"
-                },
-
-                new Shortcut()
-                {
-                    Title = "Github",
-                    Group = "GitHub",
-                    Position = 112,
-                    Url = "whatever"
-                },
-
-                //ADO
-                new Shortcut()
-                {
-                    Title = "KPMG Active",
-                    Group = "ADO",
-                    Position = 20,
-                    Url = "whatever"
-                },
-
-                new Shortcut()
-                {
-                    Title = "My Tracked",
-                    Group = "ADO",
-                    Position = 21,
-                    Url = "whatever"
-                },
-
-                new Shortcut()
-                {
-                    Title = "Doc Rec",
-                    Group = "ADO",
-                    Position = 22,
-                    Url = "whatever"
-                },
-
-                //MSFT Internal
-                new Shortcut()
-                {
-                    Title = "HRweb",
-                    Group = "Microsoft Internal",
-                    Position = 23,
-                    Url = "whatever"
-                },
-                new Shortcut()
-                {
-                    Title = "Stock",
-                    Group = "Microsoft Internal",
-                    Position = 2,
-                    Url = "whatever"
-                },
-                new Shortcut()
-                {
-                    Title = "Connects",
-                    Group = "Microsoft Internal",
-                    Position = 1,
-                    Url = "whatever"
-                }
-            };
-
-            return shortcuts;
+            return results;
         }
 
         public async Task<List<Event>> GetEvents(int take = 100)
