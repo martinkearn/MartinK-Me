@@ -117,7 +117,14 @@
     </footer>
 
     <!--JS-->
-    <script src="~/js/site.min.js" defer></script>
+    <environment names="Development">
+        <script src="~/lib/jquery/dist/jquery.min.js"></script>
+        <script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+        <script src="~/js/site.js"></script>
+    </environment>
+    <environment names="Staging,Production">
+        <script src="~/js/site.min.js" defer></script>
+    </environment>
 
     <script defer>
         (function (i, s, o, g, r, a, m) {

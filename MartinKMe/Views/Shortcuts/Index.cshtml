@@ -11,16 +11,16 @@
 
 @*<i class="fa fa-windows fa-lg"></i>*@
 
-<div class="container-fluid sequence-background-@backgroundCount">
+<div class="container-fluid">
     <div class="container">
         <div class="row">
             <div class="col-md-12">
                 @{
                     var searchGroup = Model.Groups.Where(o => o.Key == "Search").FirstOrDefault();
-                    backgroundCount = backgroundCount + 1;
                 }
 
-                <input type="text" id="query" name="query" value="" style="width:100%;margin-bottom:10px;color:#000000;">
+                <h4 class="shortcut-header"><i class="fa fa-search fa-lg"></i></h4>
+                <input type="text" id="query" name="query" value="" style="width:100%;margin-bottom:10px;margin-top:10px;color:#000000;" />
 
                 @foreach (var shortcut in searchGroup)
                 {
@@ -62,6 +62,50 @@
     }
 
 }
+
+<div class="container-fluid">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#AddShortcutModal">
+                    <i class="fa fa-plus fa-lg"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+
+<div class="modal fade" id="AddShortcutModal" tabindex="-1" role="dialog" aria-labelledby="AddShortcutModal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content" style="color:black;">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel"  style="color:black;">Add a shortcut</h4>
+            </div>
+            <form asp-action="Create" asp-controller="Shortcuts">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label class="control-label" for="Title" style="font-weight:normal;">Title</label>
+                        <input id="Title" name="Title" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label" for="Group" style="font-weight:normal;">Group</label>
+                        <input id="Group" name="Group" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label" for="Url" style="font-weight:normal;">Url</label>
+                        <input id="Url" name="Url" class="form-control" />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <input type="submit" value="AddForm" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 
 <script>
     function search(url) {

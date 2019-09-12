@@ -21,6 +21,7 @@ namespace MartinKMe.Repositories
         private const string _linksContainer = "Links";
         private const string _linkPartitionkey = "Links";
         private const string _shortcutsContainer = "Shortcuts";
+        private const string _shortcutPartitionkey = "Shortcuts";
         private const string _eventContainer = "Events";
         private const string _eventPartitionkey = "Events";
         private const string _talkContainer = "Talks";
@@ -154,7 +155,19 @@ namespace MartinKMe.Repositories
 
             TableBatchOperation batchOperation = new TableBatchOperation();
 
-            var entity = new TableEntityAdapter<Link>(item, _eventPartitionkey, item.Tag.ToLower());
+            var entity = new TableEntityAdapter<Link>(item, _linkPartitionkey, item.Tag.ToLower());
+            batchOperation.InsertOrReplace(entity);
+
+            await table.ExecuteBatchAsync(batchOperation);
+        }
+
+        public async Task StoreShortcut(Shortcut item)
+        {
+            var table = await GetCloudTable(_appSecretSettings.StorageConnectionString, _shortcutsContainer);
+
+            TableBatchOperation batchOperation = new TableBatchOperation();
+
+            var entity = new TableEntityAdapter<Shortcut>(item, _shortcutPartitionkey, item.Title.Replace(" ", "-").ToLower());
             batchOperation.InsertOrReplace(entity);
 
             await table.ExecuteBatchAsync(batchOperation);

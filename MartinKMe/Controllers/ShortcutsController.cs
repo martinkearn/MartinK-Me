@@ -2,6 +2,7 @@ using MartinKMe.Interfaces;
 using MartinKMe.Models;
 using MartinKMe.Models.ShortcutsViewModels;
 using Microsoft.AspNetCore.Html;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -36,5 +37,35 @@ namespace MartinKMe.Controllers
 
             return View(vm);
         }
+
+        // POST: Shortcuts/Create
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Create(IFormCollection collection)
+        {
+            try
+            {
+                var allShortcuts = await _store.GetShortcuts();
+                var shortcutsInGroup = allShortcuts.Where(o => o.Group == collection["Group"]).OrderBy(o=>o.Position);
+                var nextPosition = shortcutsInGroup.Last().Position + 1;
+
+                var shortcut = new Shortcut
+                {
+                    Title = collection["Title"],
+                    Url = collection["Url"],
+                    Group = collection["Group"],
+                    Position = nextPosition
+                };
+
+                await _store.StoreShortcut(shortcut);
+
+                return RedirectToAction(nameof(Index));
+            }
+            catch
+            {
+                return View();
+            }
+        }
+
     }
 }
