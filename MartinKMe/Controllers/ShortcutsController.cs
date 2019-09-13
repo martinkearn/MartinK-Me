@@ -40,15 +40,16 @@ namespace MartinKMe.Controllers
 
         // POST: Shortcuts/Create
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create(IFormCollection collection)
         {
             try
             {
                 var allShortcuts = await _store.GetShortcuts();
                 var shortcutsInGroup = allShortcuts.Where(o => o.Group == collection["Group"]).OrderBy(o=>o.Position);
-                var nextPosition = shortcutsInGroup.Last().Position + 1;
-
+                var nextPosition = (shortcutsInGroup.Count() > 0) ?
+                    shortcutsInGroup.Last().Position + 1 :
+                    allShortcuts.OrderBy(o => o.Position).Last().Position +100;
+                
                 var shortcut = new Shortcut
                 {
                     Title = collection["Title"],
@@ -63,7 +64,7 @@ namespace MartinKMe.Controllers
             }
             catch
             {
-                return View();
+                return RedirectToAction(nameof(Index));
             }
         }
 
