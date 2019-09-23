@@ -1,6 +1,6 @@
 ﻿@inject Microsoft.Extensions.Options.IOptions<PersonaliseOptions> opt
 @{
-    ViewData["Title"] = string.Format("Hi, I'm {0}, an evangelist at Microsoft", opt.Value.Name);
+    ViewData["Title"] = string.Format("Hi, I'm {0}, a software engineer and evangelist at Microsoft", opt.Value.Name);
 }
 
 @section head {
@@ -21,7 +21,7 @@
 <div class="jumbotron">
     <div class="container">
         <h1>Hi, I'm @opt.Value.Name</h1>
-        <p>I'm an evangelist at Microsoft</p>
+        <p>I'm software engineer and evangelist at Microsoft</p>
         <p class="hidden-xs">@opt.Value.Slogan</p>
         <p class="hidden-xs">I'm based in @opt.Value.Location</p>
     </div>
