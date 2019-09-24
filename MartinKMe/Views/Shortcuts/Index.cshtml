@@ -3,52 +3,54 @@
 
 @{
     ViewData["Title"] = "Shortcuts";
-}
-
-@{
     var backgroundCount = 1;
+    var backgroundImageCount = new Random().Next(1, 30);
 }
 
-<!--Listen to Enter key event-->
-<script type="text/javascript">
+@section head
+{
+    <link rel="stylesheet" href="~/css/shortcuts.css" />
+}
 
-    $(document).keypress(function (e) {
-        if (e.which == 13 || event.keyCode == 13) {
-            window.location = "https://www.bing.com/search?q=" + document.getElementById("query").value;
+@section scripts
+{
+    <script>
+        function search(url) {
+            window.location = url + document.getElementById("query").value;
         }
-    });
+    </script>
+}
 
-/**/</script>
+<div class="shortcuts-background shortcuts-background-image-@backgroundImageCount">
 
-<div class="container-fluid">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                @{
-                    var searchGroup = Model.Groups.Where(o => o.Key == "Search").FirstOrDefault();
-                }
+    <div class="container-fluid">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
 
-                <h4 class="shortcut-header"><i class="fa fa-search fa-lg"></i></h4>
-                <input onfocus="this.value=''" type="text" id="query" name="query" value="Search me ..." style="width:100%;margin-bottom:10px;margin-top:10px;color:#000000;" />
+                    <input onfocus="this.value=''" type="text" id="query" name="query" value="Search me ..." class="search-input" />
 
-                @foreach (var shortcut in searchGroup)
-                {
-                    <button onclick="search('@shortcut.Url')" title="@shortcut.Title" class="btn btn-primary btn-lg">
-                        @shortcut.Title
-                    </button>
-                }
+                    @foreach (var shortcut in Model.Groups.Where(o => o.Key == "Search").FirstOrDefault())
+                    {
+                        <button onclick="search('@shortcut.Url')" title="@shortcut.Title" class="btn btn-primary btn-lg sequence-background-@backgroundCount">
+                            @shortcut.Title
+                        </button>
 
+                        {
+                            backgroundCount = backgroundCount + 1;
+                        }
+                    }
+
+                </div>
             </div>
         </div>
     </div>
-</div>
 
-@foreach (var group in Model.Groups)
-{
-    if (group.Key != "Search")
+    @foreach (var group in Model.Groups)
     {
-        <div class="container-fluid sequence-background-@backgroundCount">
-            <div class="container">
+        if (group.Key != "Search")
+        {
+            <div class="container shortcuts-container ">
                 <div class="row">
                     <div class="col-md-12">
                         <h4 class="shortcut-header">@group.Key</h4>
@@ -63,35 +65,31 @@
                     </div>
                 </div>
             </div>
-        </div>
-
-        {
-            backgroundCount = backgroundCount + 1;
         }
+
     }
 
-}
-
-<div class="container-fluid">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#AddShortcutModal">
-                    <i class="fa fa-plus fa-lg"></i>
-                </button>
+    <div class="container-fluid">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#AddShortcutModal">
+                        <i class="fa fa-plus fa-lg"></i>
+                    </button>
+                </div>
             </div>
         </div>
     </div>
+
 </div>
 
 <!-- Modal -->
-
 <div class="modal fade" id="AddShortcutModal" tabindex="-1" role="dialog" aria-labelledby="AddShortcutModal">
     <div class="modal-dialog" role="document">
         <div class="modal-content" style="color:black;">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="myModalLabel" style="color:black;">Add a shortcut</h4>
+                <h4 class="modal-title" id="myModalLabel" style="">Add a shortcut</h4>
             </div>
             <form asp-action="Create" asp-controller="Shortcuts">
                 <div class="modal-body">
@@ -115,9 +113,3 @@
         </div>
     </div>
 </div>
-
-<script>
-    function search(url) {
-        window.location = url + document.getElementById("query").value;
-    }
-</script>
