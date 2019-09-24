@@ -220,129 +220,84 @@ footer {
     height: 100%;
 }
 
-.shortcuts-background-image-1 
-{
-    background-image: linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.4)), url('../images/wallpaper/wp (1).jpg');
+.shortcuts-background-image-1 {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.4)), url('https://martinkme.blob.core.windows.net/wallpaper/wp%20(1)-min.jpg');
 }
 
 .shortcuts-background-image-2 {
-    background-image: linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.4)), url('../images/wallpaper/wp (2).jpg');
+    background-image: linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.4)), url('https://martinkme.blob.core.windows.net/wallpaper/wp%20(2)-min.jpg');
 }
 
 .shortcuts-background-image-3 {
-    background-image: linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.4)), url('../images/wallpaper/wp (3).jpg');
+    background-image: linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.4)), url('https://martinkme.blob.core.windows.net/wallpaper/wp%20(3)-min.jpg');
 }
 
 .shortcuts-background-image-4 {
-    background-image: linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.4)), url('../images/wallpaper/wp (4).jpg');
+    background-image: linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.4)), url('https://martinkme.blob.core.windows.net/wallpaper/wp%20(4)-min.jpg');
 }
 
 .shortcuts-background-image-5 {
-    background-image: linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.4)), url('../images/wallpaper/wp (5).jpg');
+    background-image: linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.4)), url('https://martinkme.blob.core.windows.net/wallpaper/wp%20(5)-min.jpg');
 }
 
 .shortcuts-background-image-6 {
-    background-image: linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.4)), url('../images/wallpaper/wp (6).jpg');
+    background-image: linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.4)), url('https://martinkme.blob.core.windows.net/wallpaper/wp%20(6)-min.jpg');
 }
 
 .shortcuts-background-image-7 {
-    background-image: linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.4)), url('../images/wallpaper/wp (7).jpg');
+    background-image: linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.4)), url('https://martinkme.blob.core.windows.net/wallpaper/wp%20(7)-min.jpg');
 }
 
 .shortcuts-background-image-8 {
-    background-image: linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.4)), url('../images/wallpaper/wp (8).jpg');
+    background-image: linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.4)), url('https://martinkme.blob.core.windows.net/wallpaper/wp%20(8)-min.jpg');
 }
 
 .shortcuts-background-image-9 {
-    background-image: linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.4)), url('../images/wallpaper/wp (9).jpg');
+    background-image: linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.4)), url('https://martinkme.blob.core.windows.net/wallpaper/wp%20(9)-min.jpg');
 }
 
 .shortcuts-background-image-10 {
-    background-image: linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.4)), url('../images/wallpaper/wp (10).jpg');
+    background-image: linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.4)), url('https://martinkme.blob.core.windows.net/wallpaper/wp%20(10)-min.jpg');
 }
 
 .shortcuts-background-image-11 {
-    background-image: linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.4)), url('../images/wallpaper/wp (11).jpg');
+    background-image: linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.4)), url('https://martinkme.blob.core.windows.net/wallpaper/wp%20(11)-min.jpg');
 }
 
 .shortcuts-background-image-12 {
-    background-image: linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.4)), url('../images/wallpaper/wp (12).jpg');
+    background-image: linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.4)), url('https://martinkme.blob.core.windows.net/wallpaper/wp%20(12)-min.jpg');
 }
 
 .shortcuts-background-image-13 {
-    background-image: linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.4)), url('../images/wallpaper/wp (13).jpg');
+    background-image: linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.4)), url('https://martinkme.blob.core.windows.net/wallpaper/wp%20(13)-min.jpg');
 }
 
 .shortcuts-background-image-14 {
-    background-image: linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.4)), url('../images/wallpaper/wp (14).jpg');
+    background-image: linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.4)), url('https://martinkme.blob.core.windows.net/wallpaper/wp%20(14)-min.jpg');
 }
 
 .shortcuts-background-image-15 {
-    background-image: linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.4)), url('../images/wallpaper/wp (15).jpg');
+    background-image: linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.4)), url('https://martinkme.blob.core.windows.net/wallpaper/wp%20(15)-min.jpg');
 }
 
 .shortcuts-background-image-16 {
-    background-image: linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.4)), url('../images/wallpaper/wp (16).jpg');
+    background-image: linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.4)), url('https://martinkme.blob.core.windows.net/wallpaper/wp%20(16)-min.jpg');
 }
 
 .shortcuts-background-image-17 {
-    background-image: linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.4)), url('../images/wallpaper/wp (17).jpg');
+    background-image: linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.4)), url('https://martinkme.blob.core.windows.net/wallpaper/wp%20(17)-min.jpg');
 }
 
 .shortcuts-background-image-18 {
-    background-image: linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.4)), url('../images/wallpaper/wp (18).jpg');
+    background-image: linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.4)), url('https://martinkme.blob.core.windows.net/wallpaper/wp%20(18)-min.jpg');
 }
 
 .shortcuts-background-image-19 {
-    background-image: linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.4)), url('../images/wallpaper/wp (19).jpg');
+    background-image: linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.4)), url('https://martinkme.blob.core.windows.net/wallpaper/wp%20(19)-min.jpg');
 }
 
 .shortcuts-background-image-20 {
-    background-image: linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.4)), url('../images/wallpaper/wp (20).jpg');
-}
-
-.shortcuts-background-image-10 {
-    background-image: linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.4)), url('../images/wallpaper/wp (10).jpg');
-}
-
-.shortcuts-background-image-21 {
-    background-image: linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.4)), url('../images/wallpaper/wp (21).jpg');
-}
-
-.shortcuts-background-image-22 {
-    background-image: linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.4)), url('../images/wallpaper/wp (22).jpg');
-}
-
-.shortcuts-background-image-23 {
-    background-image: linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.4)), url('../images/wallpaper/wp (23).jpg');
-}
-
-.shortcuts-background-image-24 {
-    background-image: linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.4)), url('../images/wallpaper/wp (24).jpg');
-}
-
-.shortcuts-background-image-25 {
-    background-image: linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.4)), url('../images/wallpaper/wp (25).jpg');
-}
-
-.shortcuts-background-image-26 {
-    background-image: linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.4)), url('../images/wallpaper/wp (26).jpg');
-}
-
-.shortcuts-background-image-27 {
-    background-image: linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.4)), url('../images/wallpaper/wp (27).jpg');
-}
-
-.shortcuts-background-image-28 {
-    background-image: linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.4)), url('../images/wallpaper/wp (28).jpg');
-}
-
-.shortcuts-background-image-29 {
-    background-image: linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.4)), url('../images/wallpaper/wp (29).jpg');
-}
-
-.shortcuts-background-image-30 {
-    background-image: linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.4)), url('../images/wallpaper/wp (30).jpg');
+    background-image: linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.4)), url('https://martinkme.blob.core.windows.net/wallpaper/wp%20(20)-min.jpg');
 }
 
 .search-input {
