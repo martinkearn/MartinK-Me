@@ -15,6 +15,12 @@
 @section scripts
 {
     <script>
+        $("#query").keyup(function(event) {
+          if (event.keyCode === 13) {
+              search("https://www.bing.com/search?q=");
+          }
+        });
+
         function search(url) {
             window.location = url + document.getElementById("query").value;
         }
