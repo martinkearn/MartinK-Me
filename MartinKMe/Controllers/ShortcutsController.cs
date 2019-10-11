@@ -68,5 +68,23 @@ namespace MartinKMe.Controllers
             }
         }
 
+        // POST: Shortcuts/Delete
+        [HttpPost]
+        public async Task<ActionResult> Delete(IFormCollection collection)
+        {
+            try
+            {
+                var shortcutTitle = collection["Title"];
+
+                await _store.DeleteShortcut(shortcutTitle);
+
+                return RedirectToAction(nameof(Index));
+            }
+            catch
+            {
+                return RedirectToAction(nameof(Index));
+            }
+        }
+
     }
 }

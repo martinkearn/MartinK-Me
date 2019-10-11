@@ -173,6 +173,22 @@ namespace MartinKMe.Repositories
             await table.ExecuteBatchAsync(batchOperation);
         }
 
+        public async Task DeleteShortcut(string title)
+        {
+            var table = await GetCloudTable(_appSecretSettings.StorageConnectionString, _shortcutsContainer);
+
+            //get the Shortcut entity
+            var shortcuts = await GetShortcuts();
+            var shortcutToDelete = shortcuts.Where(o => o.Title.ToLowerInvariant() == title.ToLowerInvariant()).FirstOrDefault();
+            var shortcutToDeleteEntity = new TableEntityAdapter<Shortcut>(shortcutToDelete, _shortcutPartitionkey, shortcutToDelete.Title.Replace(" ", "-").ToLower());
+            shortcutToDeleteEntity.ETag = "*";
+
+            // execute deletion operation
+            TableBatchOperation batchOperation = new TableBatchOperation();
+            batchOperation.Delete(shortcutToDeleteEntity);
+            await table.ExecuteBatchAsync(batchOperation);
+        }
+
         public async Task StoreEvent(Event item)
         {
             var table = await GetCloudTable(_appSecretSettings.StorageConnectionString, _eventContainer);

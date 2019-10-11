@@ -16,6 +16,8 @@ namespace MartinKMe.Interfaces
 
         Task StoreShortcut(Shortcut Shortcut);
 
+        Task DeleteShortcut(string title);
+
         Task<List<Event>> GetEvents(int take);
 
         Task StoreEvent(Event Event);
