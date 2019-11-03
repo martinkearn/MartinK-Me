@@ -99,15 +99,15 @@
                 </div>
                 <div class="col-md-2">
                     <h3>New York</h3>
-                    <p><strong>@DateTime.UtcNow.Subtract(new TimeSpan(4, 0, 0)).ToString("HH:mm")</strong><br /><small>@DateTime.UtcNow.Subtract(new TimeSpan(4, 0, 0)).ToString("ddd dd")</small></p>
+                    <p><strong>@DateTime.UtcNow.Subtract(new TimeSpan(5, 0, 0)).ToString("HH:mm")</strong><br /><small>@DateTime.UtcNow.Subtract(new TimeSpan(5, 0, 0)).ToString("ddd dd")</small></p>
                 </div>
                 <div class="col-md-2">
                     <h3>Home</h3>
-                    <p><strong>@DateTime.UtcNow.Add(new TimeSpan(1, 0, 0)).ToString("HH:mm")</strong><br /><small>@DateTime.UtcNow.Add(new TimeSpan(1, 0, 0)).ToString("ddd dd")</small></p>
+                    <p><strong>@DateTime.UtcNow.ToString("HH:mm")</strong><br /><small>@DateTime.UtcNow.ToString("ddd dd")</small></p>
                 </div>
                 <div class="col-md-2">
                     <h3>Europe</h3>
-                    <p><strong>@DateTime.UtcNow.Add(new TimeSpan(2, 0, 0)).ToString("HH:mm")</strong><br /><small>@DateTime.UtcNow.Add(new TimeSpan(2, 0, 0)).ToString("ddd dd")</small></p>
+                    <p><strong>@DateTime.UtcNow.Add(new TimeSpan(1, 0, 0)).ToString("HH:mm")</strong><br /><small>@DateTime.UtcNow.Add(new TimeSpan(1, 0, 0)).ToString("ddd dd")</small></p>
                 </div>
                 <div class="col-md-2">
                     <h3>India</h3>
@@ -122,18 +122,6 @@
     </div>
 
 </div>
-
-@section footer
-{
-    <div class="container">
-        <div class="row">
-            <div class="col-sm-12">
-                <p>Footer stuff from page</p>
-            </div>
-        </div>
-    </div>
-}
-
 
 <!-- Add Modal -->
 <div class="modal fade" id="AddShortcutModal" tabindex="-1" role="dialog" aria-labelledby="AddShortcutModal">
