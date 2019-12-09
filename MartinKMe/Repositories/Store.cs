@@ -295,6 +295,8 @@ namespace MartinKMe.Repositories
 
         public async Task<List<string>> GetWallpaperUris()
         {
+            //https://docs.microsoft.com/en-us/azure/storage/blobs/storage-quickstart-blobs-dotnet-legacy
+
             var storageAccount = CloudStorageAccount.Parse(_appSecretSettings.StorageConnectionString);
 
             CloudBlobClient cloudBlobClient = storageAccount.CreateCloudBlobClient();
@@ -335,14 +337,6 @@ namespace MartinKMe.Repositories
             var table = tableClient.GetTableReference(containerName);
             await table.CreateIfNotExistsAsync();
             return table;
-        }
-
-        private async Task<CloudBlobContainer> GetCloudBlobContainer(string connectionString, string containerName)
-        {
-            var storageAccount = CloudStorageAccount.Parse(connectionString);
-            var blobClient = storageAccount.CreateCloudBlobClient();
-            var blobContainer = blobClient.GetContainerReference(containerName);
-            return blobContainer;
         }
 
     }
