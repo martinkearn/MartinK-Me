@@ -23,6 +23,9 @@ namespace MartinKMe.Controllers
 
         public async Task<IActionResult> Index()
         {
+            //all wallpapers
+            var wallpapers = await _store.GetWallpaperUris();
+
             // all shortcuts
             var allShortcuts = await _store.GetShortcuts();
 

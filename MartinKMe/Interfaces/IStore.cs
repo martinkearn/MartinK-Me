@@ -29,5 +29,7 @@ namespace MartinKMe.Interfaces
         Task<List<Content>> GetContents();
 
         Task<Content> GetContent(string id);
+
+        Task<List<string>> GetWallpaperUris();
     }
 }
