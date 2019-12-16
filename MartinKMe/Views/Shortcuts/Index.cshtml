@@ -34,7 +34,7 @@
             <div class="row">
                 <div class="col-md-12">
 
-                    <input onfocus="this.value=''" type="text" id="query" name="query" value="Search me ..." class="search-input" />
+                    <input onfocus="this.value=''" type="text" id="query" name="query" value="Search me ..." class="search-input" autofocus />
 
                     @foreach (var shortcut in Model.Groups.Where(o => o.Key == "Search").FirstOrDefault())
                     {
