@@ -212,92 +212,11 @@ footer {
 
 .shortcuts-background {
     color: #FE940D;
-    background-image: linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.4)), url('../images/wallpaper/(1).jpg');
     background-position: center center;
     margin-bottom: 0;
     background-size: cover;
     background-repeat: no-repeat;
     height: 100%;
-}
-
-.shortcuts-background-image-1 {
-    background-image: linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.4)), url('https://martinkme.blob.core.windows.net/wallpaper/wp%20(1)-min.jpg');
-}
-
-.shortcuts-background-image-2 {
-    background-image: linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.4)), url('https://martinkme.blob.core.windows.net/wallpaper/wp%20(2)-min.jpg');
-}
-
-.shortcuts-background-image-3 {
-    background-image: linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.4)), url('https://martinkme.blob.core.windows.net/wallpaper/wp%20(3)-min.jpg');
-}
-
-.shortcuts-background-image-4 {
-    background-image: linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.4)), url('https://martinkme.blob.core.windows.net/wallpaper/wp%20(4)-min.jpg');
-}
-
-.shortcuts-background-image-5 {
-    background-image: linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.4)), url('https://martinkme.blob.core.windows.net/wallpaper/wp%20(5)-min.jpg');
-}
-
-.shortcuts-background-image-6 {
-    background-image: linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.4)), url('https://martinkme.blob.core.windows.net/wallpaper/wp%20(6)-min.jpg');
-}
-
-.shortcuts-background-image-7 {
-    background-image: linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.4)), url('https://martinkme.blob.core.windows.net/wallpaper/wp%20(7)-min.jpg');
-}
-
-.shortcuts-background-image-8 {
-    background-image: linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.4)), url('https://martinkme.blob.core.windows.net/wallpaper/wp%20(8)-min.jpg');
-}
-
-.shortcuts-background-image-9 {
-    background-image: linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.4)), url('https://martinkme.blob.core.windows.net/wallpaper/wp%20(9)-min.jpg');
-}
-
-.shortcuts-background-image-10 {
-    background-image: linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.4)), url('https://martinkme.blob.core.windows.net/wallpaper/wp%20(10)-min.jpg');
-}
-
-.shortcuts-background-image-11 {
-    background-image: linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.4)), url('https://martinkme.blob.core.windows.net/wallpaper/wp%20(11)-min.jpg');
-}
-
-.shortcuts-background-image-12 {
-    background-image: linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.4)), url('https://martinkme.blob.core.windows.net/wallpaper/wp%20(12)-min.jpg');
-}
-
-.shortcuts-background-image-13 {
-    background-image: linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.4)), url('https://martinkme.blob.core.windows.net/wallpaper/wp%20(13)-min.jpg');
-}
-
-.shortcuts-background-image-14 {
-    background-image: linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.4)), url('https://martinkme.blob.core.windows.net/wallpaper/wp%20(14)-min.jpg');
-}
-
-.shortcuts-background-image-15 {
-    background-image: linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.4)), url('https://martinkme.blob.core.windows.net/wallpaper/wp%20(15)-min.jpg');
-}
-
-.shortcuts-background-image-16 {
-    background-image: linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.4)), url('https://martinkme.blob.core.windows.net/wallpaper/wp%20(16)-min.jpg');
-}
-
-.shortcuts-background-image-17 {
-    background-image: linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.4)), url('https://martinkme.blob.core.windows.net/wallpaper/wp%20(17)-min.jpg');
-}
-
-.shortcuts-background-image-18 {
-    background-image: linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.4)), url('https://martinkme.blob.core.windows.net/wallpaper/wp%20(18)-min.jpg');
-}
-
-.shortcuts-background-image-19 {
-    background-image: linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.4)), url('https://martinkme.blob.core.windows.net/wallpaper/wp%20(19)-min.jpg');
-}
-
-.shortcuts-background-image-20 {
-    background-image: linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.4)), url('https://martinkme.blob.core.windows.net/wallpaper/wp%20(20)-min.jpg');
 }
 
 .search-input {

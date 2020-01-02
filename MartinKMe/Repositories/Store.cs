@@ -1,9 +1,6 @@
-﻿using Azure.Storage.Blobs;
-using Azure.Storage.Blobs.Models;
-using MartinKMe.Interfaces;
+﻿using MartinKMe.Interfaces;
 using MartinKMe.Models;
 using Microsoft.Extensions.Options;
-using Microsoft.VisualBasic.CompilerServices;
 using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Blob;
 using Microsoft.WindowsAzure.Storage.Table;
@@ -11,8 +8,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
-using System.Security.Policy;
-using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
@@ -32,7 +27,7 @@ namespace MartinKMe.Repositories
         private const string _talkPartitionkey = "Talks";
         private const string _contentContainer = "Contents";
         private const string _articlePartitionkey = "article";
-        private const string _wallpaperContainer = "Wallpaper";
+        private const string _wallpaperContainer = "wallpaper";
 
         public Store(IOptions<AppSecretSettings> appSecretSettings)
         {
@@ -295,15 +290,11 @@ namespace MartinKMe.Repositories
 
         public async Task<List<string>> GetWallpaperUris()
         {
-            //https://docs.microsoft.com/en-us/azure/storage/blobs/storage-quickstart-blobs-dotnet-legacy
-
             var storageAccount = CloudStorageAccount.Parse(_appSecretSettings.StorageConnectionString);
 
             CloudBlobClient cloudBlobClient = storageAccount.CreateCloudBlobClient();
 
             CloudBlobContainer cloudBlobContainer = cloudBlobClient.GetContainerReference(_wallpaperContainer);
-           
-            //await cloudBlobContainer.CreateAsync();
 
             var wallpaperUris = new List<string>();
             BlobContinuationToken blobContinuationToken = null;
