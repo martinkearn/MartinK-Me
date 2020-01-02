@@ -8,5 +8,7 @@ namespace MartinKMe.Models.ShortcutsViewModels
     public class IndexViewModel
     {
         public List<IGrouping<string,Shortcut>> Groups { get; set; }
+
+        public string WallpaperUri { get; set; }
     }
 }

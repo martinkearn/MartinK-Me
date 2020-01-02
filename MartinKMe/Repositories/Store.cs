@@ -2,13 +2,12 @@
 using MartinKMe.Models;
 using Microsoft.Extensions.Options;
 using Microsoft.WindowsAzure.Storage;
+using Microsoft.WindowsAzure.Storage.Blob;
 using Microsoft.WindowsAzure.Storage.Table;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
-using System.Security.Policy;
-using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
@@ -28,6 +27,7 @@ namespace MartinKMe.Repositories
         private const string _talkPartitionkey = "Talks";
         private const string _contentContainer = "Contents";
         private const string _articlePartitionkey = "article";
+        private const string _wallpaperContainer = "wallpaper";
 
         public Store(IOptions<AppSecretSettings> appSecretSettings)
         {
@@ -288,6 +288,30 @@ namespace MartinKMe.Repositories
             return thisItem;
         }
 
+        public async Task<List<string>> GetWallpaperUris()
+        {
+            var storageAccount = CloudStorageAccount.Parse(_appSecretSettings.StorageConnectionString);
+
+            CloudBlobClient cloudBlobClient = storageAccount.CreateCloudBlobClient();
+
+            CloudBlobContainer cloudBlobContainer = cloudBlobClient.GetContainerReference(_wallpaperContainer);
+
+            var wallpaperUris = new List<string>();
+            BlobContinuationToken blobContinuationToken = null;
+            do
+            {
+                var results = await cloudBlobContainer.ListBlobsSegmentedAsync(null, blobContinuationToken);
+                // Get the value of the continuation token returned by the listing call.
+                blobContinuationToken = results.ContinuationToken;
+                foreach (IListBlobItem item in results.Results)
+                {
+                    wallpaperUris.Add(item.Uri.ToString());
+                }
+            } while (blobContinuationToken != null); // Loop while the continuation token is not null.
+
+            return wallpaperUris;
+        }
+
         private static string FormatForUrl(string str)
         {
             var a = str.Replace(" ", "-");
@@ -300,8 +324,8 @@ namespace MartinKMe.Repositories
         private async Task<CloudTable> GetCloudTable(string tableConnectionString, string containerName)
         {
             var storageAccount = CloudStorageAccount.Parse(tableConnectionString);
-            var blobClient = storageAccount.CreateCloudTableClient();
-            var table = blobClient.GetTableReference(containerName);
+            var tableClient = storageAccount.CreateCloudTableClient();
+            var table = tableClient.GetTableReference(containerName);
             await table.CreateIfNotExistsAsync();
             return table;
         }

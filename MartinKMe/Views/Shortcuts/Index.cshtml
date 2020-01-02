@@ -27,14 +27,13 @@
     </script>
 }
 
-<div class="shortcuts-background shortcuts-background-image-@backgroundImageCount">
-
+<div class="shortcuts-background" style="background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('@Model.WallpaperUri')">
     <div class="container-fluid">
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
 
-                    <input onfocus="this.value=''" type="text" id="query" name="query" value="Search me ..." class="search-input" />
+                    <input onfocus="this.value=''" type="text" id="query" name="query" value="Search me ..." class="search-input" autofocus />
 
                     @foreach (var shortcut in Model.Groups.Where(o => o.Key == "Search").FirstOrDefault())
                     {

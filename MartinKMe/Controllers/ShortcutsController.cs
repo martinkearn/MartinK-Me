@@ -1,13 +1,10 @@
 using MartinKMe.Interfaces;
 using MartinKMe.Models;
 using MartinKMe.Models.ShortcutsViewModels;
-using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace MartinKMe.Controllers
@@ -23,6 +20,11 @@ namespace MartinKMe.Controllers
 
         public async Task<IActionResult> Index()
         {
+            // wallpaper
+            var wallpapers = await _store.GetWallpaperUris();
+            var wallpaperIndex = (new Random().Next(1, (wallpapers.Count + 1 )))-1;
+            var wallpaperUri = wallpapers[wallpaperIndex];
+
             // all shortcuts
             var allShortcuts = await _store.GetShortcuts();
 
@@ -32,7 +34,8 @@ namespace MartinKMe.Controllers
 
             var vm = new IndexViewModel()
             {
-                Groups = groupedShortcuts
+                Groups = groupedShortcuts,
+                WallpaperUri = wallpaperUri
             };
 
             return View(vm);
