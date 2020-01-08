@@ -1,129 +1,16 @@
 {
-    "$connections": {
-        "value": {
-            "azureblob_1": {
-                "connectionId": "/subscriptions/1fcbb1ab-1178-46fc-8c5d-f0e20b65610d/resourceGroups/MartinKearn/providers/Microsoft.Web/connections/azureblob-1",
-                "connectionName": "azureblob-1",
-                "id": "/subscriptions/1fcbb1ab-1178-46fc-8c5d-f0e20b65610d/providers/Microsoft.Web/locations/uksouth/managedApis/azureblob"
-            },
-            "azuretables_1": {
-                "connectionId": "/subscriptions/1fcbb1ab-1178-46fc-8c5d-f0e20b65610d/resourceGroups/MartinKearn/providers/Microsoft.Web/connections/azuretables-1",
-                "connectionName": "azuretables-1",
-                "id": "/subscriptions/1fcbb1ab-1178-46fc-8c5d-f0e20b65610d/providers/Microsoft.Web/locations/uksouth/managedApis/azuretables"
-            }
-        }
-    },
     "definition": {
         "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
         "actions": {
             "For_each_Added_Webhook": {
                 "actions": {
-                    "Added_ConvertToHtmlWithMetadata": {
+                    "Append_to_array_variable_Added": {
                         "inputs": {
-                            "body": "https://api.github.com/repos/@{body('Webhook_JSON')?['head_commit']?['author']?['username']}/@{body('Webhook_JSON')?['repository']?['name']}/contents/@{items('For_each_Added_Webhook')}",
-                            "method": "POST",
-                            "uri": "https://martinkearnfunctions.azurewebsites.net/api/ConvertToHtmlWithMetadata"
+                            "name": "AddedModifiedFiles",
+                            "value": "@items('For_each_Added_Webhook')"
                         },
                         "runAfter": {},
-                        "type": "Http"
-                    },
-                    "Added_Insert_or_Replace_Entity": {
-                        "inputs": {
-                            "body": "@body('Added_Parse_JSON')",
-                            "host": {
-                                "connection": {
-                                    "name": "@parameters('$connections')['azuretables_1']['connectionId']"
-                                }
-                            },
-                            "method": "put",
-                            "path": "/Tables/@{encodeURIComponent('Contents')}/entities(PartitionKey='@{encodeURIComponent(body('Added_Parse_JSON')?['type'])}',RowKey='@{encodeURIComponent(body('Added_Parse_JSON')?['key'])}')"
-                        },
-                        "runAfter": {
-                            "Create_blob": [
-                                "Succeeded"
-                            ]
-                        },
-                        "type": "ApiConnection"
-                    },
-                    "Added_Parse_JSON": {
-                        "inputs": {
-                            "content": "@body('Added_ConvertToHtmlWithMetadata')",
-                            "schema": {
-                                "properties": {
-                                    "author": {
-                                        "type": "string"
-                                    },
-                                    "categories": {
-                                        "type": "string"
-                                    },
-                                    "description": {
-                                        "type": "string"
-                                    },
-                                    "githubpath": {
-                                        "type": "string"
-                                    },
-                                    "html": {
-                                        "type": "string"
-                                    },
-                                    "image": {
-                                        "type": "string"
-                                    },
-                                    "key": {
-                                        "type": "string"
-                                    },
-                                    "path": {
-                                        "type": "string"
-                                    },
-                                    "published": {
-                                        "type": "string"
-                                    },
-                                    "thumbnail": {
-                                        "type": "string"
-                                    },
-                                    "title": {
-                                        "type": "string"
-                                    },
-                                    "type": {
-                                        "type": "string"
-                                    }
-                                },
-                                "type": "object"
-                            }
-                        },
-                        "runAfter": {
-                            "Added_ConvertToHtmlWithMetadata": [
-                                "Succeeded"
-                            ]
-                        },
-                        "type": "ParseJson"
-                    },
-                    "Create_blob": {
-                        "inputs": {
-                            "body": "@body('Added_Parse_JSON')?['html']",
-                            "host": {
-                                "connection": {
-                                    "name": "@parameters('$connections')['azureblob_1']['connectionId']"
-                                }
-                            },
-                            "method": "post",
-                            "path": "/datasets/default/files",
-                            "queries": {
-                                "folderPath": "/contents",
-                                "name": "file.html",
-                                "queryParametersSingleEncoded": true
-                            }
-                        },
-                        "runAfter": {
-                            "Added_Parse_JSON": [
-                                "Succeeded"
-                            ]
-                        },
-                        "runtimeConfiguration": {
-                            "contentTransfer": {
-                                "transferMode": "Chunked"
-                            }
-                        },
-                        "type": "ApiConnection"
+                        "type": "AppendToArrayVariable"
                     }
                 },
                 "foreach": "@body('Webhook_JSON')?['head_commit']?['added']",
@@ -134,86 +21,195 @@
                 },
                 "type": "Foreach"
             },
-            "For_each_Modified_Webhook": {
+            "For_each_Added_or_Modified_file": {
                 "actions": {
-                    "Modified_ConvertToHtmlWithMetadata": {
-                        "inputs": {
-                            "body": "https://api.github.com/repos/@{body('Webhook_JSON')?['head_commit']?['author']?['username']}/@{body('Webhook_JSON')?['repository']?['name']}/contents/@{items('For_each_Modified_Webhook')}",
-                            "method": "POST",
-                            "uri": "https://martinkearnfunctions.azurewebsites.net/api/ConvertToHtmlWithMetadata"
-                        },
-                        "runAfter": {},
-                        "type": "Http"
-                    },
-                    "Modified_Insert_or_Replace_Entity": {
-                        "inputs": {
-                            "body": "@body('Modified_Parse_JSON')",
-                            "host": {
-                                "connection": {
-                                    "name": "@parameters('$connections')['azuretables_1']['connectionId']"
-                                }
-                            },
-                            "method": "put",
-                            "path": "/Tables/@{encodeURIComponent('Contents')}/entities(PartitionKey='@{encodeURIComponent(body('Modified_Parse_JSON')?['type'])}',RowKey='@{encodeURIComponent(body('Modified_Parse_JSON')?['key'])}')"
-                        },
-                        "runAfter": {
-                            "Modified_Parse_JSON": [
-                                "Succeeded"
-                            ]
-                        },
-                        "type": "ApiConnection"
-                    },
-                    "Modified_Parse_JSON": {
-                        "inputs": {
-                            "content": "@body('Modified_ConvertToHtmlWithMetadata')",
-                            "schema": {
-                                "properties": {
-                                    "author": {
-                                        "type": "string"
+                    "Condition": {
+                        "actions": {
+                            "Create_blob": {
+                                "inputs": {
+                                    "body": "@base64ToString(body('GitHubMarkdownToHtml'))",
+                                    "host": {
+                                        "connection": {
+                                            "name": "@parameters('$connections')['azureblob_1']['connectionId']"
+                                        }
                                     },
-                                    "categories": {
-                                        "type": "string"
-                                    },
-                                    "description": {
-                                        "type": "string"
-                                    },
-                                    "githubpath": {
-                                        "type": "string"
-                                    },
-                                    "html": {
-                                        "type": "string"
-                                    },
-                                    "image": {
-                                        "type": "string"
-                                    },
-                                    "key": {
-                                        "type": "string"
-                                    },
-                                    "path": {
-                                        "type": "string"
-                                    },
-                                    "published": {
-                                        "type": "string"
-                                    },
-                                    "thumbnail": {
-                                        "type": "string"
-                                    },
-                                    "title": {
-                                        "type": "string"
-                                    },
-                                    "type": {
-                                        "type": "string"
+                                    "method": "post",
+                                    "path": "/datasets/default/files",
+                                    "queries": {
+                                        "folderPath": "/contents",
+                                        "name": "@{concat(variables('UniqueId'),'.html')}",
+                                        "queryParametersSingleEncoded": true
                                     }
                                 },
-                                "type": "object"
+                                "runAfter": {
+                                    "GitHubMarkdownToHtml": [
+                                        "Succeeded"
+                                    ]
+                                },
+                                "runtimeConfiguration": {
+                                    "contentTransfer": {
+                                        "transferMode": "Chunked"
+                                    }
+                                },
+                                "type": "ApiConnection"
+                            },
+                            "GitHubMarkdownToHtml": {
+                                "inputs": {
+                                    "body": "@variables('GitHubApiUrl')",
+                                    "method": "POST",
+                                    "uri": "@{variables('FunctionEndpoint')}api/GitHubMarkdownToHtml"
+                                },
+                                "runAfter": {
+                                    "Set_GitHubApiUrl": [
+                                        "Succeeded"
+                                    ]
+                                },
+                                "type": "Http"
+                            },
+                            "Insert_or_Replace_Entity": {
+                                "inputs": {
+                                    "body": "@body('YamlToMetadata')",
+                                    "host": {
+                                        "connection": {
+                                            "name": "@parameters('$connections')['azuretables_1']['connectionId']"
+                                        }
+                                    },
+                                    "method": "put",
+                                    "path": "/Tables/@{encodeURIComponent('Contents')}/entities(PartitionKey='@{encodeURIComponent(body('Parse_YamlToMetadata')?['type'])}',RowKey='@{encodeURIComponent(body('Parse_YamlToMetadata')?['key'])}')"
+                                },
+                                "runAfter": {
+                                    "Parse_YamlToMetadata": [
+                                        "Succeeded"
+                                    ]
+                                },
+                                "type": "ApiConnection"
+                            },
+                            "Parse_YamlToMetadata": {
+                                "inputs": {
+                                    "content": "@body('YamlToMetadata')",
+                                    "schema": {
+                                        "properties": {
+                                            "author": {
+                                                "type": "string"
+                                            },
+                                            "categories": {
+                                                "type": "string"
+                                            },
+                                            "description": {
+                                                "type": "string"
+                                            },
+                                            "gitHubPath": {
+                                                "type": "string"
+                                            },
+                                            "htmlBlobPath": {
+                                                "type": "string"
+                                            },
+                                            "image": {
+                                                "type": "string"
+                                            },
+                                            "key": {
+                                                "type": "string"
+                                            },
+                                            "path": {
+                                                "type": "string"
+                                            },
+                                            "published": {
+                                                "type": "string"
+                                            },
+                                            "status": {
+                                                "type": "string"
+                                            },
+                                            "thumbnail": {
+                                                "type": "string"
+                                            },
+                                            "title": {
+                                                "type": "string"
+                                            },
+                                            "type": {
+                                                "type": "string"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                },
+                                "runAfter": {
+                                    "YamlToMetadata": [
+                                        "Succeeded"
+                                    ]
+                                },
+                                "type": "ParseJson"
+                            },
+                            "Set_GitHubApiUrl": {
+                                "inputs": {
+                                    "name": "GitHubApiUrl",
+                                    "value": "https://api.github.com/repos/@{body('Webhook_JSON')?['head_commit']?['author']?['username']}/@{body('Webhook_JSON')?['repository']?['name']}/contents/@{items('For_each_Added_or_Modified_file')}"
+                                },
+                                "runAfter": {
+                                    "Set_UniqueId": [
+                                        "Succeeded"
+                                    ]
+                                },
+                                "type": "SetVariable"
+                            },
+                            "Set_UniqueId": {
+                                "inputs": {
+                                    "name": "UniqueId",
+                                    "value": "@{base64(items('For_each_Added_or_Modified_file'))}"
+                                },
+                                "runAfter": {},
+                                "type": "SetVariable"
+                            },
+                            "YamlToMetadata": {
+                                "inputs": {
+                                    "body": "@variables('GitHubApiUrl')",
+                                    "method": "POST",
+                                    "queries": {
+                                        "BlobPath": "https://martinkme.blob.core.windows.net@{body('Create_blob')['Path']}"
+                                    },
+                                    "uri": "@{variables('FunctionEndpoint')}api/YamlToMetadata"
+                                },
+                                "runAfter": {
+                                    "Create_blob": [
+                                        "Succeeded"
+                                    ]
+                                },
+                                "type": "Http"
                             }
                         },
-                        "runAfter": {
-                            "Modified_ConvertToHtmlWithMetadata": [
-                                "Succeeded"
+                        "expression": {
+                            "and": [
+                                {
+                                    "endsWith": [
+                                        "@items('For_each_Added_or_Modified_file')",
+                                        ".md"
+                                    ]
+                                }
                             ]
                         },
-                        "type": "ParseJson"
+                        "runAfter": {},
+                        "type": "If"
+                    }
+                },
+                "foreach": "@variables('AddedModifiedFiles')",
+                "runAfter": {
+                    "For_each_Added_Webhook": [
+                        "Succeeded"
+                    ],
+                    "For_each_Modified_Webhook": [
+                        "Succeeded"
+                    ]
+                },
+                "type": "Foreach"
+            },
+            "For_each_Modified_Webhook": {
+                "actions": {
+                    "Append_to_array_variable_Modified": {
+                        "inputs": {
+                            "name": "AddedModifiedFiles",
+                            "value": "@items('For_each_Modified_Webhook')"
+                        },
+                        "runAfter": {},
+                        "type": "AppendToArrayVariable"
                     }
                 },
                 "foreach": "@body('Webhook_JSON')?['head_commit']?['Modified']",
@@ -242,11 +238,72 @@
                 },
                 "foreach": "@body('Webhook_JSON')?['head_commit']?['removed']",
                 "runAfter": {
-                    "Webhook_JSON": [
+                    "For_each_Added_or_Modified_file": [
                         "Succeeded"
                     ]
                 },
                 "type": "Foreach"
+            },
+            "Initialize_AddedModifiedFiles": {
+                "inputs": {
+                    "variables": [
+                        {
+                            "name": "AddedModifiedFiles",
+                            "type": "Array"
+                        }
+                    ]
+                },
+                "runAfter": {
+                    "Initialize_FunctionEndpoint": [
+                        "Succeeded"
+                    ]
+                },
+                "type": "InitializeVariable"
+            },
+            "Initialize_FunctionEndpoint": {
+                "inputs": {
+                    "variables": [
+                        {
+                            "name": "FunctionEndpoint",
+                            "type": "String",
+                            "value": "https://martinkearnfunctions.azurewebsites.net/"
+                        }
+                    ]
+                },
+                "runAfter": {},
+                "type": "InitializeVariable"
+            },
+            "Initialize_GitHubApiUrl": {
+                "inputs": {
+                    "variables": [
+                        {
+                            "name": "GitHubApiUrl",
+                            "type": "String"
+                        }
+                    ]
+                },
+                "runAfter": {
+                    "Initialize_UniqueId": [
+                        "Succeeded"
+                    ]
+                },
+                "type": "InitializeVariable"
+            },
+            "Initialize_UniqueId": {
+                "inputs": {
+                    "variables": [
+                        {
+                            "name": "UniqueId",
+                            "type": "String"
+                        }
+                    ]
+                },
+                "runAfter": {
+                    "Initialize_AddedModifiedFiles": [
+                        "Succeeded"
+                    ]
+                },
+                "type": "InitializeVariable"
             },
             "Webhook_JSON": {
                 "inputs": {
@@ -784,7 +841,11 @@
                         "type": "object"
                     }
                 },
-                "runAfter": {},
+                "runAfter": {
+                    "Initialize_GitHubApiUrl": [
+                        "Succeeded"
+                    ]
+                },
                 "type": "ParseJson"
             }
         },
@@ -1323,6 +1384,22 @@
                 },
                 "kind": "Http",
                 "type": "Request"
+            }
+        }
+    },
+    "parameters": {
+        "$connections": {
+            "value": {
+                "azureblob_1": {
+                    "connectionId": "/subscriptions/1fcbb1ab-1178-46fc-8c5d-f0e20b65610d/resourceGroups/MartinKearn/providers/Microsoft.Web/connections/azureblob-1",
+                    "connectionName": "azureblob-1",
+                    "id": "/subscriptions/1fcbb1ab-1178-46fc-8c5d-f0e20b65610d/providers/Microsoft.Web/locations/uksouth/managedApis/azureblob"
+                },
+                "azuretables_1": {
+                    "connectionId": "/subscriptions/1fcbb1ab-1178-46fc-8c5d-f0e20b65610d/resourceGroups/MartinKearn/providers/Microsoft.Web/connections/azuretables-1",
+                    "connectionName": "azuretables-1",
+                    "id": "/subscriptions/1fcbb1ab-1178-46fc-8c5d-f0e20b65610d/providers/Microsoft.Web/locations/uksouth/managedApis/azuretables"
+                }
             }
         }
     }
