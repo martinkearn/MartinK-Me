@@ -1,4 +1,5 @@
 ﻿using Azure.Storage;
+using Azure.Storage.Blobs;
 using Azure.Storage.Sas;
 using MartinKMe.Interfaces;
 using MartinKMe.Models;
@@ -8,6 +9,7 @@ using Microsoft.WindowsAzure.Storage.Blob;
 using Microsoft.WindowsAzure.Storage.Table;
 using System;
 using System.Collections.Generic;
+using System.Data.Common;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -281,11 +283,14 @@ namespace MartinKMe.Repositories
             var connectionStringKVP = _appSecretSettings.StorageConnectionString.Split(';')
                 .Select(x => x.Split('='))
                 .ToDictionary(x => x[0], x => x[1]);
+            var csBuilder = new DbConnectionStringBuilder();
+            csBuilder.ConnectionString = _appSecretSettings.StorageConnectionString;
 
             // Get file name and uri
             var thisItem = contents.Where(o => o.Path.ToLower() == id.ToLower()).FirstOrDefault();
             var thisItemUri = new Uri(thisItem.Html);
             var thisItemFileName = Path.GetFileName(thisItemUri.AbsoluteUri);
+            var thisItemRelativeUri = thisItemUri.IsAbsoluteUri ? thisItemUri.PathAndQuery : thisItemUri.OriginalString;
 
             // Get SAS
             //var storageAccount = CloudStorageAccount.Parse(_appSecretSettings.StorageConnectionString);
@@ -300,22 +305,55 @@ namespace MartinKMe.Repositories
             //var sas = storageAccount.GetSharedAccessSignature(sasPolicy);
             //var sasUrl = thisItemUri.AbsoluteUri + sas;
 
-            BlobSasBuilder blobSasBuilder = new BlobSasBuilder()
+            //BlobSasBuilder blobSasBuilder = new BlobSasBuilder()
+            //{
+            //    Protocol = SasProtocol.None,
+            //    BlobContainerName = _contentContainer,
+            //    BlobName = thisItemFileName,
+            //    StartsOn = DateTimeOffset.UtcNow.AddHours(-1),
+            //    ExpiresOn = DateTime.UtcNow.AddDays(1),
+            //    Resource = "b",
+            //    IPRange = new SasIPRange(IPAddress.None, IPAddress.None),
+            //};
+            //blobSasBuilder.SetPermissions(BlobSasPermissions.Read);
+            //var sharedKeyCredential = new StorageSharedKeyCredential(Base64Encode(connectionStringKVP["AccountName"]), Base64Encode(connectionStringKVP["AccountKey"]));
+            //var sasToken = blobSasBuilder.ToSasQueryParameters(sharedKeyCredential);
+            //UriBuilder sasUri = new UriBuilder(thisItem.Html)
+            //{
+            //    Query = blobSasBuilder.ToSasQueryParameters(sharedKeyCredential).ToString(),
+            //};
+
+            //  Creates a client to the BlobService using the connection string.
+            var blobServiceClient = new BlobServiceClient(_appSecretSettings.StorageConnectionString);
+
+            //  Gets a reference to the container.
+            var blobContainerClient = blobServiceClient.GetBlobContainerClient(_contentContainer);
+
+            //  Gets a reference to the blob in the container
+            BlobClient blobClient = blobContainerClient.GetBlobClient(thisItemRelativeUri);
+
+            //  Defines the resource being accessed and for how long the access is allowed.
+            var blobSasBuilder = new BlobSasBuilder
             {
-                Protocol = SasProtocol.None,
-                BlobContainerName = _contentContainer,
-                BlobName = thisItemFileName,
                 StartsOn = DateTimeOffset.UtcNow.AddHours(-1),
                 ExpiresOn = DateTime.UtcNow.AddDays(1),
-                Resource = "b",
-                IPRange = new SasIPRange(IPAddress.None, IPAddress.None),
+                BlobContainerName = _contentContainer,
+                BlobName = thisItemRelativeUri,
             };
+
+            //  Defines the type of permission.
             blobSasBuilder.SetPermissions(BlobSasPermissions.Read);
-            var sharedKeyCredential = new StorageSharedKeyCredential(Base64Encode(connectionStringKVP["AccountName"]), Base64Encode(connectionStringKVP["AccountKey"]));
-            var sasToken = blobSasBuilder.ToSasQueryParameters(sharedKeyCredential);
+
+            //  Builds an instance of StorageSharedKeyCredential      
+            var storageSharedKeyCredential = new StorageSharedKeyCredential((string)csBuilder["AccountName"], (string)csBuilder["AccountKey"]);
+
+            //  Builds the Sas URI.
+            BlobSasQueryParameters sasQueryParameters = blobSasBuilder.ToSasQueryParameters(storageSharedKeyCredential);
+
+            //  Builds the URI to the blob storage.
             UriBuilder sasUri = new UriBuilder(thisItem.Html)
             {
-                Query = blobSasBuilder.ToSasQueryParameters(sharedKeyCredential).ToString(),
+                Query = sasQueryParameters.ToString(),
             };
 
             // Get blob for each article
