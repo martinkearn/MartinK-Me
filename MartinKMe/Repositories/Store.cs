@@ -1,4 +1,6 @@
-﻿using MartinKMe.Interfaces;
+﻿using Azure.Storage;
+using Azure.Storage.Sas;
+using MartinKMe.Interfaces;
 using MartinKMe.Models;
 using Microsoft.Extensions.Options;
 using Microsoft.WindowsAzure.Storage;
@@ -6,8 +8,11 @@ using Microsoft.WindowsAzure.Storage.Blob;
 using Microsoft.WindowsAzure.Storage.Table;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
+using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
@@ -272,20 +277,71 @@ namespace MartinKMe.Repositories
         {
             var contents = await GetContents();
 
+            // Break connection string
+            var connectionStringKVP = _appSecretSettings.StorageConnectionString.Split(';')
+                .Select(x => x.Split('='))
+                .ToDictionary(x => x[0], x => x[1]);
+
+            // Get file name and uri
             var thisItem = contents.Where(o => o.Path.ToLower() == id.ToLower()).FirstOrDefault();
+            var thisItemUri = new Uri(thisItem.Html);
+            var thisItemFileName = Path.GetFileName(thisItemUri.AbsoluteUri);
+
+            // Get SAS
+            //var storageAccount = CloudStorageAccount.Parse(_appSecretSettings.StorageConnectionString);
+            //var sasPolicy = new SharedAccessAccountPolicy()
+            //{
+            //    Permissions = SharedAccessAccountPermissions.Read,
+            //    SharedAccessExpiryTime = DateTime.UtcNow.AddMinutes(5),
+            //    SharedAccessStartTime = DateTime.UtcNow,
+            //    Protocols = SharedAccessProtocol.HttpsOrHttp,
+            //    ResourceTypes = SharedAccessAccountResourceTypes.Object
+            //};
+            //var sas = storageAccount.GetSharedAccessSignature(sasPolicy);
+            //var sasUrl = thisItemUri.AbsoluteUri + sas;
+
+            BlobSasBuilder blobSasBuilder = new BlobSasBuilder()
+            {
+                Protocol = SasProtocol.None,
+                BlobContainerName = _contentContainer,
+                BlobName = thisItemFileName,
+                StartsOn = DateTimeOffset.UtcNow.AddHours(-1),
+                ExpiresOn = DateTime.UtcNow.AddDays(1),
+                Resource = "b",
+                IPRange = new SasIPRange(IPAddress.None, IPAddress.None),
+            };
+            blobSasBuilder.SetPermissions(BlobSasPermissions.Read);
+            var sharedKeyCredential = new StorageSharedKeyCredential(Base64Encode(connectionStringKVP["AccountName"]), Base64Encode(connectionStringKVP["AccountKey"]));
+            var sasToken = blobSasBuilder.ToSasQueryParameters(sharedKeyCredential);
+            UriBuilder sasUri = new UriBuilder(thisItem.Html)
+            {
+                Query = blobSasBuilder.ToSasQueryParameters(sharedKeyCredential).ToString(),
+            };
 
             // Get blob for each article
             var html = string.Empty;
             using (var httpBlobClient = new HttpClient())
             {
-                httpBlobClient.BaseAddress = new Uri(thisItem.Html);
-                html = await httpBlobClient.GetStringAsync(thisItem.Html);
+                httpBlobClient.BaseAddress = new Uri(sasUri.Uri.AbsoluteUri);
+                html = await httpBlobClient.GetStringAsync(sasUri.Uri.AbsoluteUri);
             }
 
             // overwrite the value from GetContents which is a path to HTML with the actual HTML from the blob
             thisItem.Html = html;
 
             return thisItem;
+        }
+
+        private static string Base64Encode(string plainText)
+        {
+            var plainTextBytes = System.Text.Encoding.UTF8.GetBytes(plainText);
+            return Convert.ToBase64String(plainTextBytes);
+        }
+
+        public static string Base64Decode(string base64EncodedData)
+        {
+            var base64EncodedBytes = Convert.FromBase64String(base64EncodedData);
+            return Encoding.UTF8.GetString(base64EncodedBytes);
         }
 
         public async Task<List<string>> GetWallpaperUris()
