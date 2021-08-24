@@ -1,4 +1,7 @@
-﻿using MartinKMe.Interfaces;
+﻿using Azure.Storage;
+using Azure.Storage.Blobs;
+using Azure.Storage.Sas;
+using MartinKMe.Interfaces;
 using MartinKMe.Models;
 using Microsoft.Extensions.Options;
 using Microsoft.WindowsAzure.Storage;
@@ -6,8 +9,12 @@ using Microsoft.WindowsAzure.Storage.Blob;
 using Microsoft.WindowsAzure.Storage.Table;
 using System;
 using System.Collections.Generic;
+using System.Data.Common;
+using System.IO;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
+using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
@@ -272,20 +279,34 @@ namespace MartinKMe.Repositories
         {
             var contents = await GetContents();
 
+            // Get file name and uri
             var thisItem = contents.Where(o => o.Path.ToLower() == id.ToLower()).FirstOrDefault();
+            var thisItemUri = new Uri(thisItem.Html);
+            var thisItemFileName = Path.GetFileName(thisItemUri.AbsoluteUri);
 
-            // Get blob for each article
-            var html = string.Empty;
-            using (var httpBlobClient = new HttpClient())
+            // Download the blob into a string
+            var blobContainer = new BlobContainerClient(_appSecretSettings.StorageConnectionString, _contentContainer.ToLower());
+            var blobClient = blobContainer.GetBlobClient(thisItemFileName);
+            var blobDownloadInfo = await blobClient.DownloadAsync();
+            using (var streamReader = new StreamReader(blobDownloadInfo.Value.Content))
             {
-                httpBlobClient.BaseAddress = new Uri(thisItem.Html);
-                html = await httpBlobClient.GetStringAsync(thisItem.Html);
+                // Overwrite the value from GetContents which is a path to HTML with the actual HTML from the blob
+                thisItem.Html = await streamReader.ReadToEndAsync();
             }
 
-            // overwrite the value from GetContents which is a path to HTML with the actual HTML from the blob
-            thisItem.Html = html;
-
             return thisItem;
+        }
+
+        private static string Base64Encode(string plainText)
+        {
+            var plainTextBytes = System.Text.Encoding.UTF8.GetBytes(plainText);
+            return Convert.ToBase64String(plainTextBytes);
+        }
+
+        public static string Base64Decode(string base64EncodedData)
+        {
+            var base64EncodedBytes = Convert.FromBase64String(base64EncodedData);
+            return Encoding.UTF8.GetString(base64EncodedBytes);
         }
 
         public async Task<List<string>> GetWallpaperUris()
