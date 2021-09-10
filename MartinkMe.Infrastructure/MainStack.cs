@@ -29,26 +29,6 @@ class MainStack : Stack
             Kind = Kind.StorageV2
         });
 
-        var functionsAppServicePlan = new AppServicePlan("functions-appserviceplan", new AppServicePlanArgs
-        {
-            ResourceGroupName = resourceGroup.Name,
-            Sku = new SkuDescriptionArgs
-            {
-                Tier = "Dynamic",
-                Name = "Y1"
-            }
-        });
-
-        var webAppServicePlan = new AppServicePlan("web-appserviceplan", new AppServicePlanArgs
-        {
-            ResourceGroupName = resourceGroup.Name,
-            Sku = new SkuDescriptionArgs
-            {
-                Tier = "Shared",
-                Name = "D1"
-            }
-        });
-
         var appInsights = new Component("appinsights", new ComponentArgs
         {
             ApplicationType = ApplicationType.Web,
@@ -63,6 +43,16 @@ class MainStack : Stack
             ResourceGroupName = resourceGroup.Name,
         });
 
+        var functionsAppServicePlan = new AppServicePlan("functions-appserviceplan", new AppServicePlanArgs
+        {
+            ResourceGroupName = resourceGroup.Name,
+            Sku = new SkuDescriptionArgs
+            {
+                Tier = "Dynamic",
+                Name = "Y1"
+            }
+        });
+
         var functionsPublishBlob = new Blob("functions.zip", new BlobArgs
         {
             AccountName = storageAccount.Name,
@@ -70,15 +60,6 @@ class MainStack : Stack
             ResourceGroupName = resourceGroup.Name,
             Type = BlobType.Block,
             Source = new FileArchive($"..\\MartinKMe.Functions\\bin\\Debug\\netcoreapp3.1\\publish") // This path should be set to the output of `dotnet publish` command
-        });
-
-        var webPublishBlob = new Blob("web.zip", new BlobArgs
-        {
-            AccountName = storageAccount.Name,
-            ContainerName = deploymentsContainer.Name,
-            ResourceGroupName = resourceGroup.Name,
-            Type = BlobType.Block,
-            Source = new FileArchive($"..\\MartinKMe.Web\\bin\\Debug\\net6.0\\publish") // This path should be set to the output of `dotnet publish` command
         });
 
         var functionsAppService = new WebApp($"functions-appservice", new WebAppArgs
@@ -105,6 +86,10 @@ class MainStack : Stack
                     new NameValuePairArgs{
                         Name = "WEBSITE_RUN_FROM_PACKAGE",
                         Value = OutputHelpers.SignedBlobReadUrl(functionsPublishBlob, deploymentsContainer, storageAccount, resourceGroup, 3650),
+                    },                    
+                    new NameValuePairArgs{
+                        Name = "APPINSIGHTS_INSTRUMENTATIONKEY",
+                        Value = appInsights.InstrumentationKey
                     },
                     new NameValuePairArgs{
                         Name = "APPLICATIONINSIGHTS_CONNECTION_STRING",
@@ -112,6 +97,25 @@ class MainStack : Stack
                     },
                 },
             },
+        });
+
+        var webAppServicePlan = new AppServicePlan("web-appserviceplan", new AppServicePlanArgs
+        {
+            ResourceGroupName = resourceGroup.Name,
+            Sku = new SkuDescriptionArgs
+            {
+                Tier = "Shared",
+                Name = "D1"
+            }
+        });
+
+        var webPublishBlob = new Blob("web.zip", new BlobArgs
+        {
+            AccountName = storageAccount.Name,
+            ContainerName = deploymentsContainer.Name,
+            ResourceGroupName = resourceGroup.Name,
+            Type = BlobType.Block,
+            Source = new FileArchive($"..\\MartinKMe.Web\\bin\\Debug\\net6.0\\publish") // This path should be set to the output of `dotnet publish` command
         });
 
         var webAppService = new WebApp($"web-appservice", new WebAppArgs
@@ -125,6 +129,10 @@ class MainStack : Stack
                     new NameValuePairArgs{
                         Name = "WEBSITE_RUN_FROM_PACKAGE",
                         Value = OutputHelpers.SignedBlobReadUrl(webPublishBlob, deploymentsContainer, storageAccount, resourceGroup, 3650),
+                    },                    
+                    new NameValuePairArgs{
+                        Name = "APPINSIGHTS_INSTRUMENTATIONKEY",
+                        Value = appInsights.InstrumentationKey
                     },
                     new NameValuePairArgs{
                         Name = "APPLICATIONINSIGHTS_CONNECTION_STRING",
