@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MartinKMe", "MartinKMe\Mart
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MartinkMe.Infrastructure", "MartinkMe.Infrastructure\MartinkMe.Infrastructure.csproj", "{EDBA5AB6-B48E-4188-9E7C-9BD9CB43AB39}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MartinKMe.Functions", "MartinKMe.Functions\MartinKMe.Functions.csproj", "{AA9FECAE-AFEA-4153-9F31-38DD948964DD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{EDBA5AB6-B48E-4188-9E7C-9BD9CB43AB39}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EDBA5AB6-B48E-4188-9E7C-9BD9CB43AB39}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EDBA5AB6-B48E-4188-9E7C-9BD9CB43AB39}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AA9FECAE-AFEA-4153-9F31-38DD948964DD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AA9FECAE-AFEA-4153-9F31-38DD948964DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AA9FECAE-AFEA-4153-9F31-38DD948964DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AA9FECAE-AFEA-4153-9F31-38DD948964DD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
