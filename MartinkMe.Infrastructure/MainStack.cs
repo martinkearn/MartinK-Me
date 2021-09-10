@@ -72,6 +72,15 @@ class MainStack : Stack
             Source = new FileArchive($"..\\MartinKMe.Functions\\bin\\Debug\\netcoreapp3.1\\publish") // This path should be set to the output of `dotnet publish` command
         });
 
+        var webPublishBlob = new Blob("web.zip", new BlobArgs
+        {
+            AccountName = storageAccount.Name,
+            ContainerName = deploymentsContainer.Name,
+            ResourceGroupName = resourceGroup.Name,
+            Type = BlobType.Block,
+            Source = new FileArchive($"..\\MartinKMe.Web\\bin\\Debug\\net6.0\\publish") // This path should be set to the output of `dotnet publish` command
+        });
+
         var functionsAppService = new WebApp($"functions-appservice", new WebAppArgs
         {
             Kind = "FunctionApp",
@@ -96,6 +105,26 @@ class MainStack : Stack
                     new NameValuePairArgs{
                         Name = "WEBSITE_RUN_FROM_PACKAGE",
                         Value = OutputHelpers.SignedBlobReadUrl(functionsPublishBlob, deploymentsContainer, storageAccount, resourceGroup, 3650),
+                    },
+                    new NameValuePairArgs{
+                        Name = "APPLICATIONINSIGHTS_CONNECTION_STRING",
+                        Value = Output.Format($"InstrumentationKey={appInsights.InstrumentationKey}"),
+                    },
+                },
+            },
+        });
+
+        var webAppService = new WebApp($"web-appservice", new WebAppArgs
+        {
+            ResourceGroupName = resourceGroup.Name,
+            ServerFarmId = webAppServicePlan.Id,
+            SiteConfig = new SiteConfigArgs
+            {
+                AppSettings = new[]
+                {
+                    new NameValuePairArgs{
+                        Name = "WEBSITE_RUN_FROM_PACKAGE",
+                        Value = OutputHelpers.SignedBlobReadUrl(webPublishBlob, deploymentsContainer, storageAccount, resourceGroup, 3650),
                     },
                     new NameValuePairArgs{
                         Name = "APPLICATIONINSIGHTS_CONNECTION_STRING",
