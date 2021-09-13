@@ -13,13 +13,14 @@ namespace MartinKMe.Functions.Clients
     {
         [FunctionName(nameof(HttpStartClient))]
         public static async Task<HttpResponseMessage> HttpStart(
-            [HttpTrigger(AuthorizationLevel.Anonymous, "post")] HttpRequestMessage req,
+            [HttpTrigger(AuthorizationLevel.Function, "post")] HttpRequestMessage req,
             [DurableClient] IDurableOrchestrationClient starter,
             ILogger log)
         {
             // Receive payload
             var githubRawPayload = await req.Content.ReadAsStringAsync();
             var payload = JsonConvert.DeserializeObject<GithubPushWebhookPayload>(githubRawPayload);
+            log.LogInformation("Received Github webhook for commit {CommitId}", payload.Commits[0].Id);
 
             // Function input comes from the request content.
             //string instanceId = await starter.StartNewAsync("Function1", null);
