@@ -22,6 +22,7 @@ class MainStack : Stack
         {
             ResourceGroupName = resourceGroup.Name,
             AllowBlobPublicAccess = false,
+            AccountName = $"storage{ResourceGroupBaseName.ToLowerInvariant()}",
             Sku = new SkuArgs
             {
                 Name = SkuName.Standard_LRS
@@ -34,7 +35,8 @@ class MainStack : Stack
             ApplicationType = ApplicationType.Web,
             Kind = "web",
             ResourceGroupName = resourceGroup.Name,
-        });
+            ResourceName = $"appinsights-{ResourceGroupBaseName.ToLowerInvariant()}"
+        }); ;
 
         var deploymentsContainer = new BlobContainer("deployments", new BlobContainerArgs
         {
@@ -46,6 +48,7 @@ class MainStack : Stack
         var functionsAppServicePlan = new AppServicePlan("functions-appserviceplan", new AppServicePlanArgs
         {
             ResourceGroupName = resourceGroup.Name,
+            Name = $"functions-appserviceplan-{ResourceGroupBaseName.ToLowerInvariant()}",
             Sku = new SkuDescriptionArgs
             {
                 Tier = "Dynamic",
@@ -67,6 +70,7 @@ class MainStack : Stack
             Kind = "FunctionApp",
             ResourceGroupName = resourceGroup.Name,
             ServerFarmId = functionsAppServicePlan.Id,
+            Name = $"functions-appservice-{ResourceGroupBaseName.ToLowerInvariant()}",
             SiteConfig = new SiteConfigArgs
             {
                 AppSettings = new[]
@@ -102,6 +106,7 @@ class MainStack : Stack
         var webAppServicePlan = new AppServicePlan("web-appserviceplan", new AppServicePlanArgs
         {
             ResourceGroupName = resourceGroup.Name,
+            Name = $"web-appserviceplan-{ResourceGroupBaseName.ToLowerInvariant()}",
             Sku = new SkuDescriptionArgs
             {
                 Tier = "Shared",
@@ -122,6 +127,7 @@ class MainStack : Stack
         {
             ResourceGroupName = resourceGroup.Name,
             ServerFarmId = webAppServicePlan.Id,
+            Name = $"web-appservice-{ResourceGroupBaseName.ToLowerInvariant()}",
             SiteConfig = new SiteConfigArgs
             {
                 AppSettings = new[]
