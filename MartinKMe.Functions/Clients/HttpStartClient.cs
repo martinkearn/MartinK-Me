@@ -1,4 +1,5 @@
 ﻿using MartinKMe.Domain.Models;
+using MartinKMe.Functions.Orchestrations;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.DurableTask;
 using Microsoft.Azure.WebJobs.Extensions.Http;
@@ -19,15 +20,30 @@ namespace MartinKMe.Functions.Clients
         {
             // Receive payload
             var githubRawPayload = await req.Content.ReadAsStringAsync();
-            var payload = JsonConvert.DeserializeObject<GithubPushWebhookPayload>(githubRawPayload);
-            log.LogInformation("Received Github webhook for commit {CommitId}", payload.Commits[0].Id);
 
-            // Function input comes from the request content.
-            //string instanceId = await starter.StartNewAsync("Function1", null);
+            GithubPushWebhookPayload payload;
+            try
+            {
+                payload = JsonConvert.DeserializeObject<GithubPushWebhookPayload>(githubRawPayload);
+                log.LogInformation("Received Github webhook for commit {CommitId}", payload.Commits[0].Id);
+            }
+            catch (JsonReaderException jex)
+            {
+                var message = "Payload was not in expected format";
+                log.LogError(jex, message);
+                HttpResponseMessage response = new HttpResponseMessage(System.Net.HttpStatusCode.BadRequest)
+                {
+                    Content = new StringContent(message)
+                };
+                return response;
+            }
 
-            //log.LogInformation($"Started orchestration with ID = '{instanceId}'.");
+            // Start CommitProcessingOrchestration
+            string instanceId = await starter.StartNewAsync(nameof(CommitProcessingOrchestration), payload);
+            log.LogInformation($"Started CommitProcessingOrchestration orchestration with ID = '{instanceId}'.");
 
-            return starter.CreateCheckStatusResponse(req, "noid");
+            // Return management information payload
+            return starter.CreateCheckStatusResponse(req, instanceId);
         }
     }
 }
