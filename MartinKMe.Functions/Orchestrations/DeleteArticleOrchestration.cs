@@ -10,9 +10,12 @@ namespace MartinKMe.Functions.Orchestrations
         [FunctionName(nameof(DeleteArticleOrchestration))]
         public static async Task<List<string>> RunOrchestrator([OrchestrationTrigger] IDurableOrchestrationContext context)
         {
+            // Get input payload
+            var input = context.GetInput<string>();
+
             var outputs = new List<string>()
             {
-                "Testing from DeleteArticleOrchestration"
+                $"Deleted {input}"
             };
 
             return outputs;
