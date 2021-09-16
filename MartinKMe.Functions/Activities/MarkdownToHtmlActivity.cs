@@ -1,19 +1,26 @@
-﻿using Microsoft.Azure.WebJobs;
+﻿using MartinKMe.Domain.Interfaces;
+using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.DurableTask;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MartinKMe.Functions.Activities
 {
-    public class MarkdownToHtmlActivity
+    public sealed class MarkdownToHtmlActivity
     {
-        [FunctionName(nameof(MarkdownToHtmlActivity))]
-        public async Task<string> MarkdownToHtml([ActivityTrigger] string markdown)
+        private readonly IMarkdownService _markdownService;
+
+        public MarkdownToHtmlActivity(IMarkdownService markdownService)
         {
+            _markdownService = markdownService;
+        }
+
+        [FunctionName(nameof(MarkdownToHtmlActivity))]
+        public string MarkdownToHtml([ActivityTrigger] string markdown)
+        {
+            // Convert markdown to html
+            var fileContents = _markdownService.MarkdownToBase64Html(markdown);
+
             // Return
-            return "contents";
+            return fileContents;
         }
     }
 }

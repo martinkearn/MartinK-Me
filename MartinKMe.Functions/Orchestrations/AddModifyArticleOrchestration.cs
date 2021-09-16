@@ -14,9 +14,15 @@ namespace MartinKMe.Functions.Orchestrations
             // Get input payload
             var input = context.GetInput<string>();
 
-            var outputs = new List<string>
+            // get file contents
+            var fileContentsMarkdown = await context.CallActivityAsync<string>(nameof(GetFileContentsActivity), input);
+
+            // Convert markdown to html
+            var fileContentsHtml = await context.CallActivityAsync<string>(nameof(MarkdownToHtmlActivity), fileContentsMarkdown);
+
+            var outputs = new List<string>()
             {
-                await context.CallActivityAsync<string>(nameof(GetFileContentsActivity), input)
+                $"Added/modified {input} - {fileContentsHtml}"
             };
 
             return outputs;
