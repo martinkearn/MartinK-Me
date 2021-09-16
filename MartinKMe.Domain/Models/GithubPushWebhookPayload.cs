@@ -457,10 +457,10 @@ namespace MartinKMe.Domain.Models
         public Committer Committer { get; set; }
 
         [JsonProperty("added")]
-        public List<object> Added { get; set; }
+        public List<string> Added { get; set; }
 
         [JsonProperty("removed")]
-        public List<object> Removed { get; set; }
+        public List<string> Removed { get; set; }
 
         [JsonProperty("modified")]
         public List<string> Modified { get; set; }
@@ -493,10 +493,10 @@ namespace MartinKMe.Domain.Models
         public Committer Committer { get; set; }
 
         [JsonProperty("added")]
-        public List<object> Added { get; set; }
+        public List<string> Added { get; set; }
 
         [JsonProperty("removed")]
-        public List<object> Removed { get; set; }
+        public List<string> Removed { get; set; }
 
         [JsonProperty("modified")]
         public List<string> Modified { get; set; }
