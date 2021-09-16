@@ -10,6 +10,6 @@ namespace MartinKMe.Domain.Interfaces
         /// </summary>
         /// <param name="fileApiUrl">The Github api url for the file to return.</param>
         /// <returns>The raw contents of the file as a string</returns>
-        Task<string> GetFile(string fileApiUrl);
+        Task<string> GetFileContents(string fileApiUrl);
     }
 }
