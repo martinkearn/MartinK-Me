@@ -7,27 +7,24 @@ using System.Threading.Tasks;
 
 namespace MartinKMe.Functions.Activities
 {
-    public class GetFileContentsActivity
+    public sealed class GetFileContentsActivity
     {
-        private readonly IHttpClientFactory clientFactory;
+        private readonly HttpClient client;
         private readonly IUtilityService utilityService;
 
-        public GetFileContentsActivity(IUtilityService utilityService)//IHttpClientFactory httpClientFactory, 
+        public GetFileContentsActivity(HttpClient httpClient, IUtilityService utilityService)// 
         {
-            //clientFactory = httpClientFactory;
+            client = httpClient;
             this.utilityService = utilityService;
         }
 
         [FunctionName(nameof(GetFileContentsActivity))]
         public async Task<string> GetFileContents([ActivityTrigger] string input)
         {
-            //var client = clientFactory.CreateClient();
-            //var response = await client.GetAsync(input);
-            //response.EnsureSuccessStatusCode();
-
+            var response = await client.GetAsync("http://martink.me");
+            response.EnsureSuccessStatusCode();
             //var contents = utilityService.Base64Decode(await response.Content.ReadAsStringAsync());
-            var contents = utilityService.Base64Decode("Zm9v");
-
+            var contents = await response.Content.ReadAsStringAsync();
             return contents;
         }
     }
