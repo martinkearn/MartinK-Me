@@ -1,4 +1,5 @@
-﻿using Microsoft.Azure.WebJobs;
+﻿using MartinKMe.Functions.Activities;
+using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.DurableTask;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -13,9 +14,9 @@ namespace MartinKMe.Functions.Orchestrations
             // Get input payload
             var input = context.GetInput<string>();
 
-            var outputs = new List<string>()
+            var outputs = new List<string>
             {
-                $"Added or modified {input}"
+                await context.CallActivityAsync<string>(nameof(GetFileContentsActivity), input)
             };
 
             return outputs;
