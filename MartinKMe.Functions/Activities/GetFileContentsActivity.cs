@@ -12,9 +12,9 @@ namespace MartinKMe.Functions.Activities
         private readonly HttpClient client;
         private readonly IUtilityService utilityService;
 
-        public GetFileContentsActivity(HttpClient httpClient, IUtilityService utilityService)// 
+        public GetFileContentsActivity(IHttpClientFactory httpClientFactory, IUtilityService utilityService)// 
         {
-            client = httpClient;
+            client = httpClientFactory.CreateClient();
             this.utilityService = utilityService;
         }
 
