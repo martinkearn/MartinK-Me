@@ -1,6 +1,7 @@
 ﻿using MartinKMe.Domain.Interfaces;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.DurableTask;
+using Newtonsoft.Json;
 using System;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -21,10 +22,18 @@ namespace MartinKMe.Functions.Activities
         [FunctionName(nameof(GetFileContentsActivity))]
         public async Task<string> GetFileContents([ActivityTrigger] string input)
         {
-            var response = await client.GetAsync("http://martink.me");
+            // Make request to Github
+            client.BaseAddress = new Uri(input);
+            client.DefaultRequestHeaders.Add("User-Agent", "Martink.me - GetFileContentsActivity");
+            var response = await client.GetAsync(input);
             response.EnsureSuccessStatusCode();
-            //var contents = utilityService.Base64Decode(await response.Content.ReadAsStringAsync());
-            var contents = await response.Content.ReadAsStringAsync();
+
+            // Read and decode contents
+            string rawContents = await response.Content.ReadAsStringAsync();
+            dynamic objContents = JsonConvert.DeserializeObject(rawContents);
+            var contents = utilityService.Base64Decode((string)objContents.content);
+
+            // Return
             return contents;
         }
     }
