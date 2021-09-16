@@ -1,10 +1,34 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Markdig;
+using MartinKMe.Domain.Interfaces;
 
 namespace MartinKMe.Services
 {
-    class MarkdownService
+    public class MarkdownService : IMarkdownService
     {
+        private readonly IUtilityService _utilityService;
+
+        public MarkdownService(IUtilityService utilityService)
+        {
+            _utilityService = utilityService;
+        }
+
+        public string MarkdownToBase64Html(string markdown)
+        {
+            // parse markdown to html with MarkDig
+            var mdPipeline = new MarkdownPipelineBuilder()
+                .UseYamlFrontMatter()
+                .UseAdvancedExtensions()
+                .Build();
+            var html = Markdown.ToHtml(markdown, mdPipeline);
+
+            // trim leading <H1> ... Bit hacky as it assumes that the H1 is the first line of html
+            var htmlNoH1 = html.Substring(html.IndexOf("</h1>") + 5);
+
+            // base64 encode
+            var encodedContents = _utilityService.Base64Encode(htmlNoH1);
+
+            // Return
+            return encodedContents;
+        }
     }
 }
