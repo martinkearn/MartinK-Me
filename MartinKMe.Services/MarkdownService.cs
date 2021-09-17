@@ -24,11 +24,8 @@ namespace MartinKMe.Services
             // trim leading <H1> ... Bit hacky as it assumes that the H1 is the first line of html
             var htmlNoH1 = html.Substring(html.IndexOf("</h1>") + 5);
 
-            // base64 encode
-            var encodedContents = _utilityService.Base64Encode(htmlNoH1);
-
             // Return
-            return encodedContents;
+            return htmlNoH1;
         }
     }
 }

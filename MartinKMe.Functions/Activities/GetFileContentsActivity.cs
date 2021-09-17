@@ -1,4 +1,5 @@
 ﻿using MartinKMe.Domain.Interfaces;
+using MartinKMe.Domain.Models;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.DurableTask;
 using System.Threading.Tasks;
@@ -15,13 +16,9 @@ namespace MartinKMe.Functions.Activities
         }
 
         [FunctionName(nameof(GetFileContentsActivity))]
-        public async Task<string> GetFileContents([ActivityTrigger] string gitHubApiFileUrl)
+        public async Task<FileNameContents> GetFileContents([ActivityTrigger] string gitHubApiFileUrl)
         {
-            // Get file contents
-            var fileContents = await _githubService.GetFileContents(gitHubApiFileUrl);
-
-            // Return
-            return fileContents;
+            return await _githubService.GetFileContents(gitHubApiFileUrl);
         }
     }
 }

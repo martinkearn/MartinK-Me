@@ -1,4 +1,5 @@
 ﻿using MartinKMe.Functions.Activities;
+using MartinKMe.Domain.Models;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.DurableTask;
 using System.Collections.Generic;
@@ -15,13 +16,16 @@ namespace MartinKMe.Functions.Orchestrations
             var githubApiUrl = context.GetInput<string>();
 
             // Get file contents
-            var fileContentsMarkdown = await context.CallActivityAsync<string>(nameof(GetFileContentsActivity), githubApiUrl);
+            var fileNameContents = await context.CallActivityAsync<FileNameContents>(nameof(GetFileContentsActivity), githubApiUrl);
 
             // Convert markdown to html
-            var fileContentsHtml = await context.CallActivityAsync<string>(nameof(MarkdownToHtmlActivity), fileContentsMarkdown);
+            var fileContentsHtml = await context.CallActivityAsync<string>(nameof(MarkdownToHtmlActivity), fileNameContents.FileContents);
+
+            // Replace the markdown contents with html
+            fileNameContents.FileContents = fileContentsHtml;
 
             // Upsert html blob to storage
-            var htmlBlobUri = await context.CallActivityAsync<string>(nameof(UpsertBlobActivity), fileContentsHtml);
+            var htmlBlobUri = await context.CallActivityAsync<string>(nameof(UpsertBlobActivity), fileNameContents);
 
             var outputs = new List<string>()
             {

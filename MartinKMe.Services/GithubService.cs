@@ -18,7 +18,7 @@ namespace MartinKMe.Services
             _utilityService = utilityService;
         }
 
-        public async Task<string> GetFileContents(string fileApiUrl)
+        public async Task<FileNameContents> GetFileContents(string fileApiUrl)
         {
             // Make request to Github
             _client.BaseAddress = new Uri(fileApiUrl);
@@ -28,11 +28,18 @@ namespace MartinKMe.Services
 
             // Read and decode contents
             string rawContents = await response.Content.ReadAsStringAsync();
-            GithubFilePayload? objContents = JsonConvert.DeserializeObject<GithubFilePayload>(rawContents);
+            GithubFilePayload objContents = JsonConvert.DeserializeObject<GithubFilePayload>(rawContents);
+
+            // Prepare response Tuple
             var decodedContents = _utilityService.Base64Decode(objContents.Content);
+            var fileNameContents = new FileNameContents()
+            {
+                FileName = objContents.Name,
+                FileContents = decodedContents,
+            };
 
             // Return
-            return decodedContents;
+            return fileNameContents;
         }
     }
 }

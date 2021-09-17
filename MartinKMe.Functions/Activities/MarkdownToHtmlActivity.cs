@@ -17,10 +17,7 @@ namespace MartinKMe.Functions.Activities
         public string MarkdownToHtml([ActivityTrigger] string markdown)
         {
             // Convert markdown to html
-            var fileContents = _markdownService.MarkdownToBase64Html(markdown);
-
-            // Return
-            return fileContents;
+            return _markdownService.MarkdownToBase64Html(markdown);
         }
     }
 }
