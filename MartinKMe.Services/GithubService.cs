@@ -20,6 +20,32 @@ namespace MartinKMe.Services
 
         public async Task<FileNameContents> GetFileContents(string fileApiUrl)
         {
+            // Get github file api response
+            var filePayload = await this.GetGithubFilePayload(fileApiUrl);
+
+            // Prepare response
+            var decodedContents = _utilityService.Base64Decode(filePayload.Content);
+            var fileNameContents = new FileNameContents()
+            {
+                FileName = filePayload.Name,
+                FileContents = decodedContents,
+            };
+
+            // Return
+            return fileNameContents;
+        }
+
+        public async Task<Uri> GetFileUri(string fileApiUrl)
+        {
+            // Get github file api response
+            var filePayload = await this.GetGithubFilePayload(fileApiUrl);
+
+            // Return
+            return new Uri(filePayload.HtmlUrl);
+        }
+
+        private async Task<GithubFilePayload> GetGithubFilePayload(string fileApiUrl)
+        {
             // Make request to Github
             _client.BaseAddress = new Uri(fileApiUrl);
             _client.DefaultRequestHeaders.Add("User-Agent", "Martink.me - GetFileContentsActivity");
@@ -27,19 +53,11 @@ namespace MartinKMe.Services
             response.EnsureSuccessStatusCode();
 
             // Read and decode contents
-            string rawContents = await response.Content.ReadAsStringAsync();
-            GithubFilePayload objContents = JsonConvert.DeserializeObject<GithubFilePayload>(rawContents);
-
-            // Prepare response Tuple
-            var decodedContents = _utilityService.Base64Decode(objContents.Content);
-            var fileNameContents = new FileNameContents()
-            {
-                FileName = objContents.Name,
-                FileContents = decodedContents,
-            };
+            var rawContents = await response.Content.ReadAsStringAsync();
+            var objContents = JsonConvert.DeserializeObject<GithubFilePayload>(rawContents);
 
             // Return
-            return fileNameContents;
+            return objContents;
         }
     }
 }
