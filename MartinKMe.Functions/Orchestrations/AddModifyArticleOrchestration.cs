@@ -4,6 +4,7 @@ using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.DurableTask;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System;
 
 namespace MartinKMe.Functions.Orchestrations
 {
@@ -25,7 +26,7 @@ namespace MartinKMe.Functions.Orchestrations
             fileNameContents.FileContents = fileContentsHtml;
 
             // Upsert html blob to storage
-            var htmlBlobUri = await context.CallActivityAsync<string>(nameof(UpsertBlobActivity), fileNameContents);
+            var htmlBlobUri = await context.CallActivityAsync<Uri>(nameof(UpsertBlobActivity), fileNameContents);
 
             var outputs = new List<string>()
             {
