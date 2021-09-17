@@ -6,6 +6,8 @@ using Pulumi.AzureNative.Storage;
 using Pulumi.AzureNative.Storage.Inputs;
 using Pulumi.AzureNative.Web;
 using Pulumi.AzureNative.Web.Inputs;
+using System;
+using System.Web;
 using Kind = Pulumi.AzureNative.Storage.Kind;
 
 class MainStack : Stack
@@ -56,7 +58,7 @@ class MainStack : Stack
             }
         });
 
-        var functionsPublishBlob = new Blob("functions.zip", new BlobArgs
+        var functionsPublishBlob = new Blob($"functions-{DateTime.UtcNow.ToString("yyyy-MM-dd-HH-mm")}.zip", new BlobArgs
         {
             AccountName = storageAccount.Name,
             ContainerName = deploymentsContainer.Name,
