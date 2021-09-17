@@ -65,6 +65,7 @@ class MainStack : Stack
             Source = new FileArchive($"..\\MartinKMe.Functions\\bin\\Release\\netcoreapp3.1\\publish") // This path should be set to the output of `dotnet publish` command
         });
 
+        var storageConnectionString = OutputHelpers.GetConnectionString(resourceGroup.Name, storageAccount.Name);
         var functionsAppService = new WebApp($"functions-appservice", new WebAppArgs
         {
             Kind = "FunctionApp",
@@ -77,7 +78,7 @@ class MainStack : Stack
                 {
                     new NameValuePairArgs{
                         Name = "AzureWebJobsStorage",
-                        Value = OutputHelpers.GetConnectionString(resourceGroup.Name, storageAccount.Name),
+                        Value = storageConnectionString,
                     },
                     new NameValuePairArgs{
                         Name = "FUNCTIONS_WORKER_RUNTIME",
@@ -98,6 +99,14 @@ class MainStack : Stack
                     new NameValuePairArgs{
                         Name = "APPLICATIONINSIGHTS_CONNECTION_STRING",
                         Value = Output.Format($"InstrumentationKey={appInsights.InstrumentationKey}"),
+                    },
+                    new NameValuePairArgs{
+                        Name = "BlobStorageConfiguration:Container",
+                        Value = "contents",
+                    },
+                    new NameValuePairArgs{
+                        Name = "BlobStorageConfiguration:ConnectionString",
+                        Value = storageConnectionString,
                     },
                 },
             },
