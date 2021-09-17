@@ -12,17 +12,20 @@ namespace MartinKMe.Functions.Orchestrations
         public static async Task<List<string>> RunOrchestrator([OrchestrationTrigger] IDurableOrchestrationContext context)
         {
             // Get input payload
-            var input = context.GetInput<string>();
+            var githubApiUrl = context.GetInput<string>();
 
-            // get file contents
-            var fileContentsMarkdown = await context.CallActivityAsync<string>(nameof(GetFileContentsActivity), input);
+            // Get file contents
+            var fileContentsMarkdown = await context.CallActivityAsync<string>(nameof(GetFileContentsActivity), githubApiUrl);
 
             // Convert markdown to html
             var fileContentsHtml = await context.CallActivityAsync<string>(nameof(MarkdownToHtmlActivity), fileContentsMarkdown);
 
+            // Upsert html blob to storage
+            var htmlBlobUri = await context.CallActivityAsync<string>(nameof(UpsertBlobActivity), fileContentsHtml);
+
             var outputs = new List<string>()
             {
-                $"Added/modified {input} - {fileContentsHtml}"
+                $"Added/modified {githubApiUrl} - {fileContentsHtml}"
             };
 
             return outputs;

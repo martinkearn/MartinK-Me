@@ -15,6 +15,7 @@ namespace MartinKMe.Functions
             builder.Services.AddSingleton<IUtilityService, UtilityService>();
             builder.Services.AddSingleton<IGithubService, GithubService>();
             builder.Services.AddSingleton<IMarkdownService, MarkdownService>();
+            builder.Services.AddSingleton<IBlobStorageService, BlobStorageService>();
             builder.Services.AddLogging();
         }
     }
