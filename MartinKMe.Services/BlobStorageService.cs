@@ -18,10 +18,10 @@ namespace MartinKMe.Services
             _options = blobStorageConfigurationOptions.Value;
         }
 
-        public async Task<Uri> UpsertBlob(string fileName, string fileContents, string storageConnectionString)
+        public async Task<Uri> UpsertBlob(string fileName, string fileContents)
         {
             // Create a BlobServiceClient object which will be used to create a container client
-            BlobServiceClient blobServiceClient = new BlobServiceClient(storageConnectionString);
+            BlobServiceClient blobServiceClient = new BlobServiceClient(_options.ConnectionString);
 
             // Get/create the container and return a container client object
             BlobContainerClient containerClient = blobServiceClient.GetBlobContainerClient(_options.Container);
@@ -32,7 +32,7 @@ namespace MartinKMe.Services
 
             // Upload the file
             using var ms = new MemoryStream(Encoding.UTF8.GetBytes(fileContents));
-            blobClient.Upload(ms);
+            await blobClient.UploadAsync(ms, overwrite:true);
 
             return blobClient.Uri;
         }
