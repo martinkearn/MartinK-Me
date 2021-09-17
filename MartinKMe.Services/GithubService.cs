@@ -9,12 +9,12 @@ namespace MartinKMe.Services
 {
     public class GithubService : IGithubService
     {
-        private readonly HttpClient _client;
+        private readonly IHttpClientFactory _clientFactory;
         private readonly IUtilityService _utilityService;
 
         public GithubService(IHttpClientFactory httpClientFactory, IUtilityService utilityService)
         {
-            _client = httpClientFactory.CreateClient();
+            _clientFactory = httpClientFactory;
             _utilityService = utilityService;
         }
 
@@ -47,9 +47,10 @@ namespace MartinKMe.Services
         private async Task<GithubFilePayload> GetGithubFilePayload(string fileApiUrl)
         {
             // Make request to Github
-            _client.BaseAddress = new Uri(fileApiUrl);
-            _client.DefaultRequestHeaders.Add("User-Agent", "Martink.me - GetFileContentsActivity");
-            var response = await _client.GetAsync(fileApiUrl);
+            var client = _clientFactory.CreateClient();
+            client.BaseAddress = new Uri(fileApiUrl);
+            client.DefaultRequestHeaders.Add("User-Agent", "Martink.me - GetFileContentsActivity");
+            var response = await client.GetAsync(fileApiUrl);
             response.EnsureSuccessStatusCode();
 
             // Read and decode contents

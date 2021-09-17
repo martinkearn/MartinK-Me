@@ -6,7 +6,6 @@ using Microsoft.Azure.Functions.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
-using System.IO;
 
 [assembly: FunctionsStartup(typeof(Startup))]
 namespace MartinKMe.Functions
@@ -32,6 +31,7 @@ namespace MartinKMe.Functions
             builder.Services.AddSingleton<IGithubService, GithubService>();
             builder.Services.AddSingleton<IMarkdownService, MarkdownService>();
             builder.Services.AddSingleton<IBlobStorageService, BlobStorageService>();
+            builder.Services.AddSingleton<IYamlService, YamlService>();
 
             builder.Services.AddOptions<BlobStorageConfiguration>()
                 .Configure<IConfiguration>((settings, configuration) =>

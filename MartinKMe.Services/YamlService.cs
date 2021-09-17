@@ -18,17 +18,19 @@ namespace MartinKMe.Services
             _utilityService = utilityService;
         }
 
-        public Article YamlToArticle(string yaml, Uri blobUri, string githubPath)
+        public Article YamlToArticle(string fileContents, Uri blobUri, Uri githubPath)
         {
+            var yamlString = fileContents.Substring(0, fileContents.LastIndexOf("---\n")); // Chop off the markdown, leaving just the YAML header as YamlDotNet only deals with YAML documents. Assumes there is a space after the end of the YAML header
+
             var yamlDeserializer = new DeserializerBuilder()
                 .Build();
 
-            var yamlHeader = yamlDeserializer.Deserialize<GithubFileYamlHeader>(yaml);
+            var yamlHeader = yamlDeserializer.Deserialize<GithubFileYamlHeader>(yamlString);
 
             // Check we have required props
             if (string.IsNullOrEmpty(yamlHeader.Title))
             { 
-                throw new ArgumentException("Title is a required field which is missing from the yaml header.", yaml);
+                throw new ArgumentException("Title is a required field which is missing from the yaml header.", fileContents);
             }
 
             // Build dto
@@ -37,7 +39,7 @@ namespace MartinKMe.Services
             path = path.ToLowerInvariant();
             var article = new Article()
             {
-                Key = _utilityService.Base64Encode(githubPath), // Base64 required because the path may contain a back slash
+                Key = _utilityService.Base64Encode(githubPath.ToString()), // Base64 required because the path may contain a back slash
                 Title = yamlHeader.Title,
                 Author = yamlHeader.Author ?? string.Empty,
                 Description = yamlHeader.Description ?? string.Empty,
