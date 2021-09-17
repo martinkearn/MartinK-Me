@@ -25,7 +25,7 @@ namespace MartinKMe.Functions.Activities
             var storageConnectionString = Environment.GetEnvironmentVariable("AzureWebJobsStorage");
 
             // Upsert blob from file contents
-            return await _blobStorageService.UpsertBlob(input.FileName, input.FileContents, "contents", storageConnectionString);
+            return await _blobStorageService.UpsertBlob(input.FileName, input.FileContents, storageConnectionString);
         }
     }
 }
