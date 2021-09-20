@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using System;
 using MartinKMe.Functions.Models;
+using Azure;
 
 namespace MartinKMe.Functions.Orchestrations
 {
@@ -35,7 +36,7 @@ namespace MartinKMe.Functions.Orchestrations
             articleContext.Article = await context.CallActivityAsync<Article>(nameof(YamlToMarkdownActivity), articleContext);
 
             // Upsert Article in table storage
-            var response = await context.CallActivityAsync<Article>(nameof(UpsertArticleActivity), articleContext.Article);
+            var response = await context.CallActivityAsync<Response>(nameof(UpsertArticleActivity), articleContext.Article);
 
             var outputs = new List<string>()
             {

@@ -16,11 +16,11 @@ namespace MartinKMe.Services
             _clientFactory = httpClientFactory;
         }
 
-        public async Task<GithubContent> GetGithubContent(string fileApiUrl)
+        public async Task<GithubContent> GetGithubContent(Uri fileApiUrl)
         {
             // Make request to Github
             var client = _clientFactory.CreateClient();
-            client.BaseAddress = new Uri(fileApiUrl);
+            client.BaseAddress = fileApiUrl;
             client.DefaultRequestHeaders.Add("User-Agent", "Martink.me - GetFileContentsActivity");
             var response = await client.GetAsync(fileApiUrl);
             response.EnsureSuccessStatusCode();

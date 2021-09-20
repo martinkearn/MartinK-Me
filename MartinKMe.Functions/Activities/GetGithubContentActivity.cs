@@ -2,6 +2,7 @@
 using MartinKMe.Domain.Models;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.DurableTask;
+using System;
 using System.Threading.Tasks;
 
 namespace MartinKMe.Functions.Activities
@@ -16,7 +17,7 @@ namespace MartinKMe.Functions.Activities
         }
 
         [FunctionName(nameof(GetGithubContentActivity))]
-        public async Task<GithubContent> GetGithubContent([ActivityTrigger] string gitHubApiFileUrl)
+        public async Task<GithubContent> GetGithubContent([ActivityTrigger] Uri gitHubApiFileUrl)
         {
             var githubContent = await _githubService.GetGithubContent(gitHubApiFileUrl);
             return githubContent;
