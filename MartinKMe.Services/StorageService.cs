@@ -62,10 +62,10 @@ namespace MartinKMe.Services
             entity[nameof(Article.Path)] = article.Path;
             entity[nameof(Article.GitHubPath)] = article.GitHubPath;
             entity[nameof(Article.Status)] = article.Status;
-            entity[nameof(Article.HtmlBlobPath)] = article.HtmlBlobPath;
+            entity[nameof(Article.HtmlBlobPath)] = article.HtmlBlobPath.ToString();
 
             // Upsert entity
-            var response = await client.AddEntityAsync(entity);
+            var response = await client.UpsertEntityAsync(entity, TableUpdateMode.Replace);
 
             //R eturn
             return response;
