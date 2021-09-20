@@ -110,6 +110,10 @@ class MainStack : Stack
                         Name = "StorageConfiguration:ConnectionString",
                         Value = storageConnectionString,
                     },
+                    new NameValuePairArgs{
+                        Name = "StorageConfiguration:Table",
+                        Value = "Contents",
+                    },
                 },
             },
         });
