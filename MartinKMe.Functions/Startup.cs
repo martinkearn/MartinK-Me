@@ -1,4 +1,5 @@
-﻿using MartinKMe.Domain.Interfaces;
+﻿using Azure.Data.Tables;
+using MartinKMe.Domain.Interfaces;
 using MartinKMe.Domain.Models;
 using MartinKMe.Functions;
 using MartinKMe.Services;

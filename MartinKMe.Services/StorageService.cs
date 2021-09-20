@@ -1,4 +1,6 @@
-﻿using Azure.Storage.Blobs;
+﻿using Azure;
+using Azure.Data.Tables;
+using Azure.Storage.Blobs;
 using MartinKMe.Domain.Interfaces;
 using MartinKMe.Domain.Models;
 using Microsoft.Extensions.Options;
@@ -35,6 +37,38 @@ namespace MartinKMe.Services
             await blobClient.UploadAsync(ms, overwrite:true);
 
             return blobClient.Uri;
+        }
+
+        public async Task<Response> UpsertArticle(Article article)
+        {
+            // Create table if it does not exist
+            TableClient client = new TableClient(_options.ConnectionString, _options.Table);
+            await client.CreateIfNotExistsAsync();
+
+            // Build entitiy based on article
+            TableEntity entity = new TableEntity
+            {
+                PartitionKey = "article",
+                RowKey = article.Key
+            };
+            entity[nameof(Article.Title)] = article.Title;
+            entity[nameof(Article.Author)] = article.Author;
+            entity[nameof(Article.Description)] = article.Description;
+            entity[nameof(Article.Image)] = article.Image;
+            entity[nameof(Article.Thumbnail)] = article.Thumbnail;
+            entity[nameof(Article.Type)] = article.Type;
+            entity[nameof(Article.Published)] = article.Published.ToString();
+            entity[nameof(Article.Categories)] = article.Categories;
+            entity[nameof(Article.Path)] = article.Path;
+            entity[nameof(Article.GitHubPath)] = article.GitHubPath;
+            entity[nameof(Article.Status)] = article.Status;
+            entity[nameof(Article.HtmlBlobPath)] = article.HtmlBlobPath;
+
+            // Upsert entity
+            var response = await client.AddEntityAsync(entity);
+
+            //R eturn
+            return response;
         }
     }
 }

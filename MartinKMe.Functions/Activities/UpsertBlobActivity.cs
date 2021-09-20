@@ -9,11 +9,11 @@ namespace MartinKMe.Functions.Activities
 {
     public sealed class UpsertBlobActivity
     {
-        private readonly IStorageService _blobStorageService;
+        private readonly IStorageService _storageService;
 
-        public UpsertBlobActivity(IStorageService blobStorageService)
+        public UpsertBlobActivity(IStorageService storageService)
         {
-            _blobStorageService = blobStorageService;
+            _storageService = storageService;
         }
 
         [FunctionName(nameof(UpsertBlobActivity))]
@@ -23,7 +23,7 @@ namespace MartinKMe.Functions.Activities
             var fileName = articleContext.GithubContent.Name.Replace(".md", string.Empty);
 
             // Upsert blob from file contents
-            return await _blobStorageService.UpsertBlob(fileName, articleContext.PlainHtmlContents);
+            return await _storageService.UpsertBlob(fileName, articleContext.PlainHtmlContents);
         }
     }
 }

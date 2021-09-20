@@ -1,25 +1,25 @@
-﻿using MartinKMe.Domain.Interfaces;
+﻿using Azure;
+using MartinKMe.Domain.Interfaces;
 using MartinKMe.Domain.Models;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.DurableTask;
-using System;
 using System.Threading.Tasks;
 
 namespace MartinKMe.Functions.Activities
 {
     public sealed class UpsertArticleActivity
     {
-        private readonly IStorageService _blobStorageService;
+        private readonly IStorageService _storageService;
 
-        public UpsertArticleActivity(IStorageService blobStorageService)
+        public UpsertArticleActivity(IStorageService storageService)
         {
-            _blobStorageService = blobStorageService;
+            _storageService = storageService;
         }
 
         [FunctionName(nameof(UpsertArticleActivity))]
-        public async Task UpsertBlob([ActivityTrigger] Article article)
+        public async Task<Response> UpsertBlob([ActivityTrigger] Article article)
         {
-
+            return await _storageService.UpsertArticle(article);
         }
     }
 }

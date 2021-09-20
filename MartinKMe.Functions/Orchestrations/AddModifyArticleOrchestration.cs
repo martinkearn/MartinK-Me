@@ -34,6 +34,9 @@ namespace MartinKMe.Functions.Orchestrations
             // Convert Yaml to Article object
             articleContext.Article = await context.CallActivityAsync<Article>(nameof(YamlToMarkdownActivity), articleContext);
 
+            // Upsert Article in table storage
+            var response = await context.CallActivityAsync<Article>(nameof(UpsertArticleActivity), articleContext.Article);
+
             var outputs = new List<string>()
             {
                 $"Added/modified {articleContext.GithubContentApiUri}"
