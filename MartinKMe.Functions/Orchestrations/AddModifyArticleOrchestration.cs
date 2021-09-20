@@ -36,7 +36,7 @@ namespace MartinKMe.Functions.Orchestrations
             articleContext.Article = await context.CallActivityAsync<Article>(nameof(YamlToMarkdownActivity), articleContext);
 
             // Upsert Article in table storage
-            var response = await context.CallActivityAsync<Response>(nameof(UpsertArticleActivity), articleContext.Article);
+            await context.CallActivityAsync<Response>(nameof(UpsertArticleActivity), articleContext.Article);
 
             var outputs = new List<string>()
             {

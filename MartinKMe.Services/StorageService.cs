@@ -1,5 +1,4 @@
-﻿using Azure;
-using Azure.Data.Tables;
+﻿using Azure.Data.Tables;
 using Azure.Storage.Blobs;
 using MartinKMe.Domain.Interfaces;
 using MartinKMe.Domain.Models;
@@ -39,7 +38,7 @@ namespace MartinKMe.Services
             return blobClient.Uri;
         }
 
-        public async Task<Response> UpsertArticle(Article article)
+        public async Task<bool> UpsertArticle(Article article)
         {
             // Create table if it does not exist
             TableClient client = new TableClient(_options.ConnectionString, _options.Table);
@@ -65,10 +64,10 @@ namespace MartinKMe.Services
             entity[nameof(Article.HtmlBlobPath)] = article.HtmlBlobPath.ToString();
 
             // Upsert entity
-            var response = await client.UpsertEntityAsync(entity, TableUpdateMode.Replace);
+            await client.UpsertEntityAsync(entity, TableUpdateMode.Replace);
 
-            //R eturn
-            return response;
+            //Return
+            return true;
         }
     }
 }
