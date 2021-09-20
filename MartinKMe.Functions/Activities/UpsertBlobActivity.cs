@@ -19,11 +19,7 @@ namespace MartinKMe.Functions.Activities
         [FunctionName(nameof(UpsertBlobActivity))]
         public async Task<Uri> UpsertBlob([ActivityTrigger] ArticleContext articleContext)
         {
-            // Chop off the .md to form a file name
-            var fileName = articleContext.GithubContent.Name.Replace(".md", string.Empty);
-
-            // Upsert blob from file contents
-            return await _storageService.UpsertBlob(fileName, articleContext.PlainHtmlContents);
+            return await _storageService.UpsertBlob(articleContext.GithubContent.Name, articleContext.PlainHtmlContents);
         }
     }
 }

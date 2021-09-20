@@ -19,8 +19,7 @@ namespace MartinKMe.Functions.Activities
         [FunctionName(nameof(GetGithubContentActivity))]
         public async Task<GithubContent> GetGithubContent([ActivityTrigger] Uri gitHubApiFileUrl)
         {
-            var githubContent = await _githubService.GetGithubContent(gitHubApiFileUrl);
-            return githubContent;
+            return await _githubService.GetGithubContent(gitHubApiFileUrl);
         }
     }
 }

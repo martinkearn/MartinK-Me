@@ -35,7 +35,7 @@ namespace MartinKMe.Services
             using var ms = new MemoryStream(Encoding.UTF8.GetBytes(fileContents));
             await blobClient.UploadAsync(ms, overwrite:true);
 
-            return blobClient.Uri;
+            return new Uri(blobClient.Uri.AbsoluteUri);
         }
 
         public async Task UpsertArticle(Article article)
