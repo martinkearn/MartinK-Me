@@ -38,7 +38,7 @@ namespace MartinKMe.Services
             return blobClient.Uri;
         }
 
-        public async Task<bool> UpsertArticle(Article article)
+        public async Task UpsertArticle(Article article)
         {
             // Create table if it does not exist
             TableClient client = new TableClient(_options.ConnectionString, _options.Table);
@@ -65,9 +65,6 @@ namespace MartinKMe.Services
 
             // Upsert entity
             await client.UpsertEntityAsync(entity, TableUpdateMode.Replace);
-
-            //Return
-            return true;
         }
     }
 }

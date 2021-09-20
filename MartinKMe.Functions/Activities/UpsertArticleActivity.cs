@@ -17,9 +17,9 @@ namespace MartinKMe.Functions.Activities
         }
 
         [FunctionName(nameof(UpsertArticleActivity))]
-        public async Task<bool> UpsertBlob([ActivityTrigger] Article article)
+        public async Task UpsertBlob([ActivityTrigger] Article article)
         {
-            return await _storageService.UpsertArticle(article);
+            await _storageService.UpsertArticle(article);
         }
     }
 }
