@@ -1,11 +1,8 @@
 ﻿using MartinKMe.Domain.Interfaces;
 using MartinKMe.Domain.Models;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Text;
 using YamlDotNet.Serialization;
-using YamlDotNet.Serialization.NamingConventions;
 
 namespace MartinKMe.Services
 {
@@ -18,9 +15,9 @@ namespace MartinKMe.Services
             _utilityService = utilityService;
         }
 
-        public Article YamlToArticle(string fileContents, Uri blobUri, Uri githubPath)
+        public Article YamlToArticle(string plainFileContents, Uri blobUri, string githubPath)
         {
-            var yamlString = fileContents.Substring(0, fileContents.LastIndexOf("---\n")); // Chop off the markdown, leaving just the YAML header as YamlDotNet only deals with YAML documents. Assumes there is a space after the end of the YAML header
+            var yamlString = plainFileContents.Substring(0, plainFileContents.LastIndexOf("---\n")); // Chop off the markdown, leaving just the YAML header as YamlDotNet only deals with YAML documents. Assumes there is a space after the end of the YAML header
 
             var yamlDeserializer = new DeserializerBuilder()
                 .Build();
@@ -30,7 +27,7 @@ namespace MartinKMe.Services
             // Check we have required props
             if (string.IsNullOrEmpty(yamlHeader.Title))
             { 
-                throw new ArgumentException("Title is a required field which is missing from the yaml header.", fileContents);
+                throw new ArgumentException("Title is a required field which is missing from the yaml header.", plainFileContents);
             }
 
             // Build dto

@@ -14,7 +14,7 @@ namespace MartinKMe.Domain.Models
         public DateTime Published { get; set; }
         public string Categories { get; set; }
         public string Path { get; set; }
-        public Uri GitHubPath { get; set; }
+        public string GitHubPath { get; set; }
         public string Status { get; set; }
         public Uri HtmlBlobPath { get; set; }
     }

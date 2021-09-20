@@ -2,7 +2,7 @@
 
 namespace MartinKMe.Domain.Models
 {
-    public class GithubFilePayload
+    public class GithubContent
     {
         [JsonProperty("name")]
         public string Name { get; set; }

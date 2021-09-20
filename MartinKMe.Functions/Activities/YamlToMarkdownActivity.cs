@@ -16,10 +16,10 @@ namespace MartinKMe.Functions.Activities
         }
 
         [FunctionName(nameof(YamlToMarkdownActivity))]
-        public Article YamlToMarkdown([ActivityTrigger] YamlToMarkdownActivityInput input)
+        public Article YamlToMarkdown([ActivityTrigger] ArticleContext articleContext)
         {
-            // Convert yaml to aticle
-            return _yamlService.YamlToArticle(input.FileContents, input.BlobPath, input.GithubPath);
+            // Convert yaml to article
+            return _yamlService.YamlToArticle(articleContext.PlainContents, articleContext.HtmlBlobStorageUri, articleContext.GithubContent.Path);
         }
     }
 }

@@ -1,6 +1,8 @@
 ﻿using MartinKMe.Domain.Models;
+using MartinKMe.Functions.Models;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.DurableTask;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -37,11 +39,14 @@ namespace MartinKMe.Functions.Orchestrations
                 // Check the commit is a markdown file and in the right path in the repo
                 if (item.ToLowerInvariant().EndsWith(".md") && item.ToLowerInvariant().StartsWith("blogs/"))
                 {
-                    // Prepare Github API url for item
-                    var itemGitHubApiUrl = $"https://api.github.com/repos/{author}/{repo}/contents/{item}";
+                    // Prepare ArticleContext for the item
+                    var articleContext = new ArticleContext()
+                    {
+                        GithubContentApiUri = new Uri($"https://api.github.com/repos/{author}/{repo}/contents/{item}")
+                    };
 
                     // Call sub-orchestration
-                    var subOrchestrationOutput = await context.CallSubOrchestratorAsync<List<string>>(subOrchestration, itemGitHubApiUrl);
+                    var subOrchestrationOutput = await context.CallSubOrchestratorAsync<List<string>>(subOrchestration, articleContext);
                     outputs.AddRange(subOrchestrationOutput);
                 }
             }

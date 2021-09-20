@@ -15,34 +15,28 @@ namespace MartinKMe.Functions.Orchestrations
         public static async Task<List<string>> RunOrchestrator([OrchestrationTrigger] IDurableOrchestrationContext context)
         {
             // Get input payload
-            var githubApiUrl = context.GetInput<string>();
+            var articleContext = context.GetInput<ArticleContext>();
 
-            // Get file contents and uri
-            var fileNameContents = await context.CallActivityAsync<FileNameContents>(nameof(GetFileContentsActivity), githubApiUrl);
-            var fileUri = await context.CallActivityAsync<Uri>(nameof(GetFileUriActivity), githubApiUrl);
+            // Get Github content
+            articleContext.GithubContent = await context.CallActivityAsync<GithubContent>(nameof(GetGithubContentActivity), articleContext.GithubContentApiUri);
 
-            // Convert markdown to html
-            var fileContentsHtml = await context.CallActivityAsync<string>(nameof(MarkdownToHtmlActivity), fileNameContents.FileContents);
+            // Decode the Base64 contents
+            articleContext.PlainContents = (articleContext.GithubContent.Encoding == "base64") ?
+                await context.CallActivityAsync<string>(nameof(DecodeBase64Activity), articleContext.GithubContent.Content) :
+                articleContext.GithubContent.Content;
 
-            // Replace the markdown contents with html
-            fileNameContents.FileContents = fileContentsHtml;
+            // Convert plain Markdown to Html
+            articleContext.PlainHtmlContents = await context.CallActivityAsync<string>(nameof(MarkdownToHtmlActivity), articleContext.PlainContents);
 
             // Upsert html blob to storage
-            var htmlBlobUri = await context.CallActivityAsync<Uri>(nameof(UpsertBlobActivity), fileNameContents);
+            articleContext.HtmlBlobStorageUri = await context.CallActivityAsync<Uri>(nameof(UpsertBlobActivity), articleContext);
 
             // Yaml to Article
-            var yamlToMarkdownActivityInput = new YamlToMarkdownActivityInput()
-            {
-                BlobPath = htmlBlobUri,
-                FileContents = fileNameContents.FileContents,
-                GithubPath = fileUri,
-            };
-            var article = await context.CallActivityAsync<Article>(nameof(YamlToMarkdownActivity), yamlToMarkdownActivityInput);
-
+            articleContext.Article = await context.CallActivityAsync<Article>(nameof(YamlToMarkdownActivity), articleContext);
 
             var outputs = new List<string>()
             {
-                $"Added/modified {githubApiUrl} - {fileContentsHtml}"
+                $"Added/modified {articleContext.GithubContentApiUri}"
             };
 
             return outputs;
