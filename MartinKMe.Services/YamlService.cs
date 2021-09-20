@@ -3,6 +3,7 @@ using MartinKMe.Domain.Models;
 using System;
 using System.IO;
 using YamlDotNet.Serialization;
+using YamlDotNet.Serialization.NamingConventions;
 
 namespace MartinKMe.Services
 {
@@ -20,6 +21,7 @@ namespace MartinKMe.Services
             var yamlString = plainFileContents.Substring(0, plainFileContents.LastIndexOf("---\n")); // Chop off the markdown, leaving just the YAML header as YamlDotNet only deals with YAML documents. Assumes there is a space after the end of the YAML header
 
             var yamlDeserializer = new DeserializerBuilder()
+                .WithNamingConvention(CamelCaseNamingConvention.Instance)
                 .Build();
 
             var yamlHeader = yamlDeserializer.Deserialize<GithubFileYamlHeader>(yamlString);
