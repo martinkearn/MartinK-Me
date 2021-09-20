@@ -103,11 +103,11 @@ class MainStack : Stack
                         Value = Output.Format($"InstrumentationKey={appInsights.InstrumentationKey}"),
                     },
                     new NameValuePairArgs{
-                        Name = "BlobStorageConfiguration:Container",
+                        Name = "StorageConfiguration:BlobContainer",
                         Value = "contents",
                     },
                     new NameValuePairArgs{
-                        Name = "BlobStorageConfiguration:ConnectionString",
+                        Name = "StorageConfiguration:ConnectionString",
                         Value = storageConnectionString,
                     },
                 },
