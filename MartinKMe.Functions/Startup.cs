@@ -30,13 +30,13 @@ namespace MartinKMe.Functions
             builder.Services.AddSingleton<IUtilityService, UtilityService>();
             builder.Services.AddSingleton<IGithubService, GithubService>();
             builder.Services.AddSingleton<IMarkdownService, MarkdownService>();
-            builder.Services.AddSingleton<IBlobStorageService, BlobStorageService>();
+            builder.Services.AddSingleton<IStorageService, StorageService>();
             builder.Services.AddSingleton<IYamlService, YamlService>();
 
-            builder.Services.AddOptions<BlobStorageConfiguration>()
+            builder.Services.AddOptions<StorageConfiguration>()
                 .Configure<IConfiguration>((settings, configuration) =>
                 {
-                    configuration.GetSection(nameof(BlobStorageConfiguration)).Bind(settings);
+                    configuration.GetSection(nameof(StorageConfiguration)).Bind(settings);
                 });
         }
     }

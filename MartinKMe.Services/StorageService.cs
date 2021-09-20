@@ -9,13 +9,13 @@ using System.Threading.Tasks;
 
 namespace MartinKMe.Services
 {
-    public class BlobStorageService : IBlobStorageService
+    public class StorageService : IStorageService
     {
-        private readonly BlobStorageConfiguration _options;
+        private readonly StorageConfiguration _options;
 
-        public BlobStorageService(IOptions<BlobStorageConfiguration> blobStorageConfigurationOptions)
+        public StorageService(IOptions<StorageConfiguration> storageConfigurationOptions)
         { 
-            _options = blobStorageConfigurationOptions.Value;
+            _options = storageConfigurationOptions.Value;
         }
 
         public async Task<Uri> UpsertBlob(string fileName, string fileContents)
@@ -24,7 +24,7 @@ namespace MartinKMe.Services
             BlobServiceClient blobServiceClient = new BlobServiceClient(_options.ConnectionString);
 
             // Get/create the container and return a container client object
-            BlobContainerClient containerClient = blobServiceClient.GetBlobContainerClient(_options.Container);
+            BlobContainerClient containerClient = blobServiceClient.GetBlobContainerClient(_options.BlobContainer);
             await containerClient.CreateIfNotExistsAsync();
 
             // Get a reference to a blob

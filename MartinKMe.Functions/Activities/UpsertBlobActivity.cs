@@ -9,9 +9,9 @@ namespace MartinKMe.Functions.Activities
 {
     public sealed class UpsertBlobActivity
     {
-        private readonly IBlobStorageService _blobStorageService;
+        private readonly IStorageService _blobStorageService;
 
-        public UpsertBlobActivity(IBlobStorageService blobStorageService)
+        public UpsertBlobActivity(IStorageService blobStorageService)
         {
             _blobStorageService = blobStorageService;
         }

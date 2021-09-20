@@ -31,7 +31,7 @@ namespace MartinKMe.Functions.Orchestrations
             // Upsert html blob to storage
             articleContext.HtmlBlobStorageUri = await context.CallActivityAsync<Uri>(nameof(UpsertBlobActivity), articleContext);
 
-            // Yaml to Article
+            // Convert Yaml to Article object
             articleContext.Article = await context.CallActivityAsync<Article>(nameof(YamlToMarkdownActivity), articleContext);
 
             var outputs = new List<string>()
