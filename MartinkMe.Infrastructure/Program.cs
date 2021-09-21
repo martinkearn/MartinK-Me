@@ -3,5 +3,8 @@ using Pulumi;
 
 class Program
 {
-    static Task<int> Main() => Deployment.RunAsync<MainStack>();
+    static Task<int> Main()
+    {
+        return Deployment.RunAsync<MainStack>();
+    }
 }

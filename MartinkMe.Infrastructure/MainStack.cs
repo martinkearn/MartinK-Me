@@ -7,7 +7,6 @@ using Pulumi.AzureNative.Storage.Inputs;
 using Pulumi.AzureNative.Web;
 using Pulumi.AzureNative.Web.Inputs;
 using System;
-using System.Web;
 using Kind = Pulumi.AzureNative.Storage.Kind;
 
 class MainStack : Stack
@@ -15,6 +14,8 @@ class MainStack : Stack
     private const string ResourceGroupBaseName = "MartinKMe";
     public MainStack()
     {
+        var config = new Config();
+
         var resourceGroup = new ResourceGroup("MartinKMe", new ResourceGroupArgs 
         { 
             ResourceGroupName = ResourceGroupBaseName,
@@ -38,12 +39,43 @@ class MainStack : Stack
             Kind = "web",
             ResourceGroupName = resourceGroup.Name,
             ResourceName = $"appinsights-{ResourceGroupBaseName.ToLowerInvariant()}"
-        }); ;
+        });
 
         var deploymentsContainer = new BlobContainer("deployments", new BlobContainerArgs
         {
             AccountName = storageAccount.Name,
             PublicAccess = PublicAccess.None,
+            ResourceGroupName = resourceGroup.Name,
+        });
+
+        var wallpaperContainer = new BlobContainer("wallpaper", new BlobContainerArgs
+        {
+            AccountName = storageAccount.Name,
+            PublicAccess = PublicAccess.None,
+            ResourceGroupName = resourceGroup.Name,
+        });
+
+        var eventsTable = new Table("events", new TableArgs
+        {
+            AccountName = storageAccount.Name,
+            ResourceGroupName = resourceGroup.Name,
+        });
+
+        var linksTable = new Table("links", new TableArgs
+        {
+            AccountName = storageAccount.Name,
+            ResourceGroupName = resourceGroup.Name,
+        });
+
+        var shortcutsTable = new Table("shortcuts", new TableArgs
+        {
+            AccountName = storageAccount.Name,
+            ResourceGroupName = resourceGroup.Name,
+        });
+
+        var talksTable = new Table("talks", new TableArgs
+        {
+            AccountName = storageAccount.Name,
             ResourceGroupName = resourceGroup.Name,
         });
 
@@ -58,7 +90,7 @@ class MainStack : Stack
             }
         });
 
-        var functionsPublishBlob = new Blob($"functions-{DateTime.UtcNow.ToString("yyyy-MM-dd-HH-mm")}.zip", new BlobArgs
+        var functionsPublishBlob = new Blob($"functions-{DateTime.UtcNow:yyyy-MM-dd-HH-mm}.zip", new BlobArgs
         {
             AccountName = storageAccount.Name,
             ContainerName = deploymentsContainer.Name,
@@ -106,9 +138,13 @@ class MainStack : Stack
                         Name = "StorageConfiguration:BlobContainer",
                         Value = "contents",
                     },
+                    //new NameValuePairArgs{
+                    //    Name = "StorageConfiguration:ConnectionString",
+                    //    Value = storageConnectionString,
+                    //},
                     new NameValuePairArgs{
                         Name = "StorageConfiguration:ConnectionString",
-                        Value = storageConnectionString,
+                        Value = config.Require("StorageConnectionString"),
                     },
                     new NameValuePairArgs{
                         Name = "StorageConfiguration:Table",
@@ -129,7 +165,7 @@ class MainStack : Stack
             }
         });
 
-        var webPublishBlob = new Blob("web.zip", new BlobArgs
+        var webPublishBlob = new Blob($"web-{DateTime.UtcNow:yyyy-MM-dd-HH-mm}.zip", new BlobArgs
         {
             AccountName = storageAccount.Name,
             ContainerName = deploymentsContainer.Name,
@@ -162,6 +198,5 @@ class MainStack : Stack
                 },
             },
         });
-
     }
 }

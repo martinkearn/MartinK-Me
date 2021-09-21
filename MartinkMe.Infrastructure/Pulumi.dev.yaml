@@ -1,2 +1,4 @@
 config:
+  MartinkMe.Infrastructure:StorageConnectionString:
+    secure: AAABAJmt7laC4wjFNJdYcTyWRyeRS7aTTGYB9c3l+k/p4xLOFpw7KB1xXYGLZxkt2qgkXdvubkXRBwcsvMW0aWt/lnUUQC03leTEFxMuxpOl4Ma0ty4RrxXNSVzcruhX7s0hgClgCOlqWCnkeCGJcl/KR+uCpwnP+oeemqmaz1VB9D9Pigrg2QQd4nS3RcsofUZ1UEqBg6jKdOf1nXTTGqQw6xecSq00jD5WzaDTKJQAOFp8+Qc/P9NCX4eH1JPefw21wnTaQOlFqOWHH/gHyn2iOmq5zgJE
   azure-native:location: uksouth
