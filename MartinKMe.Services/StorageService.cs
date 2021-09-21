@@ -50,18 +50,18 @@ namespace MartinKMe.Services
                 PartitionKey = "article",
                 RowKey = article.Key
             };
-            entity[nameof(Article.Title)] = article.Title;
-            entity[nameof(Article.Author)] = article.Author;
-            entity[nameof(Article.Description)] = article.Description;
-            entity[nameof(Article.Image)] = article.Image;
-            entity[nameof(Article.Thumbnail)] = article.Thumbnail;
-            entity[nameof(Article.Type)] = article.Type;
-            entity[nameof(Article.Published)] = article.Published.ToString();
-            entity[nameof(Article.Categories)] = article.Categories;
-            entity[nameof(Article.Path)] = article.Path;
-            entity[nameof(Article.GitHubPath)] = article.GitHubPath;
-            entity[nameof(Article.Status)] = article.Status;
-            entity[nameof(Article.HtmlBlobPath)] = article.HtmlBlobPath.ToString();
+            entity[nameof(Article.Title).ToLowerInvariant()] = article.Title;
+            entity[nameof(Article.Author).ToLowerInvariant()] = article.Author;
+            entity[nameof(Article.Description).ToLowerInvariant()] = article.Description;
+            entity[nameof(Article.Image).ToLowerInvariant()] = article.Image;
+            entity[nameof(Article.Thumbnail).ToLowerInvariant()] = article.Thumbnail;
+            entity[nameof(Article.Type).ToLowerInvariant()] = article.Type;
+            entity[nameof(Article.Published).ToLowerInvariant()] = article.Published.ToString();
+            entity[nameof(Article.Categories).ToLowerInvariant()] = article.Categories;
+            entity[nameof(Article.Path).ToLowerInvariant()] = article.Path;
+            entity[nameof(Article.GitHubPath).ToLowerInvariant()] = article.GitHubPath;
+            entity[nameof(Article.Status).ToLowerInvariant()] = article.Status;
+            entity[nameof(Article.HtmlBlobPath).ToLowerInvariant()] = article.HtmlBlobPath.ToString();
 
             // Upsert entity
             await client.UpsertEntityAsync(entity, TableUpdateMode.Replace);
