@@ -55,7 +55,6 @@ class MainStack : Stack
             ResourceGroupName = resourceGroup.Name,
         });
 
-
         var articleBlobsContainer = new BlobContainer("articleblobs", new BlobContainerArgs
         {
             AccountName = storageAccount.Name,
@@ -63,25 +62,7 @@ class MainStack : Stack
             ResourceGroupName = resourceGroup.Name,
         });
 
-        var eventsTable = new Table("events", new TableArgs
-        {
-            AccountName = storageAccount.Name,
-            ResourceGroupName = resourceGroup.Name,
-        });
-
-        var linksTable = new Table("links", new TableArgs
-        {
-            AccountName = storageAccount.Name,
-            ResourceGroupName = resourceGroup.Name,
-        });
-
         var shortcutsTable = new Table("shortcuts", new TableArgs
-        {
-            AccountName = storageAccount.Name,
-            ResourceGroupName = resourceGroup.Name,
-        });
-
-        var talksTable = new Table("talks", new TableArgs
         {
             AccountName = storageAccount.Name,
             ResourceGroupName = resourceGroup.Name,
