@@ -23,7 +23,7 @@ jobs:
         run: dotnet restore
           
       - name: .net publish         
-      - run: dotnet publish
+        run: dotnet publish
       
       - uses: azure/login@v1
         with:
@@ -36,3 +36,5 @@ jobs:
           work-dir: MartinkMe.Infrastructure
         env:
           PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
+          FunctionsPublishPath: ${{ secrets.FUNCTIONSPUBLISHPATH }}
+          WebPublishPath: ${{ secrets.WEBPUBLISHPATH }}
