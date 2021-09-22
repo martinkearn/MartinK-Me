@@ -12,12 +12,6 @@ jobs:
       - uses: actions/setup-dotnet@v1
         with:
           dotnet-version: 3.1.x
-      - name: Configure Azure Credentials
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-access-key-id: ${{ secrets.ARM_CLIENT_ID }}
-          aws-region: ${{ secrets.ARM_CLIENT_SECRET }}
-          aws-secret-access-key: ${{ secrets.ARM_TENANT_ID  }}
       - uses: pulumi/actions@v3
         with:
           command: up
