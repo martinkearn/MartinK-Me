@@ -47,6 +47,7 @@ namespace MartinKMe.Services
                 PartitionKey = "article",
                 RowKey = article.Key
             };
+            
             entity[nameof(article.Key).ToLowerInvariant()] = article.Key;
             entity[nameof(article.Title).ToLowerInvariant()] = article.Title;
             entity[nameof(article.Author).ToLowerInvariant()] = article.Author;
@@ -54,7 +55,7 @@ namespace MartinKMe.Services
             entity[nameof(article.Image).ToLowerInvariant()] = article.Image;
             entity[nameof(article.Thumbnail).ToLowerInvariant()] = article.Thumbnail;
             entity[nameof(article.Type).ToLowerInvariant()] = article.Type;
-            entity[nameof(article.Published).ToLowerInvariant()] = new DateTime(article.Published.Ticks, DateTimeKind.Utc);
+            entity[nameof(article.Published).ToLowerInvariant()] = DateTime.SpecifyKind(article.Published, DateTimeKind.Utc);
             entity[nameof(article.Categories).ToLowerInvariant()] = article.Categories;
             entity[nameof(article.Path).ToLowerInvariant()] = article.Path;
             entity[nameof(article.GitHubPath).ToLowerInvariant()] = article.GitHubPath;
