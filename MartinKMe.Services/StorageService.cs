@@ -57,7 +57,7 @@ namespace MartinKMe.Services
             entity["image"] = article.Image;
             entity["thumbnail"] = article.Thumbnail;
             entity["type"] = article.Type;
-            entity["published"] = article.Published.ToString();
+            entity["published"] = article.Published.ToString("yyyy-MM-ddTHH:mm:ss");
             entity["categories"] = article.Categories;
             entity["path"] = article.Path;
             entity["gitHubPath"] = article.GitHubPath;
