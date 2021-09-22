@@ -96,8 +96,7 @@ class MainStack : Stack
             ContainerName = deploymentsContainer.Name,
             ResourceGroupName = resourceGroup.Name,
             Type = BlobType.Block,
-            Source = new FileArchive("../publishfunctions")
-            //Source = new FileArchive($"..\\MartinKMe.Functions\\bin\\Release\\netcoreapp3.1\\publish") // This path should be set to the output of `dotnet publish` command
+            Source = new FileArchive("../publishfunctions") // Run this command at the same location as the Pulumi stack to put the publish output in the right location: `dotnet publish --no-restore --configuration Release --output ./publishfunctions ../MartinKMe.Functions/MartinKMe.Functions.csproj`
         });
 
         var storageConnectionString = OutputHelpers.GetConnectionString(resourceGroup.Name, storageAccount.Name);
@@ -168,7 +167,7 @@ class MainStack : Stack
             ContainerName = deploymentsContainer.Name,
             ResourceGroupName = resourceGroup.Name,
             Type = BlobType.Block,
-            Source = new FileArchive("../publishweb") // This path should be set to the output of `dotnet publish` command
+            Source = new FileArchive("../publishweb") // Run this command at the same location as the Pulumi stack to put the publish output in the right location: `dotnet publish --no-restore --configuration Release --output ./publishweb ../MartinkMe.Web/MartinkMe.Web.csproj`
         });
 
         var webAppService = new WebApp($"web-appservice", new WebAppArgs
