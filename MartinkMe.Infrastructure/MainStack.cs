@@ -55,6 +55,14 @@ class MainStack : Stack
             ResourceGroupName = resourceGroup.Name,
         });
 
+
+        var articleBlobsContainer = new BlobContainer("articleblobs", new BlobContainerArgs
+        {
+            AccountName = storageAccount.Name,
+            PublicAccess = PublicAccess.None,
+            ResourceGroupName = resourceGroup.Name,
+        });
+
         var eventsTable = new Table("events", new TableArgs
         {
             AccountName = storageAccount.Name,
@@ -79,6 +87,12 @@ class MainStack : Stack
             ResourceGroupName = resourceGroup.Name,
         });
 
+        var articlesTable = new Table("articles", new TableArgs
+        {
+            AccountName = storageAccount.Name,
+            ResourceGroupName = resourceGroup.Name,
+        });
+
         var functionsAppServicePlan = new AppServicePlan("functions-appserviceplan", new AppServicePlanArgs
         {
             ResourceGroupName = resourceGroup.Name,
@@ -96,7 +110,7 @@ class MainStack : Stack
             ContainerName = deploymentsContainer.Name,
             ResourceGroupName = resourceGroup.Name,
             Type = BlobType.Block,
-            Source = new FileArchive("../publishfunctions") // Run this command at the same location as the Pulumi stack to put the publish output in the right location: `dotnet publish --no-restore --configuration Release --output ./publishfunctions ../MartinKMe.Functions/MartinKMe.Functions.csproj`
+            Source = new FileArchive("./publishfunctions") // Run this command at the same location as the Pulumi stack to put the publish output in the right location: `dotnet publish --no-restore --configuration Release --output ../publishfunctions ../MartinKMe.Functions/MartinKMe.Functions.csproj`
         });
 
         var storageConnectionString = OutputHelpers.GetConnectionString(resourceGroup.Name, storageAccount.Name);
@@ -136,7 +150,7 @@ class MainStack : Stack
                     },
                     new NameValuePairArgs{
                         Name = "StorageConfiguration:BlobContainer",
-                        Value = "contents",
+                        Value = articleBlobsContainer.Name,
                     },
                     new NameValuePairArgs{
                         Name = "StorageConfiguration:ConnectionString",
@@ -144,7 +158,7 @@ class MainStack : Stack
                     },
                     new NameValuePairArgs{
                         Name = "StorageConfiguration:Table",
-                        Value = "Contents",
+                        Value = articlesTable.Name,
                     },
                 },
             },
@@ -167,7 +181,7 @@ class MainStack : Stack
             ContainerName = deploymentsContainer.Name,
             ResourceGroupName = resourceGroup.Name,
             Type = BlobType.Block,
-            Source = new FileArchive("../publishweb") // Run this command at the same location as the Pulumi stack to put the publish output in the right location: `dotnet publish --no-restore --configuration Release --output ./publishweb ../MartinkMe.Web/MartinkMe.Web.csproj`
+            Source = new FileArchive("./publishweb") // Run this command at the same location as the Pulumi stack to put the publish output in the right location: `dotnet publish --no-restore --configuration Release --output ../publishweb ../MartinKMe.Web/MartinkMe.Web.csproj`
         });
 
         var webAppService = new WebApp($"web-appservice", new WebAppArgs
