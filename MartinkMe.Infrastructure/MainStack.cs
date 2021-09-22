@@ -96,7 +96,8 @@ class MainStack : Stack
             ContainerName = deploymentsContainer.Name,
             ResourceGroupName = resourceGroup.Name,
             Type = BlobType.Block,
-            Source = new FileArchive($"..\\MartinKMe.Functions\\bin\\Release\\netcoreapp3.1\\publish") // This path should be set to the output of `dotnet publish` command
+            Source = new FileArchive(config.Require("FunctionsPublishPath"))
+            //Source = new FileArchive($"..\\MartinKMe.Functions\\bin\\Release\\netcoreapp3.1\\publish") // This path should be set to the output of `dotnet publish` command
         });
 
         var storageConnectionString = OutputHelpers.GetConnectionString(resourceGroup.Name, storageAccount.Name);
@@ -167,7 +168,7 @@ class MainStack : Stack
             ContainerName = deploymentsContainer.Name,
             ResourceGroupName = resourceGroup.Name,
             Type = BlobType.Block,
-            Source = new FileArchive($"..\\MartinKMe.Web\\bin\\Debug\\net6.0\\publish") // This path should be set to the output of `dotnet publish` command
+            Source = new FileArchive(config.Require("WebPublishPath")) // This path should be set to the output of `dotnet publish` command
         });
 
         var webAppService = new WebApp($"web-appservice", new WebAppArgs

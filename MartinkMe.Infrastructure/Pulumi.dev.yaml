@@ -1,4 +1,6 @@
 config:
+  MartinkMe.Infrastructure:FunctionsPublishPath: ..\\MartinKMe.Functions\\bin\\Release\\netcoreapp3.1\\publish
+  MartinkMe.Infrastructure:WebPublishPath: ..\\MartinKMe.Web\\bin\\Debug\\net6.0\\publish
   azure-native:clientId: 6456ece1-6c35-471f-a6dd-7e81db3795d9
   azure-native:clientSecret:
     secure: AAABANVVwUrbvifUchDUsHFqcGbbwvQepOnSvaypfqgv/GXht5QWFI1RTk7KJZC25C1BN+vAffZmO4B8wMhUz6uSITPW
