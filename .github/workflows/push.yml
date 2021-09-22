@@ -9,18 +9,26 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      
       - uses: actions/setup-dotnet@v1
         with:
           dotnet-version: 3.1.x
+          
       - uses: actions/setup-dotnet@v1
         with:
           dotnet-version: 6.0.x
           include-prerelease: true
+          
+      - name: Install dependencies
+        run: dotnet restore
+          
+      - name: .net publish         
       - run: dotnet publish
-      - name: Azure Login
-        uses: azure/login@v1
+      
+      - uses: azure/login@v1
         with:
           creds: ${{ secrets.AZURE_PRINCIPAL }}
+          
       - uses: pulumi/actions@v3
         with:
           command: up
