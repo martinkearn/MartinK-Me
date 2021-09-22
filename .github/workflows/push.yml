@@ -25,7 +25,7 @@ jobs:
       - name: .net Restore
         run: dotnet restore
 
-      - name: Bui.net Build
+      - name: .net Build
         run: dotnet build --no-restore --configuration Release
           
       - name: .net Publish MartinKMe.Functions  
