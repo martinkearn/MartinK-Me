@@ -21,11 +21,8 @@ namespace MartinKMe.Services
 
         public async Task<Uri> UpsertBlob(string fileName, string fileContents)
         {
-            // Create a BlobServiceClient object which will be used to create a container client
-            BlobServiceClient blobServiceClient = new BlobServiceClient(_options.ConnectionString);
-
             // Get/create the container and return a container client object
-            BlobContainerClient containerClient = blobServiceClient.GetBlobContainerClient(_options.BlobContainer);
+            BlobContainerClient containerClient = new BlobContainerClient(_options.ConnectionString, _options.BlobContainer);
             await containerClient.CreateIfNotExistsAsync();
 
             // Get a reference to a blob
@@ -57,7 +54,7 @@ namespace MartinKMe.Services
             entity[nameof(article.Image).ToLowerInvariant()] = article.Image;
             entity[nameof(article.Thumbnail).ToLowerInvariant()] = article.Thumbnail;
             entity[nameof(article.Type).ToLowerInvariant()] = article.Type;
-            entity[nameof(article.Published).ToLowerInvariant()] = article.Published;
+            entity[nameof(article.Published).ToLowerInvariant()] = new DateTime(article.Published.Ticks, DateTimeKind.Utc);
             entity[nameof(article.Categories).ToLowerInvariant()] = article.Categories;
             entity[nameof(article.Path).ToLowerInvariant()] = article.Path;
             entity[nameof(article.GitHubPath).ToLowerInvariant()] = article.GitHubPath;
