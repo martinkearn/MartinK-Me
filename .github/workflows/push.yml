@@ -24,9 +24,15 @@ jobs:
           
       - name: .net Restore
         run: dotnet restore
+
+      - name: Bui.net Build
+        run: dotnet build --no-restore --configuration Release
           
-      - name: .net Publish         
-        run: dotnet publish
+      - name: .net Publish MartinKMe.Functions  
+        run: dotnet publish --no-restore --configuration Release --output ./publish MartinKMe.Functions/MartinKMe.Functions.csproj
+
+      - name: .net Publish MartinKMe.Web  
+        run: dotnet publish --no-restore --configuration Release --output ./publish MartinKMe.Web/MartinKMe.Web.csproj
           
       - name: Pulumi Up
         uses: pulumi/actions@v3
@@ -36,5 +42,3 @@ jobs:
           work-dir: MartinkMe.Infrastructure
         env:
           PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
-          FunctionsPublishPath: ${{ secrets.FUNCTIONSPUBLISHPATH }}
-          WebPublishPath: ${{ secrets.WEBPUBLISHPATH }}

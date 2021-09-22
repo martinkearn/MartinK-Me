@@ -96,7 +96,7 @@ class MainStack : Stack
             ContainerName = deploymentsContainer.Name,
             ResourceGroupName = resourceGroup.Name,
             Type = BlobType.Block,
-            Source = new FileArchive(config.Require("FunctionsPublishPath"))
+            Source = new FileArchive("../publish")
             //Source = new FileArchive($"..\\MartinKMe.Functions\\bin\\Release\\netcoreapp3.1\\publish") // This path should be set to the output of `dotnet publish` command
         });
 
@@ -168,7 +168,7 @@ class MainStack : Stack
             ContainerName = deploymentsContainer.Name,
             ResourceGroupName = resourceGroup.Name,
             Type = BlobType.Block,
-            Source = new FileArchive(config.Require("WebPublishPath")) // This path should be set to the output of `dotnet publish` command
+            Source = new FileArchive("../publish") // This path should be set to the output of `dotnet publish` command
         });
 
         var webAppService = new WebApp($"web-appservice", new WebAppArgs
