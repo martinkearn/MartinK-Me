@@ -1,4 +1,4 @@
-using MartinkMe.Web.Data;
+using MartinKMe.Web.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.DependencyInjection;
