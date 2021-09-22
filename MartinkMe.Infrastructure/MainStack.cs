@@ -138,13 +138,9 @@ class MainStack : Stack
                         Name = "StorageConfiguration:BlobContainer",
                         Value = "contents",
                     },
-                    //new NameValuePairArgs{
-                    //    Name = "StorageConfiguration:ConnectionString",
-                    //    Value = storageConnectionString,
-                    //},
                     new NameValuePairArgs{
                         Name = "StorageConfiguration:ConnectionString",
-                        Value = config.Require("StorageConnectionString"),
+                        Value = storageConnectionString,
                     },
                     new NameValuePairArgs{
                         Name = "StorageConfiguration:Table",
