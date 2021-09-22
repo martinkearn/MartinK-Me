@@ -34,6 +34,11 @@ namespace MartinKMe.Functions.Models
         public Uri HtmlBlobStorageUri { get; set; }
 
         /// <summary>
+        /// Name of the HTML blob in storage, for exmaple test.html
+        /// </summary>
+        public string BlobFileName { get; set; }
+
+        /// <summary>
         /// Article entitiy which gets stored and used by other systems.
         /// </summary>
         public Article Article { get; set; }

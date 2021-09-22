@@ -21,18 +21,23 @@ namespace MartinKMe.Services
 
         public async Task<Uri> UpsertBlob(string fileName, string fileContents)
         {
-            // Get/create the container and return a container client object
-            BlobContainerClient containerClient = new BlobContainerClient(_options.ConnectionString, _options.BlobContainer);
-            await containerClient.CreateIfNotExistsAsync();
-
             // Get a reference to a blob
-            BlobClient blobClient = containerClient.GetBlobClient(fileName);
+            var blobClient = await GetBlobClient(fileName);
 
             // Upload the file
             using var ms = new MemoryStream(Encoding.UTF8.GetBytes(fileContents));
             await blobClient.UploadAsync(ms, overwrite:true);
 
             return new Uri(blobClient.Uri.AbsoluteUri);
+        }
+
+        public async Task DeleteBlob(string fileName)
+        {
+            // Get a reference to a blob
+            var blobClient = await GetBlobClient(fileName);
+
+            // Delete blob
+            await blobClient.DeleteIfExistsAsync(Azure.Storage.Blobs.Models.DeleteSnapshotsOption.IncludeSnapshots);
         }
 
         public async Task UpsertArticle(Article article)
@@ -64,6 +69,19 @@ namespace MartinKMe.Services
 
             // Upsert entity
             await client.UpsertEntityAsync(entity, TableUpdateMode.Replace);
+        }
+
+        private async Task<BlobClient> GetBlobClient(string fileName)
+        {
+            // Get/create the container and return a container client object
+            BlobContainerClient containerClient = new BlobContainerClient(_options.ConnectionString, _options.BlobContainer);
+            await containerClient.CreateIfNotExistsAsync();
+
+            // Get a reference to a blob
+            BlobClient blobClient = containerClient.GetBlobClient(fileName);
+
+            // Return
+            return blobClient;
         }
     }
 }

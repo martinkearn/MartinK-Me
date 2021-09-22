@@ -8,6 +8,8 @@ namespace MartinKMe.Domain.Interfaces
     {
         public Task<Uri> UpsertBlob(string fileName, string fileContents);
 
+        public Task DeleteBlob(string fileName);
+
         public Task UpsertArticle(Article article);
     }
 }

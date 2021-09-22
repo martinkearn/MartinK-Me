@@ -1,4 +1,6 @@
-﻿using Microsoft.Azure.WebJobs;
+﻿using MartinKMe.Functions.Activities;
+using MartinKMe.Functions.Models;
+using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.DurableTask;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -11,11 +13,16 @@ namespace MartinKMe.Functions.Orchestrations
         public static async Task<List<string>> RunOrchestrator([OrchestrationTrigger] IDurableOrchestrationContext context)
         {
             // Get input payload
-            var input = context.GetInput<string>();
+            var articleContext = context.GetInput<ArticleContext>();
+
+            // Delete blob
+            await context.CallActivityAsync<string>(nameof(DeleteBlobActivity), articleContext);
+
+            // Delete article
 
             var outputs = new List<string>()
             {
-                $"Deleted {input}"
+                $"Deleted {articleContext.GithubContentApiUri}"
             };
 
             return outputs;

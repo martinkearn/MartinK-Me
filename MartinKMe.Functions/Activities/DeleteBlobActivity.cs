@@ -2,24 +2,23 @@
 using MartinKMe.Functions.Models;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.DurableTask;
-using System;
 using System.Threading.Tasks;
 
 namespace MartinKMe.Functions.Activities
 {
-    public sealed class UpsertBlobActivity
+    public sealed class DeleteBlobActivity
     {
         private readonly IStorageService _storageService;
 
-        public UpsertBlobActivity(IStorageService storageService)
+        public DeleteBlobActivity(IStorageService storageService)
         {
             _storageService = storageService;
         }
 
-        [FunctionName(nameof(UpsertBlobActivity))]
-        public async Task<Uri> UpsertBlob([ActivityTrigger] ArticleContext articleContext)
+        [FunctionName(nameof(DeleteBlobActivity))]
+        public async Task DeleteBlob([ActivityTrigger] ArticleContext articleContext)
         {
-            return await _storageService.UpsertBlob(articleContext.BlobFileName, articleContext.PlainHtmlContents);
+            await _storageService.DeleteBlob(articleContext.BlobFileName);
         }
     }
 }
