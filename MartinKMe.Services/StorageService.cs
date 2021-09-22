@@ -50,6 +50,7 @@ namespace MartinKMe.Services
                 PartitionKey = "article",
                 RowKey = article.Key
             };
+            entity["key"] = article.Key;
             entity["title"] = article.Title;
             entity["author"] = article.Author;
             entity["description"] = article.Description;
