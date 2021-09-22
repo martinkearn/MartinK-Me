@@ -12,6 +12,7 @@ jobs:
       - uses: actions/setup-dotnet@v1
         with:
           dotnet-version: 3.1.x
+      - run: dotnet publish
       - uses: pulumi/actions@v3
         with:
           command: up
