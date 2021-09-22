@@ -8,28 +8,28 @@ jobs:
     name: Update
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout
+        uses: actions/checkout@v2
       
-      - uses: actions/setup-dotnet@v1
+      - name: Setup .net 3.1.x
+        uses: actions/setup-dotnet@v1
         with:
           dotnet-version: 3.1.x
-          
-      - uses: actions/setup-dotnet@v1
+        
+      - name: Setup .net 6.0.x
+        uses: actions/setup-dotnet@v1
         with:
           dotnet-version: 6.0.x
           include-prerelease: true
           
-      - name: Install dependencies
+      - name: .net Restore
         run: dotnet restore
           
-      - name: .net publish         
+      - name: .net Publish         
         run: dotnet publish
-      
-      - uses: azure/login@v1
-        with:
-          creds: ${{ secrets.AZURE_PRINCIPAL }}
           
-      - uses: pulumi/actions@v3
+      - name: Pulumi Up
+        uses: pulumi/actions@v3
         with:
           command: up
           stack-name: dev
