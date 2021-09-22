@@ -50,19 +50,19 @@ namespace MartinKMe.Services
                 PartitionKey = "article",
                 RowKey = article.Key
             };
-            entity["key"] = article.Key;
-            entity["title"] = article.Title;
-            entity["author"] = article.Author;
-            entity["description"] = article.Description;
-            entity["image"] = article.Image;
-            entity["thumbnail"] = article.Thumbnail;
-            entity["type"] = article.Type;
-            entity["published"] = article.Published.ToString("yyyy-MM-ddTHH:mm:ss");
-            entity["categories"] = article.Categories;
-            entity["path"] = article.Path;
-            entity["gitHubPath"] = article.GitHubPath;
-            entity["status"] = article.Status;
-            entity["htmlBlobPath"] = article.HtmlBlobPath.ToString();
+            entity[nameof(article.Key).ToLowerInvariant()] = article.Key;
+            entity[nameof(article.Title).ToLowerInvariant()] = article.Title;
+            entity[nameof(article.Author).ToLowerInvariant()] = article.Author;
+            entity[nameof(article.Description).ToLowerInvariant()] = article.Description;
+            entity[nameof(article.Image).ToLowerInvariant()] = article.Image;
+            entity[nameof(article.Thumbnail).ToLowerInvariant()] = article.Thumbnail;
+            entity[nameof(article.Type).ToLowerInvariant()] = article.Type;
+            entity[nameof(article.Published).ToLowerInvariant()] = article.Published;
+            entity[nameof(article.Categories).ToLowerInvariant()] = article.Categories;
+            entity[nameof(article.Path).ToLowerInvariant()] = article.Path;
+            entity[nameof(article.GitHubPath).ToLowerInvariant()] = article.GitHubPath;
+            entity[nameof(article.Status).ToLowerInvariant()] = article.Status;
+            entity[nameof(article.HtmlBlobPath).ToLowerInvariant()] = article.HtmlBlobPath.ToString();
 
             // Upsert entity
             await client.UpsertEntityAsync(entity, TableUpdateMode.Replace);
