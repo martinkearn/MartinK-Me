@@ -44,24 +44,24 @@ namespace MartinKMe.Services
             TableClient client = new TableClient(_options.ConnectionString, _options.Table);
             await client.CreateIfNotExistsAsync();
 
-            // Build entitiy based on article
+            // Build entitiy based on article. Table storage properties are case senitive and other systems using the same data expect the properties in camel case
             TableEntity entity = new TableEntity
             {
                 PartitionKey = "article",
                 RowKey = article.Key
             };
-            entity[nameof(Article.Title).ToLowerInvariant()] = article.Title;
-            entity[nameof(Article.Author).ToLowerInvariant()] = article.Author;
-            entity[nameof(Article.Description).ToLowerInvariant()] = article.Description;
-            entity[nameof(Article.Image).ToLowerInvariant()] = article.Image;
-            entity[nameof(Article.Thumbnail).ToLowerInvariant()] = article.Thumbnail;
-            entity[nameof(Article.Type).ToLowerInvariant()] = article.Type;
-            entity[nameof(Article.Published).ToLowerInvariant()] = article.Published.ToString();
-            entity[nameof(Article.Categories).ToLowerInvariant()] = article.Categories;
-            entity[nameof(Article.Path).ToLowerInvariant()] = article.Path;
-            entity[nameof(Article.GitHubPath).ToLowerInvariant()] = article.GitHubPath;
-            entity[nameof(Article.Status).ToLowerInvariant()] = article.Status;
-            entity[nameof(Article.HtmlBlobPath).ToLowerInvariant()] = article.HtmlBlobPath.ToString();
+            entity["title"] = article.Title;
+            entity["author"] = article.Author;
+            entity["description"] = article.Description;
+            entity["image"] = article.Image;
+            entity["thumbnail"] = article.Thumbnail;
+            entity["type"] = article.Type;
+            entity["published"] = article.Published.ToString();
+            entity["categories"] = article.Categories;
+            entity["path"] = article.Path;
+            entity["gitHubPath"] = article.GitHubPath;
+            entity["status"] = article.Status;
+            entity["htmlBlobPath"] = article.HtmlBlobPath.ToString();
 
             // Upsert entity
             await client.UpsertEntityAsync(entity, TableUpdateMode.Replace);
