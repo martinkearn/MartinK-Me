@@ -15,7 +15,7 @@ Here are some of the things you should consider doing after you have your fork:
   * Use the commands `dotnet ef migrations add YourMigrationNameHere` and `dotnet ef database update` from the console (naviagted to the project root directory, the same directory as `EvangelistSiteWeb.xproj`) to add the model schema and update your database
 * Experiment with your own fonts, colours, picture and copy; make it your own
   * The site is built using [Bootstrap](http://getbootstrap.com/) so familiarise yourself with the [Bootrap Grid System](http://getbootstrap.com/css/#grid)
-  * The background colours are in a range of CSS styles entitled `.sequence-background-1` through to `.sequence-background-20` in `site.css`. In the template these are four base colours repeated 5 times, but you can add your own colours here and have 20 different colours if you want.
+  * The background colours are in a range of CSS styles entitled `.sequence-background-1` through to `.sequence-background-20` in `site.css`. In the template these are four base colours repeated five times, but you can add your own colours here and have 20 different colours if you want.
   * The font is Lato from Google Fonts. Choose your own font at https://fonts.google.com and edit the `body` rule in site.css to reference it
 
 ## Settings
