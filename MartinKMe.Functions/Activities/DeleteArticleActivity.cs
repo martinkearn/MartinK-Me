@@ -5,19 +5,19 @@ using System.Threading.Tasks;
 
 namespace MartinKMe.Functions.Activities
 {
-    public sealed class DeleteBlobActivity
+    public sealed class DeleteArticleActivity
     {
         private readonly IStorageService _storageService;
 
-        public DeleteBlobActivity(IStorageService storageService)
+        public DeleteArticleActivity(IStorageService storageService)
         {
             _storageService = storageService;
         }
 
-        [FunctionName(nameof(DeleteBlobActivity))]
-        public async Task DeleteBlob([ActivityTrigger] string fileName)
+        [FunctionName(nameof(DeleteArticleActivity))]
+        public async Task DeleteArticle([ActivityTrigger] string articleKey)
         {
-            await _storageService.DeleteBlob(fileName);
+            await _storageService.DeleteArticle(articleKey);
         }
     }
 }

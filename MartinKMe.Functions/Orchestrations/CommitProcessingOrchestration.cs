@@ -47,11 +47,13 @@ namespace MartinKMe.Functions.Orchestrations
                 var blobFileName = new StringBuilder(item.ToLowerInvariant());
                 blobFileName.Replace("blogs/", string.Empty);
                 blobFileName.Replace(".md", ".html");
-
+                var plainTextBytes = Encoding.UTF8.GetBytes(item.ToLowerInvariant());
+                var articleKey = Convert.ToBase64String(plainTextBytes);
                 var articleContext = new ArticleContext()
                 {
                     GithubContentApiUri = new Uri($"https://api.github.com/repos/{author}/{repo}/contents/{item}"),
                     BlobFileName = blobFileName.ToString().ToLowerInvariant(),
+                    ArticleKey = articleKey,
                 };
 
                 // Call sub-orchestration
@@ -61,7 +63,5 @@ namespace MartinKMe.Functions.Orchestrations
 
             return outputs;
         }
-
-
     }
 }
