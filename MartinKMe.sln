@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31612.314
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MartinKMe.Infrastructure", "MartinkMe.Infrastructure\MartinKMe.Infrastructure.csproj", "{EDBA5AB6-B48E-4188-9E7C-9BD9CB43AB39}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MartinKMe.Infrastructure", "MartinKMe.Infrastructure\MartinKMe.Infrastructure.csproj", "{EDBA5AB6-B48E-4188-9E7C-9BD9CB43AB39}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MartinKMe.Functions", "MartinKMe.Functions\MartinKMe.Functions.csproj", "{5FE6FEF9-3357-4DE6-83A3-D4D3A1672998}"
 EndProject
