@@ -144,50 +144,5 @@ class MainStack : Stack
                 },
             },
         });
-
-        var webAppServicePlan = new AppServicePlan("web-appserviceplan", new AppServicePlanArgs
-        {
-            ResourceGroupName = resourceGroup.Name,
-            Name = $"web-appserviceplan-{ResourceGroupBaseName.ToLowerInvariant()}",
-            Sku = new SkuDescriptionArgs
-            {
-                Tier = "Shared",
-                Name = "D1"
-            }
-        });
-
-        var webPublishBlob = new Blob($"web-{DateTime.UtcNow:yyyy-MM-dd-HH-mm}.zip", new BlobArgs
-        {
-            AccountName = storageAccount.Name,
-            ContainerName = deploymentsContainer.Name,
-            ResourceGroupName = resourceGroup.Name,
-            Type = BlobType.Block,
-            Source = new FileArchive("./publishweb") // Run this command at the same location as the Pulumi stack to put the publish output in the right location: `dotnet publish --no-restore --configuration Release --output ../publishweb ../MartinKMe.Web/MartinkMe.Web.csproj`
-        });
-
-        var webAppService = new WebApp($"web-appservice", new WebAppArgs
-        {
-            ResourceGroupName = resourceGroup.Name,
-            ServerFarmId = webAppServicePlan.Id,
-            Name = $"web-appservice-{ResourceGroupBaseName.ToLowerInvariant()}",
-            SiteConfig = new SiteConfigArgs
-            {
-                AppSettings = new[]
-                {
-                    new NameValuePairArgs{
-                        Name = "WEBSITE_RUN_FROM_PACKAGE",
-                        Value = OutputHelpers.SignedBlobReadUrl(webPublishBlob, deploymentsContainer, storageAccount, resourceGroup, 3650),
-                    },                    
-                    new NameValuePairArgs{
-                        Name = "APPINSIGHTS_INSTRUMENTATIONKEY",
-                        Value = appInsights.InstrumentationKey
-                    },
-                    new NameValuePairArgs{
-                        Name = "APPLICATIONINSIGHTS_CONNECTION_STRING",
-                        Value = Output.Format($"InstrumentationKey={appInsights.InstrumentationKey}"),
-                    },
-                },
-            },
-        });
     }
 }
