@@ -1,4 +1,4 @@
-using MartinkMe.Infrastructure.Helpers;
+using MartinKMe.Infrastructure.Helpers;
 using Pulumi;
 using Pulumi.AzureNative.Insights;
 using Pulumi.AzureNative.Resources;
