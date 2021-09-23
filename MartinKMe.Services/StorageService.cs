@@ -15,6 +15,7 @@ namespace MartinKMe.Services
         private readonly StorageConfiguration _options;
         private readonly TableClient _tableClient;
         private readonly BlobContainerClient _blobContainerClient;
+        private const string _partitionKey = "article";
 
         public StorageService(IOptions<StorageConfiguration> storageConfigurationOptions)
         { 
@@ -53,7 +54,7 @@ namespace MartinKMe.Services
             // Build entitiy based on article. Table storage properties are case senitive and other systems using the same data expect the properties in camel case
             TableEntity entity = new TableEntity
             {
-                PartitionKey = "article",
+                PartitionKey = _partitionKey,
                 RowKey = article.Key
             };
             
@@ -78,7 +79,7 @@ namespace MartinKMe.Services
         public async Task DeleteArticle(string articleKey)
         {
             // Delete entity
-            await _tableClient.DeleteEntityAsync("article", articleKey);
+            await _tableClient.DeleteEntityAsync(_partitionKey, articleKey);
         }
     }
 }
