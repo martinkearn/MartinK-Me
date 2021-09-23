@@ -3,10 +3,10 @@
     public interface IMarkdownService
     {
         /// <summary>
-        /// Converts Markdown to a Base64 encoded html string
+        /// Converts Markdown to a html string
         /// </summary>
         /// <param name="markdown">Markdown to convert</param>
-        /// <returns>Base64 encoded html string</returns>
-        string MarkdownToBase64Html(string markdown);
+        /// <returns>Html string</returns>
+        string MarkdownToHtml(string markdown);
     }
 }

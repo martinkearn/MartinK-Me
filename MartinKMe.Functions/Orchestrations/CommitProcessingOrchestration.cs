@@ -5,6 +5,7 @@ using Microsoft.Azure.WebJobs.Extensions.DurableTask;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace MartinKMe.Functions.Orchestrations
@@ -43,9 +44,16 @@ namespace MartinKMe.Functions.Orchestrations
             foreach (var item in filteredItems)
             {
                 // Prepare ArticleContext for the item
+                var blobFileName = new StringBuilder(item.ToLowerInvariant());
+                blobFileName.Replace("blogs/", string.Empty);
+                blobFileName.Replace(".md", ".html");
+                var plainTextBytes = Encoding.UTF8.GetBytes(item.ToLowerInvariant());
+                var articleKey = Convert.ToBase64String(plainTextBytes);
                 var articleContext = new ArticleContext()
                 {
-                    GithubContentApiUri = new Uri($"https://api.github.com/repos/{author}/{repo}/contents/{item}")
+                    GithubContentApiUri = new Uri($"https://api.github.com/repos/{author}/{repo}/contents/{item}"),
+                    BlobFileName = blobFileName.ToString().ToLowerInvariant(),
+                    ArticleKey = articleKey,
                 };
 
                 // Call sub-orchestration
@@ -55,7 +63,5 @@ namespace MartinKMe.Functions.Orchestrations
 
             return outputs;
         }
-
-
     }
 }

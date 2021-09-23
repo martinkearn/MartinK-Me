@@ -1,7 +1,7 @@
 
 using System;
 
-namespace MartinkMe.Web.Data;
+namespace MartinKMe.Web.Data;
 public class WeatherForecast
 {
     public DateTime Date { get; set; }

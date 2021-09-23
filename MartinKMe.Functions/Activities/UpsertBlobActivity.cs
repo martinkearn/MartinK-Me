@@ -19,7 +19,7 @@ namespace MartinKMe.Functions.Activities
         [FunctionName(nameof(UpsertBlobActivity))]
         public async Task<Uri> UpsertBlob([ActivityTrigger] ArticleContext articleContext)
         {
-            return await _storageService.UpsertBlob(articleContext.GithubContent.Name, articleContext.PlainHtmlContents);
+            return await _storageService.UpsertBlob(articleContext.BlobFileName, articleContext.PlainHtmlContents);
         }
     }
 }

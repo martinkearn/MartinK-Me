@@ -28,7 +28,6 @@ namespace MartinKMe.Functions
             builder.Services.AddHttpClient();
             builder.Services.AddLogging();
 
-            builder.Services.AddSingleton<IUtilityService, UtilityService>();
             builder.Services.AddSingleton<IGithubService, GithubService>();
             builder.Services.AddSingleton<IMarkdownService, MarkdownService>();
             builder.Services.AddSingleton<IStorageService, StorageService>();

@@ -9,7 +9,7 @@ namespace MartinKMe.Functions.Models
     public class ArticleContext
     {
         /// <summary>
-        /// The full Uri to get information about a given file from the Gthuc content Api
+        /// The full Uri to get information about a given file from the Github content Api
         /// </summary>
         public Uri GithubContentApiUri { get; set; }
 
@@ -32,6 +32,16 @@ namespace MartinKMe.Functions.Models
         /// The uri for the html blob in storage
         /// </summary>
         public Uri HtmlBlobStorageUri { get; set; }
+
+        /// <summary>
+        /// Name of the HTML blob in storage, for exmaple test.html
+        /// </summary>
+        public string BlobFileName { get; set; }
+
+        /// <summary>
+        /// The key for the article entity. Typicaly a base64 encoded version of the GitHub path
+        /// </summary>
+        public string ArticleKey { get; set; }
 
         /// <summary>
         /// Article entitiy which gets stored and used by other systems.
