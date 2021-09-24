@@ -135,5 +135,11 @@ class MainStack : Stack
                 },
             },
         });
+
+        // Export outputs
+        this.StorageConnectionString = storageConnectionString;
     }
+
+    [Output]
+    public Output<string> StorageConnectionString { get; set; }
 }
