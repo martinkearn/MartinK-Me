@@ -10,6 +10,9 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+        
+      - name: Print all env vars
+        run: env
       
       - name: Setup .net 3.1.x
         uses: actions/setup-dotnet@v1
