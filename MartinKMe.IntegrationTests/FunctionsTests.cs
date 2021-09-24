@@ -1,6 +1,7 @@
 using MartinKMe.IntegrationTests.Models;
 using Microsoft.Extensions.Configuration;
 using System.Net.Http;
+using System.Text.Json.Nodes;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -26,21 +27,16 @@ namespace MartinKMe.IntegrationTests
         }
 
         [Fact]
-        public async Task Functions_AddArticle_StoresBlobAndArticle()
+        public async Task GithubApi_GetContentRepo_SmokeTest()
         {
-            // Arrange
-            var response = await _httpClient.GetAsync("https://api.github.com/user/repos");
-            var str = await response.Content.ReadAsStringAsync();
-            
-            // Assert
-            Assert.NotEmpty(str);
-        }
+            // Act
+            var response = await _httpClient.GetAsync($"https://api.github.com/repos/martinkearn/content");
+            string resultJson = await response.Content.ReadAsStringAsync();
+            JsonObject result = JsonNode.Parse(resultJson)?.AsObject();
+            var name = (string)result?["name"];
 
-        [Fact]
-        public void Hello()
-        {
-            var hello = "hello";
-            Assert.Equal("hello", hello);
+            // Assert
+            Assert.Equal("Content", name);
         }
     }
 }
