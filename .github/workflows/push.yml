@@ -13,6 +13,9 @@ jobs:
         
       - name: Print all env vars
         run: env
+        env:
+          Settings:GithubPat: ${{ secrets.SETTINGS_GITHUBPAT }}
+          Settings:StorageConnectionString: ${{ secrets.SETTINGS_STORAGECONNECTIONSTRING }}
       
       - name: Setup .net 3.1.x
         uses: actions/setup-dotnet@v1
