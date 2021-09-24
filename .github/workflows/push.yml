@@ -1,11 +1,11 @@
-name: Pulumi
+name: Pulumi Up on Push
 on:
   push:
     branches:
       - 2021Rewrite
 jobs:
   preview:
-    name: Update
+    name: Build Publish and Deploy
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
