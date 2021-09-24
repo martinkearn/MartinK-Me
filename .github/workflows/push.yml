@@ -40,3 +40,7 @@ jobs:
 
       - name: .net Test
         run: dotnet test --no-restore
+        env:
+          Settings:GithubPat: ${{ secrets.SETTINGS_GITHUBPAT }}
+          Settings:StorageConnectionString: ${{ secrets.SETTINGS_STORAGECONNECTIONSTRING }}
+          
