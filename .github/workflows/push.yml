@@ -23,7 +23,7 @@ jobs:
         run: dotnet build --no-restore --configuration Release
           
       - name: .net Publish MartinKMe.Functions  
-        run: dotnet publish --no-restore --configuration Release --output ./publishfunctions MartinKMe.Functions/MartinKMe.Functions.csproj
+        run: dotnet publish --no-restore --configuration Release --output MartinKMe.Infrastructure/publishfunctions MartinKMe.Functions/MartinKMe.Functions.csproj
           
       - name: Pulumi Up
         uses: pulumi/actions@v3
