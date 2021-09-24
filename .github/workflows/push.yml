@@ -50,7 +50,7 @@ jobs:
           ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
           ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
       
-      - run: echo "Storage connection string ${{ steps.Pulumi_Up.outputs.StorageConnectionString }}"
+      - run: echo "Storage connection string ${{ steps.pulumi.outputs.StorageConnectionString }}"
 
       - name: .net Test
         run: dotnet test --no-restore
