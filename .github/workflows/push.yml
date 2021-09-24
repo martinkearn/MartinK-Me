@@ -30,6 +30,6 @@ jobs:
         with:
           command: up
           stack-name: dev
-          work-dir: MartinkMe.Infrastructure
+          work-dir: MartinKMe.Infrastructure
         env:
           PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
