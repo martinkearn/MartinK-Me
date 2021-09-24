@@ -4,8 +4,6 @@ using Azure.Storage.Blobs;
 using MartinKMe.IntegrationTests.Models;
 using Microsoft.Extensions.Configuration;
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
 using System.Text.Json;
@@ -19,8 +17,6 @@ namespace MartinKMe.IntegrationTests
     {
         private readonly HttpClient _httpClient;
         private readonly Settings _settings;
-        private readonly string _githubPat;
-        private readonly string _storageConnectionString;
 
         public FunctionsTests()
         {
@@ -30,13 +26,19 @@ namespace MartinKMe.IntegrationTests
                 .Build();
             _settings = configuration.GetSection(nameof(Settings)).Get<Settings>();
 
-            // Get env vars
-            _githubPat = Environment.GetEnvironmentVariable("Settings:GithubPat");
-            _storageConnectionString = Environment.GetEnvironmentVariable("Settings:StorageConnectionString");
+            // Get settings from environment variables if they have not loaded from
+            if (_settings == null)
+            {
+                _settings = new Settings()
+                {
+                    GithubPat = Environment.GetEnvironmentVariable("Settings:GithubPat"),
+                    StorageConnectionString = Environment.GetEnvironmentVariable("Settings:StorageConnectionString"),
+                };
+            }
 
             // Setup http client
             _httpClient = new HttpClient();
-            _httpClient.DefaultRequestHeaders.Add("Authorization", $"Bearer {_githubPat}");
+            _httpClient.DefaultRequestHeaders.Add("Authorization", $"Bearer {_settings.GithubPat}");
             _httpClient.DefaultRequestHeaders.Add("User-Agent", "MartinKMe.IntegrationTests");
         }
 
@@ -74,9 +76,9 @@ namespace MartinKMe.IntegrationTests
             response.EnsureSuccessStatusCode();
 
             // Setup Azure Storage clients
-            var blobContainerClient = new BlobContainerClient(_storageConnectionString, "articleblobs");
+            var blobContainerClient = new BlobContainerClient(_settings.StorageConnectionString, "articleblobs");
             var blobClient = blobContainerClient.GetBlobClient($"tests/{blobFileName}.html");
-            var tableClient = new TableClient(_storageConnectionString, "articles");
+            var tableClient = new TableClient(_settings.StorageConnectionString, "articles");
 
             // Assert in a loop with 30 second delays until test times out
             do
