@@ -91,7 +91,9 @@ class MainStack : Stack
             ContainerName = deploymentsContainer.Name,
             ResourceGroupName = resourceGroup.Name,
             Type = BlobType.Block,
-            Source = new FileArchive("../publishfunctions") // Run this command at the same location as the Pulumi stack to put the publish output in the right location: `dotnet publish --no-restore --configuration Release --output ../publishfunctions ../MartinKMe.Functions/MartinKMe.Functions.csproj`
+            Source = new FileArchive("./publishfunctions") 
+            // Run this command at the same location as the Pulumi stack to put the publish output as a sub folder
+            // dotnet publish --no-restore --configuration Release --output ./publishfunctions ../MartinKMe.Functions/MartinKMe.Functions.csproj
         });
 
         var storageConnectionString = OutputHelpers.GetConnectionString(resourceGroup.Name, storageAccount.Name);
