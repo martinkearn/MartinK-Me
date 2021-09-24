@@ -47,7 +47,7 @@ namespace MartinKMe.IntegrationTests
             Assert.Equal("Content", name);
         }
 
-        [Fact(Timeout = 180000)]
+        [Fact(Timeout = 300000)] // 5 minute timeout
         public async Task Functions_AddArticle_CreatesBlobAndArticleEntity()
         {
             // Upload markdown file to Github
