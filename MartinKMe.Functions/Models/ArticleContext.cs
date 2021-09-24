@@ -39,11 +39,6 @@ namespace MartinKMe.Functions.Models
         public string BlobFileName { get; set; }
 
         /// <summary>
-        /// The key for the article entity. Typically a base64 encoded version of the Github path, for example blogs/Test.md will result in a key of YmxvZ3MvdGVzdC5tZA==
-        /// </summary>
-        public string ArticleKey { get; set; }
-
-        /// <summary>
         /// Article entitiy which gets stored and used by other systems.
         /// </summary>
         public Article Article { get; set; }

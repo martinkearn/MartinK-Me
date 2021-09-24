@@ -68,6 +68,7 @@ namespace MartinKMe.Services
             entity[nameof(article.Published).ToLowerInvariant()] = DateTime.SpecifyKind(article.Published, DateTimeKind.Utc);
             entity[nameof(article.Categories).ToLowerInvariant()] = article.Categories;
             entity[nameof(article.Status).ToLowerInvariant()] = article.Status;
+            entity[nameof(article.WebPath).ToLowerInvariant()] = article.WebPath;
             entity[nameof(article.HtmlBlobPath).ToLowerInvariant()] = article.HtmlBlobPath.ToString();
 
             // Upsert entity

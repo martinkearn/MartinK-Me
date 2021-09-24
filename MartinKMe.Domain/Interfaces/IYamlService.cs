@@ -13,8 +13,8 @@ namespace MartinKMe.Domain.Interfaces
         /// </summary>
         /// <param name="plainFileContents">The plain file contents which contains the YAML.</param>
         /// <param name="blobUri">The Uri to set as the HtmlBlobPath property for the resulting Article.</param>
-        /// <param name="articleKey">The key for the resulting Article. Used as Azure Storage entity row key.</param>
+        /// <param name="article">The Article to append the YAML data onto.</param>
         /// <returns>An Article.</returns>
-        public Article YamlToArticle(string plainFileContents, Uri blobUri, string articleKey);
+        public Article YamlToArticle(string plainFileContents, Uri blobUri, Article article);
     }
 }

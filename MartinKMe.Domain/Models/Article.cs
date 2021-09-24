@@ -53,6 +53,11 @@ namespace MartinKMe.Domain.Models
         public string Status { get; set; }
 
         /// <summary>
+        /// A web friendly path for the article based on Title which will be used to form the web url. If the Title is "Coding for Dummies", the path will be "coding-for-dummies"
+        /// </summary>
+        public string WebPath { get; set; }
+
+        /// <summary>
         /// The absolute uri to the rleated html blob in Azure Storage. Does not require key or sas token.
         /// </summary>
         public Uri HtmlBlobPath { get; set; }

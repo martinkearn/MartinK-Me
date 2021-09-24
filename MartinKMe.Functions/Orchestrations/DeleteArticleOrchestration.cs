@@ -19,7 +19,7 @@ namespace MartinKMe.Functions.Orchestrations
             await context.CallActivityAsync(nameof(DeleteBlobActivity), articleContext.BlobFileName);
 
             // Delete article
-            await context.CallActivityAsync(nameof(DeleteArticleActivity), articleContext.ArticleKey);
+            await context.CallActivityAsync(nameof(DeleteArticleActivity), articleContext.Article.Key);
 
             var outputs = new List<string>()
             {

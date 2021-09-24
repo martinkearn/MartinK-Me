@@ -2,6 +2,7 @@
 using MartinKMe.Functions.Models;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.DurableTask;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +14,7 @@ namespace MartinKMe.Functions.Orchestrations
     public class CommitProcessingOrchestration
     {
         [FunctionName(nameof(CommitProcessingOrchestration))]
-        public static async Task<List<string>> RunOrchestrator([OrchestrationTrigger] IDurableOrchestrationContext context)
+        public static async Task<List<string>> RunOrchestrator([OrchestrationTrigger] IDurableOrchestrationContext context, ILogger logger)
         {
             // Get input payload
             var input = context.GetInput<GithubPushWebhookPayload>();
@@ -29,6 +30,8 @@ namespace MartinKMe.Functions.Orchestrations
             // Items deleted in commit
             outputs.AddRange(await CallSubOrchestration(context, input.HeadCommit.Removed, nameof(DeleteArticleOrchestration), input.HeadCommit.Author.Username, input.Repository.Name));
 
+            // Log and return
+            logger.LogInformation("CommitProcessingOrchestration completed for {GithubCommitId}", input.HeadCommit.Id);
             return outputs;
         }
 
@@ -52,13 +55,14 @@ namespace MartinKMe.Functions.Orchestrations
                 // Prepare the article key (base64 encoded version of the gihub path .. i.e blogs/Test.md)
                 var plainTextBytes = Encoding.UTF8.GetBytes(item.ToLowerInvariant());
                 var articleKey = Convert.ToBase64String(plainTextBytes);
+                var article = new Article() { Key = articleKey };
 
                 // Prepare article context
                 var articleContext = new ArticleContext()
                 {
                     GithubContentApiUri = new Uri($"https://api.github.com/repos/{author}/{repo}/contents/{item}"),
                     BlobFileName = blobFileName.ToString().ToLowerInvariant(),
-                    ArticleKey = articleKey,
+                    Article = article,
                 };
 
                 // Call sub-orchestration passing article content
