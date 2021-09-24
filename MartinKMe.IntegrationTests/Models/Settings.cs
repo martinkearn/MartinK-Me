@@ -6,5 +6,7 @@ namespace MartinKMe.IntegrationTests.Models
     public class Settings
     {
         public string GithubPat { get; set; }
+
+        public string StorageConnectionString { get; set; }
     }
 }
