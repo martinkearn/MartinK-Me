@@ -7,6 +7,7 @@ using YamlDotNet.Serialization.NamingConventions;
 
 namespace MartinKMe.Services
 {
+    /// <inheritdoc/>
     public class YamlService : IYamlService
     {
         public Article YamlToArticle(string plainFileContents, Uri blobUri, string key)
@@ -17,7 +18,7 @@ namespace MartinKMe.Services
                 .WithNamingConvention(CamelCaseNamingConvention.Instance)
                 .Build();
 
-            var yamlHeader = yamlDeserializer.Deserialize<GithubFileYamlHeader>(yamlString);
+            var yamlHeader = yamlDeserializer.Deserialize<ArticleYamlHeader>(yamlString);
 
             // Check we have required props
             if (string.IsNullOrEmpty(yamlHeader.Title))
@@ -37,13 +38,10 @@ namespace MartinKMe.Services
                 Description = yamlHeader.Description ?? string.Empty,
                 Image = yamlHeader.Image ?? string.Empty,
                 Thumbnail = yamlHeader.Thumbnail ?? string.Empty,
-                Type = yamlHeader.Type.ToLowerInvariant() ?? string.Empty,
                 Published = yamlHeader.Published,
                 Categories = (string.Join(",", yamlHeader.Categories)) ?? string.Empty,
                 HtmlBlobPath = blobUri,
-                Path = path,
                 Status = yamlHeader.Status,
-                GitHubPath = key
             };
 
             // Return

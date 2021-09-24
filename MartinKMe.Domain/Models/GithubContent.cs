@@ -2,6 +2,9 @@
 
 namespace MartinKMe.Domain.Models
 {
+    /// <summary>
+    /// Class used to deserialise the output of the Github Content API for a given file.
+    /// </summary>
     public class GithubContent
     {
         [JsonProperty("name")]
@@ -41,6 +44,9 @@ namespace MartinKMe.Domain.Models
         public Links Links { get; set; }
     }
 
+    /// <summary>
+    /// Used for the Links property of GithubContent
+    /// </summary>
     public class Links
     {
         [JsonProperty("self")]

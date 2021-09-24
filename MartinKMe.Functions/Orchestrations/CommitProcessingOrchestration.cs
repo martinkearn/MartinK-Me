@@ -36,6 +36,7 @@ namespace MartinKMe.Functions.Orchestrations
         {
             var outputs = new List<string>();
 
+            // Filter the items to only include markdown files in the /blogs/ folder
             var filteredItems = items
                 .Where(i => i.EndsWith(".md", StringComparison.InvariantCultureIgnoreCase))
                 .Where(i => i.StartsWith("blogs/", StringComparison.InvariantCultureIgnoreCase))
@@ -43,12 +44,16 @@ namespace MartinKMe.Functions.Orchestrations
 
             foreach (var item in filteredItems)
             {
-                // Prepare ArticleContext for the item
+                // Prepare the blob name (.html version of the markdown file)
                 var blobFileName = new StringBuilder(item.ToLowerInvariant());
                 blobFileName.Replace("blogs/", string.Empty);
                 blobFileName.Replace(".md", ".html");
+
+                // Prepare the article key (base64 encoded version of the gihub path .. i.e blogs/Test.md)
                 var plainTextBytes = Encoding.UTF8.GetBytes(item.ToLowerInvariant());
                 var articleKey = Convert.ToBase64String(plainTextBytes);
+
+                // Prepare article context
                 var articleContext = new ArticleContext()
                 {
                     GithubContentApiUri = new Uri($"https://api.github.com/repos/{author}/{repo}/contents/{item}"),
@@ -56,7 +61,7 @@ namespace MartinKMe.Functions.Orchestrations
                     ArticleKey = articleKey,
                 };
 
-                // Call sub-orchestration
+                // Call sub-orchestration passing article content
                 var subOrchestrationOutput = await context.CallSubOrchestratorAsync<List<string>>(subOrchestration, articleContext);
                 outputs.AddRange(subOrchestrationOutput);
             }

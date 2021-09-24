@@ -3,7 +3,10 @@ using System.Collections.Generic;
 
 namespace MartinKMe.Domain.Models
 {
-    public class GithubFileYamlHeader
+    /// <summary>
+    /// Used to deserialise the YAML front matter in an article Markdown file
+    /// </summary>
+    public class ArticleYamlHeader
     {
         public string Title { get; set; }
         public string Author { get; set; }

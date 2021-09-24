@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 
 namespace MartinKMe.Services
 {
+    /// <inheritdoc/>
     public class StorageService : IStorageService
     {
         private readonly StorageConfiguration _options;
@@ -21,10 +22,10 @@ namespace MartinKMe.Services
         { 
             _options = storageConfigurationOptions.Value;
 
-            _tableClient = new TableClient(_options.ConnectionString, _options.Table);
+            _tableClient = new TableClient(_options.ConnectionString, _options.ArticlesTable);
             _tableClient.CreateIfNotExists();
 
-            _blobContainerClient = new BlobContainerClient(_options.ConnectionString, _options.BlobContainer);
+            _blobContainerClient = new BlobContainerClient(_options.ConnectionString, _options.ArticleBlobsContainer);
             _blobContainerClient.CreateIfNotExists();
         }
 
@@ -64,11 +65,8 @@ namespace MartinKMe.Services
             entity[nameof(article.Description).ToLowerInvariant()] = article.Description;
             entity[nameof(article.Image).ToLowerInvariant()] = article.Image;
             entity[nameof(article.Thumbnail).ToLowerInvariant()] = article.Thumbnail;
-            entity[nameof(article.Type).ToLowerInvariant()] = article.Type;
             entity[nameof(article.Published).ToLowerInvariant()] = DateTime.SpecifyKind(article.Published, DateTimeKind.Utc);
             entity[nameof(article.Categories).ToLowerInvariant()] = article.Categories;
-            entity[nameof(article.Path).ToLowerInvariant()] = article.Path;
-            entity[nameof(article.GitHubPath).ToLowerInvariant()] = article.GitHubPath;
             entity[nameof(article.Status).ToLowerInvariant()] = article.Status;
             entity[nameof(article.HtmlBlobPath).ToLowerInvariant()] = article.HtmlBlobPath.ToString();
 

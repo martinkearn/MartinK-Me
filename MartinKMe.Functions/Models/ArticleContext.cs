@@ -4,7 +4,7 @@ using System;
 namespace MartinKMe.Functions.Models
 {
     /// <summary>
-    /// A model for collasting data related to and article as it passes through the pipeline.
+    /// A model for collating data related to an Article as it passes through the pipeline.
     /// </summary>
     public class ArticleContext
     {
@@ -14,7 +14,7 @@ namespace MartinKMe.Functions.Models
         public Uri GithubContentApiUri { get; set; }
 
         /// <summary>
-        /// Result of calling the Github Content api for the given article. Contains many uysefull properties such as path, download uri, contents and name
+        /// Result of calling the Github Content api for the given article. Contains many usefull properties such as path, download uri, contents and name
         /// </summary>
         public GithubContent GithubContent { get; set; }
 
@@ -39,7 +39,7 @@ namespace MartinKMe.Functions.Models
         public string BlobFileName { get; set; }
 
         /// <summary>
-        /// The key for the article entity. Typicaly a base64 encoded version of the GitHub path
+        /// The key for the article entity. Typically a base64 encoded version of the Github path, for example blogs/Test.md will result in a key of YmxvZ3MvdGVzdC5tZA==
         /// </summary>
         public string ArticleKey { get; set; }
 

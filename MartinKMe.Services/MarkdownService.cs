@@ -3,6 +3,7 @@ using MartinKMe.Domain.Interfaces;
 
 namespace MartinKMe.Services
 {
+    /// <inheritdoc/>
     public class MarkdownService : IMarkdownService
     {
         public string MarkdownToHtml(string markdown)
