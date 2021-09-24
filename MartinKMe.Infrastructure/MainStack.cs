@@ -9,13 +9,17 @@ using Pulumi.AzureNative.Web.Inputs;
 using System;
 using Kind = Pulumi.AzureNative.Storage.Kind;
 
+/// <summary>
+/// Main stack
+/// See https://www.pulumi.com/docs/intro/cloud-providers/azure/setup/ for guidance on setting up the Azure App Registration/Service Principle in the Pulumi config.
+/// Requires publish .net projects. Run this command at the same location as the Pulumi stack to put the Functions porject publish output as a sub folder (which is where Pulumi will look for it)
+/// dotnet publish --no-restore --configuration Release --output ./publishfunctions ../MartinKMe.Functions/MartinKMe.Functions.csproj
+/// </summary>
 class MainStack : Stack
 {
     private const string ResourceGroupBaseName = "MartinKMe";
     public MainStack()
     {
-        var config = new Config();
-
         var resourceGroup = new ResourceGroup("MartinKMe", new ResourceGroupArgs 
         { 
             ResourceGroupName = ResourceGroupBaseName,
@@ -48,23 +52,10 @@ class MainStack : Stack
             ResourceGroupName = resourceGroup.Name,
         });
 
-        var wallpaperContainer = new BlobContainer("wallpaper", new BlobContainerArgs
-        {
-            AccountName = storageAccount.Name,
-            PublicAccess = PublicAccess.None,
-            ResourceGroupName = resourceGroup.Name,
-        });
-
         var articleBlobsContainer = new BlobContainer("articleblobs", new BlobContainerArgs
         {
             AccountName = storageAccount.Name,
             PublicAccess = PublicAccess.None,
-            ResourceGroupName = resourceGroup.Name,
-        });
-
-        var shortcutsTable = new Table("shortcuts", new TableArgs
-        {
-            AccountName = storageAccount.Name,
             ResourceGroupName = resourceGroup.Name,
         });
 
@@ -92,8 +83,6 @@ class MainStack : Stack
             ResourceGroupName = resourceGroup.Name,
             Type = BlobType.Block,
             Source = new FileArchive("./publishfunctions") 
-            // Run this command at the same location as the Pulumi stack to put the publish output as a sub folder
-            // dotnet publish --no-restore --configuration Release --output ./publishfunctions ../MartinKMe.Functions/MartinKMe.Functions.csproj
         });
 
         var storageConnectionString = OutputHelpers.GetConnectionString(resourceGroup.Name, storageAccount.Name);
