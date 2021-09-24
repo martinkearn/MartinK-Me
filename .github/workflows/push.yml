@@ -10,11 +10,23 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+        
+      - name: Print all env vars
+        run: env
+        env:
+          Settings:GithubPat: ${{ secrets.SETTINGS_GITHUBPAT }}
+          Settings:StorageConnectionString: ${{ secrets.SETTINGS_STORAGECONNECTIONSTRING }}
       
       - name: Setup .net 3.1.x
         uses: actions/setup-dotnet@v1
         with:
           dotnet-version: 3.1.x
+          
+      - name: Setup .net 6.0.x
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 6.0.x
+          include-prerelease: true
           
       - name: .net Restore
         run: dotnet restore
@@ -37,3 +49,10 @@ jobs:
           ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
           ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
           ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
+
+      - name: .net Test
+        run: dotnet test --no-restore
+        env:
+          Settings:GithubPat: ${{ secrets.SETTINGS_GITHUBPAT }}
+          Settings:StorageConnectionString: ${{ secrets.SETTINGS_STORAGECONNECTIONSTRING }}
+          
