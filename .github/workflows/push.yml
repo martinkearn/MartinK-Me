@@ -16,6 +16,12 @@ jobs:
         with:
           dotnet-version: 3.1.x
           
+      - name: Setup .net 6.0.x
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 6.0.x
+          include-prerelease: true
+          
       - name: .net Restore
         run: dotnet restore
 
