@@ -138,6 +138,9 @@ class MainStack : Stack
 
         // Export outputs
         this.StorageConnectionString = storageConnectionString;
+
+        // Export as env vars
+        Environment.SetEnvironmentVariable("Settings:StorageConnectionString", this.StorageConnectionString.ToString());
     }
 
     [Output]
