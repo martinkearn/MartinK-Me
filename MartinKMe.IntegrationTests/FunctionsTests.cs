@@ -4,6 +4,7 @@ using Azure.Storage.Blobs;
 using MartinKMe.IntegrationTests.Models;
 using Microsoft.Extensions.Configuration;
 using System;
+using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Text.Json;
@@ -56,15 +57,18 @@ namespace MartinKMe.IntegrationTests
         }
 
         [Fact(Timeout = 300000)] // 5 minute timeout
-        public async Task Functions_AddArticle_CreatesBlobAndArticleEntity()
+        public async Task Functions_AddThenRemoveArticle_CreatesBlobAndArticleEntityThenDeletesThem()
         {
-            // Upload markdown file to Github
+            // Setup test variables
             var testRun = Guid.NewGuid();
             var blobFileName = $"integrationtest-{testRun}";
             var gitHubPath = $"Blogs/Tests/{blobFileName}.md";
+            var githubFullApiUri = $"https://api.github.com/repos/martinkearn/content/contents/{gitHubPath}";
             var gitHubPathBytes = Encoding.UTF8.GetBytes(gitHubPath.ToLowerInvariant());
             var uniqueTestMessage = $"Integration test content for test run {testRun}";
             var uniqueTestMessageBytes = Encoding.UTF8.GetBytes(uniqueTestMessage);
+
+            // Upload markdown file to Github
             var testArticleContentsBase64 = $"LS0tCnRpdGxlOiBJbnRlZ3JhdGlvbiBUZXN0aW5nCmF1dGhvcjogTWFydGluIEtlYXJuCmRlc2NyaXB0aW9uOiBNeSB0ZXN0IGFydGljbGUKaW1hZ2U6IGh0dHBzOi8vZHVtbXlpbWFnZS5jb20vODAweDYwMC8wMDAvZmZmJnRleHQ9cGxhY2Vob2xkZXIKdGh1bWJuYWlsOiBodHRwczovL2R1bW15aW1hZ2UuY29tLzIwMHgyMDAvMDAwL2ZmZiZ0ZXh0PXBsYWNlaG9sZGVyCnR5cGU6IGFydGljbGUKc3RhdHVzOiBkcmFmdApwdWJsaXNoZWQ6IDIwMjEvMDkvMjIgMDk6MzA6MDAKY2F0ZWdvcmllczogCiAgLSBUZXN0aW5nCi0tLQoKLlRoaXMgYXJ0aWNsZSBpcyBqdXN0IGZvciB0ZXN0aW5nIHB1cnBvc2VzCgojIyBIZXJlIGlzIGEgSDIgdG8gbWFrZSBzdXJlIEhUTUwgcGFyc2luZyBpcyB3b3JraW5nCi0gQW5kCi0gSGVyZQotIEFyZQotIFNvbWUKLSBCdWxsZXRzCgojIyMgSDMKU29tZSBleHRyYSB0ZXh0{Convert.ToBase64String(uniqueTestMessageBytes)}";
             var putBody = new ContentPutBody()
             {
@@ -72,15 +76,20 @@ namespace MartinKMe.IntegrationTests
                  Message = uniqueTestMessage
             };
             var content = new StringContent(JsonSerializer.Serialize(putBody));
-            var response = await _httpClient.PutAsync($"https://api.github.com/repos/martinkearn/content/contents/{gitHubPath}", content);
+            var response = await _httpClient.PutAsync(githubFullApiUri, content);
             response.EnsureSuccessStatusCode();
+
+            // Get response to use when removing file later
+            string resultJson = await response.Content.ReadAsStringAsync();
+            JsonObject result = JsonNode.Parse(resultJson)?.AsObject();
+            var sha = (string)result?["content"]?["sha"];
 
             // Setup Azure Storage clients
             var blobContainerClient = new BlobContainerClient(_settings.StorageConnectionString, "articleblobs");
             var blobClient = blobContainerClient.GetBlobClient($"tests/{blobFileName}.html");
             var tableClient = new TableClient(_settings.StorageConnectionString, "articles");
 
-            // Assert in a loop with 30 second delays until test times out
+            // Assert that HTML blob and Article entity exist in a loop with 30 second delays until test times out
             do
             {
                 if (blobClient.Exists())
@@ -95,7 +104,7 @@ namespace MartinKMe.IntegrationTests
                         Assert.Equal(blobClient.Uri.AbsoluteUri, entity["htmlblobpath"]);
                         break;
                     }
-                    catch (RequestFailedException ex)
+                    catch (RequestFailedException)
                     { 
                         // We dont do anything with the exception, let the loop carry on
                     }
@@ -105,6 +114,20 @@ namespace MartinKMe.IntegrationTests
                 await Task.Delay(new TimeSpan(0, 0, 30));
             }
             while (true);
+
+            // Delete file from Github
+            var deleteBody = new ContentDeleteBody()
+            {
+                Sha = sha,
+                Message = $"Removing {uniqueTestMessage}"
+            };
+            var deleteRequest = new HttpRequestMessage(HttpMethod.Delete, githubFullApiUri)
+            {
+                Content = new StringContent(JsonSerializer.Serialize(deleteBody))
+            };
+            var deleteResponse = await _httpClient.SendAsync(deleteRequest);
+            deleteResponse.EnsureSuccessStatusCode();
+            Assert.Equal(HttpStatusCode.OK, deleteResponse.StatusCode);
         }
     }
 }
