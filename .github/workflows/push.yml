@@ -48,9 +48,11 @@ jobs:
       - name: Print all env vars
         run: env
 
+      - run: echo $"SecretStorageConnectionString:{{ steps.pulumiup.outputs.SecretStorageConnectionString }}"
+
       - name: .net Test
         run: dotnet test --no-restore
         env:
-          Settings:StorageConnectionString: ${{ steps.pulumiup.outputs.StorageConnectionString }}
+          Settings:StorageConnectionString: ${{ steps.pulumiup.outputs.SecretStorageConnectionString }}
           Settings:GithubPat: ${{ secrets.SETTINGS_GITHUBPAT }}
           
