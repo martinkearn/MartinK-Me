@@ -1,11 +1,11 @@
-name: Pulumi
+name: Pulumi Up on Push
 on:
   push:
     branches:
       - 2021Rewrite
 jobs:
   preview:
-    name: Update
+    name: Build Publish and Deploy
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -15,7 +15,7 @@ jobs:
         uses: actions/setup-dotnet@v1
         with:
           dotnet-version: 3.1.x
-        
+
       - name: Setup .net 6.0.x
         uses: actions/setup-dotnet@v1
         with:
@@ -29,16 +29,16 @@ jobs:
         run: dotnet build --no-restore --configuration Release
           
       - name: .net Publish MartinKMe.Functions  
-        run: dotnet publish --no-restore --configuration Release --output ./publishfunctions MartinKMe.Functions/MartinKMe.Functions.csproj
-
-      - name: .net Publish MartinKMe.Web  
-        run: dotnet publish --no-restore --configuration Release --output ./publishweb MartinkMe.Web/MartinkMe.Web.csproj
+        run: dotnet publish --no-restore --configuration Release --output MartinKMe.Infrastructure/publishfunctions MartinKMe.Functions/MartinKMe.Functions.csproj
           
       - name: Pulumi Up
+        id: pulumiup
         uses: pulumi/actions@v3
         with:
           command: up
           stack-name: dev
-          work-dir: MartinkMe.Infrastructure
+          work-dir: MartinKMe.Infrastructure
         env:
           PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
+          ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
+          ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}

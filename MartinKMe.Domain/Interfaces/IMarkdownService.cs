@@ -1,5 +1,8 @@
 ﻿namespace MartinKMe.Domain.Interfaces
 {
+    /// <summary>
+    /// Service for working with markdown.
+    /// </summary>
     public interface IMarkdownService
     {
         /// <summary>

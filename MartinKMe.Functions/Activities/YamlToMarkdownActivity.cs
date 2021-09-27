@@ -19,7 +19,7 @@ namespace MartinKMe.Functions.Activities
         public Article YamlToMarkdown([ActivityTrigger] ArticleContext articleContext)
         {
             // Convert yaml to article
-            return _yamlService.YamlToArticle(articleContext.PlainContents, articleContext.HtmlBlobStorageUri, articleContext.ArticleKey);
+            return _yamlService.YamlToArticle(articleContext.PlainContents, articleContext.HtmlBlobStorageUri, articleContext.Article);
         }
     }
 }

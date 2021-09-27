@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace MartinKMe.Services
 {
+    /// <inheritdoc/>
     public class GithubService : IGithubService
     {
         private readonly IHttpClientFactory _clientFactory;

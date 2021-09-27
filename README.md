@@ -1,4 +1,6 @@
 # MartinK.me Site
+[![Pulumi](https://github.com/martinkearn/MartinK-Me/actions/workflows/push.yml/badge.svg)](https://github.com/martinkearn/MartinK-Me/actions/workflows/push.yml)
+
 A website written in ASP.net Core 1.0 that can be used to create a personal website for technical evangelists which can be used to promote articles, links, resources and talks. 
 
 My own personal site is published at [MartinK.me](http://MartinK.me) which is published from this code base.
@@ -9,7 +11,7 @@ This site is setup to be customised. If you want to do this, first fork it to yo
 Here are some of the things you should consider doing after you have your fork:
 * Update `AppSettings.json` with your details and all the personal stuff will be updated throughout the site
 * Go to `/admin` for the administration pages to add data
-* Make sure you use your own database. 
+* Make sure you use your own cloud database. 
   * Create an Azure SQL database and grab the ADO.net connection string
   * Add the connection string (with your username password in it) as the value of the `DefaultConnection` in `AppSettings.json`
   * Use the commands `dotnet ef migrations add YourMigrationNameHere` and `dotnet ef database update` from the console (naviagted to the project root directory, the same directory as `EvangelistSiteWeb.xproj`) to add the model schema and update your database
