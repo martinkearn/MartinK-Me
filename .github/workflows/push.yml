@@ -32,6 +32,7 @@ jobs:
         run: dotnet publish --no-restore --configuration Release --output MartinKMe.Infrastructure/publishfunctions MartinKMe.Functions/MartinKMe.Functions.csproj
           
       - name: Pulumi Up
+        id: pulumiup
         uses: pulumi/actions@v3
         with:
           command: up
@@ -50,5 +51,6 @@ jobs:
       - name: .net Test
         run: dotnet test --no-restore
         env:
+          Settings:StorageConnectionString: ${{ steps.pulumiup.outputs.StorageConnectionString }}
           Settings:GithubPat: ${{ secrets.SETTINGS_GITHUBPAT }}
           
