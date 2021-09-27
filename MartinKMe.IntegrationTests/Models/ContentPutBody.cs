@@ -2,6 +2,9 @@
 
 namespace MartinKMe.IntegrationTests.Models
 {
+    /// <summary>
+    /// Model used for the body for Put request to Github repo api
+    /// </summary>
     public class ContentPutBody
     {
         [JsonPropertyName("message")]

@@ -2,6 +2,9 @@
 
 namespace MartinKMe.IntegrationTests.Models
 {
+    /// <summary>
+    /// Model used for the body for Delete request to Github repo api
+    /// </summary>
     public class ContentDeleteBody
     {
         [JsonPropertyName("message")]
