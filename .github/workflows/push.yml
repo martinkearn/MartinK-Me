@@ -7,7 +7,11 @@ jobs:
   preview:
     name: Build Publish and Deploy
     runs-on: ubuntu-latest
+    env:
+      Settings:StorageConnectionString: new
     steps:
+      - run: echo "Storage connection string $Settings:StorageConnectionString"
+    
       - name: Checkout
         uses: actions/checkout@v2
         
@@ -43,18 +47,18 @@ jobs:
           command: up
           stack-name: dev
           work-dir: MartinKMe.Infrastructure
+          export: foo=bar
         env:
           PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
           ARM_CLIENT_ID: ${{ secrets.ARM_CLIENT_ID }}
           ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
           ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
           ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
-      
-      - run: echo "Storage connection string ${{ steps.pulumi.outputs.StorageConnectionString }}"
+           
+      - run: echo "Storage connection string $Settings:StorageConnectionString"
 
       - name: .net Test
         run: dotnet test --no-restore
         env:
           Settings:GithubPat: ${{ secrets.SETTINGS_GITHUBPAT }}
-          Settings:StorageConnectionString: ${{ secrets.SETTINGS_STORAGECONNECTIONSTRING }}
           
