@@ -1,0 +1,3 @@
+name: MartinkMe.Infrastructure
+runtime: dotnet
+description: An infrastructure project to support Martink.me website
