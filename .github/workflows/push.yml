@@ -44,11 +44,6 @@ jobs:
           ARM_CLIENT_SECRET: ${{ secrets.ARM_CLIENT_SECRET }}
           ARM_TENANT_ID: ${{ secrets.ARM_TENANT_ID }}
           ARM_SUBSCRIPTION_ID: ${{ secrets.ARM_SUBSCRIPTION_ID }}
-           
-      - name: Print all env vars
-        run: env
-
-      - run: echo $"SecretStorageConnectionString:{{ steps.pulumiup.outputs.SecretStorageConnectionString }}"
 
       - name: .net Test
         run: dotnet test --no-restore
