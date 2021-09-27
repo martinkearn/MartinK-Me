@@ -1,4 +1,4 @@
-using MartinkMe.Infrastructure.Helpers;
+using MartinKMe.Infrastructure.Helpers;
 using Pulumi;
 using Pulumi.AzureNative.Insights;
 using Pulumi.AzureNative.Resources;
@@ -9,13 +9,17 @@ using Pulumi.AzureNative.Web.Inputs;
 using System;
 using Kind = Pulumi.AzureNative.Storage.Kind;
 
+/// <summary>
+/// Main stack
+/// See https://www.pulumi.com/docs/intro/cloud-providers/azure/setup/ for guidance on setting up the Azure App Registration/Service Principle in the Pulumi config.
+/// Requires publish .net projects. Run this command at the same location as the Pulumi stack to put the Functions porject publish output as a sub folder (which is where Pulumi will look for it)
+/// dotnet publish --no-restore --configuration Release --output ./publishfunctions ../MartinKMe.Functions/MartinKMe.Functions.csproj
+/// </summary>
 class MainStack : Stack
 {
     private const string ResourceGroupBaseName = "MartinKMe";
     public MainStack()
     {
-        var config = new Config();
-
         var resourceGroup = new ResourceGroup("MartinKMe", new ResourceGroupArgs 
         { 
             ResourceGroupName = ResourceGroupBaseName,
@@ -48,23 +52,10 @@ class MainStack : Stack
             ResourceGroupName = resourceGroup.Name,
         });
 
-        var wallpaperContainer = new BlobContainer("wallpaper", new BlobContainerArgs
-        {
-            AccountName = storageAccount.Name,
-            PublicAccess = PublicAccess.None,
-            ResourceGroupName = resourceGroup.Name,
-        });
-
         var articleBlobsContainer = new BlobContainer("articleblobs", new BlobContainerArgs
         {
             AccountName = storageAccount.Name,
             PublicAccess = PublicAccess.None,
-            ResourceGroupName = resourceGroup.Name,
-        });
-
-        var shortcutsTable = new Table("shortcuts", new TableArgs
-        {
-            AccountName = storageAccount.Name,
             ResourceGroupName = resourceGroup.Name,
         });
 
@@ -91,7 +82,7 @@ class MainStack : Stack
             ContainerName = deploymentsContainer.Name,
             ResourceGroupName = resourceGroup.Name,
             Type = BlobType.Block,
-            Source = new FileArchive("./publishfunctions") // Run this command at the same location as the Pulumi stack to put the publish output in the right location: `dotnet publish --no-restore --configuration Release --output ../publishfunctions ../MartinKMe.Functions/MartinKMe.Functions.csproj`
+            Source = new FileArchive("./publishfunctions") 
         });
 
         var storageConnectionString = OutputHelpers.GetConnectionString(resourceGroup.Name, storageAccount.Name);
@@ -130,7 +121,7 @@ class MainStack : Stack
                         Value = Output.Format($"InstrumentationKey={appInsights.InstrumentationKey}"),
                     },
                     new NameValuePairArgs{
-                        Name = "StorageConfiguration:BlobContainer",
+                        Name = "StorageConfiguration:ArticleBlobsContainer",
                         Value = articleBlobsContainer.Name,
                     },
                     new NameValuePairArgs{
@@ -138,56 +129,17 @@ class MainStack : Stack
                         Value = storageConnectionString,
                     },
                     new NameValuePairArgs{
-                        Name = "StorageConfiguration:Table",
+                        Name = "StorageConfiguration:ArticlesTable",
                         Value = articlesTable.Name,
                     },
                 },
             },
         });
 
-        var webAppServicePlan = new AppServicePlan("web-appserviceplan", new AppServicePlanArgs
-        {
-            ResourceGroupName = resourceGroup.Name,
-            Name = $"web-appserviceplan-{ResourceGroupBaseName.ToLowerInvariant()}",
-            Sku = new SkuDescriptionArgs
-            {
-                Tier = "Shared",
-                Name = "D1"
-            }
-        });
-
-        var webPublishBlob = new Blob($"web-{DateTime.UtcNow:yyyy-MM-dd-HH-mm}.zip", new BlobArgs
-        {
-            AccountName = storageAccount.Name,
-            ContainerName = deploymentsContainer.Name,
-            ResourceGroupName = resourceGroup.Name,
-            Type = BlobType.Block,
-            Source = new FileArchive("./publishweb") // Run this command at the same location as the Pulumi stack to put the publish output in the right location: `dotnet publish --no-restore --configuration Release --output ../publishweb ../MartinKMe.Web/MartinkMe.Web.csproj`
-        });
-
-        var webAppService = new WebApp($"web-appservice", new WebAppArgs
-        {
-            ResourceGroupName = resourceGroup.Name,
-            ServerFarmId = webAppServicePlan.Id,
-            Name = $"web-appservice-{ResourceGroupBaseName.ToLowerInvariant()}",
-            SiteConfig = new SiteConfigArgs
-            {
-                AppSettings = new[]
-                {
-                    new NameValuePairArgs{
-                        Name = "WEBSITE_RUN_FROM_PACKAGE",
-                        Value = OutputHelpers.SignedBlobReadUrl(webPublishBlob, deploymentsContainer, storageAccount, resourceGroup, 3650),
-                    },                    
-                    new NameValuePairArgs{
-                        Name = "APPINSIGHTS_INSTRUMENTATIONKEY",
-                        Value = appInsights.InstrumentationKey
-                    },
-                    new NameValuePairArgs{
-                        Name = "APPLICATIONINSIGHTS_CONNECTION_STRING",
-                        Value = Output.Format($"InstrumentationKey={appInsights.InstrumentationKey}"),
-                    },
-                },
-            },
-        });
+        // Export outputs
+        this.SecretStorageConnectionString = storageConnectionString.Apply(Output.CreateSecret);
     }
+
+    [Output]
+    public Output<string> SecretStorageConnectionString { get; set; }
 }
