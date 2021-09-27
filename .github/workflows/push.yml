@@ -1,4 +1,4 @@
-name: Pulumi Up on Push
+name: Pulumi Up
 on:
   push:
 jobs:
