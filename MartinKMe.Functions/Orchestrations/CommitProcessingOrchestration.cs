@@ -21,14 +21,17 @@ namespace MartinKMe.Functions.Orchestrations
 
             var outputs = new List<string>();
 
-            // Items added in commit
-            outputs.AddRange(await CallSubOrchestration(context, input.HeadCommit.Added, nameof(AddModifyArticleOrchestration), input.HeadCommit.Author.Username, input.Repository.Name));
+            foreach (var commit in input.Commits)
+            {
+                // Items added in commit
+                outputs.AddRange(await CallSubOrchestration(context, commit.Added, nameof(AddModifyArticleOrchestration), commit.Author.Username, input.Repository.Name));
 
-            // Items modified in commit
-            outputs.AddRange(await CallSubOrchestration(context, input.HeadCommit.Modified, nameof(AddModifyArticleOrchestration), input.HeadCommit.Author.Username, input.Repository.Name));
+                // Items modified in commit
+                outputs.AddRange(await CallSubOrchestration(context, commit.Modified, nameof(AddModifyArticleOrchestration), commit.Author.Username, input.Repository.Name));
 
-            // Items deleted in commit
-            outputs.AddRange(await CallSubOrchestration(context, input.HeadCommit.Removed, nameof(DeleteArticleOrchestration), input.HeadCommit.Author.Username, input.Repository.Name));
+                // Items deleted in commit
+                outputs.AddRange(await CallSubOrchestration(context, commit.Removed, nameof(DeleteArticleOrchestration), commit.Author.Username, input.Repository.Name));
+            }
 
             // Log and return
             logger.LogInformation("CommitProcessingOrchestration completed for {GithubCommitId}", input.HeadCommit.Id);
