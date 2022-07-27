@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 
 namespace MartinKMe.Domain.Models
 {
@@ -7,40 +7,40 @@ namespace MartinKMe.Domain.Models
     /// </summary>
     public class GithubContent
     {
-        [JsonProperty("name")]
+        [JsonPropertyName("name")]
         public string Name { get; set; }
 
-        [JsonProperty("path")]
+        [JsonPropertyName("path")]
         public string Path { get; set; }
 
-        [JsonProperty("sha")]
+        [JsonPropertyName("sha")]
         public string Sha { get; set; }
 
-        [JsonProperty("size")]
+        [JsonPropertyName("size")]
         public int Size { get; set; }
 
-        [JsonProperty("url")]
+        [JsonPropertyName("url")]
         public string Url { get; set; }
 
-        [JsonProperty("html_url")]
+        [JsonPropertyName("html_url")]
         public string HtmlUrl { get; set; }
 
-        [JsonProperty("git_url")]
+        [JsonPropertyName("git_url")]
         public string GitUrl { get; set; }
 
-        [JsonProperty("download_url")]
+        [JsonPropertyName("download_url")]
         public string DownloadUrl { get; set; }
 
-        [JsonProperty("type")]
+        [JsonPropertyName("type")]
         public string Type { get; set; }
 
-        [JsonProperty("content")]
+        [JsonPropertyName("content")]
         public string Content { get; set; }
 
-        [JsonProperty("encoding")]
+        [JsonPropertyName("encoding")]
         public string Encoding { get; set; }
 
-        [JsonProperty("_links")]
+        [JsonPropertyName("_links")]
         public Links Links { get; set; }
     }
 
@@ -49,13 +49,13 @@ namespace MartinKMe.Domain.Models
     /// </summary>
     public class Links
     {
-        [JsonProperty("self")]
+        [JsonPropertyName("self")]
         public string Self { get; set; }
 
-        [JsonProperty("git")]
+        [JsonPropertyName("git")]
         public string Git { get; set; }
 
-        [JsonProperty("html")]
+        [JsonPropertyName("html")]
         public string Html { get; set; }
     }
 }
