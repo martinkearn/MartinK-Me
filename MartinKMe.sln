@@ -18,6 +18,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MartinKMe.Services", "Marti
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MartinKMe.IntegrationTests", "MartinKMe.IntegrationTests\MartinKMe.IntegrationTests.csproj", "{F1C7A119-CAD3-4A37-B21D-F6CE71CCB3F2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MartinKMe.FunctionsV4", "MartinKMe.FunctionsV4\MartinKMe.FunctionsV4.csproj", "{5CB9D0A4-A946-439D-848A-BC21D6A91DF5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -44,6 +46,10 @@ Global
 		{F1C7A119-CAD3-4A37-B21D-F6CE71CCB3F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F1C7A119-CAD3-4A37-B21D-F6CE71CCB3F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F1C7A119-CAD3-4A37-B21D-F6CE71CCB3F2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5CB9D0A4-A946-439D-848A-BC21D6A91DF5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5CB9D0A4-A946-439D-848A-BC21D6A91DF5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5CB9D0A4-A946-439D-848A-BC21D6A91DF5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5CB9D0A4-A946-439D-848A-BC21D6A91DF5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
