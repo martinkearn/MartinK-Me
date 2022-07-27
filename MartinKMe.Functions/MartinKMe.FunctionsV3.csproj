@@ -11,8 +11,12 @@
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="5.0.0" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\MartinKMe.Domain\MartinKMe.Domain.csproj" />
-    <ProjectReference Include="..\MartinKMe.Services\MartinKMe.Services.csproj" />
+    <ProjectReference Include="..\MartinKMe.Domain\MartinKMe.Domain.csproj">
+      <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
+    </ProjectReference>
+    <ProjectReference Include="..\MartinKMe.Services\MartinKMe.Services.csproj">
+      <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Update="host.json">

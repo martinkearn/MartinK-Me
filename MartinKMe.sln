@@ -3,18 +3,18 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31612.314
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MartinKMe.Infrastructure", "MartinKMe.Infrastructure\MartinKMe.Infrastructure.csproj", "{EDBA5AB6-B48E-4188-9E7C-9BD9CB43AB39}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MartinKMe.Infrastructure", "MartinKMe.Infrastructure\MartinKMe.Infrastructure.csproj", "{EDBA5AB6-B48E-4188-9E7C-9BD9CB43AB39}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MartinKMe.Functions", "MartinKMe.Functions\MartinKMe.Functions.csproj", "{5FE6FEF9-3357-4DE6-83A3-D4D3A1672998}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MartinKMe.FunctionsV3", "MartinKMe.Functions\MartinKMe.FunctionsV3.csproj", "{5FE6FEF9-3357-4DE6-83A3-D4D3A1672998}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MartinKMe.Domain", "MartinKMe.Domain\MartinKMe.Domain.csproj", "{F96D15DC-EB6D-4FE3-979E-54695A054312}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MartinKMe.Domain", "MartinKMe.Domain\MartinKMe.Domain.csproj", "{F96D15DC-EB6D-4FE3-979E-54695A054312}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{ED56252B-046B-4B2C-B372-A948679C0DDD}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MartinKMe.Services", "MartinKMe.Services\MartinKMe.Services.csproj", "{36D33936-667F-4321-A0B4-CC371652F4B6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MartinKMe.Services", "MartinKMe.Services\MartinKMe.Services.csproj", "{36D33936-667F-4321-A0B4-CC371652F4B6}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MartinKMe.IntegrationTests", "MartinKMe.IntegrationTests\MartinKMe.IntegrationTests.csproj", "{F1C7A119-CAD3-4A37-B21D-F6CE71CCB3F2}"
 EndProject
