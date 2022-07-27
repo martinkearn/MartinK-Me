@@ -21,7 +21,7 @@ namespace MartinKMe.IntegrationTests
 
         public FunctionsTests()
         {
-            // Read GithubPat form user secrets
+            // Read GithubPat from user secrets
             var configuration = new ConfigurationBuilder()
                 .AddUserSecrets<Settings>()
                 .Build();

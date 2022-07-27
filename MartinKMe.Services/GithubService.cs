@@ -1,9 +1,9 @@
 ﻿using MartinKMe.Domain.Interfaces;
 using MartinKMe.Domain.Models;
-using Newtonsoft.Json;
 using System;
 using System.Net.Http;
 using System.Threading.Tasks;
+using System.Text.Json;
 
 namespace MartinKMe.Services
 {
@@ -28,7 +28,7 @@ namespace MartinKMe.Services
 
             // Read and decode contents
             var rawContents = await response.Content.ReadAsStringAsync();
-            var objContents = JsonConvert.DeserializeObject<GithubContent>(rawContents);
+            var objContents = JsonSerializer.Deserialize<GithubContent>(rawContents);
 
             // Return
             return objContents;
