@@ -8,8 +8,8 @@ namespace MartinKMe.IntegrationTests.Models
     [ExcludeFromCodeCoverage]
     public class Settings
     {
-        public string? GithubPat { get; set; }
+        public string GithubPat { get; set; }
 
-        public string? StorageConnectionString { get; set; }
+        public string StorageConnectionString { get; set; }
     }
 }

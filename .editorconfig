@@ -5,3 +5,6 @@ dotnet_diagnostic.CS8618.severity = silent
 
 # CS8600: Converting null literal or possible null value to non-nullable type.
 dotnet_diagnostic.CS8600.severity = none
+
+# DF0201: OrchestrationTrigger must be used with a DurableOrchestrationContext or DurableOrchestrationContextBase.
+dotnet_diagnostic.DF0201.severity = silent

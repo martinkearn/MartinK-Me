@@ -1,0 +1,7 @@
+﻿# Code files
+[*.{cs,vb}]
+dotnet_analyzer_diagnostic.category-Style.severity = warning
+dotnet_analyzer_diagnostic.category-Naming.severity = warning
+
+# DF0201: OrchestrationTrigger must be used with a DurableOrchestrationContext or DurableOrchestrationContextBase.
+dotnet_diagnostic.DF0201.severity = silent

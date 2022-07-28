@@ -11,6 +11,6 @@ namespace MartinKMe.IntegrationTests.Models
         public string Message { get; set; }
 
         [JsonPropertyName("sha")]
-        public string? Sha { get; set; }
+        public string Sha { get; set; }
     }
 }
