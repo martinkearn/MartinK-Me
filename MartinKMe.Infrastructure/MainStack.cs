@@ -12,12 +12,12 @@ using Kind = Pulumi.AzureNative.Storage.Kind;
 /// <summary>
 /// Main stack
 /// See https://www.pulumi.com/docs/intro/cloud-providers/azure/setup/ for guidance on setting up the Azure App Registration/Service Principle in the Pulumi config.
-/// Requires publish .net projects. Run this command at the same location as the Pulumi stack to put the Functions porject publish output as a sub folder (which is where Pulumi will look for it)
+/// Requires publish .net projects. Run this command at the same location as the Pulumi stack to put the Functions project publish output as a sub folder (which is where Pulumi will look for it)
 /// dotnet publish --no-restore --configuration Release --output ./publishfunctions ../MartinKMe.Functions/MartinKMe.Functions.csproj
 /// </summary>
 class MainStack : Stack
 {
-    private const string ResourceGroupBaseName = "MartinKMe";
+    private const string ResourceGroupBaseName = "MartinKMe2023Dev";
     public MainStack()
     {
         var resourceGroup = new ResourceGroup("MartinKMe", new ResourceGroupArgs 
@@ -91,7 +91,7 @@ class MainStack : Stack
             Kind = "FunctionApp",
             ResourceGroupName = resourceGroup.Name,
             ServerFarmId = functionsAppServicePlan.Id,
-            Name = $"functions-appservice-{ResourceGroupBaseName.ToLowerInvariant()}",
+            Name = $"functions-app-{ResourceGroupBaseName.ToLowerInvariant()}",
             SiteConfig = new SiteConfigArgs
             {
                 AppSettings = new[]
@@ -106,7 +106,7 @@ class MainStack : Stack
                     },
                     new NameValuePairArgs{
                         Name = "FUNCTIONS_EXTENSION_VERSION",
-                        Value = "~3",
+                        Value = "~4",
                     },
                     new NameValuePairArgs{
                         Name = "WEBSITE_RUN_FROM_PACKAGE",
