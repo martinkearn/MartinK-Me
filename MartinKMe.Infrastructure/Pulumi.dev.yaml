@@ -1,9 +1,0 @@
-# These are secrets, do not store in git
-
-config:
-  azure-native:clientId: 6456ece1-6c35-471f-a6dd-7e81db3795d9
-  azure-native:clientSecret:
-    secure: AAABALICI4YFpSZi9OPa7Rdbv9GD393ehbki0c/UZOXtN0N2WSbTp7O2VhiUiyFCh+rP7RigPdlmV9+6BIRIaTYaAiOm
-  azure-native:location: uksouth
-  azure-native:subscriptionId: 1fcbb1ab-1178-46fc-8c5d-f0e20b65610d
-  azure-native:tenantId: 72f988bf-86f1-41af-91ab-2d7cd011db47
