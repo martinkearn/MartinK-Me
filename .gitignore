@@ -240,3 +240,5 @@ _Pvt_Extensions
 .fake/
 MartinKMe.Infrastructure/Pulumi.dev.yaml
 MartinKMe.FunctionsV4/.DS_Store
+src/.DS_Store
+.DS_Store
