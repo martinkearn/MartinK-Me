@@ -242,3 +242,8 @@ MartinKMe.Infrastructure/Pulumi.dev.yaml
 MartinKMe.FunctionsV4/.DS_Store
 src/.DS_Store
 .DS_Store
+src/Workflow/__azurite*
+Src/Workflow/__blobstorage*
+Src/Workflow/__queuestorage*
+.DS_Store
+src/Workflow/local.settings.json
