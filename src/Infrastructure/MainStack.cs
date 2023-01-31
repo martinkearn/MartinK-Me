@@ -1,4 +1,4 @@
-using MartinKMe.Infrastructure.Helpers;
+using MK.Infrastructure.Helpers;
 using Pulumi;
 using Pulumi.AzureNative.Insights;
 using Pulumi.AzureNative.Resources;
@@ -13,17 +13,14 @@ using Kind = Pulumi.AzureNative.Storage.Kind;
 /// Main stack
 /// See https://www.pulumi.com/docs/intro/cloud-providers/azure/setup/ for guidance on setting up the Azure App Registration/Service Principle in the Pulumi config.
 /// Requires publish .net projects. Run this command at the same location as the Pulumi stack to put the Functions project publish output as a sub folder (which is where Pulumi will look for it)
-/// dotnet publish --no-restore --configuration Release --output ./publishfunctions ../MartinKMe.Functions/MartinKMe.Functions.csproj
+/// dotnet publish --no-restore --configuration Release --output ./publishfunctions ../MK.Functions/MK.Functions.csproj
 /// </summary>
 class MainStack : Stack
 {
-    private const string ResourceGroupBaseName = "MartinKMe2023Dev";
+    private const string ResourceGroupBaseName = "MK2023Dev";
     public MainStack()
     {
-        var resourceGroup = new ResourceGroup("MartinKMe", new ResourceGroupArgs 
-        { 
-            ResourceGroupName = ResourceGroupBaseName,
-        });
+        var resourceGroup = new ResourceGroup(ResourceGroupBaseName);
 
         var storageAccount = new StorageAccount("storage", new StorageAccountArgs
         {

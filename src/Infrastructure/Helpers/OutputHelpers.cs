@@ -3,7 +3,7 @@ using Pulumi.AzureNative.Resources;
 using Pulumi.AzureNative.Storage;
 using System;
 
-namespace MartinKMe.Infrastructure.Helpers
+namespace MK.Infrastructure.Helpers
 {
     public static class OutputHelpers
     {
