@@ -238,3 +238,4 @@ _Pvt_Extensions
 
 # FAKE - F# Make
 .fake/
+MartinKMe.Infrastructure/Pulumi.dev.yaml
