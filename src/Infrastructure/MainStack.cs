@@ -3,7 +3,6 @@ using Pulumi;
 using Pulumi.AzureNative.Insights;
 using Pulumi.AzureNative.Resources;
 using Pulumi.AzureNative.Storage;
-using Pulumi.AzureNative.Storage.Inputs;
 using Pulumi.AzureNative.Web;
 using Pulumi.AzureNative.Web.Inputs;
 using System;
@@ -27,7 +26,7 @@ class MainStack : Stack
             ResourceGroupName = resourceGroup.Name,
             AllowBlobPublicAccess = false,
             AccountName = $"storage{ResourceGroupBaseName.ToLowerInvariant()}",
-            Sku = new SkuArgs
+            Sku = new Pulumi.AzureNative.Storage.Inputs.SkuArgs
             {
                 Name = SkuName.Standard_LRS
             },
@@ -83,12 +82,12 @@ class MainStack : Stack
         });
 
         var storageConnectionString = OutputHelpers.GetConnectionString(resourceGroup.Name, storageAccount.Name);
-        var functionsAppService = new WebApp($"functions-appservice", new WebAppArgs
+
+        var functionsApp = new WebApp($"functions-app-{ResourceGroupBaseName.ToLowerInvariant()}", new WebAppArgs
         {
             Kind = "FunctionApp",
             ResourceGroupName = resourceGroup.Name,
             ServerFarmId = functionsAppServicePlan.Id,
-            Name = $"functions-app-{ResourceGroupBaseName.ToLowerInvariant()}",
             SiteConfig = new SiteConfigArgs
             {
                 AppSettings = new[]
@@ -108,7 +107,7 @@ class MainStack : Stack
                     new NameValuePairArgs{
                         Name = "WEBSITE_RUN_FROM_PACKAGE",
                         Value = OutputHelpers.SignedBlobReadUrl(functionsPublishBlob, deploymentsContainer, storageAccount, resourceGroup, 3650),
-                    },                    
+                    },
                     new NameValuePairArgs{
                         Name = "APPINSIGHTS_INSTRUMENTATIONKEY",
                         Value = appInsights.InstrumentationKey
