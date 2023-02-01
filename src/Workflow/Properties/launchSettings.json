@@ -2,7 +2,7 @@
   "profiles": {
     "Workflow": {
       "commandName": "Project",
-      "commandLineArgs": "--port 7169",
+      "commandLineArgs": "--port 7223",
       "launchBrowser": false
     }
   }
