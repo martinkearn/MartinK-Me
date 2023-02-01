@@ -1,10 +1,6 @@
 # Infrastructure
 This project contains Pulumi code to deploy the required infrastrcuture to Azure.
 
-## Publish FunctionsV4 project
-1. Open a Terminal in `/MK.Infrastructure`
-1. `dotnet publish --no-restore --configuration Release --output ./publishfunctions ../MK.Workflow/Workflow.csproj`
-
 ## Deploy Pulumi stack
 1. Ensure you have Pulumi and Azure CLI's installed: https://www.pulumi.com/docs/get-started/azure/begin/
 1. Open a Terminal in `/MK.Infrastructure`
