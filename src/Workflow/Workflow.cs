@@ -32,19 +32,5 @@ namespace MK.Functions
             log.LogInformation($"Saying hello to {name}.");
             return $"Hello {name}!";
         }
-
-        [FunctionName("Workflow_HttpStart")]
-        public static async Task<HttpResponseMessage> HttpStart(
-            [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post")] HttpRequestMessage req,
-            [DurableClient] IDurableOrchestrationClient starter,
-            ILogger log)
-        {
-            // Function input comes from the request content.
-            string instanceId = await starter.StartNewAsync("Workflow", null);
-
-            log.LogInformation($"Started orchestration with ID = '{instanceId}'.");
-
-            return starter.CreateCheckStatusResponse(req, instanceId);
-        }
     }
 }
