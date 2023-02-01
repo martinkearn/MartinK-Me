@@ -3,7 +3,6 @@ using Pulumi;
 using Pulumi.AzureNative.Insights;
 using Pulumi.AzureNative.Resources;
 using Pulumi.AzureNative.Storage;
-using Pulumi.AzureNative.Storage.Inputs;
 using Pulumi.AzureNative.Web;
 using Pulumi.AzureNative.Web.Inputs;
 using System;
@@ -11,23 +10,22 @@ using Kind = Pulumi.AzureNative.Storage.Kind;
 
 /// <summary>
 /// Main stack
-/// See https://www.pulumi.com/docs/intro/cloud-providers/azure/setup/ for guidance on setting up the Azure App Registration/Service Principle in the Pulumi config.
-/// Requires publish .net projects. Run this command at the same location as the Pulumi stack to put the Functions project publish output as a sub folder (which is where Pulumi will look for it)
-/// dotnet publish --no-restore --configuration Release --output ./publishfunctions ../Workflow/Workflow.csproj
 /// </summary>
 class MainStack : Stack
 {
     private const string ResourceGroupBaseName = "MK2023Dev";
     public MainStack()
     {
-        var resourceGroup = new ResourceGroup(ResourceGroupBaseName);
+        var resourceGroup = new ResourceGroup(ResourceGroupBaseName, new ResourceGroupArgs{
+            Location = "uksouth"
+        });
 
         var storageAccount = new StorageAccount("storage", new StorageAccountArgs
         {
             ResourceGroupName = resourceGroup.Name,
             AllowBlobPublicAccess = false,
             AccountName = $"storage{ResourceGroupBaseName.ToLowerInvariant()}",
-            Sku = new SkuArgs
+            Sku = new Pulumi.AzureNative.Storage.Inputs.SkuArgs
             {
                 Name = SkuName.Standard_LRS
             },
@@ -62,14 +60,18 @@ class MainStack : Stack
             ResourceGroupName = resourceGroup.Name,
         });
 
-        var functionsAppServicePlan = new AppServicePlan("functions-appserviceplan", new AppServicePlanArgs
+        var functionsAppServicePlan = new AppServicePlan($"functions-appserviceplan-linux-{ResourceGroupBaseName.ToLowerInvariant()}", new AppServicePlanArgs
         {
             ResourceGroupName = resourceGroup.Name,
-            Name = $"functions-appserviceplan-{ResourceGroupBaseName.ToLowerInvariant()}",
+            Kind = "functionapp",
+            Reserved = true,
             Sku = new SkuDescriptionArgs
             {
+                Capacity = 0,
+                Family = "Y",
+                Name = "Y1",
+                Size = "Y1",
                 Tier = "Dynamic",
-                Name = "Y1"
             }
         });
 
@@ -79,16 +81,16 @@ class MainStack : Stack
             ContainerName = deploymentsContainer.Name,
             ResourceGroupName = resourceGroup.Name,
             Type = BlobType.Block,
-            Source = new FileArchive("./publishfunctions") 
+            Source = new FileArchive("../workflow/bin/Release/net7.0") 
         });
 
         var storageConnectionString = OutputHelpers.GetConnectionString(resourceGroup.Name, storageAccount.Name);
-        var functionsAppService = new WebApp($"functions-appservice", new WebAppArgs
+
+        var functionsApp = new WebApp($"functions-app-{ResourceGroupBaseName.ToLowerInvariant()}", new WebAppArgs
         {
-            Kind = "FunctionApp",
+            Kind = "functionapp",
             ResourceGroupName = resourceGroup.Name,
             ServerFarmId = functionsAppServicePlan.Id,
-            Name = $"functions-app-{ResourceGroupBaseName.ToLowerInvariant()}",
             SiteConfig = new SiteConfigArgs
             {
                 AppSettings = new[]
@@ -99,7 +101,7 @@ class MainStack : Stack
                     },
                     new NameValuePairArgs{
                         Name = "FUNCTIONS_WORKER_RUNTIME",
-                        Value = "dotnet",
+                        Value = "dotnet-isolated",
                     },
                     new NameValuePairArgs{
                         Name = "FUNCTIONS_EXTENSION_VERSION",
@@ -108,7 +110,7 @@ class MainStack : Stack
                     new NameValuePairArgs{
                         Name = "WEBSITE_RUN_FROM_PACKAGE",
                         Value = OutputHelpers.SignedBlobReadUrl(functionsPublishBlob, deploymentsContainer, storageAccount, resourceGroup, 3650),
-                    },                    
+                    },
                     new NameValuePairArgs{
                         Name = "APPINSIGHTS_INSTRUMENTATIONKEY",
                         Value = appInsights.InstrumentationKey
@@ -116,19 +118,7 @@ class MainStack : Stack
                     new NameValuePairArgs{
                         Name = "APPLICATIONINSIGHTS_CONNECTION_STRING",
                         Value = Output.Format($"InstrumentationKey={appInsights.InstrumentationKey}"),
-                    },
-                    new NameValuePairArgs{
-                        Name = "StorageConfiguration:ArticleBlobsContainer",
-                        Value = articleBlobsContainer.Name,
-                    },
-                    new NameValuePairArgs{
-                        Name = "StorageConfiguration:ConnectionString",
-                        Value = storageConnectionString,
-                    },
-                    new NameValuePairArgs{
-                        Name = "StorageConfiguration:ArticlesTable",
-                        Value = articlesTable.Name,
-                    },
+                    }
                 },
             },
         });

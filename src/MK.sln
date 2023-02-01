@@ -1,0 +1,35 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 25.0.1704.3
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Workflow", "Workflow\Workflow.csproj", "{3F0B6885-DF7A-45B7-B746-C1492986F129}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{C97BD6BB-5B42-42E1-93F3-5D1F1201C71B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FD8720DA-D65B-4315-963B-BA7C7D677786}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FD8720DA-D65B-4315-963B-BA7C7D677786}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FD8720DA-D65B-4315-963B-BA7C7D677786}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FD8720DA-D65B-4315-963B-BA7C7D677786}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3F0B6885-DF7A-45B7-B746-C1492986F129}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3F0B6885-DF7A-45B7-B746-C1492986F129}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3F0B6885-DF7A-45B7-B746-C1492986F129}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3F0B6885-DF7A-45B7-B746-C1492986F129}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C97BD6BB-5B42-42E1-93F3-5D1F1201C71B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C97BD6BB-5B42-42E1-93F3-5D1F1201C71B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C97BD6BB-5B42-42E1-93F3-5D1F1201C71B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C97BD6BB-5B42-42E1-93F3-5D1F1201C71B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {CAF75D6A-D8A5-49D4-A06A-53E8D213FD85}
+	EndGlobalSection
+EndGlobal
