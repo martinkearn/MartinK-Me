@@ -1,16 +1,11 @@
 @description('The name of the Azure Function app.')
-param functionAppName string = 'func-${uniqueString(resourceGroup().id)}'
+param uniqueName string = uniqueString(resourceGroup().id)
 
 @description('Location for all resources.')
 param location string = resourceGroup().location
 
-@description('Location for Application Insights')
-param appInsightsLocation string = resourceGroup().location
-
-var hostingPlanName = functionAppName
-var applicationInsightsName = functionAppName
-var storageAccountName = '${uniqueString(resourceGroup().id)}azfunctions'
-
+//STORAGE ACCOUNT
+var storageAccountName = 'storage${uniqueName}'
 resource storageAccount 'Microsoft.Storage/storageAccounts@2021-02-01' = {
   name: storageAccountName
   location: location
@@ -20,32 +15,35 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2021-02-01' = {
   kind: 'Storage'
 }
 
-resource hostingPlan 'Microsoft.Web/serverfarms@2021-02-01' = {
-  name: hostingPlanName
-  location: location
-  sku: { tier: 'Standard', name: 'S1', family: 'S', capacity: 1 }
-  properties: { reserved: true }
-}
-
+//APP INSIGHTS
+var appInsightsName = 'appinisghts-${uniqueName}'
 resource applicationInsights 'microsoft.insights/components@2020-02-02' = {
-  name: applicationInsightsName
-  location: appInsightsLocation
+  name: appInsightsName
+  location: location
   tags: {
-    'hidden-link:${resourceId('Microsoft.Web/sites', applicationInsightsName)}': 'Resource'
+    'hidden-link:${resourceId('Microsoft.Web/sites', appInsightsName)}': 'Resource'
   }
   properties: { Application_Type: 'web' }
   kind: 'web'
 }
 
+//APP SERVICE PLAN for FUNCTION APP
+resource functionAppServicePlan 'Microsoft.Web/serverfarms@2021-02-01' = {
+  name: 'appservice-${uniqueName}'
+  location: location
+  sku: { tier: 'Dynamic', name: 'Y1', family: 'Y', capacity: 1 }
+  properties: { reserved: true }
+}
+
+//FUNCTION APP
 resource functionApp 'Microsoft.Web/sites@2021-02-01' = {
-  name: functionAppName
+  name: 'functionapp-${uniqueName}'
   location: location
   kind: 'functionapp,linux'
   properties: {
     reserved: true
-    serverFarmId: hostingPlan.id
+    serverFarmId: functionAppServicePlan.id
     siteConfig: {
-      alwaysOn: true
       linuxFxVersion: 'DOTNET-ISOLATED|7.0'
       netFrameworkVersion:'7.0'
       appSettings: [
