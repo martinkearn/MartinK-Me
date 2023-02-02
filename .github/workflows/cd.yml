@@ -34,3 +34,8 @@ jobs:
           outputValue=$( az deployment group show -g mknet-dev --name main --query properties.outputs.functionAppName.value | tr -d '"')
           echo "Setting variable $outputName=$outputValue"
           echo "##vso[task.setvariable variable=$outputName]$outputValue"
+          
+      # Echo output
+    - name: EchoOutput
+      run: echo "$functionAppName"
+      
