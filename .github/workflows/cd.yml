@@ -40,5 +40,5 @@ jobs:
       uses: Azure/functions-action@v1.4.8
       with:
         app-name: $functionAppName
-        package: '.src/Workflow'
+        package: './src/Workflow'
       
