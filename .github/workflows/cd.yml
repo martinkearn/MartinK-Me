@@ -36,6 +36,10 @@ jobs:
           echo "##vso[task.setvariable variable=$outputName]$outputValue"
           
       # Echo output
-    - name: EchoOutput
-      run: echo "$functionAppName"
+    - name: DeploFunction
+      uses: azure/CLI@v1
+      with:
+        inlineScript: |
+          #!/bin/bash
+          func azure functionapp publish {{ $functionAppName }} --dotnet-isolated --dotnet-version 7.0
       
