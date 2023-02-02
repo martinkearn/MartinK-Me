@@ -16,10 +16,24 @@ jobs:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
 
       # Deploy Bicep file
-    - name: Deploy Bicep
+    - name: BicepDeploy
       uses: azure/arm-deploy@v1
       with:
         subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION }}
         resourceGroupName: ${{ secrets.AZURE_RG }}
         template: ./src/Bicep/main.bicep
         failOnStdErr: false
+        
+      # Get outputs
+    - name: BicepOutput
+      uses: Azure/CLI@v2
+      with:
+        inlineScript: |
+          $out = az deployment group show -g mknet-dev -n main | convertfrom-json | foreach properties | foreach outputs
+          $provisionOutputs = [PSCustomObject]@{}
+          $out | Get-Member -MemberType NoteProperty | ForEach-Object {
+              $name = $_.name
+              $provisionOutputs | Add-Member -MemberType NoteProperty -Name $name -value $out.$name.value
+              Write-Host "##vso[task.setvariable variable=$($name);isOutput=true]$($out.$name.value)"
+          }
+          $provisionOutputs
