@@ -14,15 +14,6 @@ jobs:
       uses: azure/login@v1
       with:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
-
-      # Deploy Bicep file
-    - name: BicepDeploy
-      uses: azure/arm-deploy@v1
-      with:
-        subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION }}
-        resourceGroupName: ${{ secrets.AZURE_RG }}
-        template: ./src/Bicep/main.bicep
-        failOnStdErr: false
         
       # Get outputs
     - name: BicepOutput
@@ -31,8 +22,13 @@ jobs:
         inlineScript: |
           #!/bin/bash
           outputValue=$( az deployment group show -g mknet-dev --name main --query properties.outputs.functionAppName.value | tr -d '"')
-          echo "##vso[task.setvariable variable=$FunctionAppName]$outputValue"
-      
+          echo "##vso[task.setvariable variable=FunctionAppName]$outputValue"
+          
+    - name: Display
+      with:
+        inlineScript: |
+          echo ${FunctionAppName}
+     
       # Dotnet build
     - name: DotnetBuild
       shell: bash
@@ -47,4 +43,13 @@ jobs:
       with:
         app-name: $(FunctionAppName)
         package: './src/Workflow/output'
+        
+      # Deploy Bicep file
+    - name: BicepDeploy
+      uses: azure/arm-deploy@v1
+      with:
+        subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION }}
+        resourceGroupName: ${{ secrets.AZURE_RG }}
+        template: ./src/Bicep/main.bicep
+        failOnStdErr: false
       
