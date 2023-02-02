@@ -6,7 +6,9 @@ jobs:
     steps:
     
     - name: SetVar
-      run: echo 'FunctionAppName=foo' >> $GITHUB_OUTPUT
+      run: |
+        echo "action_state=yellow" >> $GITHUB_ENV
       
     - name: Readvar
-      run: echo 'var is ${{ steps.SetVar.outputs.FunctionAppName}}'
+      run: |
+        echo "${{ SetVar.action_state }}"
