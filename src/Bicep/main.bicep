@@ -6,7 +6,7 @@ param location string = resourceGroup().location
 
 //STORAGE ACCOUNT
 var storageAccountName = 'storage${uniqueName}'
-resource storageAccount 'Microsoft.Storage/storageAccounts@2021-02-01' = {
+resource storageAccount 'Microsoft.Storage/storageAccounts@2022-09-01' = {
   name: storageAccountName
   location: location
   sku: {
@@ -17,7 +17,7 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2021-02-01' = {
 
 //APP INSIGHTS
 var appInsightsName = 'appinisghts-${uniqueName}'
-resource applicationInsights 'microsoft.insights/components@2020-02-02' = {
+resource applicationInsights 'Microsoft.Insights/components@2020-02-02' = {
   name: appInsightsName
   location: location
   tags: {
@@ -28,7 +28,7 @@ resource applicationInsights 'microsoft.insights/components@2020-02-02' = {
 }
 
 //APP SERVICE PLAN for FUNCTION APP
-resource functionAppServicePlan 'Microsoft.Web/serverfarms@2021-02-01' = {
+resource functionAppServicePlan 'Microsoft.Web/serverfarms@2022-03-01' = {
   name: 'appservice-${uniqueName}'
   location: location
   sku: { tier: 'Dynamic', name: 'Y1', family: 'Y', capacity: 1 }
@@ -36,8 +36,9 @@ resource functionAppServicePlan 'Microsoft.Web/serverfarms@2021-02-01' = {
 }
 
 //FUNCTION APP
-resource functionApp 'Microsoft.Web/sites@2021-02-01' = {
-  name: 'functionapp-${uniqueName}'
+var functionAppName = 'functionapp-${uniqueName}'
+resource functionApp 'Microsoft.Web/sites@2022-03-01' = {
+  name: functionAppName
   location: location
   kind: 'functionapp,linux'
   properties: {
@@ -62,10 +63,10 @@ resource functionApp 'Microsoft.Web/sites@2021-02-01' = {
         {
           name: 'FUNCTIONS_WORKER_RUNTIME'
           value: 'dotnet-isolated'
-        }          
+        }       
       ]
     }
   }
 }
-
+output functionAppName string  = functionApp.name
 
