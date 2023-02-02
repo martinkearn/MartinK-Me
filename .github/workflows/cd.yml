@@ -22,10 +22,10 @@ jobs:
         inlineScript: |
           #!/bin/bash
           outputValue=$( az deployment group show -g mknet-dev --name main --query properties.outputs.functionAppName.value | tr -d '"')
-          echo "##vso[task.setvariable variable=FunctionAppName]$outputValue"
+          echo "FunctionAppName=outputValue" >> $GITHUB_ENV
           
     - name: Display
-      run: echo 'Function app name $FunctionAppName'
+      run: echo 'Function app name ${{ env.FunctionAppName }}'
      
       # Dotnet build
     - name: DotnetBuild
