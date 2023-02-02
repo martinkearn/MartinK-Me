@@ -5,17 +5,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
 
-      # Checkout code
     - name: Checkout
       uses: actions/checkout@main
 
-      # Log into Azure
     - name: Login
       uses: azure/login@v1
       with:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
-        
-      # Deploy Bicep file
+
     - name: BicepDeploy
       uses: azure/arm-deploy@v1
       with:
@@ -23,8 +20,7 @@ jobs:
         resourceGroupName: ${{ secrets.AZURE_RG }}
         template: ./src/Bicep/main.bicep
         failOnStdErr: false        
-        
-      # Get outputs
+
     - name: BicepOutput
       uses: azure/CLI@v1
       with:
@@ -32,12 +28,7 @@ jobs:
           #!/bin/bash
           outputValue=$( az deployment group show -g mknet-dev --name main --query properties.outputs.functionAppName.value | tr -d '"')
           echo "FunctionName=$outputValue" >> $GITHUB_ENV
-          
-    - name: DisplayFunctionName
-      run: |
-        echo "${{ env.FunctionName }}"
      
-      # Dotnet build
     - name: DotnetBuild
       shell: bash
       run: |
@@ -45,7 +36,6 @@ jobs:
         dotnet build --configuration Release --output ./output
         popd
           
-      # Deploy Function
     - name: DeployFunction
       uses: Azure/functions-action@v1.4.8
       with:
