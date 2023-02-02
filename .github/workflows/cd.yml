@@ -29,11 +29,8 @@ jobs:
       uses: azure/CLI@v1
       with:
         inlineScript: |
-          $out = az deployment group show -g mknet-dev -n main | convertfrom-json | foreach properties | foreach outputs
-          $provisionOutputs = [PSCustomObject]@{}
-          $out | Get-Member -MemberType NoteProperty | ForEach-Object {
-              $name = $_.name
-              $provisionOutputs | Add-Member -MemberType NoteProperty -Name $name -value $out.$name.value
-              Write-Host "##vso[task.setvariable variable=$($name);isOutput=true]$($out.$name.value)"
-          }
-          $provisionOutputs
+          #!/bin/bash
+          outputName="functionAppName"
+          outputValue=$( az deployment group show -g mknet-dev --name main --query properties.outputs.functionAppName.value | tr -d '"')
+          echo "Setting variable $outputName=$outputValue"
+          echo "##vso[task.setvariable variable=$outputName]$outputValue"
