@@ -1,0 +1,12 @@
+on: [push]
+name: Var Test
+jobs:
+  Test:
+    runs-on: ubuntu-latest
+    steps:
+    
+    - name: SetVar
+      run: echo 'FunctionAppName=foo' >> $GITHUB_OUTPUT
+      
+    - name: Readvar
+      run: echo 'var is ${{ steps.SetVar.outputs.FunctionAppName}}'
