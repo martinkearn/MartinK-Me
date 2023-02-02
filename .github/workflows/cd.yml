@@ -1,0 +1,44 @@
+on: [push]
+name: Azure CD
+jobs:
+  Deploy-Infrastrcuture:
+    runs-on: ubuntu-latest
+    steps:
+
+    - name: Checkout
+      uses: actions/checkout@main
+
+    - name: Login
+      uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+    - name: BicepDeploy
+      uses: azure/arm-deploy@v1
+      with:
+        subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION }}
+        resourceGroupName: ${{ secrets.AZURE_RG }}
+        template: ./src/Bicep/main.bicep
+        failOnStdErr: false        
+
+    - name: BicepOutput
+      uses: azure/CLI@v1
+      with:
+        inlineScript: |
+          #!/bin/bash
+          outputValue=$( az deployment group show -g mknet-dev --name main --query properties.outputs.functionAppName.value | tr -d '"')
+          echo "FunctionName=$outputValue" >> $GITHUB_ENV
+     
+    - name: DotnetBuild
+      shell: bash
+      run: |
+        pushd './src/Workflow'
+        dotnet build --configuration Release --output ./output
+        popd
+          
+    - name: DeployFunction
+      uses: Azure/functions-action@v1.4.8
+      with:
+        app-name: ${{ env.FunctionName }}
+        package: './src/Workflow/output'
+      

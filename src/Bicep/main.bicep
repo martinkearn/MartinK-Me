@@ -5,7 +5,7 @@ param uniqueName string = uniqueString(resourceGroup().id)
 param location string = resourceGroup().location
 
 //STORAGE ACCOUNT
-var storageAccountName = 'storage${uniqueName}'
+var storageAccountName = 'mkstorage${uniqueName}'
 resource storageAccount 'Microsoft.Storage/storageAccounts@2022-09-01' = {
   name: storageAccountName
   location: location
@@ -16,7 +16,7 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2022-09-01' = {
 }
 
 //APP INSIGHTS
-var appInsightsName = 'appinisghts-${uniqueName}'
+var appInsightsName = 'mk-appinisghts-${uniqueName}'
 resource applicationInsights 'Microsoft.Insights/components@2020-02-02' = {
   name: appInsightsName
   location: location
@@ -29,14 +29,14 @@ resource applicationInsights 'Microsoft.Insights/components@2020-02-02' = {
 
 //APP SERVICE PLAN for FUNCTION APP
 resource functionAppServicePlan 'Microsoft.Web/serverfarms@2022-03-01' = {
-  name: 'appservice-${uniqueName}'
+  name: 'mk-appservice-${uniqueName}'
   location: location
   sku: { tier: 'Dynamic', name: 'Y1', family: 'Y', capacity: 1 }
   properties: { reserved: true }
 }
 
 //FUNCTION APP
-var functionAppName = 'functionapp-${uniqueName}'
+var functionAppName = 'mk-functionapp-${uniqueName}'
 resource functionApp 'Microsoft.Web/sites@2022-03-01' = {
   name: functionAppName
   location: location
