@@ -26,7 +26,7 @@ jobs:
         
       # Get outputs
     - name: BicepOutput
-      uses: Azure/CLI@v2
+      uses: AzureCLI@2
       with:
         inlineScript: |
           $out = az deployment group show -g mknet-dev -n main | convertfrom-json | foreach properties | foreach outputs
