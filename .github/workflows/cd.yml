@@ -25,9 +25,7 @@ jobs:
           echo "##vso[task.setvariable variable=FunctionAppName]$outputValue"
           
     - name: Display
-      with:
-        inlineScript: |
-          echo ${FunctionAppName}
+      run: echo ${FunctionAppName}
      
       # Dotnet build
     - name: DotnetBuild
