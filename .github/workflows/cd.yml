@@ -1,20 +1,22 @@
 on: [push]
 name: Azure CD
 jobs:
-  build-and-deploy:
+  Deploy-Infrastrcuture:
     runs-on: ubuntu-latest
     steps:
 
       # Checkout code
-    - uses: actions/checkout@main
+    - name: Checkout
+      uses: actions/checkout@main
 
       # Log into Azure
-    - uses: azure/login@v1
+    - name: Login
+      uses: azure/login@v1
       with:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
 
       # Deploy Bicep file
-    - name: deploy
+    - name: Deploy Bicep
       uses: azure/arm-deploy@v1
       with:
         subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION }}
