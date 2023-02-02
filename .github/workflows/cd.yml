@@ -35,11 +35,10 @@ jobs:
           echo "Setting variable $outputName=$outputValue"
           echo "##vso[task.setvariable variable=$outputName]$outputValue"
           
-      # Echo output
-    - name: DeploFunction
-      uses: azure/CLI@v1
+      # Deploy Function
+    - name: DeployFunction
+      uses: Azure/functions-action@v1.4.8
       with:
-        inlineScript: |
-          #!/bin/bash
-          func azure functionapp publish {{ $functionAppName }} --dotnet-isolated --dotnet-version 7.0
+        app-name: ${{ env.functionAppName }}
+        package: '.src/Workflow'
       
