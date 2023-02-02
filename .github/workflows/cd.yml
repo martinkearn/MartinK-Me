@@ -39,6 +39,6 @@ jobs:
     - name: DeployFunction
       uses: Azure/functions-action@v1.4.8
       with:
-        app-name: ${{ env.functionAppName }}
+        app-name: $functionAppName
         package: '.src/Workflow'
       
