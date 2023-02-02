@@ -22,10 +22,10 @@ jobs:
         inlineScript: |
           #!/bin/bash
           outputValue=$( az deployment group show -g mknet-dev --name main --query properties.outputs.functionAppName.value | tr -d '"')
-          echo "FunctionAppName=outputValue" >> $GITHUB_ENV
+          echo "FunctionAppName=$outputValue" >> $GITHUB_OUTPUT
           
     - name: Display
-      run: echo 'Function app name ${{ env.FunctionAppName }}'
+      run: echo 'Function app name ${{ steps.BicepOutput.outputs.FunctionAppName }}'
      
       # Dotnet build
     - name: DotnetBuild
