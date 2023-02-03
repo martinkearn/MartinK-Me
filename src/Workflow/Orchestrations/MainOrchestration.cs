@@ -14,6 +14,11 @@ namespace Workflow.Orchestrations
             GithubPushWebhookPayload input = context.GetInput<GithubPushWebhookPayload>();
 
             List<string> outputs = new();
+            outputs.Add("foo");
+
+            var testResponse =  await context.CallSubOrchestratorAsync<List<string>>(nameof(TestOrchestration), outputs); 
+
+            outputs.AddRange(testResponse);
 
             foreach (Commit commit in input.Commits)
             {
@@ -64,7 +69,6 @@ namespace Workflow.Orchestrations
 
                 // Call sub-orchestration passing article content
                 List<string> subOrchestrationOutput = await context.CallSubOrchestratorAsync<List<string>>(subOrchestration, articleContext);
-                //await context.CallSubOrchestratorAsync(subOrchestration, articleContext);
                 outputs.AddRange(subOrchestrationOutput);
             }
 

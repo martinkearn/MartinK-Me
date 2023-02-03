@@ -7,7 +7,7 @@ namespace Workflow.Orchestrations
 {
     public class AddModifyArticleOrchestration
     {
-        [FunctionName(nameof(AddModifyArticleOrchestration))]
+        [Function(nameof(AddModifyArticleOrchestration))]
         public async Task<List<string>> RunAddModifyArticleOrchestration([OrchestrationTrigger] TaskOrchestrationContext context)
         {
             // Get input payload
