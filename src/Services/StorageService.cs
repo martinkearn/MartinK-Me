@@ -66,7 +66,7 @@ namespace Services
             entity[nameof(article.Categories).ToLowerInvariant()] = article.Categories;
             entity[nameof(article.Status).ToLowerInvariant()] = article.Status;
             entity[nameof(article.WebPath).ToLowerInvariant()] = article.WebPath;
-            entity[nameof(article.HtmlBlobPath).ToLowerInvariant()] = article.HtmlBlobPath.ToString();
+            entity[nameof(article.HtmlBlobPath).ToLowerInvariant()] = article.HtmlBlobPath?.ToString();
 
             // Upsert entity
             await _tableClient.UpsertEntityAsync(entity, TableUpdateMode.Replace);
