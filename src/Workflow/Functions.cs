@@ -38,7 +38,7 @@ class HelloSequence
         [DurableClient] DurableTaskClient client,
         FunctionContext executionContext)
     {
-        var article = new Domain.Models.Article()
+/*         var article = new Domain.Models.Article()
         {
             Key = "YmxvZ3MvdGVzdC5tZA==",
             Title = "Test article",
@@ -53,7 +53,7 @@ class HelloSequence
             HtmlBlobPath = new Uri("https://martink.me/images/speaking.jpg")
 
         };
-        await _storageService.UpsertArticle(article);
+        await _storageService.UpsertArticle(article); */
 
         ILogger logger = executionContext.GetLogger(nameof(StartHelloCities));
 
