@@ -1,4 +1,7 @@
 global using Services;
+global using Workflow.Models;
+global using Workflow.Orchestrations;
+global using Workflow.Activities;
 global using Domain.Models;
 global using Domain.Interfaces;
 using Microsoft.Extensions.DependencyInjection;

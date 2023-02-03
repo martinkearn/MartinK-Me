@@ -15,10 +15,11 @@ namespace Workflow.Clients
             [DurableClient] DurableTaskClient client,
             FunctionContext executionContext)
         {
+            // Setup Logger
+            ILogger logger = executionContext.GetLogger(nameof(GithubPushHttpClient));
+
             // Receive payload
             string githubRawPayload = new StreamReader(req.Body).ReadToEnd();
-
-            ILogger logger = executionContext.GetLogger(nameof(GithubPushHttpClient));
 
             GithubPushWebhookPayload payload;
             try
@@ -35,7 +36,7 @@ namespace Workflow.Clients
                 return response;
             }
 
-            string instanceId = await client.ScheduleNewOrchestrationInstanceAsync(nameof(MainOrchestration));
+            string instanceId = await client.ScheduleNewOrchestrationInstanceAsync(nameof(MainOrchestration), payload);
             logger.LogInformation("Created new MainOrchestration with instance ID = {instanceId}", instanceId);
 
             return client.CreateCheckStatusResponse(req, instanceId);
