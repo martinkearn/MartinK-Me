@@ -67,7 +67,15 @@ resource functionApp 'Microsoft.Web/sites@2022-03-01' = {
         {
           name: 'StorageConfiguration__ArticlesTable'
           value: 'Contents'
-        }        
+        }
+        {
+          name: 'StorageConfiguration__ArticleBlobsContainer'
+          value: 'contents'
+        } 
+        {
+          name: 'StorageConfiguration__ConnectionString'
+          value: 'DefaultEndpointsProtocol=https;AccountName=${storageAccountName};EndpointSuffix=${environment().suffixes.storage};AccountKey=${listKeys(storageAccount.id, '2019-06-01').keys[0].value}'
+        }         
       ]
     }
   }
