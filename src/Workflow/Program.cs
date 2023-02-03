@@ -1,8 +1,8 @@
+global using Services;
+global using Domain.Models;
+global using Domain.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Services;
-using Domain.Models;
-using Domain.Interfaces;
 using Microsoft.Extensions.Configuration;
 
 var host = new HostBuilder()
