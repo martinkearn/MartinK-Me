@@ -3,6 +3,7 @@ using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Http;
 using Microsoft.DurableTask.Client;
 using Microsoft.Extensions.Logging;
+using Workflow.Orchestrations;
 
 namespace Workflow.Clients
 {
@@ -34,8 +35,8 @@ namespace Workflow.Clients
                 return response;
             }
 
-            string instanceId = await client.ScheduleNewOrchestrationInstanceAsync("HelloCities");
-            logger.LogInformation("Created new orchestration with instance ID = {instanceId}", instanceId);
+            string instanceId = await client.ScheduleNewOrchestrationInstanceAsync(nameof(MainOrchestration));
+            logger.LogInformation("Created new MainOrchestration with instance ID = {instanceId}", instanceId);
 
             return client.CreateCheckStatusResponse(req, instanceId);
         }
