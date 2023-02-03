@@ -25,7 +25,7 @@ jobs:
       with:
         subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION }}
         resourceGroupName: ${{ secrets.AZURE_RG }}
-        template: ./src/Bicep/main.bicep
+        template: ./bicep/main.bicep
         failOnStdErr: false        
 
     - name: BicepOutput
@@ -33,7 +33,7 @@ jobs:
       with:
         inlineScript: |
           #!/bin/bash
-          outputValue=$( az deployment group show -g mknet-dev --name main --query properties.outputs.functionAppName.value | tr -d '"')
+          outputValue=$( az deployment group show -g mknet-dev --name main --query properties.outputs.functionAppName.value -o tsv)
           echo "FunctionName=$outputValue" >> $GITHUB_ENV
      
     - name: DotnetBuild
