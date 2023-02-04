@@ -12,7 +12,7 @@ namespace Workflow.Activities
             _storageService = storageService;
         }
 
-        [FunctionName(nameof(UpsertBlobActivity))]
+        [Function(nameof(UpsertBlobActivity))]
         public async Task<Uri> RunUpsertBlobActivity([ActivityTrigger] ArticleContext articleContext, FunctionContext executionContext)
         {
             return await _storageService.UpsertBlob(articleContext.BlobFileName, articleContext.PlainHtmlContents);

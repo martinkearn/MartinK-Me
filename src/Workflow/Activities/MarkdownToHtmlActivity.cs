@@ -12,7 +12,7 @@ namespace Workflow.Activities
             _markdownService = markdownService;
         }
 
-        [FunctionName(nameof(MarkdownToHtmlActivity))]
+        [Function(nameof(MarkdownToHtmlActivity))]
         public string RunMarkdownToHtmlActivity([ActivityTrigger] string markdown, FunctionContext executionContext)
         {
             return _markdownService.MarkdownToHtml(markdown);

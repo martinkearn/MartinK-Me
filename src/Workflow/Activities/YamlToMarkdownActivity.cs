@@ -12,7 +12,7 @@ namespace Workflow.Activities
             _yamlService = yamlService;
         }
 
-        [FunctionName(nameof(YamlToMarkdownActivity))]
+        [Function(nameof(YamlToMarkdownActivity))]
         public Article RunYamlToMarkdownActivity([ActivityTrigger] ArticleContext articleContext, FunctionContext executionContext)
         {
             // Convert yaml to article

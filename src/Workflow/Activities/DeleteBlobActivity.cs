@@ -12,7 +12,7 @@ namespace Workflow.Activities
             _storageService = storageService;
         }
 
-        [FunctionName(nameof(DeleteBlobActivity))]
+        [Function(nameof(DeleteBlobActivity))]
         public async Task RunDeleteBlobActivity([ActivityTrigger] string fileName, FunctionContext executionContext)
         {
             await _storageService.DeleteBlob(fileName);

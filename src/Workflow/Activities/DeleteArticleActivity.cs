@@ -12,7 +12,7 @@ namespace Workflow.Activities
             _storageService = storageService;
         }
 
-        [FunctionName(nameof(DeleteArticleActivity))]
+        [Function(nameof(DeleteArticleActivity))]
         public async Task RunDeleteArticleActivity([ActivityTrigger] string articleKey, FunctionContext executionContext)
         {
             await _storageService.DeleteArticle(articleKey);
