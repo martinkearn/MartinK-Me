@@ -13,9 +13,9 @@ namespace Workflow.Activities
         }
 
         [Function(nameof(DeleteArticleActivity))]
-        public async Task RunDeleteArticleActivity([ActivityTrigger] string articleKey, FunctionContext executionContext)
+        public async Task RunDeleteArticleActivity([ActivityTrigger] ArticleContext articleContext, FunctionContext executionContext)
         {
-            await _storageService.DeleteArticle(articleKey);
+            await _storageService.DeleteArticle(articleContext.Article.Key);
         }
     }
 }

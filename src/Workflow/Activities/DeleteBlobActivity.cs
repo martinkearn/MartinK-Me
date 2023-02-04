@@ -13,9 +13,9 @@ namespace Workflow.Activities
         }
 
         [Function(nameof(DeleteBlobActivity))]
-        public async Task RunDeleteBlobActivity([ActivityTrigger] string fileName, FunctionContext executionContext)
+        public async Task RunDeleteBlobActivity([ActivityTrigger] ArticleContext articleContext, FunctionContext executionContext)
         {
-            await _storageService.DeleteBlob(fileName);
+            await _storageService.DeleteBlob(articleContext.BlobFileName);
         }
     }
 }
