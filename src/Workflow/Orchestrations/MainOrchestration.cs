@@ -19,10 +19,9 @@ namespace Workflow.Orchestrations
             {
                 // Items added in commit
                 outputs.AddRange(await CallSubOrchestration(context, commit.Added, nameof(AddModifyArticleOrchestration), commit.Author.Username, input.Repository.Name));
-                //await context.CallSubOrchestratorAsync(nameof(AddModifyArticleOrchestration), new ArticleContext());
 
                 // Items modified in commit
-                //outputs.AddRange(await CallSubOrchestration(context, commit.Modified, nameof(AddModifyArticleOrchestration), commit.Author.Username, input.Repository.Name));
+                outputs.AddRange(await CallSubOrchestration(context, commit.Modified, nameof(AddModifyArticleOrchestration), commit.Author.Username, input.Repository.Name));
 
                 // Items deleted in commit
                 //outputs.AddRange(await CallSubOrchestration(context, commit.Removed, nameof(DeleteArticleOrchestration), commit.Author.Username, input.Repository.Name));

@@ -13,10 +13,9 @@ namespace Workflow.Activities
         }
 
         [Function(nameof(GetGithubContentActivity))]
-        public async Task<GithubContent> RunGetGithubContentActivity([ActivityTrigger] string gitHubApiFileUrl, FunctionContext executionContext)
+        public async Task<GithubContent> RunGetGithubContentActivity([ActivityTrigger] ArticleContext articleContext, FunctionContext executionContext)
         {
-            var u = new Uri(gitHubApiFileUrl);
-            return await _githubService.GetGithubContent(u);
+            return await _githubService.GetGithubContent(articleContext.GithubContentApiUri);
         }
     }
 }

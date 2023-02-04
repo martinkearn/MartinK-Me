@@ -14,7 +14,7 @@ namespace Workflow.Orchestrations
             ArticleContext articleContext = context.GetInput<ArticleContext>();
 
             // Get Github content
-            articleContext.GithubContent = await context.CallActivityAsync<GithubContent>(nameof(GetGithubContentActivity), articleContext.GithubContentApiUri);
+            articleContext.GithubContent = await context.CallActivityAsync<GithubContent>(nameof(GetGithubContentActivity), articleContext);
 
             // Decode the Base64 contents
             articleContext.PlainContents = (articleContext.GithubContent.Encoding == "base64") ?
@@ -22,7 +22,7 @@ namespace Workflow.Orchestrations
                 articleContext.GithubContent.Content;
 
             // Convert plain Markdown to Html
-            articleContext.PlainHtmlContents = await context.CallActivityAsync<string>(nameof(MarkdownToHtmlActivity), articleContext.PlainContents);
+            articleContext.PlainHtmlContents = await context.CallActivityAsync<string>(nameof(MarkdownToHtmlActivity), articleContext);
 
             // Upsert html blob to storage
             articleContext.HtmlBlobStorageUri = await context.CallActivityAsync<Uri>(nameof(UpsertBlobActivity), articleContext);
@@ -31,7 +31,7 @@ namespace Workflow.Orchestrations
             articleContext.Article = await context.CallActivityAsync<Article>(nameof(YamlToMarkdownActivity), articleContext);
 
             // Upsert Article in table storage
-            await context.CallActivityAsync(nameof(UpsertArticleActivity), articleContext.Article);
+            await context.CallActivityAsync(nameof(UpsertArticleActivity), articleContext);
 
             List<string> outputs = new()
             {
