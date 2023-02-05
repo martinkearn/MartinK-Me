@@ -1,9 +1,11 @@
-﻿using System.Text;
+﻿using System.Collections.Concurrent;
+using System.Text;
 using Azure.Data.Tables;
 using Azure.Storage.Blobs;
 using Domain.Interfaces;
 using Domain.Models;
 using Microsoft.Extensions.Options;
+using Services.Models;
 
 namespace Services
 {
@@ -26,7 +28,7 @@ namespace Services
             _blobContainerClient.CreateIfNotExists();
         }
 
-        public async Task<Uri> UpsertBlob(string fileName, string fileContents)
+        public async Task<string> UpsertBlob(string fileName, string fileContents)
         {
             // Get a reference to a blob
             var blobClient = _blobContainerClient.GetBlobClient(fileName);
@@ -35,7 +37,7 @@ namespace Services
             using var ms = new MemoryStream(Encoding.UTF8.GetBytes(fileContents));
             await blobClient.UploadAsync(ms, overwrite:true);
 
-            return new Uri(blobClient.Uri.AbsoluteUri);
+            return blobClient.Uri.AbsoluteUri.ToString().ToLowerInvariant();
         }
 
         public async Task DeleteBlob(string fileName)
@@ -49,24 +51,8 @@ namespace Services
 
         public async Task UpsertArticle(Article article)
         {
-            // Build entitiy based on article. Table storage properties are case senitive and other systems using the same data expect the properties in camel case
-            TableEntity entity = new TableEntity
-            {
-                PartitionKey = _partitionKey,
-                RowKey = article.Key
-            };
-            
-            entity[nameof(article.Key).ToLowerInvariant()] = article.Key;
-            entity[nameof(article.Title).ToLowerInvariant()] = article.Title;
-            entity[nameof(article.Author).ToLowerInvariant()] = article.Author;
-            entity[nameof(article.Description).ToLowerInvariant()] = article.Description;
-            entity[nameof(article.Image).ToLowerInvariant()] = article.Image;
-            entity[nameof(article.Thumbnail).ToLowerInvariant()] = article.Thumbnail;
-            entity[nameof(article.Published).ToLowerInvariant()] = DateTime.SpecifyKind(article.Published, DateTimeKind.Utc);
-            entity[nameof(article.Categories).ToLowerInvariant()] = article.Categories;
-            entity[nameof(article.Status).ToLowerInvariant()] = article.Status;
-            entity[nameof(article.WebPath).ToLowerInvariant()] = article.WebPath;
-            entity[nameof(article.HtmlBlobPath).ToLowerInvariant()] = article.HtmlBlobPath?.ToString();
+            // Create ArticleEntity based on Article
+            var entity = new ArticleEntity(article, _partitionKey);
 
             // Upsert entity
             await _tableClient.UpsertEntityAsync(entity, TableUpdateMode.Replace);
