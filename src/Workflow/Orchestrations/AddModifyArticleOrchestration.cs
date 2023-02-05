@@ -25,7 +25,7 @@ namespace Workflow.Orchestrations
             articleContext.PlainHtmlContents = await context.CallActivityAsync<string>(nameof(MarkdownToHtmlActivity), articleContext);
 
             // Upsert html blob to storage
-            articleContext.HtmlBlobStorageUri = await context.CallActivityAsync<Uri>(nameof(UpsertBlobActivity), articleContext);
+            articleContext.HtmlBlobStorageUri = await context.CallActivityAsync<string>(nameof(UpsertBlobActivity), articleContext);
 
             // Convert Yaml to Article object
             articleContext.Article = await context.CallActivityAsync<Article>(nameof(YamlToMarkdownActivity), articleContext);

@@ -28,7 +28,7 @@ namespace Workflow.Models
         /// <summary>
         /// The uri for the html blob in storage
         /// </summary>
-        public Uri HtmlBlobStorageUri { get; set; }
+        public string HtmlBlobStorageUri { get; set; }
 
         /// <summary>
         /// Name of the HTML blob in storage, for exmaple test.html

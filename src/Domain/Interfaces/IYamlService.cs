@@ -14,6 +14,6 @@ namespace Domain.Interfaces
         /// <param name="blobUri">The Uri to set as the HtmlBlobPath property for the resulting Article.</param>
         /// <param name="article">The Article to append the YAML data onto.</param>
         /// <returns>An Article.</returns>
-        public Article YamlToArticle(string plainFileContents, Uri blobUri, Article article);
+        public Article YamlToArticle(string plainFileContents, string blobUri, Article article);
     }
 }

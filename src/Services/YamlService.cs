@@ -9,7 +9,7 @@ namespace Services
     /// <inheritdoc/>
     public class YamlService : IYamlService
     {
-        public Article YamlToArticle(string plainFileContents, Uri blobUri, Article article)
+        public Article YamlToArticle(string plainFileContents, string blobUri, Article article)
         {
             // Check we have required props
             if (string.IsNullOrEmpty(article.Key))

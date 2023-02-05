@@ -13,7 +13,7 @@ namespace Domain.Interfaces
         /// <param name="fileName">The name of the blob i.e. test.md</param>
         /// <param name="fileContents">The new contents of the blob</param>
         /// <returns>Uri to the newly created or updated blob.</returns>
-        public Task<Uri> UpsertBlob(string fileName, string fileContents);
+        public Task<string> UpsertBlob(string fileName, string fileContents);
 
         /// <summary>
         /// Delete a blob

@@ -15,6 +15,7 @@
     <None Remove="Microsoft.Extensions.Http" />
     <None Remove="Azure.Data.Tables" />
     <None Remove="Azure.Storage.Blobs" />
+    <None Remove="Models\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Markdig" Version="0.30.4" />
@@ -22,5 +23,8 @@
     <PackageReference Include="Microsoft.Extensions.Http" Version="7.0.0" />
     <PackageReference Include="Azure.Data.Tables" Version="12.7.1" />
     <PackageReference Include="Azure.Storage.Blobs" Version="12.14.1" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Models\" />
   </ItemGroup>
 </Project>
