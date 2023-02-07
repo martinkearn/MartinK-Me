@@ -36,9 +36,8 @@ resource functionAppServicePlan 'Microsoft.Web/serverfarms@2022-03-01' = {
 }
 
 //FUNCTION APP
-var functionAppName = 'mk-functionapp-${uniqueName}'
 resource functionApp 'Microsoft.Web/sites@2022-03-01' = {
-  name: functionAppName
+  name: 'mk-functionapp-${uniqueName}'
   location: location
   kind: 'functionapp,linux'
   properties: {
@@ -94,9 +93,8 @@ resource webAppServicePlan 'Microsoft.Web/serverfarms@2022-03-01' = {
 }
 
 //WEB APP
-var webAppName = 'mk-webapp-${uniqueName}'
 resource webApp 'Microsoft.Web/sites@2022-03-01' = {
-  name: webAppName
+  name: 'mk-webapp-${uniqueName}'
   location: location
   kind: 'app,linux'
   properties: {
