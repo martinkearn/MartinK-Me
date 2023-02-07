@@ -45,7 +45,7 @@ jobs:
 
     - name: dotnet build and publish Web App
       run: |
-        dotnet restore
+        dotnet restore ./src/Web/Web.csproj
         dotnet build ./src/Web/Web.csproj --configuration Release
         dotnet publish ./src/Web/Web.csproj -c Release -o '${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/Web' 
 
