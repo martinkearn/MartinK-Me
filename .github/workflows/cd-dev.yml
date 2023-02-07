@@ -44,10 +44,9 @@ jobs:
         dotnet-version: '7.0'
 
     - name: dotnet build and publish Web App
-      working-directory: /src/Web
       run: |
         dotnet restore
-        dotnet build --configuration Release
+        dotnet build ./src/Web/Web.csproj --configuration Release
         dotnet publish -c Release -o '${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/Web' 
 
     - name: Run Azure webapp deploy for Web App
