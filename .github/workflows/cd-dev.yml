@@ -29,6 +29,35 @@ jobs:
         template: ./bicep/main.bicep
         failOnStdErr: false        
 
+# Web App
+    - name: BicepOutputWebName
+      uses: azure/CLI@v1
+      with:
+        inlineScript: |
+          #!/bin/bash
+          outputValue=$( az deployment group show -g mknet-dev --name main --query properties.outputs.webAppName.value -o tsv)
+          echo "WebAppName=$outputValue" >> $GITHUB_ENV   
+
+    - name: Setup Dotnet 7.0
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: '7.0'
+
+    - name: dotnet build and publish Web App
+      working-directory: /src/Web
+      run: |
+        dotnet restore
+        dotnet build --configuration Release
+        dotnet publish -c Release -o '${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/Web' 
+
+    - name: Run Azure webapp deploy for Web App
+      working-directory: /src/Web
+      uses: azure/webapps-deploy@v2
+      with: 
+        app-name: ${{ env.WebAppName }}
+        package: '${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/Web'
+
+# Function
     - name: BicepOutputFunctionName
       uses: azure/CLI@v1
       with:
@@ -49,24 +78,3 @@ jobs:
       with:
         app-name: ${{ env.FunctionName }}
         package: './src/Workflow/output'
-
-    - name: BicepOutputWebName
-      uses: azure/CLI@v1
-      with:
-        inlineScript: |
-          #!/bin/bash
-          outputValue=$( az deployment group show -g mknet-dev --name main --query properties.outputs.webAppName.value -o tsv)
-          echo "WebAppName=$outputValue" >> $GITHUB_ENV   
-
-    - name: DotnetBuildWeb
-      shell: bash
-      run: |
-        pushd './src/Web'
-        dotnet build --configuration Release --output ./output
-        popd
-          
-    - name: DeployWeb
-      uses: azure/webapps-deploy@v2
-      with:
-        app-name: ${{ env.WebAppName }}
-        package: './src/Web/output'
