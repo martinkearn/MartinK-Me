@@ -73,5 +73,5 @@ jobs:
     - name: azure-deploy-functionapp
       uses: Azure/functions-action@v1.4.8
       with:
-        app-name: ${{ env.FunctionName }}
+        app-name: ${{ env.FunctionAppName }}
         package: './src/Workflow/output'
