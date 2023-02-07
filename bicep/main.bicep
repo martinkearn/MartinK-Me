@@ -29,16 +29,15 @@ resource applicationInsights 'Microsoft.Insights/components@2020-02-02' = {
 
 //APP SERVICE PLAN for FUNCTION APP
 resource functionAppServicePlan 'Microsoft.Web/serverfarms@2022-03-01' = {
-  name: 'mk-appservice-${uniqueName}'
+  name: 'mk-functionapp-service-${uniqueName}'
   location: location
   sku: { tier: 'Dynamic', name: 'Y1', family: 'Y', capacity: 1 }
   properties: { reserved: true }
 }
 
 //FUNCTION APP
-var functionAppName = 'mk-functionapp-${uniqueName}'
 resource functionApp 'Microsoft.Web/sites@2022-03-01' = {
-  name: functionAppName
+  name: 'mk-functionapp-${uniqueName}'
   location: location
   kind: 'functionapp,linux'
   properties: {
@@ -50,7 +49,7 @@ resource functionApp 'Microsoft.Web/sites@2022-03-01' = {
       appSettings: [
         {
           name: 'APPINSIGHTS_INSTRUMENTATIONKEY'
-          value: reference(applicationInsights.id, '2015-05-01').InstrumentationKey
+          value: reference(applicationInsights.id, '2020-02-02').InstrumentationKey
         }
         {
           name: 'AzureWebJobsStorage'
@@ -82,3 +81,46 @@ resource functionApp 'Microsoft.Web/sites@2022-03-01' = {
 }
 output functionAppName string  = functionApp.name
 
+//APP SERVICE PLAN for WEB APP
+resource webAppServicePlan 'Microsoft.Web/serverfarms@2022-03-01' = {
+  name: 'mk-webapp-service-${uniqueName}'
+  location: location
+  sku: {
+    name: 'B1'
+  }
+  kind: 'linux'
+  properties: { reserved: true }
+}
+
+//WEB APP
+resource webApp 'Microsoft.Web/sites@2022-03-01' = {
+  name: 'mk-webapp-${uniqueName}'
+  location: location
+  kind: 'app,linux'
+  properties: {
+    serverFarmId: webAppServicePlan.id
+    siteConfig: {
+      linuxFxVersion: 'DOTNETCORE|7.0'
+      appSettings: [
+        {
+          name: 'APPINSIGHTS_INSTRUMENTATIONKEY'
+          value: reference(applicationInsights.id, '2020-02-02').InstrumentationKey
+        }
+        {
+          name: 'StorageConfiguration__ArticlesTable'
+          value: 'Contents'
+        }
+        {
+          name: 'StorageConfiguration__ArticleBlobsContainer'
+          value: 'contents'
+        } 
+        {
+          name: 'StorageConfiguration__ConnectionString'
+          value: 'DefaultEndpointsProtocol=https;AccountName=${storageAccountName};EndpointSuffix=${environment().suffixes.storage};AccountKey=${listKeys(storageAccount.id, '2019-06-01').keys[0].value}'
+        } 
+      ]
+    }
+    httpsOnly: true
+  }
+}
+output webAppName string  = webApp.name
