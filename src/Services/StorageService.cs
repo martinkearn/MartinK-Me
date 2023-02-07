@@ -63,5 +63,10 @@ namespace Services
             // Delete entity
             await _tableClient.DeleteEntityAsync(_partitionKey, articleKey);
         }
+
+        public string Heartbeat()
+        {
+            return $"ArticleBlobsContainer is {_options.ArticleBlobsContainer}";
+        }
     }
 }

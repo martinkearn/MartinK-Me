@@ -35,5 +35,11 @@ namespace Domain.Interfaces
         /// <param name="articleKey">The Azure Storage Table entity key to delete.</param>
         /// <returns>Task.</returns>
         public Task DeleteArticle(string articleKey);
+
+        /// <summary>
+        /// Function to use to test avaliability of service
+        /// </summary>
+        /// <returns></returns>
+        public string Heartbeat();
     }
 }
