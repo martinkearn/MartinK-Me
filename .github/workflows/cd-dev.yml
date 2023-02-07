@@ -30,7 +30,7 @@ jobs:
         failOnStdErr: false        
 
 # Web App
-    - name: BicepOutputWebName
+    - name: bicep-output-webappname
       uses: azure/CLI@v1
       with:
         inlineScript: |
@@ -38,22 +38,22 @@ jobs:
           outputValue=$( az deployment group show -g mknet-dev --name main --query properties.outputs.webAppName.value -o tsv)
           echo "WebAppName=$outputValue" >> $GITHUB_ENV   
 
-    - name: Setup Dotnet 7.0
+    - name: setup-dotnet
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: '7.0'
 
-    - name: dotnet build and publish Web App
+    - name: dotnet-build-publish-webapp
       run: |
         dotnet restore ./src/Web/Web.csproj
         dotnet build ./src/Web/Web.csproj --configuration Release
-        dotnet publish ./src/Web/Web.csproj -c Release -o '${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/Web' 
+        dotnet publish ./src/Web/Web.csproj -c Release -o '${{ env.AZURE_WEBAPP_PACKAGE_PATH }}' 
 
-    - name: Run Azure webapp deploy for Web App
+    - name: azure-deploy-webapp
       uses: azure/webapps-deploy@v2
       with: 
         app-name: ${{ env.WebAppName }}
-        package: '${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/Web'
+        package: '${{ env.AZURE_WEBAPP_PACKAGE_PATH }}'
 
 # Function
     - name: BicepOutputFunctionName
