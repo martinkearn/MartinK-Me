@@ -29,7 +29,7 @@ resource applicationInsights 'Microsoft.Insights/components@2020-02-02' = {
 
 //APP SERVICE PLAN for FUNCTION APP
 resource functionAppServicePlan 'Microsoft.Web/serverfarms@2022-03-01' = {
-  name: 'mk-appservice-${uniqueName}'
+  name: 'mk-functionapp-service-${uniqueName}'
   location: location
   sku: { tier: 'Dynamic', name: 'Y1', family: 'Y', capacity: 1 }
   properties: { reserved: true }
@@ -84,7 +84,7 @@ output functionAppName string  = functionApp.name
 
 //APP SERVICE PLAN for WEB APP
 resource webAppServicePlan 'Microsoft.Web/serverfarms@2022-03-01' = {
-  name: 'mk-web-appservice-${uniqueName}'
+  name: 'mk-webapp-service-${uniqueName}'
   location: location
   sku: {
     name: 'B1'
