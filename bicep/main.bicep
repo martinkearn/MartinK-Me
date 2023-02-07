@@ -50,7 +50,7 @@ resource functionApp 'Microsoft.Web/sites@2022-03-01' = {
       appSettings: [
         {
           name: 'APPINSIGHTS_INSTRUMENTATIONKEY'
-          value: reference(applicationInsights.id, '2015-05-01').InstrumentationKey
+          value: reference(applicationInsights.id, '2020-02-02').InstrumentationKey
         }
         {
           name: 'AzureWebJobsStorage'
@@ -98,16 +98,15 @@ var webAppName = 'mk-webapp-${uniqueName}'
 resource webApp 'Microsoft.Web/sites@2022-03-01' = {
   name: webAppName
   location: location
-  kind: 'app'
+  kind: 'app,linux'
   properties: {
     serverFarmId: webAppServicePlan.id
     siteConfig: {
-      linuxFxVersion: 'DOTNET-ISOLATED|7.0'
-      netFrameworkVersion:'7.0'
+      linuxFxVersion: 'DOTNETCORE|7.0'
       appSettings: [
         {
           name: 'APPINSIGHTS_INSTRUMENTATIONKEY'
-          value: reference(applicationInsights.id, '2015-05-01').InstrumentationKey
+          value: reference(applicationInsights.id, '2020-02-02').InstrumentationKey
         }
         {
           name: 'StorageConfiguration__ArticlesTable'
