@@ -47,7 +47,7 @@ jobs:
       run: |
         dotnet restore
         dotnet build ./src/Web/Web.csproj --configuration Release
-        dotnet publish -c Release -o '${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/Web' 
+        dotnet publish ./src/Web/Web.csproj -c Release -o '${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/Web' 
 
     - name: Run Azure webapp deploy for Web App
       uses: azure/webapps-deploy@v2
