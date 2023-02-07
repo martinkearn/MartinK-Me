@@ -13,21 +13,26 @@ jobs:
     runs-on: ubuntu-latest
     steps:
 
-    - name: Checkout
+    - name: checkout
       uses: actions/checkout@main
 
-    - name: Login
+    - name: azure-login
       uses: azure/login@v1
       with:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-    - name: BicepDeploy
+    - name: bicep-deploy
       uses: azure/arm-deploy@v1
       with:
         subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION }}
         resourceGroupName: ${{ secrets.AZURE_RG }}
         template: ./bicep/main.bicep
-        failOnStdErr: false        
+        failOnStdErr: false    
+        
+    - name: setup-dotnet
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: '7.0'
 
 # Web App
     - name: bicep-output-webappname
@@ -37,11 +42,6 @@ jobs:
           #!/bin/bash
           outputValue=$( az deployment group show -g mknet-dev --name main --query properties.outputs.webAppName.value -o tsv)
           echo "WebAppName=$outputValue" >> $GITHUB_ENV   
-
-    - name: setup-dotnet
-      uses: actions/setup-dotnet@v1
-      with:
-        dotnet-version: '7.0'
 
     - name: dotnet-build-publish-webapp
       run: |
@@ -56,22 +56,21 @@ jobs:
         package: './src/Web/output'
 
 # Function
-    - name: BicepOutputFunctionName
+    - name: bicep-output-functionappname
       uses: azure/CLI@v1
       with:
         inlineScript: |
           #!/bin/bash
           outputValue=$( az deployment group show -g mknet-dev --name main --query properties.outputs.functionAppName.value -o tsv)
-          echo "FunctionName=$outputValue" >> $GITHUB_ENV
+          echo "FunctionAppName=$outputValue" >> $GITHUB_ENV
      
-    - name: DotnetBuildWorkflow
-      shell: bash
+    - name: dotnet-build-publish-functionapp
       run: |
-        pushd './src/Workflow'
-        dotnet build --configuration Release --output ./output
-        popd
+        dotnet restore ./src/Workflow/Workflow.csproj
+        dotnet build ./src/Workflow/Workflow.csproj --configuration Release
+        dotnet publish ./src/Workflow/Workflow.csproj -c Release -o './src/Workflow/output' 
           
-    - name: DeployWorkflow
+    - name: azure-deploy-functionapp
       uses: Azure/functions-action@v1.4.8
       with:
         app-name: ${{ env.FunctionName }}
