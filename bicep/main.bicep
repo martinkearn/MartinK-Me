@@ -104,6 +104,24 @@ resource webApp 'Microsoft.Web/sites@2022-03-01' = {
     siteConfig: {
       linuxFxVersion: 'DOTNET-ISOLATED|7.0'
       netFrameworkVersion:'7.0'
+      appSettings: [
+        {
+          name: 'APPINSIGHTS_INSTRUMENTATIONKEY'
+          value: reference(applicationInsights.id, '2015-05-01').InstrumentationKey
+        }
+        {
+          name: 'StorageConfiguration__ArticlesTable'
+          value: 'Contents'
+        }
+        {
+          name: 'StorageConfiguration__ArticleBlobsContainer'
+          value: 'contents'
+        } 
+        {
+          name: 'StorageConfiguration__ConnectionString'
+          value: 'DefaultEndpointsProtocol=https;AccountName=${storageAccountName};EndpointSuffix=${environment().suffixes.storage};AccountKey=${listKeys(storageAccount.id, '2019-06-01').keys[0].value}'
+        } 
+      ]
     }
     httpsOnly: true
   }
