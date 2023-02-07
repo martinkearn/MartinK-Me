@@ -9,7 +9,7 @@ on:
     
 name: Azure CD
 jobs:
-  Deploy-Infrastrcuture:
+  Deploy-Infrastructure:
     runs-on: ubuntu-latest
     steps:
 
