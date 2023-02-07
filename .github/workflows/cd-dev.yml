@@ -6,10 +6,7 @@ on:
   push:
     branches:
     - dev
-    
-env:
-  AZURE_WEBAPP_PACKAGE_PATH: './src/Web' # set this to the path to your web app project, defaults to the repository root
-    
+   
 name: Azure CD
 jobs:
   Deploy-Infrastructure:
@@ -50,13 +47,13 @@ jobs:
       run: |
         dotnet restore ./src/Web/Web.csproj
         dotnet build ./src/Web/Web.csproj --configuration Release
-        dotnet publish ./src/Web/Web.csproj -c Release -o '${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/output' 
+        dotnet publish ./src/Web/Web.csproj -c Release -o './src/Web/output' 
 
     - name: azure-deploy-webapp
       uses: azure/webapps-deploy@v2
       with: 
         app-name: ${{ env.WebAppName }}
-        package: '${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/output'
+        package: './src/Web/output'
 
 # Function
     - name: BicepOutputFunctionName
