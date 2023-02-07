@@ -82,3 +82,29 @@ resource functionApp 'Microsoft.Web/sites@2022-03-01' = {
 }
 output functionAppName string  = functionApp.name
 
+//APP SERVICE PLAN for WEB APP
+resource webAppServicePlan 'Microsoft.Web/serverfarms@2022-03-01' = {
+  name: 'mk-web-appservice-${uniqueName}'
+  location: location
+  sku: {
+    name: 'B1'
+  }
+  kind: 'linux'
+  properties: { reserved: true }
+}
+
+//WEB APP
+var webAppName = 'mk-webapp-${uniqueName}'
+resource webApp 'Microsoft.Web/sites@2022-03-01' = {
+  name: webAppName
+  location: location
+  kind: 'app'
+  properties: {
+    serverFarmId: webAppServicePlan.id
+    siteConfig: {
+      linuxFxVersion: 'DOTNET-ISOLATED|7.0'
+      netFrameworkVersion:'7.0'
+    }
+    httpsOnly: true
+  }
+}
