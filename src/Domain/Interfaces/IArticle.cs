@@ -54,9 +54,14 @@ namespace Domain.Interfaces
         public string WebPath { get; set; }
 
         /// <summary>
-        /// The absolute uri to the rleated html blob in Azure Storage. Does not require key or sas token.
+        /// The absolute uri to the related html blob in Azure Storage. Does not require key or sas token.
         /// </summary>
         public string HtmlBlobPath { get; set; }
+
+        /// <summary>
+        /// The absolute uri to the related markdown file on GitHub.
+        /// </summary>
+        public string GitHubUrl { get; set; }
     }
 }
 
