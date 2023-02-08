@@ -1,10 +1,21 @@
 ﻿@page "/"
+@using Domain.Models
+@inject IStorageService StorageService
 
 <PageTitle>Index</PageTitle>
 
-<h1>Hello, world!</h1>
+<h1>Heading 1</h1>
 
-Welcome to your new app.
+@foreach (Article article in articles)
+{
+    <p><a href="/articles/@article.WebPath">@article.Title - @article.Published</a></p>
+}
 
-<SurveyPrompt Title="How is Blazor working for you?" />
+@code {
+    private List<Article> articles = new List<Article>();
 
+    protected override void OnInitialized()
+    {
+        articles = StorageService.QueryArticles(string.Empty);
+    }
+}

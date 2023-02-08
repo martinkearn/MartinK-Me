@@ -35,5 +35,26 @@ namespace Domain.Interfaces
         /// <param name="articleKey">The Azure Storage Table entity key to delete.</param>
         /// <returns>Task.</returns>
         public Task DeleteArticle(string articleKey);
+
+        /// <summary>
+        /// Gets a list of Article
+        /// </summary>
+        /// <param name="filter">An OData filter string to be applied to the query. If ommited everything with the standard partition key will be used.</param>
+        /// <returns>List of articles</returns>
+        public List<Article> QueryArticles(string filter);
+
+        /// <summary>
+        /// Helper method which constructs an OData query and gets a list of Articles which match
+        /// </summary>
+        /// <param name="property">The property (key) to match the AtyicleEntity on.</param>
+        /// <param name="property">The value to match the AtyicleEntity on.</param>
+        /// <returns>An Article</returns>
+        public List<Article> GetArticlesByProperty(string property, string value);
+
+        /// <summary>
+        /// Function to use to test avaliability of service
+        /// </summary>
+        /// <returns></returns>
+        public string Heartbeat();
     }
 }

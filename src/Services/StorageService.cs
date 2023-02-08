@@ -52,7 +52,23 @@ namespace Services
         public async Task UpsertArticle(Article article)
         {
             // Create ArticleEntity based on Article
-            var entity = new ArticleEntity(article, _partitionKey);
+            var entity = new ArticleEntity();
+            // Entity properties
+            entity.RowKey = article.Key;
+            entity.PartitionKey = _partitionKey;
+
+            // Article properties
+            entity.Key = article.Key;
+            entity.Title = article.Title;
+            entity.Author = article.Author;
+            entity.Description = article.Description;
+            entity.Image = article.Image;
+            entity.Thumbnail = article.Thumbnail;
+            entity.Published = DateTime.SpecifyKind(article.Published, DateTimeKind.Utc);
+            entity.Categories = article.Categories;
+            entity.Status = article.Status;
+            entity.WebPath = article.WebPath;
+            entity.HtmlBlobPath = article.HtmlBlobPath;
 
             // Upsert entity
             await _tableClient.UpsertEntityAsync(entity, TableUpdateMode.Replace);
@@ -62,6 +78,56 @@ namespace Services
         {
             // Delete entity
             await _tableClient.DeleteEntityAsync(_partitionKey, articleKey);
+        }
+
+        public List<Article> QueryArticles(string filter)
+        {
+            if (string.IsNullOrEmpty(filter))
+            {
+                filter = $"PartitionKey eq '{_partitionKey}'";
+            }
+
+            // Query article entities
+            var articleEntities = _tableClient.Query<ArticleEntity>(filter: filter);
+            articleEntities.OrderByDescending(a => a.Published);
+
+            var artciles = new List<Article>();
+            foreach (var articleEntity in articleEntities)
+            {
+                var article = new Article()
+                {
+                    Key = articleEntity.Key,
+                    Title = articleEntity.Title,
+                    Author = articleEntity.Author,
+                    Description = articleEntity.Description,
+                    Image = articleEntity.Image,
+                    Thumbnail = articleEntity.Thumbnail,
+                    Published = articleEntity.Published,
+                    Categories = articleEntity.Categories,
+                    Status = articleEntity.Status,
+                    WebPath = articleEntity.WebPath,
+                    HtmlBlobPath = articleEntity.HtmlBlobPath,
+                };
+                artciles.Add(article);
+            }
+
+            return artciles;
+        }
+
+        public List<Article> GetArticlesByProperty(string property, string value)
+        {
+            if (string.IsNullOrEmpty(property))
+            {
+                return null;
+            }
+            var filter = $"{property} eq '{value}'";
+            var articles = QueryArticles(filter);
+            return articles;
+        }
+
+        public string Heartbeat()
+        {
+            return $"ArticleBlobsContainer is {_options.ArticleBlobsContainer}";
         }
     }
 }
