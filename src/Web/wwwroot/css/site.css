@@ -138,10 +138,15 @@ h2, h3, h4, h5, h6 {
     background-color: #0078D7;
 }
 
-footer {
+.footer {
     background-color: #002050;
     color: #ffffff;
 }
+    .footer a {
+        font-family:  system-ui;
+        color: #ffffff;
+        text-transform:none;
+    }
 
 #blazor-error-ui {
     background: lightyellow;
