@@ -2,19 +2,33 @@
 
 <PageTitle>Web</PageTitle>
 
-<div class="page">
-    <div class="sidebar">
-        <NavMenu />
-    </div>
-
-    <main>
-        <div class="top-row px-4">
-            <a href="https://docs.microsoft.com/aspnet/" target="_blank">About</a>
+<div>
+    <nav class="navbar navbar-expand-lg sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">MartinK.me</a>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/articles">Articles</a>
+                    </li>
+                </ul>
+                <span class="navbar-text">
+                    <ul>
+                        <li><a href="https://twitter.com/MartinKearn"><i class="fa-brands fa-twitter" aria-hidden="true"></i></a></li>
+                        <li><a href="https://uk.linkedin.com/in/martin-kearn-204a681"><i class="fa-brands fa-linkedin" aria-hidden="true"></i></a></li>
+                        <li><a href="https://github.com/martinkearn"><i class="fa-brands fa-github" aria-hidden="true"></i></a></li>
+                        <li><a href="http://stackoverflow.com/users/1601158/martin-kearn"><i class="fa-brands fa-stack-overflow" aria-hidden="true"></i></a></li>
+                        <li><a href="mailto:martin.kearn@microsoft.com?Subject=Enquiry%20from%20MartinK.me"><i class="fa-solid fa-envelope" aria-hidden="true"></i></a></li> 
+                    </ul>
+                </span>
+            </div>
         </div>
+    </nav>
 
+@*     <main>
         <article class="content px-4">
             @Body
         </article>
-    </main>
+    </main> *@
 </div>
 

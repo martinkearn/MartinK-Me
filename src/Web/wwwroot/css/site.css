@@ -1,40 +1,33 @@
-﻿html, body {
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+﻿body {
+    background-color: #002050;
+    color: #ffffff;
 }
 
-h1:focus {
-    outline: none;
+h1, h2, h3, h4, h5, h6 {
+    text-transform: uppercase;
+    color: #ffffff;
 }
 
-a, .btn-link {
-    color: #0071c1;
+h1 {
+    font-family: 'EurostileLTStd-BoldEx2', 'EurostileLTStd-BoldCn', 'Bebas Neue', Arial, sans-serif;
 }
 
-.btn-primary {
-    color: #fff;
-    background-color: #1b6ec2;
-    border-color: #1861ac;
+h2, h3, h4, h5, h6 {
+    font-family: 'EurostileLTStd-BoldCn', 'Bebas Neue', Arial, sans-serif;
 }
 
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+.navbar {
+    font-family: 'EurostileLTStd-BoldCn', 'Bebas Neue', 'Lato', sans-serif;
+    text-transform: uppercase;
+    text-decoration: none;
+    background-color: #222;
 }
 
-.content {
-    padding-top: 1.1rem;
+.navbar > li > a:focus, .navbar > li > a:hover {
+    color: #B4009E;
 }
 
-.valid.modified:not([type=checkbox]) {
-    outline: 1px solid #26b050;
-}
 
-.invalid {
-    outline: 1px solid red;
-}
-
-.validation-message {
-    color: red;
-}
 
 #blazor-error-ui {
     background: lightyellow;
