@@ -1,11 +1,39 @@
 @page "/articles/{articleWebPath}"
 @inject IStorageService StorageService
 
-<PageTitle>Index</PageTitle>
+<PageTitle>@article.Title</PageTitle>
 
-<h1>@article.Title</h1>
+<div class=article-container>
+    <div class="container-fluid">
+        <div class="container">
+            <p><a href="https://www.pulumi.com/">Pulumi</a> is an infrastructure-as-code (IaC) platform that facilitates deployment of cloud resources and applications using familiar programming languages such as C#, Typescript, Python and Go. Right now, Pulumi is probably the alternative to <a href="https://www.terraform.io/">Terraform</a> for cloud deployment.</p>
+        </div>
+    </div>
+</div>
 
-<p>@article.Description</p>
+
+<div class="container-fluid">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <a href="/articles" class="btn btn-primary"><i class="fa fa-angle-double-left" aria-hidden="true"></i> See all articles</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid sequence-background-1">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h2>Got a comment?</h2>
+                <p>All my articles are written and managed as Markdown files on <a href="#"><i class="fa fa-github fa-lg" aria-hidden="true"></i> GitHub</a>.</p>
+                <p>Please add an issue or submit a pull request if something is not right on this article or you have a comment.</p>
+                <p>If you'd like to simply say "thanks", then please send me a <a href="#"><i class="fa fa-twitter fa-lg" aria-hidden="true"></i></a> so the rest of Twitter can see how awesome my work is.</p>
+            </div>
+        </div>
+    </div>
+</div>
 
 @code {
     [Parameter]
