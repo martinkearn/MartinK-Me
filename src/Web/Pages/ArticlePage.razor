@@ -1,0 +1,24 @@
+@page "/articles/{articleWebPath}"
+@inject IStorageService StorageService
+
+<PageTitle>Index</PageTitle>
+
+<h1>@article.Title</h1>
+
+<p>@article.Description</p>
+
+@code {
+    [Parameter]
+    public string ArticleWebPath { get; set; }
+
+    private Article article;
+
+    protected override void OnInitialized()
+    {
+        article = StorageService.GetArticlesByProperty("WebPath", ArticleWebPath).FirstOrDefault();
+        if (article == default)
+        {
+            throw new NullReferenceException($"No article with WebPath {ArticleWebPath}");
+        }
+    }
+}
