@@ -4,11 +4,35 @@
 
 <PageTitle>Index</PageTitle>
 
-<h1>Heading 1</h1>
+@{
+    var backgroundCount = 1;
+}
 
 @foreach (Article article in articles)
 {
-    <p><a href="/articles/@article.WebPath">@article.Title - @article.Published</a></p>
+    <div class="container-fluid sequence-background-@backgroundCount p-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h2><a href="/articles/@article.WebPath.ToLower()" title="@article.Description" >@article.Title</a></h2>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-8">
+                    <p>@article.Published.ToString("dd MMM yyyy")</p>
+                    <p>@article.Description</p>
+                    <p><a href="/articles/@article.WebPath.ToLower()" title="@article.Description" type="button" class="btn btn-primary">Learn more <i class="fa fa-angle-double-right" aria-hidden="true"></i></a></p>
+                </div>
+                <div class="col-md-4 hidden-sm hidden-xs">
+                    <img src="@article.Thumbnail" class="img-responsive article-thumbnail" alt="@article.Title">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {
+        backgroundCount = backgroundCount + 1;
+    }
 }
 
 @code {

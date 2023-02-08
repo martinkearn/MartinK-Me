@@ -2,19 +2,75 @@
 
 <PageTitle>Web</PageTitle>
 
-<div class="page">
-    <div class="sidebar">
-        <NavMenu />
-    </div>
-
-    <main>
-        <div class="top-row px-4">
-            <a href="https://docs.microsoft.com/aspnet/" target="_blank">About</a>
+<div id="app">
+    <nav class="navbar navbar-expand sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">MartinK.me</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/articles">Articles</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/tags">Tags</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav d-sm-none d-md-flex">
+                    <li class="nav-item">
+                        <a class="nav-link" href="https://twitter.com/MartinKearn"><i class="fa-brands fa-twitter fa-xl" aria-hidden="true"></i></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="https://uk.linkedin.com/in/martin-kearn-204a681"><i class="fa-brands fa-linkedin fa-xl" aria-hidden="true"></i></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="https://github.com/martinkearn"><i class="fa-brands fa-github fa-xl" aria-hidden="true"></i></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="http://stackoverflow.com/users/1601158/martin-kearn"><i class="fa-brands fa-stack-overflow fa-xl" aria-hidden="true"></i></a>
+                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="mailto:martin.kearn@microsoft.com?Subject=Enquiry%20from%20MartinK.me"><i class="fa-solid fa-envelope fa-xl" aria-hidden="true"></i></a>
+                    </li>
+                </ul>
+            </div>
         </div>
+    </nav>
 
-        <article class="content px-4">
-            @Body
-        </article>
-    </main>
+    <header class="p-5">
+        <div class="container">
+            <h1>Hi, I'm Martin Kearn</h1>
+            <p>I'm software engineering lead at Microsoft</p>
+            <p class="hidden-xs">I'm into Web, AI and Azure.</p>
+            <p class="hidden-xs">I'm based in Worcester, UK</p>
+        </div>
+    </header>
+
+    @Body
+
+    <nav class="navbar navbar-expand fixed-bottom footer">
+        <div class="container">
+            <a class="navbar-brand" href="#">Don't be a stranger</a>
+            <ul class="navbar-nav  me-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="https://twitter.com/MartinKearn"><i class="fa-brands fa-twitter fa-xl" aria-hidden="true"></i></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="https://uk.linkedin.com/in/martin-kearn-204a681"><i class="fa-brands fa-linkedin fa-xl" aria-hidden="true"></i></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="https://github.com/martinkearn"><i class="fa-brands fa-github fa-xl" aria-hidden="true"></i></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="http://stackoverflow.com/users/1601158/martin-kearn"><i class="fa-brands fa-stack-overflow fa-xl" aria-hidden="true"></i></a>
+                    </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="mailto:martin.kearn@microsoft.com?Subject=Enquiry%20from%20MartinK.me"><i class="fa-solid fa-envelope fa-xl" aria-hidden="true"></i></a>
+                </li>
+            </ul>
+        </div>
+    </nav>
 </div>
 
