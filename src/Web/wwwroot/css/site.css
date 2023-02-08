@@ -156,10 +156,10 @@ footer {
 }
 
 .article-container {
-    margin-top: 10px;
-    margin-bottom: 10px;
     background-color: white;
     color: #24292e;
+    padding-top: 20px;
+    padding-bottom: 20px;
 }
 
     .article-container a {
@@ -169,6 +169,17 @@ footer {
         .article-container a:hover {
             text-decoration: underline;
         }
+    
+    .article-container .btn {
+        background-color: #337ab7;
+        color: #ffffff;
+        text-decoration: none;
+    }
+
+    .article-container .btn:hover, .article-container .btn:focus {
+        background-color: #B4009E;
+        text-decoration: none;
+    }
 
     .article-container h1, .article-container h2, .article-container h3, .article-container h4, .article-container h5, .article-container h6 {
         color: #24292e;
