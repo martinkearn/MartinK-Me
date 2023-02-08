@@ -5,13 +5,18 @@
 
 <h1>Hello, world!</h1>
 
-Welcome to your new app. @Foo
+Welcome to your new app. 
+
+@foreach (var article in articles)
+{
+    <p>@article.Title</p>
+}
 
 @code {
-    private string Foo = string.Empty;
+    private List<Article> articles = new List<Article>();
 
     protected override async Task OnInitializedAsync()
     {
-        Foo = StorageService.Heartbeat();
+        articles = StorageService.QueryArticles(string.Empty);
     }
 }
