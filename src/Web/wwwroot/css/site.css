@@ -160,6 +160,11 @@ h2, h3, h4, h5, h6 {
     z-index: 1000;
 }
 
+.comment-container {
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
 .article-container {
     background-color: white;
     color: #24292e;
