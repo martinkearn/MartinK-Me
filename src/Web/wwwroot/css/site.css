@@ -1,6 +1,7 @@
 ﻿body {
     background-color: #002050;
     color: #ffffff;
+    font-size: 14pt;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -21,13 +22,16 @@ h2, h3, h4, h5, h6 {
     text-transform: uppercase;
     text-decoration: none;
     background-color: #222;
+    color: #9d9d9d;
 }
 
-.navbar > li > a:focus, .navbar > li > a:hover {
+.navbar a {
+    color: #9d9d9d;
+}
+
+.navbar-nav > li > a:focus, .navbar-nav > li > a:hover {
     color: #B4009E;
 }
-
-
 
 #blazor-error-ui {
     background: lightyellow;
