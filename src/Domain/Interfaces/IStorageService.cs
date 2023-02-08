@@ -37,6 +37,13 @@ namespace Domain.Interfaces
         public Task DeleteArticle(string articleKey);
 
         /// <summary>
+        /// Gets a list of Article
+        /// </summary>
+        /// <param name="filter">An OData filter string to be applied to the query. If ommited everything with the standard partition key will be used.</param>
+        /// <returns>List of articles</returns>
+        public List<Article> QueryArticles(string filter);
+
+        /// <summary>
         /// Function to use to test avaliability of service
         /// </summary>
         /// <returns></returns>
