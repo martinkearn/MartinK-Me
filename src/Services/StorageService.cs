@@ -89,6 +89,7 @@ namespace Services
 
             // Query article entities
             var articleEntities = _tableClient.Query<ArticleEntity>(filter: filter);
+            articleEntities.OrderByDescending(a => a.Published);
 
             var artciles = new List<Article>();
             foreach (var articleEntity in articleEntities)
@@ -111,6 +112,17 @@ namespace Services
             }
 
             return artciles;
+        }
+
+        public List<Article> GetArticlesByProperty(string property, string value)
+        {
+            if (string.IsNullOrEmpty(property))
+            {
+                return null;
+            }
+            var filter = $"{property} eq '{value}'";
+            var articles = QueryArticles(filter);
+            return articles;
         }
 
         public string Heartbeat()
