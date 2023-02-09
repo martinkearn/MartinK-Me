@@ -171,8 +171,9 @@ h2, h3, h4, h5, h6 {
 }
 
 .badge {
-    background-color: grey;
+    background-color: #777;
     margin-right: 0.5rem;
+    font-weight: normal;
 }
 
 .article-container {
