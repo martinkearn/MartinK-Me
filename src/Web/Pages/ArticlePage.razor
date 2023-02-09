@@ -8,12 +8,7 @@
         <h1>@article.Title</h1>
         <p><i>@article.Published.ToLongDateString()</i></p>
         <p>@article.Description</p>
-        <p>
-        @foreach (var cat in article.Categories.Split(','))
-        {
-            <span class="badge text-bg-light"><a href="/tags/@cat">#@cat</a></span>
-        }
-        </p>
+        <p><TagsList Categories="@article.Categories" /></p>        
         <p>This article was published at <a href="@article.GitHubUrl">GitHub</a>. It is open source and you can make edits, comments etc.</p>
     </div>
 </header>

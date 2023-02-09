@@ -6,6 +6,7 @@
 
 a {
     color: #ffffff;
+    text-decoration: none;
 }
 
     a:hover {
@@ -166,9 +167,8 @@ h2, h3, h4, h5, h6 {
 }
 
 .badge {
-    border-radius: 3px;
-    font-weight: normal;
-    font-size: initial;
+    background-color: grey;
+    margin-right: 0.5rem;
 }
 
 .article-container {
