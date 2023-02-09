@@ -32,6 +32,7 @@ namespace Workflow.Orchestrations
 
             // Add other properties to article
             articleContext.Article.GitHubUrl = articleContext.GithubContent.HtmlUrl;
+            articleContext.Article.HtmlBlobFileName = articleContext.BlobFileName;
 
             // Upsert Article in table storage
             await context.CallActivityAsync(nameof(UpsertArticleActivity), articleContext);
