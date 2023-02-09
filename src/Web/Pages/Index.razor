@@ -4,6 +4,8 @@
 
 <PageTitle>Index</PageTitle>
 
+<HeaderComponent H1="Hi, I'm Martin Kearn" Line1="I'm software engineering lead at Microsoft." Line2="I'm into Web, AI and Azure." Line3="I'm based in Worcester, UK." />
+
 @{
     var backgroundCount = 1;
 }
@@ -20,6 +22,7 @@
             <div class="row">
                 <div class="col-md-8">
                     <p>@article.Published.ToString("dd MMM yyyy")</p>
+                    <p><TagsList Categories="@article.Categories" /></p>
                     <p>@article.Description</p>
                     <p><a href="/articles/@article.WebPath.ToLower()" title="@article.Description" type="button" class="btn btn-primary">Learn more <i class="fa fa-angle-double-right" aria-hidden="true"></i></a></p>
                 </div>

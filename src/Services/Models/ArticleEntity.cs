@@ -19,6 +19,7 @@ namespace Services.Models
         public string Status { get; set; } = default!;
         public string WebPath { get; set; } = default!;
         public string HtmlBlobPath { get; set; } = default!;
+        public string GitHubUrl { get; set; } = default!;
         public string PartitionKey { get; set; } = default!;
         public string RowKey { get; set; } = default!;
         public DateTimeOffset? Timestamp { get; set; } = DateTimeOffset.UtcNow!;

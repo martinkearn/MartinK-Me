@@ -1,0 +1,31 @@
+<header class="p-md-5 mt-3 mt-md-0 header">
+    <div class="container">
+        <h1>@H1</h1>
+        @if(Line1 != null)
+        {
+            <p>@Line1</p>
+        }
+        @if(Line2 != null)
+        {
+            <p class=".d-none .d-lg-block">@Line2</p>
+        }
+        @if(Line3 != null)
+        {
+            <p class=".d-none .d-lg-block mb-0">@Line3</p>
+        }
+    </div>
+</header>
+
+@code {
+    [Parameter]
+    public string H1 { get; set; }
+
+    [Parameter]
+    public string Line1 { get; set; }
+
+    [Parameter]
+    public string Line2 { get; set; }  
+
+    [Parameter]
+    public string Line3 { get; set; }      
+}

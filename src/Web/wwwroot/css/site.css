@@ -13,6 +13,7 @@ a {
     }
 
 h1, h2, h3, h4, h5, h6 {
+    font-family: 'EurostileLTStd-BoldCn', 'Bebas Neue', Arial, sans-serif;
     text-transform: uppercase;
     color: #ffffff;
 }
@@ -21,8 +22,8 @@ h1 {
     font-family: 'EurostileLTStd-BoldEx2', 'EurostileLTStd-BoldCn', 'Bebas Neue', Arial, sans-serif;
 }
 
-h2, h3, h4, h5, h6 {
-    font-family: 'EurostileLTStd-BoldCn', 'Bebas Neue', Arial, sans-serif;
+h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {
+    text-decoration: none;
 }
 
 .btn {
@@ -50,6 +51,10 @@ h2, h3, h4, h5, h6 {
 
 .navbar-nav > li > a:focus, .navbar-nav > li > a:hover {
     color: #B4009E;
+}
+
+.header {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.4)), url('../images/banner-home.jpg');
 }
 
 .container-fluid {
@@ -138,10 +143,15 @@ h2, h3, h4, h5, h6 {
     background-color: #0078D7;
 }
 
-footer {
+.footer {
     background-color: #002050;
     color: #ffffff;
 }
+    .footer a {
+        font-family:  system-ui;
+        color: #ffffff;
+        text-transform:none;
+    }
 
 #blazor-error-ui {
     background: lightyellow;
@@ -154,6 +164,20 @@ footer {
     width: 100%;
     z-index: 1000;
 }
+
+.comment-container {
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.badge {
+    background-color: #777;
+    margin-right: 0.5rem;
+    font-weight: normal;
+}
+    .badge a {
+        text-decoration: none;;
+    }
 
 .article-container {
     background-color: white;

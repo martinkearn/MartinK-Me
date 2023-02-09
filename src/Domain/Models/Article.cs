@@ -16,5 +16,7 @@ namespace Domain.Models
         public string Status { get; set; }
         public string WebPath { get; set; }
         public string HtmlBlobPath { get; set; }
+
+        public string GitHubUrl { get; set;}
     }
 }

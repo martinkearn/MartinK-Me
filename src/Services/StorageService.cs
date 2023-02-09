@@ -69,6 +69,7 @@ namespace Services
             entity.Status = article.Status;
             entity.WebPath = article.WebPath;
             entity.HtmlBlobPath = article.HtmlBlobPath;
+            entity.GitHubUrl = article.GitHubUrl;
 
             // Upsert entity
             await _tableClient.UpsertEntityAsync(entity, TableUpdateMode.Replace);
@@ -107,6 +108,7 @@ namespace Services
                     Status = articleEntity.Status,
                     WebPath = articleEntity.WebPath,
                     HtmlBlobPath = articleEntity.HtmlBlobPath,
+                    GitHubUrl = articleEntity.GitHubUrl
                 };
                 artciles.Add(article);
             }
