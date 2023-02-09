@@ -54,9 +54,9 @@ namespace Domain.Interfaces
         /// <summary>
         /// Helper method which gets the contents of a blob from storage as a string
         /// </summary>
-        /// <param name="blobPath">The absolute path to the blob in storage.</param>
+        /// <param name="blobName">The file name of the blob in storage.</param>
         /// <returns>A string containingthe contents of a blob.</returns>
-        public Task<string> GetBlobContent(string blobPath);
+        public Task<string> GetBlobContent(string blobName);
 
         /// <summary>
         /// Function to use to test avaliability of service

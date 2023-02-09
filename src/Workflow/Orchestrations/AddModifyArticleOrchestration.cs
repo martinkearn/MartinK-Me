@@ -10,6 +10,9 @@ namespace Workflow.Orchestrations
         [Function(nameof(AddModifyArticleOrchestration))]
         public async Task<List<string>> RunAddModifyArticleOrchestration([OrchestrationTrigger] TaskOrchestrationContext context)
         {
+            //TO DO: Need to re-think how the blob file name is generated and stored. Should be based on webpath (which derives from title), not file name in github
+            //Web is erroring when displaying blob contents currently
+
             // Get input payload
             ArticleContext articleContext = context.GetInput<ArticleContext>();
 

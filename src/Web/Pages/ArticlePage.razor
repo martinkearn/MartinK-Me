@@ -55,7 +55,7 @@
             throw new NullReferenceException($"No article with WebPath {ArticleWebPath}");
         }
 
-        // get article contents
-        articleContents = await StorageService.GetBlobContent(article.HtmlBlobPath);
+        // Get article contents
+        articleContents = await StorageService.GetBlobContent(article.HtmlBlobFileName);
     }
 }

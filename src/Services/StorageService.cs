@@ -129,16 +129,19 @@ namespace Services
             return articles;
         }
 
-        public async Task<string> GetBlobContent(string blobPath)
+        public async Task<string> GetBlobContent(string blobName)
         {
-            var blobPathUri = new Uri(blobPath);
-            var blobName = blobPathUri.Segments[blobPathUri.Segments.Length-1];
             var blobClient = _blobContainerClient.GetBlobClient(blobName);
             var blobDownloadInfo = await blobClient.DownloadAsync();
             string contents;
             using (var streamReader = new StreamReader(blobDownloadInfo.Value.Content))
             {
                 contents = await streamReader.ReadToEndAsync();
+            }
+            if (contents.StartsWith("<p>."))
+            {
+                var contentsWithoutOpeningP = contents.Substring(4);
+                contents = $"<p>{contentsWithoutOpeningP}";
             }
             return contents;
         }
