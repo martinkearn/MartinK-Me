@@ -6,7 +6,6 @@
 
 a {
     color: #ffffff;
-    text-decoration: none;
 }
 
     a:hover {
@@ -14,6 +13,7 @@ a {
     }
 
 h1, h2, h3, h4, h5, h6 {
+    font-family: 'EurostileLTStd-BoldCn', 'Bebas Neue', Arial, sans-serif;
     text-transform: uppercase;
     color: #ffffff;
 }
@@ -22,8 +22,8 @@ h1 {
     font-family: 'EurostileLTStd-BoldEx2', 'EurostileLTStd-BoldCn', 'Bebas Neue', Arial, sans-serif;
 }
 
-h2, h3, h4, h5, h6 {
-    font-family: 'EurostileLTStd-BoldCn', 'Bebas Neue', Arial, sans-serif;
+h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {
+    text-decoration: none;
 }
 
 .btn {
@@ -175,6 +175,9 @@ h2, h3, h4, h5, h6 {
     margin-right: 0.5rem;
     font-weight: normal;
 }
+    .badge a {
+        text-decoration: none;;
+    }
 
 .article-container {
     background-color: white;
