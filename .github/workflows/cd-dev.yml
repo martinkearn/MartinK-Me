@@ -5,7 +5,7 @@ on:
     - main
   push:
     branches:
-    - dev
+    - main
    
 name: Azure CD
 jobs:
