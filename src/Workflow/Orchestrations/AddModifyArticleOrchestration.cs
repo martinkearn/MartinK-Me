@@ -30,6 +30,9 @@ namespace Workflow.Orchestrations
             // Convert Yaml to Article object
             articleContext.Article = await context.CallActivityAsync<Article>(nameof(YamlToMarkdownActivity), articleContext);
 
+            // Add other properties to article
+            articleContext.Article.GitHubUrl = articleContext.GithubContent.HtmlUrl;
+
             // Upsert Article in table storage
             await context.CallActivityAsync(nameof(UpsertArticleActivity), articleContext);
 
