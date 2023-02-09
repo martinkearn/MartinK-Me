@@ -129,7 +129,9 @@ namespace Services
 
         public async Task<string> GetBlobContent(string blobPath)
         {
-            var blobClient = _blobContainerClient.GetBlobClient(blobPath);
+            var blobPathUri = new Uri(blobPath);
+            var blobName = blobPathUri.Segments[blobPathUri.Segments.Length-1];
+            var blobClient = _blobContainerClient.GetBlobClient(blobName);
             var blobDownloadInfo = await blobClient.DownloadAsync();
             string contents;
             using (var streamReader = new StreamReader(blobDownloadInfo.Value.Content))
