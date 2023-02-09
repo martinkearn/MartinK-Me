@@ -62,6 +62,12 @@ namespace Domain.Interfaces
         /// The absolute uri to the related markdown file on GitHub.
         /// </summary>
         public string GitHubUrl { get; set; }
+
+
+        /// <summary>
+        /// The file name of the related html blob in Azure Storage.
+        /// </summary>
+        public string HtmlBlobFileName { get; set; }       
     }
 }
 

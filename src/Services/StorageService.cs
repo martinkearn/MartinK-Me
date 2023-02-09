@@ -70,6 +70,7 @@ namespace Services
             entity.WebPath = article.WebPath;
             entity.HtmlBlobPath = article.HtmlBlobPath;
             entity.GitHubUrl = article.GitHubUrl;
+            entity.HtmlBlobFileName = article.HtmlBlobFileName;
 
             // Upsert entity
             await _tableClient.UpsertEntityAsync(entity, TableUpdateMode.Replace);
@@ -108,7 +109,8 @@ namespace Services
                     Status = articleEntity.Status,
                     WebPath = articleEntity.WebPath,
                     HtmlBlobPath = articleEntity.HtmlBlobPath,
-                    GitHubUrl = articleEntity.GitHubUrl
+                    GitHubUrl = articleEntity.GitHubUrl,
+                    HtmlBlobFileName = articleEntity.HtmlBlobFileName
                 };
                 artciles.Add(article);
             }
@@ -125,6 +127,23 @@ namespace Services
             var filter = $"{property} eq '{value}'";
             var articles = QueryArticles(filter);
             return articles;
+        }
+
+        public async Task<string> GetBlobContent(string blobName)
+        {
+            var blobClient = _blobContainerClient.GetBlobClient(blobName);
+            var blobDownloadInfo = await blobClient.DownloadAsync();
+            string contents;
+            using (var streamReader = new StreamReader(blobDownloadInfo.Value.Content))
+            {
+                contents = await streamReader.ReadToEndAsync();
+            }
+            if (contents.StartsWith("<p>."))
+            {
+                var contentsWithoutOpeningP = contents.Substring(4);
+                contents = $"<p>{contentsWithoutOpeningP}";
+            }
+            return contents;
         }
 
         public string Heartbeat()
