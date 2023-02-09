@@ -14,9 +14,7 @@
 </header>
 
 <div class=article-container>
-    <div class="container">
-        <p><a href="https://www.pulumi.com/">Pulumi</a> is an infrastructure-as-code (IaC) platform that facilitates deployment of cloud resources and applications using familiar programming languages such as C#, Typescript, Python and Go. Right now, Pulumi is probably the alternative to <a href="https://www.terraform.io/">Terraform</a> for cloud deployment.</p>
-    </div>
+    <div class="container">@articleContents</div>
 
     <div class="container">
         <div class="row">
@@ -46,12 +44,18 @@
 
     private Article article;
 
-    protected override void OnInitialized()
+    private string articleContents;
+
+    protected override async Task OnInitializedAsync()
     {
+        // Get article
         article = StorageService.GetArticlesByProperty("WebPath", ArticleWebPath).FirstOrDefault();
         if (article == default)
         {
             throw new NullReferenceException($"No article with WebPath {ArticleWebPath}");
         }
+
+        // get article contents
+        articleContents = await StorageService.GetBlobContent(article.HtmlBlobPath);
     }
 }
