@@ -52,6 +52,13 @@ namespace Domain.Interfaces
         public List<Article> GetArticlesByProperty(string property, string value);
 
         /// <summary>
+        /// Helper method which gets the contents of a blob from storage as a string
+        /// </summary>
+        /// <param name="blobPath">The storage container-relative path to the blob in storage.</param>
+        /// <returns>A string containingthe contents of a blob.</returns>
+        public Task<string> GetBlobContent(string blobPath);
+
+        /// <summary>
         /// Function to use to test avaliability of service
         /// </summary>
         /// <returns></returns>

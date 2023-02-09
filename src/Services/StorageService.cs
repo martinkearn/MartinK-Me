@@ -127,6 +127,18 @@ namespace Services
             return articles;
         }
 
+        public async Task<string> GetBlobContent(string blobPath)
+        {
+            var blobClient = _blobContainerClient.GetBlobClient(blobPath);
+            var blobDownloadInfo = await blobClient.DownloadAsync();
+            string contents;
+            using (var streamReader = new StreamReader(blobDownloadInfo.Value.Content))
+            {
+                contents = await streamReader.ReadToEndAsync();
+            }
+            return contents;
+        }
+
         public string Heartbeat()
         {
             return $"ArticleBlobsContainer is {_options.ArticleBlobsContainer}";
