@@ -53,6 +53,10 @@ h2, h3, h4, h5, h6 {
     color: #B4009E;
 }
 
+.header {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.4)), url('../images/banner-home.jpg');
+}
+
 .container-fluid {
     margin-top: 0;
     padding-top: 20px;
