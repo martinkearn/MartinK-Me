@@ -90,7 +90,6 @@ namespace Services
 
             // Query article entities
             var articleEntities = _tableClient.Query<ArticleEntity>(filter: filter);
-            articleEntities.OrderByDescending(a => a.Published);
 
             var articles = new List<Article>();
             foreach (var articleEntity in articleEntities)
@@ -121,8 +120,8 @@ namespace Services
                 articles = articles.Take(takeNotNullable).ToList();
             }
 
-            // Remove drafts
-            articles = articles.Where(a => a.Status.ToLowerInvariant() == "published").ToList();
+            // Remove drafts and sort
+            articles = articles.Where(a => a.Status.ToLowerInvariant() == "published").OrderByDescending(a => a.Published).ToList();
 
             return articles;
         }
