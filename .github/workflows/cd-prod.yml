@@ -7,7 +7,7 @@ on:
     - main
 
 jobs:
-  PR-CD-Prod:
+  CD-Prod:
     uses: ./.github/workflows/deployment.yml
     with:
       rg: 'mknet-prod'

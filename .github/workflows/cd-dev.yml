@@ -7,7 +7,7 @@ on:
     - main
 
 jobs:
-  PR-CD-Dev:
+  CD-Dev:
     uses: ./.github/workflows/deployment.yml
     with:
       rg: 'mknet-dev'
