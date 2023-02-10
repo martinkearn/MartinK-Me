@@ -11,6 +11,7 @@
 
     protected override void OnInitialized()
     {
+        Categories = Categories.TrimEnd(',');
         var cats = Categories.Split(',');
         foreach (var cat in cats)
         {
