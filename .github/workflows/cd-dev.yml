@@ -1,78 +1,15 @@
+name: CD Dev
+
 on:
   workflow_dispatch:
   pull_request:
     branches:
     - main
-  push:
-    branches:
-    - main
-   
-name: Azure CD
+
 jobs:
-  Deploy-Infrastructure:
-    runs-on: ubuntu-latest
-    steps:
-
-    - name: checkout
-      uses: actions/checkout@main
-
-    - name: azure-login
-      uses: azure/login@v1
-      with:
-        creds: ${{ secrets.AZURE_CREDENTIALS }}
-
-    - name: bicep-deploy
-      uses: azure/arm-deploy@v1
-      with:
-        subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION }}
-        resourceGroupName: 'mknet-dev'
-        template: ./bicep/main.bicep
-        failOnStdErr: false
-        parameters: 'uniqueName=mknetdev'
-        
-    - name: setup-dotnet
-      uses: actions/setup-dotnet@v1
-      with:
-        dotnet-version: '7.0'
-
-# Web App
-    - name: bicep-output-webappname
-      uses: azure/CLI@v1
-      with:
-        inlineScript: |
-          #!/bin/bash
-          outputValue=$( az deployment group show -g mknet-dev --name main --query properties.outputs.webAppName.value -o tsv)
-          echo "WebAppName=$outputValue" >> $GITHUB_ENV   
-
-    - name: dotnet-build-publish-webapp
-      run: |
-        dotnet restore ./src/Web/Web.csproj
-        dotnet build ./src/Web/Web.csproj --configuration Release
-        dotnet publish ./src/Web/Web.csproj -c Release -o './src/Web/output' 
-
-    - name: azure-deploy-webapp
-      uses: azure/webapps-deploy@v2
-      with: 
-        app-name: ${{ env.WebAppName }}
-        package: './src/Web/output'
-
-# Function
-    - name: bicep-output-functionappname
-      uses: azure/CLI@v1
-      with:
-        inlineScript: |
-          #!/bin/bash
-          outputValue=$( az deployment group show -g mknet-dev --name main --query properties.outputs.functionAppName.value -o tsv)
-          echo "FunctionAppName=$outputValue" >> $GITHUB_ENV
-     
-    - name: dotnet-build-publish-functionapp
-      run: |
-        dotnet restore ./src/Workflow/Workflow.csproj
-        dotnet build ./src/Workflow/Workflow.csproj --configuration Release
-        dotnet publish ./src/Workflow/Workflow.csproj -c Release -o './src/Workflow/output' 
-          
-    - name: azure-deploy-functionapp
-      uses: Azure/functions-action@v1.4.8
-      with:
-        app-name: ${{ env.FunctionAppName }}
-        package: './src/Workflow/output'
+  Pr_deployment:
+    if: github.event_name == 'pull_request' && github.event.action != 'closed'
+    uses: ./.github/workflows/deployment.yml
+    with:
+      rgname: 'mknet-dev'
+      uniquelabel: 'mknetdev'
