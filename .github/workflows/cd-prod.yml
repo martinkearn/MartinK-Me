@@ -7,8 +7,7 @@ on:
     - main
 
 jobs:
-  PR-CD-Dev:
-    if: github.event_name == 'pull_request' && github.event.action != 'closed'
+  PR-CD-Prod:
     uses: ./.github/workflows/deployment.yml
     with:
       rg: 'mknet-prod'
