@@ -14,7 +14,7 @@
     var backgroundCount = 1;
 }
 
-@foreach (Article article in articles)
+@foreach (Article article in pageOfArticles)
 {
     <div class="container-fluid sequence-background-@backgroundCount p-4">
         <div class="container">
@@ -42,11 +42,50 @@
     }
 }
 
+<div class="comment-container">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <p>@articles.Count articles avaliable dating back to 2005!</p>
+                <p>
+                    <div class="btn-toolbar" role="toolbar" aria-label="Paging buttons">
+                        <div class="btn-group me-2" role="group" aria-label="First group">
+                            @for (int p = 1; p <= pages; p++) {
+                                var thisPage = p;
+                                <button class="btn btn-secondary" @onclick="@(e => ChangePage(thisPage))">@p</button>
+                            }
+                        </div>
+                    </div>
+                </p>
+                <p>@currentPageNumber of @pages</p>
+            </div>
+        </div>
+    </div>
+</div>
+
 @code {
     private List<Article> articles = new List<Article>();
+
+    private List<Article> pageOfArticles = new List<Article>();
+
+    private int articlesPerPage = 5;
+
+    private int currentPageNumber = 1;  
+
+    private int pages;
 
     protected override void OnInitialized()
     {
         articles = StorageService.QueryArticles(default, default);
+        pageOfArticles = articles.Take(articlesPerPage).ToList();
+        var pagesDec = (double)articles.Count/(double)articlesPerPage;
+        pages = Convert.ToInt16(Math.Ceiling(pagesDec));
+    }
+
+    private void ChangePage(int page)
+    {
+        currentPageNumber = page;
+        pageOfArticles = articles.Skip((page-1)*articlesPerPage).Take(articlesPerPage).ToList();
+        StateHasChanged();
     }
 }
