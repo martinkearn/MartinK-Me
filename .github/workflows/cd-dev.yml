@@ -25,9 +25,10 @@ jobs:
       uses: azure/arm-deploy@v1
       with:
         subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION }}
-        resourceGroupName: ${{ secrets.AZURE_RG }}
+        resourceGroupName: 'mknet-dev'
         template: ./bicep/main.bicep
-        failOnStdErr: false    
+        failOnStdErr: false
+        parameters: 'uniqueName=mknetdev'
         
     - name: setup-dotnet
       uses: actions/setup-dotnet@v1
