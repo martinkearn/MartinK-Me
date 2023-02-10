@@ -7,11 +7,11 @@ on:
     - main
 
 jobs:
-  PR-CD-Prod:
+  CD-Prod:
     uses: ./.github/workflows/deployment.yml
     with:
       rg: 'mknet-prod'
       uniquelabel: 'mknetprod'
     secrets:
-      azure-credentials: ${{ secrets.AZURE_CREDENTIALS }}
+      azure-credentials: ${{ secrets.AZURE_CREDENTIALS_MKNETPROD }}
       azure-subscription: ${{ secrets.AZURE_SUBSCRIPTION }}

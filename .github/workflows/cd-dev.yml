@@ -7,12 +7,11 @@ on:
     - main
 
 jobs:
-  PR-CD-Dev:
-    if: github.event_name == 'pull_request' && github.event.action != 'closed'
+  CD-Dev:
     uses: ./.github/workflows/deployment.yml
     with:
       rg: 'mknet-dev'
       uniquelabel: 'mknetdev'
     secrets:
-      azure-credentials: ${{ secrets.AZURE_CREDENTIALS }}
+      azure-credentials: ${{ secrets.AZURE_CREDENTIALS_MKNETDEV }}
       azure-subscription: ${{ secrets.AZURE_SUBSCRIPTION }}
