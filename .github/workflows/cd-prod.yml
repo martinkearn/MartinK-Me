@@ -1,0 +1,18 @@
+name: CD Prod
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+    - main
+
+jobs:
+  PR-CD-Dev:
+    if: github.event_name == 'pull_request' && github.event.action != 'closed'
+    uses: ./.github/workflows/deployment.yml
+    with:
+      rg: 'mknet-prod'
+      uniquelabel: 'mknetprod'
+    secrets:
+      azure-credentials: ${{ secrets.AZURE_CREDENTIALS }}
+      azure-subscription: ${{ secrets.AZURE_SUBSCRIPTION }}
