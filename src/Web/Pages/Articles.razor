@@ -47,6 +47,6 @@
 
     protected override void OnInitialized()
     {
-        articles = StorageService.QueryArticles(string.Empty);
+        articles = StorageService.QueryArticles(default, default);
     }
 }
