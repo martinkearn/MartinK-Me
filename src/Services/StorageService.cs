@@ -81,7 +81,7 @@ namespace Services
             await _tableClient.DeleteEntityAsync(_partitionKey, articleKey);
         }
 
-        public List<Article> QueryArticles(string filter)
+        public List<Article> QueryArticles(string filter, int? take)
         {
             if (string.IsNullOrEmpty(filter))
             {
@@ -92,7 +92,7 @@ namespace Services
             var articleEntities = _tableClient.Query<ArticleEntity>(filter: filter);
             articleEntities.OrderByDescending(a => a.Published);
 
-            var artciles = new List<Article>();
+            var articles = new List<Article>();
             foreach (var articleEntity in articleEntities)
             {
                 var article = new Article()
@@ -111,10 +111,17 @@ namespace Services
                     GitHubUrl = articleEntity.GitHubUrl,
                     HtmlBlobFileName = articleEntity.HtmlBlobFileName
                 };
-                artciles.Add(article);
+                articles.Add(article);
             }
 
-            return artciles;
+            // Limit query if take is specified
+            if (take != default)
+            {
+                var takeNotNullable = take ?? default(int);
+                articles = articles.Take(takeNotNullable).ToList();
+            }
+
+            return articles;
         }
 
         public List<Article> GetArticlesByProperty(string property, string value)
@@ -124,7 +131,7 @@ namespace Services
                 return null;
             }
             var filter = $"{property} eq '{value}'";
-            var articles = QueryArticles(filter);
+            var articles = QueryArticles(filter, default);
             return articles;
         }
 

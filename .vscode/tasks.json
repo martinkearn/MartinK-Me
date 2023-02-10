@@ -12,7 +12,7 @@
 			"type": "process",
 			"problemMatcher": "$msCompile",
 			"options": {
-				"cwd": "${workspaceFolder}/Workflow"
+				"cwd": "${workspaceFolder}/src/Workflow"
 			}
 		},
 		{
@@ -31,7 +31,7 @@
 			},
 			"problemMatcher": "$msCompile",
 			"options": {
-				"cwd": "${workspaceFolder}/Workflow"
+				"cwd": "${workspaceFolder}/src/Workflow"
 			}
 		},
 		{
@@ -47,7 +47,7 @@
 			"type": "process",
 			"problemMatcher": "$msCompile",
 			"options": {
-				"cwd": "${workspaceFolder}/Workflow"
+				"cwd": "${workspaceFolder}/src/Workflow"
 			}
 		},
 		{
@@ -64,14 +64,14 @@
 			"dependsOn": "clean release (functions)",
 			"problemMatcher": "$msCompile",
 			"options": {
-				"cwd": "${workspaceFolder}/Workflow"
+				"cwd": "${workspaceFolder}/src/Workflow"
 			}
 		},
 		{
 			"type": "func",
 			"dependsOn": "build (functions)",
 			"options": {
-				"cwd": "${workspaceFolder}/Workflow/bin/Debug/net7.0"
+				"cwd": "${workspaceFolder}/src/Workflow/bin/Debug/net7.0"
 			},
 			"command": "host start",
 			"isBackground": true,
@@ -83,7 +83,7 @@
             "type": "process",
             "args": [
                 "build",
-                "${workspaceFolder}/Web/Web.csproj",
+                "${workspaceFolder}/src/Web/Web.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],
@@ -95,7 +95,7 @@
             "type": "process",
             "args": [
                 "publish",
-                "${workspaceFolder}/Web/Web.csproj",
+                "${workspaceFolder}/src/Web/Web.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],
@@ -109,7 +109,7 @@
                 "watch",
                 "run",
                 "--project",
-                "${workspaceFolder}/Web/Web.csproj"
+                "${workspaceFolder}/src/Web/Web.csproj"
             ],
             "problemMatcher": "$msCompile"
         }
