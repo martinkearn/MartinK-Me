@@ -3,15 +3,12 @@
 
 <PageTitle>@article.Title</PageTitle>
 
-<header class="p-md-5 mt-3 mt-md-0 header">
-    <div class="container">
-        <h1>@article.Title</h1>
-        <p><i>@article.Published.ToLongDateString()</i></p>
-        <p>@article.Description</p>
-        <p><TagsList Categories="@article.Categories" /></p>        
-        <p class="mb-0">This article was published at <a href="@article.GitHubUrl"><i class="fa fa-github fa-lg" aria-hidden="true"></i> GitHub</a>. It is open source and you can make edits, comments etc.</p>
-    </div>
-</header>
+<HeaderComponent 
+    H1=@article.Title 
+    Line1=@article.Published.ToLongDateString()
+    Line2=@article.Description 
+    Line3=@articleGitHubUrlText 
+    Tags=@article.Categories />
 
 <div class=article-container>
     <div class="container">@((MarkupString)articleContents)</div>
@@ -46,6 +43,8 @@
 
     private string articleContents;
 
+    private string articleGitHubUrlText;
+
     protected override async Task OnInitializedAsync()
     {
         // Get article
@@ -57,5 +56,6 @@
 
         // Get article contents
         articleContents = await StorageService.GetBlobContent(article.HtmlBlobFileName);
+        articleGitHubUrlText = $"This article was published at <a href='{article.GitHubUrl}'><i class='fa fa-github fa-lg' aria-hidden='true'></i> GitHub</a>. It is open source and you can make edits, comments etc.";
     }
 }

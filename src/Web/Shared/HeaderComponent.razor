@@ -3,15 +3,19 @@
         <h1>@H1</h1>
         @if(Line1 != null)
         {
-            <p>@Line1</p>
+            <p>@((MarkupString)Line1)</p>
         }
         @if(Line2 != null)
         {
-            <p class=".d-none .d-lg-block">@Line2</p>
+            <p class=".d-none .d-lg-block">@((MarkupString)Line2)</p>
+        }
+        @if(Tags != null)
+        {
+            <p><TagsList Categories="@Tags" /></p>   
         }
         @if(Line3 != null)
         {
-            <p class=".d-none .d-lg-block mb-0">@Line3</p>
+            <p class=".d-none .d-lg-block mb-0">@((MarkupString)Line3)</p>
         }
     </div>
 </header>
@@ -27,5 +31,8 @@
     public string Line2 { get; set; }  
 
     [Parameter]
-    public string Line3 { get; set; }      
+    public string Line3 { get; set; } 
+
+    [Parameter]
+    public string Tags {get; set; }     
 }

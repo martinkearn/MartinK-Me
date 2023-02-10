@@ -1,10 +1,14 @@
-﻿@page "/"
+@page "/articles"
 @using Domain.Models
 @inject IStorageService StorageService
 
-<PageTitle>Home</PageTitle>
+<PageTitle>Articles</PageTitle>
 
-<HeaderComponent H1="Hi, I'm Martin Kearn" Line1="I'm software engineering lead at Microsoft." Line2="I'm into Web, AI and Azure." Line3="I'm based in Worcester, UK." />
+<HeaderComponent 
+    H1="Articles" 
+    Line1="I adopt a 'learn in public' approach to blogging. Whenever I learn something new, I try to capture it here." 
+    Line2="All my articles are written on <a href='https://github.com/martinkearn/Content/tree/master/Blogs'><i class='fa fa-github fa-lg' aria-hidden='true'></i> GitHub</a>. You can raise issues, create pull requests or even fork the content... its open source." 
+    Line3="By default, you'll only see published articles, but you can see everytying on Github." />
 
 @{
     var backgroundCount = 1;
