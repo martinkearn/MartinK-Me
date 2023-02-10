@@ -35,6 +35,9 @@ jobs:
         dotnet-version: '7.0'
 
 # Bicep
+    - name: bicep-install
+      run: az bicep upgrade
+
     - name: bicep-deploy
       uses: azure/arm-deploy@v1
       with:
