@@ -15,6 +15,31 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2022-09-01' = {
   kind: 'Storage'
 }
 
+//ARTICLES STORAGE BLOB CONTAINER
+resource storageAccountBlobService 'Microsoft.Storage/storageAccounts/blobServices@2022-05-01' = {
+  name: 'default'
+  parent: storageAccount
+}
+
+resource storageAccountBlobServiceContainer 'Microsoft.Storage/storageAccounts/blobServices/containers@2022-05-01' = {
+  name: 'articleblobs'
+  parent: storageAccountBlobService
+  properties: {
+    publicAccess: 'None'
+  }
+}
+
+//ARTICLES STORAGE TABLE
+resource storageAccountTableService 'Microsoft.Storage/storageAccounts/tableServices@2022-05-01' = {
+  name: 'default'
+  parent: storageAccount
+}
+
+resource storageAccountTableServiceTable 'Microsoft.Storage/storageAccounts/tableServices/tables@2022-05-01' = {
+  name: 'articles'
+  parent: storageAccountTableService
+}
+
 //APP INSIGHTS
 var appInsightsName = 'mk-appinisghts-${uniqueName}'
 resource applicationInsights 'Microsoft.Insights/components@2020-02-02' = {
@@ -65,11 +90,11 @@ resource functionApp 'Microsoft.Web/sites@2022-03-01' = {
         }
         {
           name: 'StorageConfiguration__ArticlesTable'
-          value: 'articles'
+          value: storageAccountTableServiceTable.name
         }
         {
           name: 'StorageConfiguration__ArticleBlobsContainer'
-          value: 'articleblobs'
+          value: storageAccountBlobServiceContainer.name
         } 
         {
           name: 'StorageConfiguration__ConnectionString'
@@ -108,11 +133,11 @@ resource webApp 'Microsoft.Web/sites@2022-03-01' = {
         }
         {
           name: 'StorageConfiguration__ArticlesTable'
-          value: 'Contents'
+          value: storageAccountTableServiceTable.name
         }
         {
           name: 'StorageConfiguration__ArticleBlobsContainer'
-          value: 'contents'
+          value: storageAccountBlobServiceContainer.name
         } 
         {
           name: 'StorageConfiguration__ConnectionString'
