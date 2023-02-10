@@ -5,7 +5,7 @@ param uniqueName string = uniqueString(resourceGroup().id)
 param location string = resourceGroup().location
 
 //STORAGE ACCOUNT
-var storageAccountName = 'mkstorage${uniqueName}'
+var storageAccountName = 'storage${uniqueName}'
 resource storageAccount 'Microsoft.Storage/storageAccounts@2022-09-01' = {
   name: storageAccountName
   location: location
@@ -15,8 +15,33 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2022-09-01' = {
   kind: 'Storage'
 }
 
+//ARTICLES STORAGE BLOB CONTAINER
+resource storageAccountBlobService 'Microsoft.Storage/storageAccounts/blobServices@2022-05-01' = {
+  name: 'default'
+  parent: storageAccount
+}
+
+resource storageAccountBlobServiceContainer 'Microsoft.Storage/storageAccounts/blobServices/containers@2022-05-01' = {
+  name: 'articleblobs'
+  parent: storageAccountBlobService
+  properties: {
+    publicAccess: 'None'
+  }
+}
+
+//ARTICLES STORAGE TABLE
+resource storageAccountTableService 'Microsoft.Storage/storageAccounts/tableServices@2022-05-01' = {
+  name: 'default'
+  parent: storageAccount
+}
+
+resource storageAccountTableServiceTable 'Microsoft.Storage/storageAccounts/tableServices/tables@2022-05-01' = {
+  name: 'articles'
+  parent: storageAccountTableService
+}
+
 //APP INSIGHTS
-var appInsightsName = 'mk-appinisghts-${uniqueName}'
+var appInsightsName = 'appinisghts-${uniqueName}'
 resource applicationInsights 'Microsoft.Insights/components@2020-02-02' = {
   name: appInsightsName
   location: location
@@ -29,7 +54,7 @@ resource applicationInsights 'Microsoft.Insights/components@2020-02-02' = {
 
 //APP SERVICE PLAN for FUNCTION APP
 resource functionAppServicePlan 'Microsoft.Web/serverfarms@2022-03-01' = {
-  name: 'mk-functionapp-service-${uniqueName}'
+  name: 'functionapp-service-${uniqueName}'
   location: location
   sku: { tier: 'Dynamic', name: 'Y1', family: 'Y', capacity: 1 }
   properties: { reserved: true }
@@ -37,7 +62,7 @@ resource functionAppServicePlan 'Microsoft.Web/serverfarms@2022-03-01' = {
 
 //FUNCTION APP
 resource functionApp 'Microsoft.Web/sites@2022-03-01' = {
-  name: 'mk-functionapp-${uniqueName}'
+  name: 'functionapp-${uniqueName}'
   location: location
   kind: 'functionapp,linux'
   properties: {
@@ -65,11 +90,11 @@ resource functionApp 'Microsoft.Web/sites@2022-03-01' = {
         }
         {
           name: 'StorageConfiguration__ArticlesTable'
-          value: 'Contents'
+          value: storageAccountTableServiceTable.name
         }
         {
           name: 'StorageConfiguration__ArticleBlobsContainer'
-          value: 'contents'
+          value: storageAccountBlobServiceContainer.name
         } 
         {
           name: 'StorageConfiguration__ConnectionString'
@@ -83,7 +108,7 @@ output functionAppName string  = functionApp.name
 
 //APP SERVICE PLAN for WEB APP
 resource webAppServicePlan 'Microsoft.Web/serverfarms@2022-03-01' = {
-  name: 'mk-webapp-service-${uniqueName}'
+  name: 'webapp-service-${uniqueName}'
   location: location
   sku: {
     name: 'B1'
@@ -94,7 +119,7 @@ resource webAppServicePlan 'Microsoft.Web/serverfarms@2022-03-01' = {
 
 //WEB APP
 resource webApp 'Microsoft.Web/sites@2022-03-01' = {
-  name: 'mk-webapp-${uniqueName}'
+  name: 'webapp-${uniqueName}'
   location: location
   kind: 'app,linux'
   properties: {
@@ -108,11 +133,11 @@ resource webApp 'Microsoft.Web/sites@2022-03-01' = {
         }
         {
           name: 'StorageConfiguration__ArticlesTable'
-          value: 'Contents'
+          value: storageAccountTableServiceTable.name
         }
         {
           name: 'StorageConfiguration__ArticleBlobsContainer'
-          value: 'contents'
+          value: storageAccountBlobServiceContainer.name
         } 
         {
           name: 'StorageConfiguration__ConnectionString'

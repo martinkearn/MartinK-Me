@@ -1,6 +1,4 @@
-﻿using System.Text;
-using Microsoft.Azure.Functions.Worker;
-using Microsoft.Azure.WebJobs;
+﻿using Microsoft.Azure.Functions.Worker;
 using Microsoft.DurableTask;
 
 namespace Workflow.Orchestrations
@@ -14,10 +12,10 @@ namespace Workflow.Orchestrations
             ArticleContext articleContext = context.GetInput<ArticleContext>();
 
             // Delete blob
-            await context.CallActivityAsync(nameof(DeleteBlobActivity), articleContext);
+            await context.CallActivityAsync(nameof(DeleteBlobActivity), articleContext.HtmlBlobFileName);
 
             // Delete article
-            await context.CallActivityAsync(nameof(DeleteArticleActivity), articleContext);
+            await context.CallActivityAsync(nameof(DeleteArticleActivity), articleContext.Article.Key);
 
             List<string> outputs = new()
             {

@@ -1,4 +1,4 @@
-﻿namespace Domain.Interfaces
+﻿namespace Workflow.Interfaces
 {
     /// <summary>
     /// Service for working with markdown.

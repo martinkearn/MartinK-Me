@@ -1,5 +1,4 @@
 ﻿using Microsoft.Azure.Functions.Worker;
-using Microsoft.Azure.WebJobs;
 
 namespace Workflow.Activities
 {
@@ -13,9 +12,9 @@ namespace Workflow.Activities
         }
 
         [Function(nameof(GetGithubContentActivity))]
-        public async Task<GithubContent> RunGetGithubContentActivity([ActivityTrigger] ArticleContext articleContext, FunctionContext executionContext)
+        public async Task<GithubContent> RunGetGithubContentActivity([ActivityTrigger] string githubContentApiUri, FunctionContext executionContext)
         {
-            return await _githubService.GetGithubContent(articleContext.GithubContentApiUri);
+            return await _githubService.GetGithubContent(githubContentApiUri);
         }
     }
 }

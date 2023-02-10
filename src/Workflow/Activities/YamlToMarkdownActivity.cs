@@ -1,5 +1,4 @@
 ﻿using Microsoft.Azure.Functions.Worker;
-using Microsoft.Azure.WebJobs;
 
 namespace Workflow.Activities
 {
@@ -16,7 +15,7 @@ namespace Workflow.Activities
         public Article RunYamlToMarkdownActivity([ActivityTrigger] ArticleContext articleContext, FunctionContext executionContext)
         {
             // Convert yaml to article
-            return _yamlService.YamlToArticle(articleContext.PlainContents, articleContext.HtmlBlobStorageUri, articleContext.Article);
+            return _yamlService.YamlToArticle(articleContext.PlainContents, articleContext.Article);
         }
     }
 }

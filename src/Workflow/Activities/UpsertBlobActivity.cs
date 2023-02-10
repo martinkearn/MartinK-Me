@@ -1,5 +1,4 @@
 ﻿using Microsoft.Azure.Functions.Worker;
-using Microsoft.Azure.WebJobs;
 
 namespace Workflow.Activities
 {
@@ -15,7 +14,7 @@ namespace Workflow.Activities
         [Function(nameof(UpsertBlobActivity))]
         public async Task<string> RunUpsertBlobActivity([ActivityTrigger] ArticleContext articleContext, FunctionContext executionContext)
         {
-            return await _storageService.UpsertBlob(articleContext.BlobFileName, articleContext.PlainHtmlContents);
+            return await _storageService.UpsertBlob(articleContext.HtmlBlobFileName, articleContext.PlainHtmlContents);
         }
     }
 }

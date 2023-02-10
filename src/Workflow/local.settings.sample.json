@@ -3,8 +3,8 @@
   "Values": {
     "AzureWebJobsStorage": "storage connection string here",
     "FUNCTIONS_WORKER_RUNTIME": "dotnet-isolated",
-    "StorageConfiguration:ArticleBlobsContainer": "contents",
+    "StorageConfiguration:ArticleBlobsContainer": "articleblobs",
     "StorageConfiguration:ConnectionString": "storage connection string here",
-    "StorageConfiguration:ArticlesTable": "Contents"
+    "StorageConfiguration:ArticlesTable": "articles"
   }
 }

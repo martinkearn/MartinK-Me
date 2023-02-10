@@ -1,5 +1,4 @@
 ﻿using Microsoft.Azure.Functions.Worker;
-using Microsoft.Azure.WebJobs;
 
 namespace Workflow.Activities
 {
@@ -13,9 +12,9 @@ namespace Workflow.Activities
         }
 
         [Function(nameof(DeleteArticleActivity))]
-        public async Task RunDeleteArticleActivity([ActivityTrigger] ArticleContext articleContext, FunctionContext executionContext)
+        public async Task RunDeleteArticleActivity([ActivityTrigger] string articleKey, FunctionContext executionContext)
         {
-            await _storageService.DeleteArticle(articleContext.Article.Key);
+            await _storageService.DeleteArticle(articleKey);
         }
     }
 }

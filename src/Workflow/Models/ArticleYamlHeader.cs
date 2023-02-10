@@ -1,4 +1,4 @@
-﻿namespace Domain.Models
+﻿namespace Workflow.Models
 {
     /// <summary>
     /// Used to deserialise the YAML front matter in an article Markdown file
