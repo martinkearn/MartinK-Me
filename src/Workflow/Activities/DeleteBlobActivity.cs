@@ -1,5 +1,4 @@
 ﻿using Microsoft.Azure.Functions.Worker;
-using Microsoft.Azure.WebJobs;
 
 namespace Workflow.Activities
 {
@@ -13,9 +12,9 @@ namespace Workflow.Activities
         }
 
         [Function(nameof(DeleteBlobActivity))]
-        public async Task RunDeleteBlobActivity([ActivityTrigger] ArticleContext articleContext, FunctionContext executionContext)
+        public async Task RunDeleteBlobActivity([ActivityTrigger] string htmlBlobFileName, FunctionContext executionContext)
         {
-            await _storageService.DeleteBlob(articleContext.BlobFileName);
+            await _storageService.DeleteBlob(htmlBlobFileName);
         }
     }
 }

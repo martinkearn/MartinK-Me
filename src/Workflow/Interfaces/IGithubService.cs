@@ -1,6 +1,4 @@
-﻿using Domain.Models;
-
-namespace Domain.Interfaces
+﻿namespace Workflow.Interfaces
 {
     /// <summary>
     /// Service for interacting with Github.
@@ -12,6 +10,6 @@ namespace Domain.Interfaces
         /// </summary>
         /// <param name="fileApiUrl">The Github api url for the file to return.</param>
         /// <returns>Github content for the file.</returns>
-        Task<GithubContent> GetGithubContent(Uri fileApiUrl);
+        Task<GithubContent> GetGithubContent(string fileApiUrl);
     }
 }

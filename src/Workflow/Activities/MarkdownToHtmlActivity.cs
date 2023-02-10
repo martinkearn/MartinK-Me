@@ -1,5 +1,4 @@
 ﻿using Microsoft.Azure.Functions.Worker;
-using Microsoft.Azure.WebJobs;
 
 namespace Workflow.Activities
 {
@@ -13,9 +12,9 @@ namespace Workflow.Activities
         }
 
         [Function(nameof(MarkdownToHtmlActivity))]
-        public string RunMarkdownToHtmlActivity([ActivityTrigger] ArticleContext articleContext, FunctionContext executionContext)
+        public string RunMarkdownToHtmlActivity([ActivityTrigger] string plainContents, FunctionContext executionContext)
         {
-            return _markdownService.MarkdownToHtml(articleContext.PlainContents);
+            return _markdownService.MarkdownToHtml(plainContents);
         }
     }
 }

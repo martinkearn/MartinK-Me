@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace Domain.Models
+namespace Workflow.Models
 {
     /// <summary>
     /// Class used to deserialise the output of the Github Content API for a given file.

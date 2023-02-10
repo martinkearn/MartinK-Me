@@ -1,7 +1,6 @@
 using System.Text;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.DurableTask;
-using Microsoft.Extensions.Logging;
 
 namespace Workflow.Orchestrations
 {
@@ -43,11 +42,6 @@ namespace Workflow.Orchestrations
 
             foreach (string item in filteredItems)
             {
-                // Prepare the blob name (.html version of the markdown file)
-                StringBuilder blobFileName = new(item.ToLowerInvariant());
-                _ = blobFileName.Replace("blogs/", string.Empty);
-                _ = blobFileName.Replace(".md", ".html");
-
                 // Prepare the article key (base64 encoded version of the gihub path .. i.e blogs/Test.md)
                 byte[] plainTextBytes = Encoding.UTF8.GetBytes(item.ToLowerInvariant());
                 string articleKey = Convert.ToBase64String(plainTextBytes);
@@ -57,7 +51,7 @@ namespace Workflow.Orchestrations
                 ArticleContext articleContext = new()
                 {
                     GithubContentApiUri = new Uri($"https://api.github.com/repos/{author}/{repo}/contents/{item}"),
-                    BlobFileName = blobFileName.ToString().ToLowerInvariant(),
+                    HtmlBlobFileName = $"{articleKey}.html",
                     Article = article,
                 };
 

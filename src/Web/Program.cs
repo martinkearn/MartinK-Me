@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Web;
-using Services;
+﻿using Services;
 using Domain.Interfaces;
 using Domain.Models;
 

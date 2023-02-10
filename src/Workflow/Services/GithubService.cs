@@ -1,8 +1,6 @@
 ﻿using System.Text.Json;
-using Domain.Interfaces;
-using Domain.Models;
 
-namespace Services
+namespace Workflow.Services
 {
     /// <inheritdoc/>
     public class GithubService : IGithubService
@@ -14,11 +12,11 @@ namespace Services
             _clientFactory = httpClientFactory;
         }
 
-        public async Task<GithubContent> GetGithubContent(Uri fileApiUrl)
+        public async Task<GithubContent> GetGithubContent(string fileApiUrl)
         {
             // Make request to Github
             var client = _clientFactory.CreateClient();
-            client.BaseAddress = fileApiUrl;
+            client.BaseAddress = new Uri(fileApiUrl);
             client.DefaultRequestHeaders.Add("User-Agent", "Martink.me - GetFileContentsActivity");
             var response = await client.GetAsync(fileApiUrl);
             response.EnsureSuccessStatusCode();

@@ -1,15 +1,12 @@
-﻿using System.Text;
-using Domain.Interfaces;
-using Domain.Models;
-using YamlDotNet.Serialization;
+﻿using YamlDotNet.Serialization;
 using YamlDotNet.Serialization.NamingConventions;
 
-namespace Services
+namespace Workflow.Services
 {
     /// <inheritdoc/>
     public class YamlService : IYamlService
     {
-        public Article YamlToArticle(string plainFileContents, string blobUri, Article article)
+        public Article YamlToArticle(string plainFileContents, Article article)
         {
             // Check we have required props
             if (string.IsNullOrEmpty(article.Key))
@@ -31,11 +28,6 @@ namespace Services
                 throw new ArgumentException("Title is a required field which is missing from the yaml header.", plainFileContents);
             }
 
-            // Build Path
-            var pathSb = new StringBuilder(string.Join("-", yamlHeader.Title.Split(Path.GetInvalidFileNameChars())));
-            pathSb.Replace(" ", "-");
-            var path = pathSb.ToString().ToLowerInvariant();
-
             // Build Article
             if (article == null) article = new Article();
             article.Title = yamlHeader.Title;
@@ -45,9 +37,7 @@ namespace Services
             article.Thumbnail = yamlHeader.Thumbnail ?? string.Empty;
             article.Published = yamlHeader.Published;
             article.Categories = (string.Join(",", yamlHeader.Categories)) ?? string.Empty;
-            article.HtmlBlobPath = blobUri;
             article.Status = yamlHeader.Status;
-            article.WebPath = path;
 
             // Return
             return article;

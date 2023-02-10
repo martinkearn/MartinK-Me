@@ -1,7 +1,6 @@
-﻿using Domain.Interfaces;
-using Markdig;
+﻿using Markdig;
 
-namespace Services
+namespace Workflow.Services
 {
     /// <inheritdoc/>
     public class MarkdownService : IMarkdownService

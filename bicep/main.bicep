@@ -65,11 +65,11 @@ resource functionApp 'Microsoft.Web/sites@2022-03-01' = {
         }
         {
           name: 'StorageConfiguration__ArticlesTable'
-          value: 'Contents'
+          value: 'articles'
         }
         {
           name: 'StorageConfiguration__ArticleBlobsContainer'
-          value: 'contents'
+          value: 'articleblobs'
         } 
         {
           name: 'StorageConfiguration__ConnectionString'

@@ -1,5 +1,4 @@
-﻿using System.Collections.Concurrent;
-using System.Text;
+﻿using System.Text;
 using Azure.Data.Tables;
 using Azure.Storage.Blobs;
 using Domain.Interfaces;

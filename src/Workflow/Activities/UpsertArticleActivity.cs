@@ -1,5 +1,4 @@
 ﻿using Microsoft.Azure.Functions.Worker;
-using Microsoft.Azure.WebJobs;
 
 namespace Workflow.Activities
 {
@@ -13,9 +12,9 @@ namespace Workflow.Activities
         }
 
         [Function(nameof(UpsertArticleActivity))]
-        public async Task RunUpsertArticleActivity([ActivityTrigger] ArticleContext articleContext, FunctionContext executionContext)
+        public async Task RunUpsertArticleActivity([ActivityTrigger] Article article, FunctionContext executionContext)
         {
-            await _storageService.UpsertArticle(articleContext.Article);
+            await _storageService.UpsertArticle(article);
         }
     }
 }

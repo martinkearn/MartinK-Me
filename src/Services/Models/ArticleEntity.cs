@@ -1,7 +1,6 @@
 ﻿using Azure;
 using Azure.Data.Tables;
 using Domain.Interfaces;
-using Domain.Models;
 
 namespace Services.Models
 {

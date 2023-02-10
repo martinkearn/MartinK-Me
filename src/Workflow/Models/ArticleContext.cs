@@ -33,7 +33,7 @@ namespace Workflow.Models
         /// <summary>
         /// Name of the HTML blob in storage, for exmaple test.html
         /// </summary>
-        public string BlobFileName { get; set; }
+        public string HtmlBlobFileName { get; set; }
 
         /// <summary>
         /// Article entitiy which gets stored and used by other systems.
