@@ -1,18 +1,19 @@
 @page "/tags/{tag}"
 @using Domain.Models
 @inject IStorageService StorageService
+@inject TagService TagService
 
 <PageTitle>Articles</PageTitle>
 
 <HeaderComponent 
-    H1=@tag
+    H1=@cat
     Line1="All the articles I have about this topic." />
 
 @{
     var backgroundCount = 1;
 }
 
-@foreach (Article article in articles)
+@foreach (Article article in articesInTag)
 {
     <div class="container-fluid sequence-background-@backgroundCount p-4">
         <div class="container">
@@ -44,21 +45,37 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <p>@articles.Count articles avaliable dating back to 2005!</p>
+                <p>@articesInTag.Count articles under @cat.ToUpperInvariant(). @articles.Count articles overall dating back to 2005!</p>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <a href="/tags" class="btn btn-secondary"><i class="fa fa-angle-double-left" aria-hidden="true"></i> See all tags</a>
+                <a href="/articles" class="btn btn-secondary"><i class="fa fa-angle-double-left" aria-hidden="true"></i> See all articles</a>
             </div>
         </div>
     </div>
 </div>
 
+
+
 @code {
     [Parameter]
     public string tag { get; set; }
 
+    private string cat;
+
     private List<Article> articles = new List<Article>();
+
+    private List<Article> articesInTag = new List<Article>(); 
 
     protected override void OnInitialized()
     {
+        cat = TagService.TagToCategory(tag);
         articles = StorageService.QueryArticles(default, default);
+        articesInTag = articles.Where(a => a.Categories.ToLowerInvariant().Contains(cat)).ToList();
     }
 
 }

@@ -1,6 +1,7 @@
 ﻿using Services;
 using Domain.Interfaces;
 using Domain.Models;
+using Web.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,6 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddSingleton<IStorageService, StorageService>();
+builder.Services.AddSingleton<TagService>();
 builder.Services.AddOptions<StorageConfiguration>()
     .Configure<IConfiguration>((settings, configuration) =>
     {

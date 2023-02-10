@@ -1,3 +1,5 @@
+@inject TagService TagService
+
 @foreach (var tag in Tags)
 {
     <span class="badge rounded-pill text-bg-secondary"><a href="/tags/@tag">#@tag</a> </span>
@@ -15,15 +17,8 @@
         var cats = Categories.Split(',');
         foreach (var cat in cats)
         {
-            var tag = FormatCategoryToTag(cat);
+            var tag = TagService.CategoryToTag(cat);
             Tags.Add(tag);
         }
-    }
-
-    private string FormatCategoryToTag(string category)
-    {
-        var tag = category.Replace(' ', '-');
-        tag = tag.ToLowerInvariant();
-        return tag;
     }
 }
