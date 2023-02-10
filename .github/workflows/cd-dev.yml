@@ -7,7 +7,7 @@ on:
     - main
 
 jobs:
-  Pr_deployment:
+  PR-CD-Dev:
     if: github.event_name == 'pull_request' && github.event.action != 'closed'
     uses: ./.github/workflows/deployment.yml
     with:
