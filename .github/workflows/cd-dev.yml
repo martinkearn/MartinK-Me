@@ -28,7 +28,7 @@ jobs:
         resourceGroupName: 'mknet-dev'
         template: ./bicep/main.bicep
         failOnStdErr: false
-        parameters: 'uniqueName=mknet-dev'
+        parameters: 'uniqueName=mknetdev'
         
     - name: setup-dotnet
       uses: actions/setup-dotnet@v1
