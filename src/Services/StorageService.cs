@@ -121,6 +121,9 @@ namespace Services
                 articles = articles.Take(takeNotNullable).ToList();
             }
 
+            // Remove drafts
+            articles = articles.Where(a => a.Status.ToLowerInvariant() == "published").ToList();
+
             return articles;
         }
 

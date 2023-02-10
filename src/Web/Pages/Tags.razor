@@ -1,0 +1,38 @@
+@page "/tags"
+@using Domain.Models
+@inject IStorageService StorageService
+
+<PageTitle>Tags</PageTitle>
+
+<HeaderComponent 
+    H1="Tags" 
+    Line1="Every article is tagged at least once." 
+    Line2="Tags are groups of articles that relate to a topic."  />
+
+<div class="container-fluid p-4">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <TagsList Categories="@categories" />
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    private string categories = "";
+
+    protected override void OnInitialized()
+    {
+        var articles = StorageService.QueryArticles(default, default);
+        foreach (var article in articles)
+        {
+            var articleCats = article.Categories.Split(',');
+            foreach (var articleCat in articleCats)
+            {
+                if (!categories.Contains(articleCat)) categories += articleCat +",";
+            }
+        }
+    }
+
+}

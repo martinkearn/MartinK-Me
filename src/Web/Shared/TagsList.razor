@@ -11,18 +11,11 @@
 
     protected override void OnInitialized()
     {
+        Categories = Categories.TrimEnd(',');
         var cats = Categories.Split(',');
         foreach (var cat in cats)
         {
-            var tag = FormatCategoryToTag(cat);
-            Tags.Add(tag);
+            Tags.Add(cat);
         }
-    }
-
-    private string FormatCategoryToTag(string category)
-    {
-        var tag = category.Replace(' ', '-');
-        tag = tag.ToLowerInvariant();
-        return tag;
     }
 }

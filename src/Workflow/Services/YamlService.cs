@@ -28,6 +28,16 @@ namespace Workflow.Services
                 throw new ArgumentException("Title is a required field which is missing from the yaml header.", plainFileContents);
             }
 
+            // Prepare categories to tags (url friendly)
+            var tags = "";
+            foreach (var cat in yamlHeader.Categories)
+            {
+                var tag = cat.Replace(' ', '-');
+                tag = tag.ToLowerInvariant();
+                tags += tag + ",";
+            }
+            tags = tags.TrimEnd(',');
+
             // Build Article
             if (article == null) article = new Article();
             article.Title = yamlHeader.Title;
@@ -36,7 +46,7 @@ namespace Workflow.Services
             article.Image = yamlHeader.Image ?? string.Empty;
             article.Thumbnail = yamlHeader.Thumbnail ?? string.Empty;
             article.Published = yamlHeader.Published;
-            article.Categories = (string.Join(",", yamlHeader.Categories)) ?? string.Empty;
+            article.Categories = tags;
             article.Status = yamlHeader.Status;
 
             // Return
