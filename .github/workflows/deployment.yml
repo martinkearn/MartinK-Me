@@ -3,11 +3,16 @@ name: Azure Deployment
 on:
   workflow_call:
       inputs:
-        rgname:
+        rg:
           type: string
           required: true
         uniquelabel:
           type: string
+          required: true
+      secrets:
+        azure-credentials:
+          required: true
+        azure-subscription:
           required: true
    
 jobs:
@@ -22,7 +27,7 @@ jobs:
     - name: azure-login
       uses: azure/login@v1
       with:
-        creds: ${{ secrets.AZURE_CREDENTIALS }}
+        creds: ${{ secrets.azure-credentials }}
         
     - name: setup-dotnet
       uses: actions/setup-dotnet@v1
@@ -33,8 +38,8 @@ jobs:
     - name: bicep-deploy
       uses: azure/arm-deploy@v1
       with:
-        subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION }}
-        resourceGroupName: ${{ inputs.rgname }}
+        subscriptionId: ${{ secrets.azure-subscription }}
+        resourceGroupName: ${{ inputs.rg }}
         template: ./bicep/main.bicep
         failOnStdErr: false
         parameters: 'uniqueName=${{ inputs.uniquelabel }}'
@@ -45,7 +50,7 @@ jobs:
       with:
         inlineScript: |
           #!/bin/bash
-          outputValue=$( az deployment group show -g ${{ inputs.rgname }} --name main --query properties.outputs.webAppName.value -o tsv)
+          outputValue=$( az deployment group show -g ${{ inputs.rg }} --name main --query properties.outputs.webAppName.value -o tsv)
           echo "WebAppName=$outputValue" >> $GITHUB_ENV   
 
     - name: dotnet-build-publish-webapp
@@ -66,7 +71,7 @@ jobs:
       with:
         inlineScript: |
           #!/bin/bash
-          outputValue=$( az deployment group show -g ${{ inputs.rgname }} --name main --query properties.outputs.functionAppName.value -o tsv)
+          outputValue=$( az deployment group show -g ${{ inputs.rg }} --name main --query properties.outputs.functionAppName.value -o tsv)
           echo "FunctionAppName=$outputValue" >> $GITHUB_ENV
      
     - name: dotnet-build-publish-functionapp

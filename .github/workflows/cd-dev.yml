@@ -11,5 +11,8 @@ jobs:
     if: github.event_name == 'pull_request' && github.event.action != 'closed'
     uses: ./.github/workflows/deployment.yml
     with:
-      rgname: 'mknet-dev'
+      rg: 'mknet-dev'
       uniquelabel: 'mknetdev'
+    secrets:
+      azure-credentials: ${{ secrets.AZURE_CREDENTIALS }}
+      azure-subscription: ${{ secrets.AZURE_SUBSCRIPTION }}
