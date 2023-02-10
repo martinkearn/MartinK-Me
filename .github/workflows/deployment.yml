@@ -1,0 +1,87 @@
+name: Azure Deployment
+
+on:
+  workflow_call:
+      inputs:
+        rg:
+          type: string
+          required: true
+        uniquelabel:
+          type: string
+          required: true
+      secrets:
+        azure-credentials:
+          required: true
+        azure-subscription:
+          required: true
+   
+jobs:
+  Deploy-Infrastructure:
+# Setup
+    runs-on: ubuntu-latest
+    steps:
+
+    - name: checkout
+      uses: actions/checkout@main
+
+    - name: azure-login
+      uses: azure/login@v1
+      with:
+        creds: ${{ secrets.azure-credentials }}
+        
+    - name: setup-dotnet
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: '7.0'
+
+# Bicep
+    - name: bicep-deploy
+      uses: azure/arm-deploy@v1
+      with:
+        subscriptionId: ${{ secrets.azure-subscription }}
+        resourceGroupName: ${{ inputs.rg }}
+        template: ./bicep/main.bicep
+        failOnStdErr: false
+        parameters: 'uniqueName=${{ inputs.uniquelabel }}'
+
+# Web App code
+    - name: bicep-output-webappname
+      uses: azure/CLI@v1
+      with:
+        inlineScript: |
+          #!/bin/bash
+          outputValue=$( az deployment group show -g ${{ inputs.rg }} --name main --query properties.outputs.webAppName.value -o tsv)
+          echo "WebAppName=$outputValue" >> $GITHUB_ENV   
+
+    - name: dotnet-build-publish-webapp
+      run: |
+        dotnet restore ./src/Web/Web.csproj
+        dotnet build ./src/Web/Web.csproj --configuration Release
+        dotnet publish ./src/Web/Web.csproj -c Release -o './src/Web/output' 
+
+    - name: azure-deploy-webapp
+      uses: azure/webapps-deploy@v2
+      with: 
+        app-name: ${{ env.WebAppName }}
+        package: './src/Web/output'
+
+# Function code
+    - name: bicep-output-functionappname
+      uses: azure/CLI@v1
+      with:
+        inlineScript: |
+          #!/bin/bash
+          outputValue=$( az deployment group show -g ${{ inputs.rg }} --name main --query properties.outputs.functionAppName.value -o tsv)
+          echo "FunctionAppName=$outputValue" >> $GITHUB_ENV
+     
+    - name: dotnet-build-publish-functionapp
+      run: |
+        dotnet restore ./src/Workflow/Workflow.csproj
+        dotnet build ./src/Workflow/Workflow.csproj --configuration Release
+        dotnet publish ./src/Workflow/Workflow.csproj -c Release -o './src/Workflow/output' 
+          
+    - name: azure-deploy-functionapp
+      uses: Azure/functions-action@v1.4.8
+      with:
+        app-name: ${{ env.FunctionAppName }}
+        package: './src/Workflow/output'

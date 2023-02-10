@@ -1,8 +1,8 @@
-name: CD Dev
+name: CD Prod
 
 on:
   workflow_dispatch:
-  pull_request:
+  push:
     branches:
     - main
 
@@ -11,8 +11,8 @@ jobs:
     if: github.event_name == 'pull_request' && github.event.action != 'closed'
     uses: ./.github/workflows/deployment.yml
     with:
-      rg: 'mknet-dev'
-      uniquelabel: 'mknetdev'
+      rg: 'mknet-prod'
+      uniquelabel: 'mknetprod'
     secrets:
       azure-credentials: ${{ secrets.AZURE_CREDENTIALS }}
       azure-subscription: ${{ secrets.AZURE_SUBSCRIPTION }}
