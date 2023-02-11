@@ -46,7 +46,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <p>@articles.Count articles avaliable dating back to 2005! <button type='button' class='btn btn-link' @onclick=(EnableDrafts)>view drafts also</button></p>
+                <p>@articles.Count articles avaliable dating back to 2005! If you want to see even more, you can <a href="/articles" @onclick=(EnableDrafts)>view drafts</a></p>
                 <p>
                     <div class="btn-toolbar" role="toolbar" aria-label="Paging buttons">
                         <div class="btn-group me-2" role="group" aria-label="First group">
