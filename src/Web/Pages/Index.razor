@@ -53,6 +53,6 @@
 
     protected override void OnInitialized()
     {
-        articles = StorageService.QueryArticles(default, 5);
+        articles = StorageService.QueryArticles(default, false, 5);
     }
 }

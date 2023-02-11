@@ -24,7 +24,7 @@
 
     protected override void OnInitialized()
     {
-        var articles = StorageService.QueryArticles(default, default);
+        var articles = StorageService.QueryArticles(default, false, default);
         foreach (var article in articles)
         {
             var articleCats = article.Categories.Split(',');

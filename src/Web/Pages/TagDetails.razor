@@ -69,7 +69,7 @@
 
     protected override void OnInitialized()
     {
-        articles = StorageService.QueryArticles(default, default);
+        articles = StorageService.QueryArticles(default, false, default);
         articesInTag = articles.Where(a => a.Categories.ToLowerInvariant().Contains(tag)).ToList();
     }
 

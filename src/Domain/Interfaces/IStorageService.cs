@@ -40,9 +40,10 @@ namespace Domain.Interfaces
         /// Gets a list of Article
         /// </summary>
         /// <param name="filter">An OData filter string to be applied to the query. If ommited everything with the standard partition key will be used.</param>
+        /// <param name="includeDrafts">If true only article where Status=Published. If false, everything is returned.</param>
         /// <param name="take">The number of articles to return. Sorted by most recent base don Published. Defaults to 5.</param>
         /// <returns>List of articles</returns>
-        public List<Article> QueryArticles(string filter, int? take);
+        public List<Article> QueryArticles(string filter, bool includeDrafts, int? take);
 
         /// <summary>
         /// Helper method which constructs an OData query and gets a list of Articles which match

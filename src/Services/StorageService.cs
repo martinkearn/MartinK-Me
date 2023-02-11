@@ -81,7 +81,7 @@ namespace Services
             await _tableClient.DeleteEntityAsync(_partitionKey, articleKey);
         }
 
-        public List<Article> QueryArticles(string filter, int? take)
+        public List<Article> QueryArticles(string filter, bool includeDrafts, int? take)
         {
             if (string.IsNullOrEmpty(filter))
             {
@@ -120,8 +120,14 @@ namespace Services
                 articles = articles.Take(takeNotNullable).ToList();
             }
 
-            // Remove drafts and sort
-            articles = articles.Where(a => a.Status.ToLowerInvariant() == "published").OrderByDescending(a => a.Published).ToList();
+            // Remove drafts
+            if (!includeDrafts)
+            {
+                articles = articles.Where(a => a.Status.ToLowerInvariant() == "published").ToList();
+            }
+
+            //Sort by Published
+            articles = articles.OrderByDescending(a => a.Published).ToList();
 
             return articles;
         }
@@ -133,7 +139,7 @@ namespace Services
                 return null;
             }
             var filter = $"{property} eq '{value}'";
-            var articles = QueryArticles(filter, default);
+            var articles = QueryArticles(filter, false, default);
             return articles;
         }
 
