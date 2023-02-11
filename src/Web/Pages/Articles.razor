@@ -7,8 +7,8 @@
 <HeaderComponent 
     H1="Articles" 
     Line1="I adopt a 'learn in public' approach to blogging. Whenever I learn something new, I try to capture it here." 
-    Line2="All my articles are written on <a href='https://github.com/martinkearn/Content/tree/master/Blogs'><i class='fa fa-github fa-lg' aria-hidden='true'></i> GitHub</a>. You can raise issues, create pull requests or even fork the content... its open source." 
-    Line3="By default, you'll only see published articles, but you can see everytying on Github." />
+    Line2="All my articles are written on <a href='https://github.com/martinkearn/Content/tree/master/Blogs'><i class='fa fa-github fa-lg' aria-hidden='true'></i> GitHub</a>." 
+    Line3="You can raise issues, create pull requests or even fork the content... its open source." />
 
 @{
     var backgroundCount = 1;
@@ -46,7 +46,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <p>@articles.Count articles avaliable dating back to 2005!</p>
+                <p>@articles.Count articles avaliable dating back to 2005! <button type='button' class='btn btn-link' @onclick=(EnableDrafts)>view drafts also</button></p>
                 <p>
                     <div class="btn-toolbar" role="toolbar" aria-label="Paging buttons">
                         <div class="btn-group me-2" role="group" aria-label="First group">
@@ -76,16 +76,27 @@
 
     protected override void OnInitialized()
     {
-        articles = StorageService.QueryArticles(default, default);
+        articles = StorageService.QueryArticles(default, false, default);
+        Setup();
+    }
+
+    private void Setup()
+    {
         pageOfArticles = articles.Take(articlesPerPage).ToList();
         var pagesDec = (double)articles.Count/(double)articlesPerPage;
         pages = Convert.ToInt16(Math.Ceiling(pagesDec));
+        currentPageNumber = 1;
     }
 
     private void ChangePage(int page)
     {
         currentPageNumber = page;
         pageOfArticles = articles.Skip((page-1)*articlesPerPage).Take(articlesPerPage).ToList();
-        StateHasChanged();
+    }
+
+    private void EnableDrafts()
+    {
+        articles = StorageService.QueryArticles(default, true, default);
+        Setup();
     }
 }
