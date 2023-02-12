@@ -1,4 +1,5 @@
 ﻿@inherits LayoutComponentBase
+@inject NavigationManager NavigationManager
 
 <PageTitle>Web</PageTitle>
 
@@ -39,31 +40,34 @@
         </div>
     </nav>
 
-    <div class="mb-5">
+    <div class="mb-1">
         @Body
     </div>
 
-    <nav class="navbar navbar-expand fixed-bottom footer">
-        <div class="container">
-            <a class="navbar-brand" href="#">Don't be a stranger ...</a>
-            <ul class="navbar-nav  me-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="https://twitter.com/MartinKearn"><i class="fa-brands fa-twitter fa-xl" aria-hidden="true"></i></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="https://uk.linkedin.com/in/martin-kearn-204a681"><i class="fa-brands fa-linkedin fa-xl" aria-hidden="true"></i></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="https://github.com/martinkearn"><i class="fa-brands fa-github fa-xl" aria-hidden="true"></i></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="http://stackoverflow.com/users/1601158/martin-kearn"><i class="fa-brands fa-stack-overflow fa-xl" aria-hidden="true"></i></a>
+    @if (!NavigationManager.Uri.ToLowerInvariant().Contains("/shortcuts"))
+    {
+        <nav class="navbar navbar-expand footer">
+            <div class="container">
+                <a class="navbar-brand" href="#">Don't be a stranger ...</a>
+                <ul class="navbar-nav  me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="https://twitter.com/MartinKearn"><i class="fa-brands fa-twitter fa-xl" aria-hidden="true"></i></a>
                     </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="mailto:martin.kearn@microsoft.com?Subject=Enquiry%20from%20MartinK.me"><i class="fa-solid fa-envelope fa-xl" aria-hidden="true"></i></a>
-                </li>
-            </ul>
-        </div>
-    </nav>
-</div>
+                    <li class="nav-item">
+                        <a class="nav-link" href="https://uk.linkedin.com/in/martin-kearn-204a681"><i class="fa-brands fa-linkedin fa-xl" aria-hidden="true"></i></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="https://github.com/martinkearn"><i class="fa-brands fa-github fa-xl" aria-hidden="true"></i></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="http://stackoverflow.com/users/1601158/martin-kearn"><i class="fa-brands fa-stack-overflow fa-xl" aria-hidden="true"></i></a>
+                        </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="mailto:martin.kearn@microsoft.com?Subject=Enquiry%20from%20MartinK.me"><i class="fa-solid fa-envelope fa-xl" aria-hidden="true"></i></a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    }
 
+</div>
