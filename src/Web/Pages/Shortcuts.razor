@@ -4,19 +4,50 @@
 
 <h1>Shortcuts</h1>
 
+@foreach (var group in groups)
+{
+    <p>@group</p>
+}
+
 @foreach (var shortcut in shortcuts)
 {
     <p>@shortcut.Key @shortcut.Title @shortcut.Url @shortcut.Group</p>
 }
 
-<button @onclick="Delete">Delete</button>
+<!-- Delete trigger modal -->
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#deleteModal">
+  Delete
+</button>
 
-<!-- Button trigger modal -->
+<!-- Delete Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="deleteModalLabel">Delete Shortcut</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form>
+            <div class="mb-3">
+                <label for="addTitle" class="form-label">Title</label>
+                <input type="text" class="form-control" id="deleteTitle" @bind-value=@deleteTitle >
+            </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" @onclick="Delete">Delete</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Add button trigger modal -->
 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addModal">
   Add
 </button>
 
-<!-- Modal -->
+<!-- Add Modal -->
 <div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -50,6 +81,10 @@
 @code {
     private List<Shortcut> shortcuts;
 
+    private List<string> groups;
+
+    private string deleteTitle;
+
     private string newTitle;
 
     private string newUrl;
@@ -58,7 +93,7 @@
 
     protected override void OnInitialized()
     {
-        shortcuts = StorageService.QueryShortcuts(string.Empty, default);
+        RefreshPage();
     }
 
     private void Create()
@@ -78,15 +113,23 @@
         newTitle = string.Empty;
         newUrl = string.Empty;
 
-        // Refresh page
-        shortcuts = StorageService.QueryShortcuts(string.Empty, default);
+        RefreshPage();
     }
 
     private void Delete()
     {
-        var lastShortcutRowkey = shortcuts.LastOrDefault().Key;
-        StorageService.DeleteShortcut(lastShortcutRowkey);
+        var deleteShortcutKey = shortcuts.Where(s => s.Title.ToLowerInvariant() == deleteTitle.ToLowerInvariant()).FirstOrDefault().Key;
+        StorageService.DeleteShortcut(deleteShortcutKey);
 
+        // Clear
+        deleteTitle = string.Empty;
+
+        RefreshPage();
+    }
+
+    private void RefreshPage()
+    {
         shortcuts = StorageService.QueryShortcuts(string.Empty, default);
+        groups = shortcuts.Select(s => s.Group).Distinct().ToList();
     }
 }
