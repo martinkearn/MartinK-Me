@@ -74,7 +74,7 @@ namespace Services
 
         public async Task UpsertShortcut(Shortcut shortcut)
         {
-            var entity = ConvertToTableEntity(shortcut, _articlesPartitionKey, Guid.NewGuid().ToString());
+            var entity = ConvertToTableEntity(shortcut, _shortcutsPartitionKey, Guid.NewGuid().ToString());
             await _shortcutsTableClient.UpsertEntityAsync(entity, TableUpdateMode.Replace);
         }
 
