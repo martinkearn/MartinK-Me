@@ -75,14 +75,14 @@ namespace Services
         public async Task UpsertShortcut(Shortcut shortcut)
         {
             // Create entity based on shortcut
-            var tea = new TableEntity(_shortcutsPartitionKey, Guid.NewGuid().ToString());
+            var te = new TableEntity(_shortcutsPartitionKey, Guid.NewGuid().ToString());
             foreach (var prop in shortcut.GetType().GetProperties())
             {
-                tea.Add(prop.Name, prop.GetValue(shortcut));
+                te.Add(prop.Name, prop.GetValue(shortcut));
             }
 
             // Upsert entity
-            await _shortcutsTableClient.UpsertEntityAsync(tea, TableUpdateMode.Replace);
+            await _shortcutsTableClient.UpsertEntityAsync(te, TableUpdateMode.Replace);
         }
 
         public List<Shortcut> QueryShortcuts(string filter, int? take)
@@ -103,28 +103,39 @@ namespace Services
 
         public async Task UpsertArticle(Article article)
         {
-            // Create ArticleEntity based on Article
-            var entity = new ArticleEntity();
-            entity.RowKey = article.Key;
-            entity.PartitionKey = _articlesPartitionKey;
+            //// Create ArticleEntity based on Article
+            //var entity = new ArticleEntity();
+            //entity.RowKey = article.Key;
+            //entity.PartitionKey = _articlesPartitionKey;
 
-            // Article properties
-            entity.Key = article.Key;
-            entity.Title = article.Title;
-            entity.Author = article.Author;
-            entity.Description = article.Description;
-            entity.Image = article.Image;
-            entity.Thumbnail = article.Thumbnail;
-            entity.Published = DateTime.SpecifyKind(article.Published, DateTimeKind.Utc);
-            entity.Categories = article.Categories;
-            entity.Status = article.Status;
-            entity.WebPath = article.WebPath;
-            entity.HtmlBlobPath = article.HtmlBlobPath;
-            entity.GitHubUrl = article.GitHubUrl;
-            entity.HtmlBlobFileName = article.HtmlBlobFileName;
+            //// Article properties
+            //entity.Key = article.Key;
+            //entity.Title = article.Title;
+            //entity.Author = article.Author;
+            //entity.Description = article.Description;
+            //entity.Image = article.Image;
+            //entity.Thumbnail = article.Thumbnail;
+            //entity.Published = DateTime.SpecifyKind(article.Published, DateTimeKind.Utc);
+            //entity.Categories = article.Categories;
+            //entity.Status = article.Status;
+            //entity.WebPath = article.WebPath;
+            //entity.HtmlBlobPath = article.HtmlBlobPath;
+            //entity.GitHubUrl = article.GitHubUrl;
+            //entity.HtmlBlobFileName = article.HtmlBlobFileName;
+
+            var te = new TableEntity(_articlesPartitionKey, article.Key);
+            foreach (var prop in article.GetType().GetProperties())
+            {
+                var value = (prop.PropertyType.Name == nameof(DateTime)) ?
+                    DateTime.SpecifyKind((DateTime)prop.GetValue(article), DateTimeKind.Utc) :
+                    prop.GetValue(article);
+
+                te.Add(prop.Name, value);
+            }
 
             // Upsert entity
-            await _articlesTableClient.UpsertEntityAsync(entity, TableUpdateMode.Replace);
+            //await _articlesTableClient.UpsertEntityAsync(entity, TableUpdateMode.Replace);
+            await _articlesTableClient.UpsertEntityAsync(te, TableUpdateMode.Replace);
         }
 
         public async Task DeleteArticle(string articleKey)
@@ -142,28 +153,22 @@ namespace Services
 
             // Query article entities
             var articleEntities = _articlesTableClient.Query<ArticleEntity>(filter: filter);
-
-            var articles = new List<Article>();
-            foreach (var articleEntity in articleEntities)
+            var articles = articleEntities.Select(x => new Article()
             {
-                var article = new Article()
-                {
-                    Key = articleEntity.Key,
-                    Title = articleEntity.Title,
-                    Author = articleEntity.Author,
-                    Description = articleEntity.Description,
-                    Image = articleEntity.Image,
-                    Thumbnail = articleEntity.Thumbnail,
-                    Published = articleEntity.Published,
-                    Categories = articleEntity.Categories,
-                    Status = articleEntity.Status,
-                    WebPath = articleEntity.WebPath,
-                    HtmlBlobPath = articleEntity.HtmlBlobPath,
-                    GitHubUrl = articleEntity.GitHubUrl,
-                    HtmlBlobFileName = articleEntity.HtmlBlobFileName
-                };
-                articles.Add(article);
-            }
+                Key = x.Key,
+                Title = x.Title,
+                Author = x.Author,
+                Description = x.Description,
+                Image = x.Image,
+                Thumbnail = x.Thumbnail,
+                Published = x.Published,
+                Categories = x.Categories,
+                Status = x.Status,
+                WebPath = x.WebPath,
+                HtmlBlobPath = x.HtmlBlobPath,
+                GitHubUrl = x.GitHubUrl,
+                HtmlBlobFileName = x.HtmlBlobFileName
+            }).ToList();
 
             // Limit query if take is specified
             if (take != default)
