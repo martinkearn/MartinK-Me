@@ -165,6 +165,14 @@ h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {
     z-index: 1000;
 }
 
+.modal {
+    color: black;
+}
+
+.modal-title {
+    color: black;
+}
+
 .comment-container {
     padding-top: 20px;
     padding-bottom: 20px;

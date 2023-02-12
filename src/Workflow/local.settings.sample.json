@@ -5,6 +5,7 @@
     "FUNCTIONS_WORKER_RUNTIME": "dotnet-isolated",
     "StorageConfiguration:ArticleBlobsContainer": "articleblobs",
     "StorageConfiguration:ConnectionString": "storage connection string here",
-    "StorageConfiguration:ArticlesTable": "articles"
+    "StorageConfiguration:ArticlesTable": "articles",
+    "StorageConfiguration:ShortcutsTable": "shortcuts"
   }
 }

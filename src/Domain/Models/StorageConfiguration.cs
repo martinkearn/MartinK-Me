@@ -19,5 +19,10 @@
         /// The name of a table in Azure Storage where Article entity are stored.
         /// </summary>
         public string ArticlesTable { get; set; }
+
+        /// <summary>
+        /// The name of a table in Azure Storage where Shortcut entities are stored.
+        /// </summary>
+        public string ShortcutsTable { get; set; }        
     }
 }

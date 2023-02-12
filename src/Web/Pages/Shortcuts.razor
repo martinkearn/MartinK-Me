@@ -1,0 +1,139 @@
+﻿@page "/shortcuts"
+@inject IStorageService StorageService
+@using System.Text;
+
+<div class="container-fluid">
+    @foreach (var group in groups)
+    {
+        <h4>@group</h4>
+        <p>
+        @foreach (var s in shortcuts.Where(s => s.Group.ToLower() == group.ToLower()))
+        {
+            <a href="@s.Url" class="me-3 mb-3">@s.Title</a>
+        }
+        </p>
+    }
+</div>
+
+<nav class="navbar navbar-expand footer">
+    <div class="container-fluid">
+        <ul class="navbar-nav me-auto">
+            <li class="nav-item">
+                <button type="button" class="btn btn-secondary me-3" data-bs-toggle="modal" data-bs-target="#deleteModal">Delete</button>
+            </li>
+            <li class="nav-item">
+                <button type="button" class="btn btn-primary me-3" data-bs-toggle="modal" data-bs-target="#addModal">Add</button>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<!-- Delete Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="deleteModalLabel">Delete Shortcut</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form>
+            <div class="mb-3">
+                <label for="addTitle" class="form-label">Title</label>
+                <input type="text" class="form-control" id="deleteTitle" @bind-value=@deleteTitle >
+            </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" @onclick="Delete">Delete</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Add Modal -->
+<div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="addModalLabel">Add Shortcut</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form>
+            <div class="mb-3">
+                <label for="addTitle" class="form-label">Title</label>
+                <input type="text" class="form-control" id="addTitle" @bind-value=@newTitle >
+            </div>
+            <div class="mb-3">
+                <label for="addUrl" class="form-label">Url</label>
+                <input type="text" class="form-control" id="addUrl" @bind-value=@newUrl >
+            </div>
+            <div class="mb-3">
+                <label for="addGroup" class="form-label">Group</label>
+                <input type="text" class="form-control" id="addGroup" @bind-value=@newGroup >
+            </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" @onclick="Create">Save</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+@code {
+    private List<Shortcut> shortcuts;
+
+    private List<string> groups;
+
+    private string deleteTitle;
+
+    private string newTitle;
+
+    private string newUrl;
+
+    private string newGroup;
+
+    protected override void OnInitialized()
+    {
+        RefreshPage();
+    }
+
+    private void Create()
+    {
+        // Create url object
+        byte[] titleBytes = Encoding.UTF8.GetBytes(newTitle.ToLowerInvariant());
+        var s = new Shortcut()
+        {
+            Key = Convert.ToBase64String(titleBytes),
+            Group = newGroup,
+            Title = newTitle,
+            Url = newUrl
+        };
+        StorageService.UpsertShortcut(s);
+
+        // Clear
+        newTitle = string.Empty;
+        newUrl = string.Empty;
+
+        RefreshPage();
+    }
+
+    private void Delete()
+    {
+        var deleteShortcutKey = shortcuts.Where(s => s.Title.ToLowerInvariant() == deleteTitle.ToLowerInvariant()).FirstOrDefault().Key;
+        StorageService.DeleteShortcut(deleteShortcutKey);
+
+        // Clear
+        deleteTitle = string.Empty;
+
+        RefreshPage();
+    }
+
+    private void RefreshPage()
+    {
+        shortcuts = StorageService.QueryShortcuts(string.Empty, default);
+        groups = shortcuts.Select(s => s.Group).Distinct().ToList();
+    }
+}

@@ -23,6 +23,35 @@ namespace Domain.Interfaces
         public Task DeleteBlob(string fileName);
 
         /// <summary>
+        /// Helper method which gets the contents of a blob from storage as a string
+        /// </summary>
+        /// <param name="blobName">The file name of the blob in storage.</param>
+        /// <returns>A string containingthe contents of a blob.</returns>
+        public Task<string> GetBlobContent(string blobName);
+
+        /// <summary>
+        /// Insert or update an Shortcut entity.
+        /// </summary>
+        /// <param name="article">Shortcut to upsert.</param>
+        /// <returns>Task</returns>
+        public Task UpsertShortcut(Shortcut shortcut);
+
+        /// <summary>
+        /// Delete an shortcut based on entity key
+        /// </summary>
+        /// <param name="articleKey">The Azure Storage Table entity key to delete.</param>
+        /// <returns>Task.</returns>
+        public Task DeleteShortcut(string shortcutKey);
+
+        /// <summary>
+        /// Gets a list of Shortcut
+        /// </summary>
+        /// <param name="filter">An OData filter string to be applied to the query. If ommited everything with the standard partition key will be used.</param>
+        /// <param name="take">The number of Shortcuts to return. Defaults to 5.</param>
+        /// <returns>List of articles</returns>
+        public List<Shortcut> QueryShortcuts(string filter, int? take);
+
+        /// <summary>
         /// Insert or update an Article entity.
         /// </summary>
         /// <param name="article">Article to upsert.</param>
@@ -52,13 +81,6 @@ namespace Domain.Interfaces
         /// <param name="property">The value to match the AtyicleEntity on.</param>
         /// <returns>An Article</returns>
         public List<Article> GetArticlesByProperty(string property, string value);
-
-        /// <summary>
-        /// Helper method which gets the contents of a blob from storage as a string
-        /// </summary>
-        /// <param name="blobName">The file name of the blob in storage.</param>
-        /// <returns>A string containingthe contents of a blob.</returns>
-        public Task<string> GetBlobContent(string blobName);
 
         /// <summary>
         /// Function to use to test avaliability of service

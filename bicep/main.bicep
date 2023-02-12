@@ -29,14 +29,19 @@ resource storageAccountBlobServiceContainer 'Microsoft.Storage/storageAccounts/b
   }
 }
 
-//ARTICLES STORAGE TABLE
+//STORAGE TABLEs
 resource storageAccountTableService 'Microsoft.Storage/storageAccounts/tableServices@2022-05-01' = {
   name: 'default'
   parent: storageAccount
 }
 
-resource storageAccountTableServiceTable 'Microsoft.Storage/storageAccounts/tableServices/tables@2022-05-01' = {
+resource storageAccountTableServiceArticlesTable 'Microsoft.Storage/storageAccounts/tableServices/tables@2022-05-01' = {
   name: 'articles'
+  parent: storageAccountTableService
+}
+
+resource storageAccountTableServiceShortcutsTable 'Microsoft.Storage/storageAccounts/tableServices/tables@2022-05-01' = {
+  name: 'shortcuts'
   parent: storageAccountTableService
 }
 
@@ -90,8 +95,12 @@ resource functionApp 'Microsoft.Web/sites@2022-03-01' = {
         }
         {
           name: 'StorageConfiguration__ArticlesTable'
-          value: storageAccountTableServiceTable.name
+          value: storageAccountTableServiceArticlesTable.name
         }
+        {
+          name: 'StorageConfiguration__ShortcutsTable'
+          value: storageAccountTableServiceShortcutsTable.name
+        } 
         {
           name: 'StorageConfiguration__ArticleBlobsContainer'
           value: storageAccountBlobServiceContainer.name
@@ -133,8 +142,12 @@ resource webApp 'Microsoft.Web/sites@2022-03-01' = {
         }
         {
           name: 'StorageConfiguration__ArticlesTable'
-          value: storageAccountTableServiceTable.name
+          value: storageAccountTableServiceArticlesTable.name
         }
+        {
+          name: 'StorageConfiguration__ShortcutsTable'
+          value: storageAccountTableServiceShortcutsTable.name
+        } 
         {
           name: 'StorageConfiguration__ArticleBlobsContainer'
           value: storageAccountBlobServiceContainer.name
