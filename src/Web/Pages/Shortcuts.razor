@@ -9,11 +9,52 @@
     <p>@shortcut.Key @shortcut.Title @shortcut.Url @shortcut.Group</p>
 }
 
-<button @onclick="Create">Create</button>
 <button @onclick="Delete">Delete</button>
+
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addModal">
+  Add
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="addModalLabel">Add Shortcut</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form>
+            <div class="mb-3">
+                <label for="addTitle" class="form-label">Title</label>
+                <input type="text" class="form-control" id="addTitle" @bind-value=@newTitle >
+            </div>
+            <div class="mb-3">
+                <label for="addUrl" class="form-label">Url</label>
+                <input type="text" class="form-control" id="addUrl" @bind-value=@newUrl >
+            </div>
+            <div class="mb-3">
+                <label for="addGroup" class="form-label">Group</label>
+                <input type="text" class="form-control" id="addGroup" @bind-value=@newGroup >
+            </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" @onclick="Create">Save</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 @code {
     private List<Shortcut> shortcuts;
+
+    private string newTitle;
+
+    private string newUrl;
+
+    private string newGroup;
 
     protected override void OnInitialized()
     {
@@ -22,17 +63,22 @@
 
     private void Create()
     {
-        var title = Guid.NewGuid().ToString();
-        byte[] titleBytes = Encoding.UTF8.GetBytes(title.ToLowerInvariant());
+        // Create url object
+        byte[] titleBytes = Encoding.UTF8.GetBytes(newTitle.ToLowerInvariant());
         var s = new Shortcut()
         {
             Key = Convert.ToBase64String(titleBytes),
-            Group = "Testing",
-            Title = title,
-            Url = "http://bar.com"
+            Group = newGroup,
+            Title = newTitle,
+            Url = newUrl
         };
         StorageService.UpsertShortcut(s);
 
+        // Clear
+        newTitle = string.Empty;
+        newUrl = string.Empty;
+
+        // Refresh page
         shortcuts = StorageService.QueryShortcuts(string.Empty, default);
     }
 
