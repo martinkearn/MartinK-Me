@@ -37,6 +37,13 @@ namespace Domain.Interfaces
         public Task UpsertShortcut(Shortcut shortcut);
 
         /// <summary>
+        /// Delete an shortcut based on entity key
+        /// </summary>
+        /// <param name="articleKey">The Azure Storage Table entity key to delete.</param>
+        /// <returns>Task.</returns>
+        public Task DeleteShortcut(string shortcutKey);
+
+        /// <summary>
         /// Gets a list of Shortcut
         /// </summary>
         /// <param name="filter">An OData filter string to be applied to the query. If ommited everything with the standard partition key will be used.</param>

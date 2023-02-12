@@ -7,6 +7,7 @@ namespace Services.Models
 {
     public class ShortcutEntity : ITableEntity, IShortcut
     {
+        public string Key { get; set; }
         public string Url { get; set; }
         public string Title { get; set; }
         public string Group { get; set; }

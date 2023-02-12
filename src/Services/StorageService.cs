@@ -74,8 +74,13 @@ namespace Services
 
         public async Task UpsertShortcut(Shortcut shortcut)
         {
-            var entity = ConvertToTableEntity(shortcut, _shortcutsPartitionKey, Guid.NewGuid().ToString());
+            var entity = ConvertToTableEntity(shortcut, _shortcutsPartitionKey, shortcut.Key);
             await _shortcutsTableClient.UpsertEntityAsync(entity, TableUpdateMode.Replace);
+        }
+
+        public async Task DeleteShortcut(string shortcutKey)
+        {
+            await _shortcutsTableClient.DeleteEntityAsync(_shortcutsPartitionKey, shortcutKey);
         }
 
         public List<Shortcut> QueryShortcuts(string filter, int? take)
@@ -89,7 +94,7 @@ namespace Services
             var shortcutEntities = _shortcutsTableClient.Query<ShortcutEntity>(filter);
 
             // Cast ShortcutEntity to Shortcut
-            var shortcuts = shortcutEntities.Select(x => new Shortcut() { Group = x.Group, Title = x.Title, Url = x.Url }).ToList();
+            var shortcuts = shortcutEntities.Select(x => new Shortcut() { Key = x.Key, Group = x.Group, Title = x.Title, Url = x.Url }).ToList();
 
             return shortcuts;
         }

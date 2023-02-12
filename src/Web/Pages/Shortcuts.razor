@@ -1,14 +1,16 @@
 ﻿@page "/shortcuts"
 @inject IStorageService StorageService
+@using System.Text;
 
 <h1>Shortcuts</h1>
 
 @foreach (var shortcut in shortcuts)
 {
-    <p>@shortcut.Title @shortcut.Url @shortcut.Group</p>
+    <p>@shortcut.Key @shortcut.Title @shortcut.Url @shortcut.Group</p>
 }
 
 <button @onclick="Create">Create</button>
+<button @onclick="Delete">Delete</button>
 
 @code {
     private List<Shortcut> shortcuts;
@@ -20,12 +22,25 @@
 
     private void Create()
     {
+        var title = Guid.NewGuid().ToString();
+        byte[] titleBytes = Encoding.UTF8.GetBytes(title.ToLowerInvariant());
         var s = new Shortcut()
         {
+            Key = Convert.ToBase64String(titleBytes),
             Group = "Testing",
-            Title = Guid.NewGuid().ToString(),
+            Title = title,
             Url = "http://bar.com"
         };
         StorageService.UpsertShortcut(s);
+
+        shortcuts = StorageService.QueryShortcuts(string.Empty, default);
+    }
+
+    private void Delete()
+    {
+        var lastShortcutRowkey = shortcuts.LastOrDefault().Key;
+        StorageService.DeleteShortcut(lastShortcutRowkey);
+
+        shortcuts = StorageService.QueryShortcuts(string.Empty, default);
     }
 }
