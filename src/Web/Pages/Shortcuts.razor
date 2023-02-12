@@ -2,22 +2,31 @@
 @inject IStorageService StorageService
 @using System.Text;
 
-<h1>Shortcuts</h1>
+<div class="container-fluid">
+    @foreach (var group in groups)
+    {
+        <h4>@group</h4>
+        <p>
+        @foreach (var s in shortcuts.Where(s => s.Group.ToLower() == group.ToLower()))
+        {
+            <a href="@s.Url" class="me-3 mb-3">@s.Title</a>
+        }
+        </p>
+    }
+</div>
 
-@foreach (var group in groups)
-{
-    <p>@group</p>
-}
-
-@foreach (var shortcut in shortcuts)
-{
-    <p>@shortcut.Key @shortcut.Title @shortcut.Url @shortcut.Group</p>
-}
-
-<!-- Delete trigger modal -->
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#deleteModal">
-  Delete
-</button>
+<nav class="navbar navbar-expand footer">
+    <div class="container-fluid">
+        <ul class="navbar-nav me-auto">
+            <li class="nav-item">
+                <button type="button" class="btn btn-secondary me-3" data-bs-toggle="modal" data-bs-target="#deleteModal">Delete</button>
+            </li>
+            <li class="nav-item">
+                <button type="button" class="btn btn-primary me-3" data-bs-toggle="modal" data-bs-target="#addModal">Add</button>
+            </li>
+        </ul>
+    </div>
+</nav>
 
 <!-- Delete Modal -->
 <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
@@ -41,11 +50,6 @@
     </div>
   </div>
 </div>
-
-<!-- Add button trigger modal -->
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addModal">
-  Add
-</button>
 
 <!-- Add Modal -->
 <div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
