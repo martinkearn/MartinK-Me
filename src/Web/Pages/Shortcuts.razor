@@ -3,12 +3,19 @@
 
 <h1>Shortcuts</h1>
 
+@foreach (var shortcut in shortcuts)
+{
+    <p>@shortcut.Title @shortcut.Url @shortcut.Group</p>
+}
+
 <button @onclick="Create">Create</button>
 
 @code {
+    private List<Shortcut> shortcuts;
+
     protected override void OnInitialized()
     {
-
+        shortcuts = StorageService.QueryShortcuts(string.Empty, default);
     }
 
     private void Create()

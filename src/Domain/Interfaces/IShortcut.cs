@@ -7,11 +7,6 @@ namespace Domain.Interfaces
 	public interface IShortcut
 	{
         /// <summary>
-        /// The unique ID and Azure Storage Table entity key.
-        /// </summary>
-        public string Key { get; set; }
-
-        /// <summary>
         /// Text representation of the shortcut Url
         /// </summary>
         public string Url { get; set; }

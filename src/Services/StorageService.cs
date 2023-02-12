@@ -6,6 +6,7 @@ using Domain.Interfaces;
 using Domain.Models;
 using Microsoft.Extensions.Options;
 using Services.Models;
+using System.Linq;
 
 namespace Services
 {
@@ -73,17 +74,8 @@ namespace Services
 
         public async Task UpsertShortcut(Shortcut shortcut)
         {
-            //// Create ShortcutEntity based on Shortcut
-            //var entity = new ShortcutEntity();
-            //entity.RowKey = shortcut.Key;
-            //entity.PartitionKey = _shortcutsPartitionKey;
-
-
-
+            // Create entity based on shortcut
             var tea = new TableEntity(_shortcutsPartitionKey, Guid.NewGuid().ToString());
-
-            //tea.Add("foo", "bar");
-
             foreach (var prop in shortcut.GetType().GetProperties())
             {
                 tea.Add(prop.Name, prop.GetValue(shortcut));
@@ -91,6 +83,22 @@ namespace Services
 
             // Upsert entity
             await _shortcutsTableClient.UpsertEntityAsync(tea, TableUpdateMode.Replace);
+        }
+
+        public List<Shortcut> QueryShortcuts(string filter, int? take)
+        {
+            if (string.IsNullOrEmpty(filter))
+            {
+                filter = $"PartitionKey eq '{_shortcutsPartitionKey}'";
+            }
+
+            // Query shortcut entities
+            var shortcutEntities = _shortcutsTableClient.Query<ShortcutEntity>(filter);
+
+            // Cast ShortcutEntity to Shortcut
+            var shortcuts = shortcutEntities.Select(x => new Shortcut() { Group = x.Group, Title = x.Title, Url = x.Url }).ToList();
+
+            return shortcuts;
         }
 
         public async Task UpsertArticle(Article article)

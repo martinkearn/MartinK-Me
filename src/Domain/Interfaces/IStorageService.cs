@@ -37,6 +37,14 @@ namespace Domain.Interfaces
         public Task UpsertShortcut(Shortcut shortcut);
 
         /// <summary>
+        /// Gets a list of Shortcut
+        /// </summary>
+        /// <param name="filter">An OData filter string to be applied to the query. If ommited everything with the standard partition key will be used.</param>
+        /// <param name="take">The number of Shortcuts to return. Defaults to 5.</param>
+        /// <returns>List of articles</returns>
+        public List<Shortcut> QueryShortcuts(string filter, int? take);
+
+        /// <summary>
         /// Insert or update an Article entity.
         /// </summary>
         /// <param name="article">Article to upsert.</param>
