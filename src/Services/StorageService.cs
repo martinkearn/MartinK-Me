@@ -74,15 +74,8 @@ namespace Services
 
         public async Task UpsertShortcut(Shortcut shortcut)
         {
-            // Create entity based on shortcut
-            var te = new TableEntity(_shortcutsPartitionKey, Guid.NewGuid().ToString());
-            foreach (var prop in shortcut.GetType().GetProperties())
-            {
-                te.Add(prop.Name, prop.GetValue(shortcut));
-            }
-
-            // Upsert entity
-            await _shortcutsTableClient.UpsertEntityAsync(te, TableUpdateMode.Replace);
+            var entity = ConvertToTableEntity(shortcut, _articlesPartitionKey, Guid.NewGuid().ToString());
+            await _shortcutsTableClient.UpsertEntityAsync(entity, TableUpdateMode.Replace);
         }
 
         public List<Shortcut> QueryShortcuts(string filter, int? take)
@@ -103,44 +96,12 @@ namespace Services
 
         public async Task UpsertArticle(Article article)
         {
-            //// Create ArticleEntity based on Article
-            //var entity = new ArticleEntity();
-            //entity.RowKey = article.Key;
-            //entity.PartitionKey = _articlesPartitionKey;
-
-            //// Article properties
-            //entity.Key = article.Key;
-            //entity.Title = article.Title;
-            //entity.Author = article.Author;
-            //entity.Description = article.Description;
-            //entity.Image = article.Image;
-            //entity.Thumbnail = article.Thumbnail;
-            //entity.Published = DateTime.SpecifyKind(article.Published, DateTimeKind.Utc);
-            //entity.Categories = article.Categories;
-            //entity.Status = article.Status;
-            //entity.WebPath = article.WebPath;
-            //entity.HtmlBlobPath = article.HtmlBlobPath;
-            //entity.GitHubUrl = article.GitHubUrl;
-            //entity.HtmlBlobFileName = article.HtmlBlobFileName;
-
-            var te = new TableEntity(_articlesPartitionKey, article.Key);
-            foreach (var prop in article.GetType().GetProperties())
-            {
-                var value = (prop.PropertyType.Name == nameof(DateTime)) ?
-                    DateTime.SpecifyKind((DateTime)prop.GetValue(article), DateTimeKind.Utc) :
-                    prop.GetValue(article);
-
-                te.Add(prop.Name, value);
-            }
-
-            // Upsert entity
-            //await _articlesTableClient.UpsertEntityAsync(entity, TableUpdateMode.Replace);
-            await _articlesTableClient.UpsertEntityAsync(te, TableUpdateMode.Replace);
+            var entity = ConvertToTableEntity(article, _articlesPartitionKey, article.Key);
+            await _articlesTableClient.UpsertEntityAsync(entity, TableUpdateMode.Replace);
         }
 
         public async Task DeleteArticle(string articleKey)
         {
-            // Delete entity
             await _articlesTableClient.DeleteEntityAsync(_articlesPartitionKey, articleKey);
         }
 
@@ -203,6 +164,20 @@ namespace Services
         public string Heartbeat()
         {
             return $"ArticleBlobsContainer is {_options.ArticleBlobsContainer}";
+        }
+
+        private TableEntity ConvertToTableEntity(object o, string partitionKey, string rowkey)
+        {
+            var entity = new TableEntity(partitionKey, rowkey);
+            foreach (var prop in o.GetType().GetProperties())
+            {
+                var value = (prop.PropertyType.Name == nameof(DateTime)) ?
+                    DateTime.SpecifyKind((DateTime)prop.GetValue(o), DateTimeKind.Utc) :
+                    prop.GetValue(o);
+
+                entity.Add(prop.Name, value);
+            }
+            return entity;
         }
     }
 }
