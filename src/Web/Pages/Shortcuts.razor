@@ -1,0 +1,24 @@
+﻿@page "/shortcuts"
+@inject IStorageService StorageService
+
+<h1>Shortcuts</h1>
+
+<button @onclick="Create">Create</button>
+
+@code {
+    protected override void OnInitialized()
+    {
+
+    }
+
+    private void Create()
+    {
+        var s = new Shortcut()
+        {
+            Group = "Testing",
+            Title = Guid.NewGuid().ToString(),
+            Url = "http://bar.com"
+        };
+        StorageService.UpsertShortcut(s);
+    }
+}

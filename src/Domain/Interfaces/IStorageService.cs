@@ -23,6 +23,20 @@ namespace Domain.Interfaces
         public Task DeleteBlob(string fileName);
 
         /// <summary>
+        /// Helper method which gets the contents of a blob from storage as a string
+        /// </summary>
+        /// <param name="blobName">The file name of the blob in storage.</param>
+        /// <returns>A string containingthe contents of a blob.</returns>
+        public Task<string> GetBlobContent(string blobName);
+
+        /// <summary>
+        /// Insert or update an Shortcut entity.
+        /// </summary>
+        /// <param name="article">Shortcut to upsert.</param>
+        /// <returns>Task</returns>
+        public Task UpsertShortcut(Shortcut shortcut);
+
+        /// <summary>
         /// Insert or update an Article entity.
         /// </summary>
         /// <param name="article">Article to upsert.</param>
@@ -52,13 +66,6 @@ namespace Domain.Interfaces
         /// <param name="property">The value to match the AtyicleEntity on.</param>
         /// <returns>An Article</returns>
         public List<Article> GetArticlesByProperty(string property, string value);
-
-        /// <summary>
-        /// Helper method which gets the contents of a blob from storage as a string
-        /// </summary>
-        /// <param name="blobName">The file name of the blob in storage.</param>
-        /// <returns>A string containingthe contents of a blob.</returns>
-        public Task<string> GetBlobContent(string blobName);
 
         /// <summary>
         /// Function to use to test avaliability of service

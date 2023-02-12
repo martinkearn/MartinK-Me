@@ -1,6 +1,9 @@
 ﻿using System;
 namespace Domain.Interfaces
 {
+    /// <summary>
+    /// An interface to define an Article.
+    /// </summary>
 	public interface IArticle
 	{
         /// <summary>

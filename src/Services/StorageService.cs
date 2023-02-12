@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System.Reflection;
+using System.Text;
 using Azure.Data.Tables;
 using Azure.Storage.Blobs;
 using Domain.Interfaces;
@@ -12,25 +13,30 @@ namespace Services
     public class StorageService : IStorageService
     {
         private readonly StorageConfiguration _options;
-        private readonly TableClient _tableClient;
-        private readonly BlobContainerClient _blobContainerClient;
-        private const string _partitionKey = "article";
+        private readonly BlobContainerClient _articlesBlobContainerClient;
+        private readonly TableClient _articlesTableClient;
+        private const string _articlesPartitionKey = "article";
+        private readonly TableClient _shortcutsTableClient;
+        private const string _shortcutsPartitionKey = "shortcut";
 
         public StorageService(IOptions<StorageConfiguration> storageConfigurationOptions)
         { 
             _options = storageConfigurationOptions.Value;
 
-            _tableClient = new TableClient(_options.ConnectionString, _options.ArticlesTable);
-            _tableClient.CreateIfNotExists();
+            _articlesTableClient = new TableClient(_options.ConnectionString, _options.ArticlesTable);
+            _articlesTableClient.CreateIfNotExists();
 
-            _blobContainerClient = new BlobContainerClient(_options.ConnectionString, _options.ArticleBlobsContainer);
-            _blobContainerClient.CreateIfNotExists();
+            _shortcutsTableClient = new TableClient(_options.ConnectionString, _options.ShortcutsTable);
+            _shortcutsTableClient.CreateIfNotExists();
+
+            _articlesBlobContainerClient = new BlobContainerClient(_options.ConnectionString, _options.ArticleBlobsContainer);
+            _articlesBlobContainerClient.CreateIfNotExists();
         }
 
         public async Task<string> UpsertBlob(string fileName, string fileContents)
         {
             // Get a reference to a blob
-            var blobClient = _blobContainerClient.GetBlobClient(fileName);
+            var blobClient = _articlesBlobContainerClient.GetBlobClient(fileName);
 
             // Upload the file
             using var ms = new MemoryStream(Encoding.UTF8.GetBytes(fileContents));
@@ -42,19 +48,57 @@ namespace Services
         public async Task DeleteBlob(string fileName)
         {
             // Get a reference to a blob
-            var blobClient = _blobContainerClient.GetBlobClient(fileName);
+            var blobClient = _articlesBlobContainerClient.GetBlobClient(fileName);
 
             // Delete blob
             await blobClient.DeleteIfExistsAsync(Azure.Storage.Blobs.Models.DeleteSnapshotsOption.IncludeSnapshots);
+        }
+
+        public async Task<string> GetBlobContent(string blobName)
+        {
+            var blobClient = _articlesBlobContainerClient.GetBlobClient(blobName);
+            var blobDownloadInfo = await blobClient.DownloadAsync();
+            string contents;
+            using (var streamReader = new StreamReader(blobDownloadInfo.Value.Content))
+            {
+                contents = await streamReader.ReadToEndAsync();
+            }
+            if (contents.StartsWith("<p>."))
+            {
+                var contentsWithoutOpeningP = contents.Substring(4);
+                contents = $"<p>{contentsWithoutOpeningP}";
+            }
+            return contents;
+        }
+
+        public async Task UpsertShortcut(Shortcut shortcut)
+        {
+            //// Create ShortcutEntity based on Shortcut
+            //var entity = new ShortcutEntity();
+            //entity.RowKey = shortcut.Key;
+            //entity.PartitionKey = _shortcutsPartitionKey;
+
+
+
+            var tea = new TableEntity(_shortcutsPartitionKey, Guid.NewGuid().ToString());
+
+            //tea.Add("foo", "bar");
+
+            foreach (var prop in shortcut.GetType().GetProperties())
+            {
+                tea.Add(prop.Name, prop.GetValue(shortcut));
+            }
+
+            // Upsert entity
+            await _shortcutsTableClient.UpsertEntityAsync(tea, TableUpdateMode.Replace);
         }
 
         public async Task UpsertArticle(Article article)
         {
             // Create ArticleEntity based on Article
             var entity = new ArticleEntity();
-            // Entity properties
             entity.RowKey = article.Key;
-            entity.PartitionKey = _partitionKey;
+            entity.PartitionKey = _articlesPartitionKey;
 
             // Article properties
             entity.Key = article.Key;
@@ -72,24 +116,24 @@ namespace Services
             entity.HtmlBlobFileName = article.HtmlBlobFileName;
 
             // Upsert entity
-            await _tableClient.UpsertEntityAsync(entity, TableUpdateMode.Replace);
+            await _articlesTableClient.UpsertEntityAsync(entity, TableUpdateMode.Replace);
         }
 
         public async Task DeleteArticle(string articleKey)
         {
             // Delete entity
-            await _tableClient.DeleteEntityAsync(_partitionKey, articleKey);
+            await _articlesTableClient.DeleteEntityAsync(_articlesPartitionKey, articleKey);
         }
 
         public List<Article> QueryArticles(string filter, bool includeDrafts, int? take)
         {
             if (string.IsNullOrEmpty(filter))
             {
-                filter = $"PartitionKey eq '{_partitionKey}'";
+                filter = $"PartitionKey eq '{_articlesPartitionKey}'";
             }
 
             // Query article entities
-            var articleEntities = _tableClient.Query<ArticleEntity>(filter: filter);
+            var articleEntities = _articlesTableClient.Query<ArticleEntity>(filter: filter);
 
             var articles = new List<Article>();
             foreach (var articleEntity in articleEntities)
@@ -141,23 +185,6 @@ namespace Services
             var filter = $"{property} eq '{value}'";
             var articles = QueryArticles(filter, false, default);
             return articles;
-        }
-
-        public async Task<string> GetBlobContent(string blobName)
-        {
-            var blobClient = _blobContainerClient.GetBlobClient(blobName);
-            var blobDownloadInfo = await blobClient.DownloadAsync();
-            string contents;
-            using (var streamReader = new StreamReader(blobDownloadInfo.Value.Content))
-            {
-                contents = await streamReader.ReadToEndAsync();
-            }
-            if (contents.StartsWith("<p>."))
-            {
-                var contentsWithoutOpeningP = contents.Substring(4);
-                contents = $"<p>{contentsWithoutOpeningP}";
-            }
-            return contents;
         }
 
         public string Heartbeat()
