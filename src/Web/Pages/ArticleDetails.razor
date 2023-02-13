@@ -56,6 +56,14 @@
 
         // Get article contents
         articleContents = await StorageService.GetBlobContent(article.HtmlBlobFileName);
+
+        //Remove h1 if the article starts with it. This is because the h1 is in the header so it will be duplicated
+        if (articleContents.ToLowerInvariant().StartsWith("<h1"))
+        {
+            articleContents = articleContents.Substring(articleContents.ToLowerInvariant().IndexOf("</h1>"));
+        }
+
+        //Set GitHUb link text
         articleGitHubUrlText = $"This article was published at <a href='{article.GitHubUrl}'><i class='fa fa-github fa-lg' aria-hidden='true'></i> GitHub</a>. It is open source and you can make edits, comments etc.";
     }
 }
