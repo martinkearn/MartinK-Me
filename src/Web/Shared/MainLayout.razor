@@ -1,9 +1,15 @@
 ﻿@inherits LayoutComponentBase
 @inject NavigationManager NavigationManager
 
+@{
+bool isShortcuts = NavigationManager.Uri.ToLowerInvariant().Contains("/shortcuts");
+var navBarClass = (isShortcuts) ? "container-fluid" : "container";
+}
+
 <div id="app">
     <nav class="navbar navbar-expand sticky-top">
-        <div class="container">
+
+        <div class="@navBarClass">
             <a class="navbar-brand" href="/">MartinK.me</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
@@ -42,7 +48,7 @@
         @Body
     </div>
 
-    @if (!NavigationManager.Uri.ToLowerInvariant().Contains("/shortcuts"))
+    @if (!isShortcuts)
     {
         <nav class="navbar navbar-expand footer">
             <div class="container">
