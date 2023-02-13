@@ -1,6 +1,6 @@
 ﻿body {
     background-color: #002050; /* For browsers that do not support gradients */
-    background-image: linear-gradient(#002050, #222,);
+    background-image: linear-gradient(#002050, #222);
     color: #ffffff;
     font-size: 14pt;
 }
