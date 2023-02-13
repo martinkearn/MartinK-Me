@@ -44,7 +44,7 @@ h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {
 }
 
 .navbar {
-    font-family: 'EurostileLTStd-BoldCn', 'Bebas Neue', 'Lato', sans-serif;
+    font-family: 'EurostileLTStd-BoldCn', 'Bebas Neue', Arial, sans-serif;
     text-transform: uppercase;
     text-decoration: none;
     background-color: #222;
