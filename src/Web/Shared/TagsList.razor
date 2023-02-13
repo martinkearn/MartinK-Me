@@ -1,11 +1,14 @@
 @foreach (var tag in Tags)
 {
-    <span class="badge rounded-pill text-bg-secondary"><a href="/tags/@tag">#@tag</a> </span>
+    <span class="badge rounded-pill text-bg-secondary @TagCss"><a href="/tags/@tag">#@tag</a> </span>
 }
 
 @code {
     [Parameter]
     public string Categories { get; set; }
+
+    [Parameter]
+    public string TagCss { get; set; }
 
     private List<string> Tags = new List<string>();
 

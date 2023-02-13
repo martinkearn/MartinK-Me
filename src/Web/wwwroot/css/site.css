@@ -230,6 +230,12 @@ h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {
     max-height: 200px;
 }
 
+.large-tag {
+    font-size: larger;
+    margin-bottom: 2rem;
+    margin-right: 2rem;
+}
+
     #blazor-error-ui .dismiss {
         cursor: pointer;
         position: absolute;
