@@ -136,12 +136,8 @@ namespace Services
                 HtmlBlobFileName = x.HtmlBlobFileName
             }).ToList();
 
-            // Limit query if take is specified
-            if (take != default)
-            {
-                var takeNotNullable = take ?? default(int);
-                articles = articles.Take(takeNotNullable).ToList();
-            }
+            //Sort by Published
+            articles = articles.OrderByDescending(a => a.Published).ToList();
 
             // Remove drafts
             if (!includeDrafts)
@@ -149,8 +145,12 @@ namespace Services
                 articles = articles.Where(a => a.Status.ToLowerInvariant() == "published").ToList();
             }
 
-            //Sort by Published
-            articles = articles.OrderByDescending(a => a.Published).ToList();
+            // Limit query if take is specified
+            if (take != default)
+            {
+                var takeNotNullable = take ?? default(int);
+                articles = articles.Take(takeNotNullable).ToList();
+            }
 
             return articles;
         }
