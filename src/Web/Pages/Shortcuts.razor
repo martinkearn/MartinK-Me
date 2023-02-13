@@ -2,16 +2,20 @@
 @inject IStorageService StorageService
 @using System.Text;
 
+<PageTitle>@WebStrings.TitlePrefix - Shortcuts</PageTitle>
+
 <div class="container-fluid">
     @foreach (var group in groups)
     {
-        <h4>@group</h4>
+      <div class="mb-5">
+        <h3>@group</h3>
         <p>
         @foreach (var s in shortcuts.Where(s => s.Group.ToLower() == group.ToLower()))
         {
-            <a href="@s.Url" class="me-3 mb-3">@s.Title</a>
+            <a href="@s.Url" class="me-4 mb-4">@s.Title</a>
         }
         </p>
+      </div>
     }
 </div>
 
