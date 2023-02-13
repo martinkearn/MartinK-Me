@@ -63,6 +63,10 @@ h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {
     background-image: linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.4)), url('../images/banner-home.jpg');
     padding-top: 20px;
     padding-bottom: 20px;
+    background-position: center center;
+    margin-bottom: 0;
+    background-size: cover;
+    background-repeat: no-repeat;
 }
 
 .container-fluid {
