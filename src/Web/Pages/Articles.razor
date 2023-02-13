@@ -52,7 +52,7 @@
                         <div class="btn-group me-2" role="group" aria-label="First group">
                             @for (int p = 1; p <= pages; p++) {
                                 var thisPage = p;
-                                <button class="btn btn-secondary" @onclick="@(e => ChangePage(thisPage))">@p</button>
+                                <button class="btn btn-secondary me-3" @onclick="@(e => ChangePage(thisPage))">@p</button>
                             }
                         </div>
                     </div>
