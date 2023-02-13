@@ -1,8 +1,9 @@
 ﻿body {
     background-color: #002050; /* For browsers that do not support gradients */
-    background-image: linear-gradient(#002050, #222);
+    background-image: linear-gradient(#222, #002050);
     color: #ffffff;
     font-size: 14pt;
+    height: 100vh;
 }
 
 a {
@@ -60,9 +61,21 @@ h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {
 
 .header {
     background-image: linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.4)), url('../images/banner-home.jpg');
+    padding-top: 20px;
+    padding-bottom: 20px;
+    background-position: center center;
+    margin-bottom: 0;
+    background-size: cover;
+    background-repeat: no-repeat;
 }
 
 .container-fluid {
+    margin-top: 0;
+    padding-top: 25px;
+    padding-bottom: 25px;
+}
+
+.sequence-background {
     margin-top: 0;
     padding-top: 20px;
     padding-bottom: 20px;
@@ -149,7 +162,7 @@ h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {
 }
 
 .footer {
-    background-color: #002050;
+    background-color: transparent !important;
     color: #ffffff;
 }
     .footer a {
@@ -178,11 +191,6 @@ h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {
     color: black;
 }
 
-.comment-container {
-    padding-top: 20px;
-    padding-bottom: 20px;
-}
-
 .badge {
     background-color: #777;
     margin-right: 0.5rem;
@@ -191,6 +199,12 @@ h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {
     .badge a {
         text-decoration: none;;
     }
+
+.comment-container {
+    margin-top: 0;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
 
 .article-container {
     background-color: white;
