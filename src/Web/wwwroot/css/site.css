@@ -61,9 +61,17 @@ h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {
 
 .header {
     background-image: linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.4)), url('../images/banner-home.jpg');
+    padding-top: 20px;
+    padding-bottom: 20px;
 }
 
 .container-fluid {
+    margin-top: 0;
+    padding-top: 25px;
+    padding-bottom: 25px;
+}
+
+.sequence-background {
     margin-top: 0;
     padding-top: 20px;
     padding-bottom: 20px;
@@ -179,11 +187,6 @@ h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {
     color: black;
 }
 
-.comment-container {
-    padding-top: 20px;
-    padding-bottom: 20px;
-}
-
 .badge {
     background-color: #777;
     margin-right: 0.5rem;
@@ -192,6 +195,12 @@ h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {
     .badge a {
         text-decoration: none;;
     }
+
+.comment-container {
+    margin-top: 0;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
 
 .article-container {
     background-color: white;
