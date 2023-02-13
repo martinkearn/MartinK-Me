@@ -23,6 +23,10 @@ h1 {
     font-family: 'EurostileLTStd-BoldEx2', 'EurostileLTStd-BoldCn', 'Bebas Neue', Arial, sans-serif;
 }
 
+    h1:focus-visible{
+        outline:none;
+    }
+
 h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {
     text-decoration: none;
 }
