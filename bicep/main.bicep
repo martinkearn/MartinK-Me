@@ -15,14 +15,22 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2022-09-01' = {
   kind: 'Storage'
 }
 
-//ARTICLES STORAGE BLOB CONTAINER
+//STORAGE BLOB CONTAINERs
 resource storageAccountBlobService 'Microsoft.Storage/storageAccounts/blobServices@2022-05-01' = {
   name: 'default'
   parent: storageAccount
 }
 
-resource storageAccountBlobServiceContainer 'Microsoft.Storage/storageAccounts/blobServices/containers@2022-05-01' = {
+resource storageAccountArticlesBlobServiceContainer 'Microsoft.Storage/storageAccounts/blobServices/containers@2022-05-01' = {
   name: 'articleblobs'
+  parent: storageAccountBlobService
+  properties: {
+    publicAccess: 'None'
+  }
+}
+
+resource storageAccountWallpaperBlobServiceContainer 'Microsoft.Storage/storageAccounts/blobServices/containers@2022-05-01' = {
+  name: 'wallpaperblobs'
   parent: storageAccountBlobService
   properties: {
     publicAccess: 'None'
@@ -103,7 +111,11 @@ resource functionApp 'Microsoft.Web/sites@2022-03-01' = {
         } 
         {
           name: 'StorageConfiguration__ArticleBlobsContainer'
-          value: storageAccountBlobServiceContainer.name
+          value: storageAccountArticlesBlobServiceContainer.name
+        } 
+        {
+          name: 'StorageConfiguration__WallpaperBlobsContainer'
+          value: storageAccountWallpaperBlobServiceContainer.name
         } 
         {
           name: 'StorageConfiguration__ConnectionString'
@@ -150,7 +162,11 @@ resource webApp 'Microsoft.Web/sites@2022-03-01' = {
         } 
         {
           name: 'StorageConfiguration__ArticleBlobsContainer'
-          value: storageAccountBlobServiceContainer.name
+          value: storageAccountArticlesBlobServiceContainer.name
+        } 
+        {
+          name: 'StorageConfiguration__WallpaperBlobsContainer'
+          value: storageAccountWallpaperBlobServiceContainer.name
         } 
         {
           name: 'StorageConfiguration__ConnectionString'
