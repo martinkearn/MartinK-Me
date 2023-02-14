@@ -5,6 +5,11 @@
 <PageTitle>@WebStrings.TitlePrefix - Shortcuts</PageTitle>
 
 <div class="container-fluid">
+  @foreach (var wallpaperUrl in wallpaperUrls)
+  {
+    <p>@wallpaperUrl</p>
+  }
+
     @foreach (var group in groups)
     {
       <div class="mb-5">
@@ -78,9 +83,10 @@
 </div>
 
 @code {
-    private List<Shortcut> shortcuts;
+    private List<Shortcut> shortcuts = new List<Shortcut>();
 
-    private List<string> groups;
+    private List<string> groups = new List<string>();
+    private List<string> wallpaperUrls = new List<string>();
 
     private string deleteTitle;
 
@@ -92,6 +98,8 @@
 
     protected override void OnInitialized()
     {
+        wallpaperUrls = StorageService.GetWallpaperUrls();
+
         RefreshPage();
     }
 

@@ -7,6 +7,8 @@ using Domain.Models;
 using Microsoft.Extensions.Options;
 using Services.Models;
 using System.Linq;
+using Azure;
+using Azure.Storage.Blobs.Models;
 
 namespace Services
 {
@@ -18,6 +20,7 @@ namespace Services
         private readonly TableClient _articlesTableClient;
         private const string _articlesPartitionKey = "article";
         private readonly TableClient _shortcutsTableClient;
+        private readonly BlobContainerClient _wallpapersBlobContainerClient;
         private const string _shortcutsPartitionKey = "shortcut";
 
         public StorageService(IOptions<StorageConfiguration> storageConfigurationOptions)
@@ -32,6 +35,9 @@ namespace Services
 
             _articlesBlobContainerClient = new BlobContainerClient(_options.ConnectionString, _options.ArticleBlobsContainer);
             _articlesBlobContainerClient.CreateIfNotExists();
+
+            _wallpapersBlobContainerClient = new BlobContainerClient(_options.ConnectionString, _options.WallpaperBlobsContainer);
+            _wallpapersBlobContainerClient.CreateIfNotExists();
         }
 
         public async Task<string> UpsertBlob(string fileName, string fileContents)
@@ -164,6 +170,17 @@ namespace Services
             var filter = $"{property} eq '{value}'";
             var articles = QueryArticles(filter, false, default);
             return articles;
+        }
+
+        public List<string> GetWallpaperUrls()
+        {
+            var blobNames = new List<string>();
+            var resultSegment = _wallpapersBlobContainerClient.GetBlobs();
+            foreach (var blobItem in resultSegment)
+            {
+                blobNames.Add(blobItem.Name);
+            }
+            return blobNames;
         }
 
         public string Heartbeat()

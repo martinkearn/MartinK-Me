@@ -23,6 +23,11 @@
         /// <summary>
         /// The name of a table in Azure Storage where Shortcut entities are stored.
         /// </summary>
-        public string ShortcutsTable { get; set; }        
+        public string ShortcutsTable { get; set; }   
+
+        /// <summary>
+        /// The name of the blob container in Azure Storage where wallpaper images are stored.
+        /// </summary>
+        public string WallpaperBlobsContainer { get; set; }     
     }
 }
