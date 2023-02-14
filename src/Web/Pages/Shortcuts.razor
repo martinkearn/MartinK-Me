@@ -4,12 +4,7 @@
 
 <PageTitle>@WebStrings.TitlePrefix - Shortcuts</PageTitle>
 
-<div class="container-fluid">
-  @foreach (var wallpaperUrl in wallpaperUrls)
-  {
-    <p>@wallpaperUrl</p>
-  }
-
+<div class="container-fluid" style="background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url(@activeWallpaper); background-size: cover; height: 100%;">
     @foreach (var group in groups)
     {
       <div class="mb-5">
@@ -88,6 +83,8 @@
     private List<string> groups = new List<string>();
     private List<string> wallpaperUrls = new List<string>();
 
+    private string activeWallpaper;
+
     private string deleteTitle;
 
     private string newTitle;
@@ -99,6 +96,10 @@
     protected override void OnInitialized()
     {
         wallpaperUrls = StorageService.GetWallpaperUrls();
+
+        var random = new Random();
+        int index = random.Next(wallpaperUrls.Count);
+        activeWallpaper = wallpaperUrls[index];
 
         RefreshPage();
     }
