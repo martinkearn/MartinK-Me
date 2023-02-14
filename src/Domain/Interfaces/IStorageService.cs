@@ -83,6 +83,12 @@ namespace Domain.Interfaces
         public List<Article> GetArticlesByProperty(string property, string value);
 
         /// <summary>
+        /// Returns list of urls for each blob in wallpapers container
+        /// </summary>
+        /// <returns>List of wallpaper blob urls</returns>
+        public List<string> GetWallpaperUrls();
+
+        /// <summary>
         /// Function to use to test avaliability of service
         /// </summary>
         /// <returns></returns>

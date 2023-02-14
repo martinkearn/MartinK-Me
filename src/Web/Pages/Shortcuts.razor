@@ -4,12 +4,12 @@
 
 <PageTitle>@WebStrings.TitlePrefix - Shortcuts</PageTitle>
 
-<div class="container-fluid">
+<div class="container-fluid" style="background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url(@activeWallpaper); background-size: cover; height: 100%;">
     @foreach (var group in groups)
     {
       <div class="mb-5">
-        <h3>@group</h3>
-        <p>
+        <h3 class="d-inline me-4">@group</h3>
+        <p class="d-inline">
         @foreach (var s in shortcuts.Where(s => s.Group.ToLower() == group.ToLower()))
         {
             <a href="@s.Url" class="me-4 mb-4">@s.Title</a>
@@ -78,9 +78,12 @@
 </div>
 
 @code {
-    private List<Shortcut> shortcuts;
+    private List<Shortcut> shortcuts = new List<Shortcut>();
 
-    private List<string> groups;
+    private List<string> groups = new List<string>();
+    private List<string> wallpaperUrls = new List<string>();
+
+    private string activeWallpaper;
 
     private string deleteTitle;
 
@@ -92,6 +95,12 @@
 
     protected override void OnInitialized()
     {
+        wallpaperUrls = StorageService.GetWallpaperUrls();
+
+        var random = new Random();
+        int index = random.Next(wallpaperUrls.Count);
+        activeWallpaper = wallpaperUrls[index];
+
         RefreshPage();
     }
 

@@ -7,6 +7,9 @@ using Domain.Models;
 using Microsoft.Extensions.Options;
 using Services.Models;
 using System.Linq;
+using Azure;
+using Azure.Storage.Blobs.Models;
+using Azure.Storage.Sas;
 
 namespace Services
 {
@@ -18,6 +21,7 @@ namespace Services
         private readonly TableClient _articlesTableClient;
         private const string _articlesPartitionKey = "article";
         private readonly TableClient _shortcutsTableClient;
+        private readonly BlobContainerClient _wallpapersBlobContainerClient;
         private const string _shortcutsPartitionKey = "shortcut";
 
         public StorageService(IOptions<StorageConfiguration> storageConfigurationOptions)
@@ -32,6 +36,9 @@ namespace Services
 
             _articlesBlobContainerClient = new BlobContainerClient(_options.ConnectionString, _options.ArticleBlobsContainer);
             _articlesBlobContainerClient.CreateIfNotExists();
+
+            _wallpapersBlobContainerClient = new BlobContainerClient(_options.ConnectionString, _options.WallpaperBlobsContainer);
+            _wallpapersBlobContainerClient.CreateIfNotExists();
         }
 
         public async Task<string> UpsertBlob(string fileName, string fileContents)
@@ -166,6 +173,27 @@ namespace Services
             return articles;
         }
 
+        public List<string> GetWallpaperUrls()
+        {
+            // Get wallpaper container SAS
+            var containerSasUri = GetServiceSasUriForContainer(_wallpapersBlobContainerClient);
+
+            // Get wallpaper blobs
+            var blobs = _wallpapersBlobContainerClient.GetBlobs();
+
+            // Build list of blob sas uris
+            var blobSasUris = new List<string>();
+            foreach (var blobItem in blobs)
+            {
+                var builder = new UriBuilder(containerSasUri);
+                var segments = builder.Path.Split('/').ToList();
+                segments.Add(blobItem.Name);
+                builder.Path = String.Join('/', segments);
+                blobSasUris.Add(builder.Uri.ToString());
+            }
+            return blobSasUris;
+        }
+
         public string Heartbeat()
         {
             return $"ArticleBlobsContainer is {_options.ArticleBlobsContainer}";
@@ -183,6 +211,29 @@ namespace Services
                 entity.Add(prop.Name, value);
             }
             return entity;
+        }
+
+        private Uri GetServiceSasUriForContainer(BlobContainerClient containerClient, string storedPolicyName = null)
+        {
+            // Create a SAS token that's valid for one month.
+            BlobSasBuilder sasBuilder = new BlobSasBuilder()
+            {
+                BlobContainerName = containerClient.Name,
+                Resource = "c"
+            };
+
+            if (storedPolicyName == null)
+            {
+                sasBuilder.ExpiresOn = DateTimeOffset.UtcNow.AddMonths(1);
+                sasBuilder.SetPermissions(BlobContainerSasPermissions.Read);
+            }
+            else
+            {
+                sasBuilder.Identifier = storedPolicyName;
+            }
+
+            Uri sasUri = containerClient.GenerateSasUri(sasBuilder);
+            return sasUri;
         }
     }
 }
