@@ -6,6 +6,7 @@
     "StorageConfiguration:ArticleBlobsContainer": "articleblobs",
     "StorageConfiguration:ConnectionString": "storage connection string here",
     "StorageConfiguration:ArticlesTable": "articles",
-    "StorageConfiguration:ShortcutsTable": "shortcuts"
+    "StorageConfiguration:ShortcutsTable": "shortcuts",
+    "StorageConfiguration:WallpaperBlobsContainer": "wallpaperblobs"
   }
 }
