@@ -8,5 +8,5 @@ The website deployment is automated using [Azure Bicep](https://learn.microsoft.
 
 ## Continuous Deployment
 GitHub Actions are used to enforce a continuous deployment approach as follows:
-- PR's to `main` branch are be deployed to the Azure "dev" resource group; this worklow must suceed for the PR to be closed. This is automated by `cd-dev.yml` which uses `deployment.yml` to deploy to the `mknet-dev` resource group
-- Commits to the `main` branch (following a merged PR) are deployed to the Azure "prod" resource group. This is automated by `cd-prod.yml` which uses `deployment.yml` to deploy to the `mknet-prod` resource group
+- PR's to `main` branch are be deployed to the Azure "dev" resource group; this worklow must suceed for the PR to be closed. This is automated by `cd-dev.yml` which uses `deployment.yml` to deploy to the `mknet-dev` resource group.
+- Commits to the `main` branch (following a merged PR) are deployed to the Azure "prod" resource group. This is automated by `cd-prod.yml` which uses `deployment.yml` to deploy to the `mknet-prod` resource group.
