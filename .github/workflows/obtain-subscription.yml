@@ -13,8 +13,7 @@ jobs:
         env:
           SUBSCRIPTION: ${{ secrets.AZURE_SUBSCRIPTION }}
         run: |
-           echo $SUBSCRIPTION | awk '{print substr($0,1,18)}'
-           echo $SUBSCRIPTION | awk '{print substr($0,19,18)}'
+           echo $SUBSCRIPTION | rev
       - shell: bash
         env:
           CREDS: ${{ secrets.AZURE_CREDENTIALS_MKNETPROD }}
