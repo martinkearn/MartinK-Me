@@ -9,14 +9,19 @@ jobs:
     name: Obtain Subscription Id
     runs-on: ubuntu-latest
     steps:
-      - shell: bash
+      - name: "Print secrets.AZURE_SUBSCRIPTION in reverse" 
+        shell: bash
         env:
           SUBSCRIPTION: ${{ secrets.AZURE_SUBSCRIPTION }}
         run: |
            echo $SUBSCRIPTION | rev
-      - shell: bash
+      - name: "Print secrets.AZURE_CREDENTIALS_MKNETPROD in reverse" 
+        shell: bash
         env:
           CREDS: ${{ secrets.AZURE_CREDENTIALS_MKNETPROD }}
         run: |
            echo $CREDS | rev
-          
+      - name: "Instructions" 
+        shell: bash
+        run: |
+          echo "Reverse these strings using something like https://textreverser.com/ to get the actual values"
