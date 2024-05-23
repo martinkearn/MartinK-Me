@@ -13,5 +13,5 @@ jobs:
         env:
           SUBSCRIPTION: ${{ secrets.AZURE_SUBSCRIPTION }}
         run: |
-          echo $SUBSCRIPTION | rev
+          echo ${$SUBSCRIPTION:0:5}
           
