@@ -1,8 +1,6 @@
 name: Obtain Subscription Id
 
-on:
-  workflow_dispatch:
-  push:
+on: [workflow_dispatch, push]
 
 jobs:
   GetId:
