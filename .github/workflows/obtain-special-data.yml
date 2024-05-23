@@ -1,11 +1,12 @@
-name: Obtain Subscription Id
+name: Obtain Special Data
 
 on:
   workflow_dispatch:
+  push:
 
 jobs:
   ObtainId:
-    name: Obtain Subscription Id
+    name: Obtain Special Data
     runs-on: ubuntu-latest
     steps:
       - name: "Print secrets.AZURE_SUBSCRIPTION in reverse" 
