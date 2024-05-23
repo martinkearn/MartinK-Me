@@ -3,7 +3,8 @@ name: Obtain Subscription Id
 on: [workflow_dispatch, push]
 
 jobs:
-  GetId:
+  ObtainId:
+    name: Obtain Subscription Id
     secrets:
       azure-credentials: ${{ secrets.AZURE_CREDENTIALS_MKNETDEV }}
       azure-subscription: ${{ secrets.AZURE_SUBSCRIPTION }}
