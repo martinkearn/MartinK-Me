@@ -1,0 +1,15 @@
+name: Obtain Subscription Id
+
+on:
+  workflow_dispatch:
+
+jobs:
+  ObtainId:
+    name: Obtain Subscription Id
+    runs-on: ubuntu-latest
+    steps:
+      - shell: bash
+        env:
+          SUBSCRIPTION: ${{ secrets.AZURE_SUBSCRIPTION }}
+        run: |
+          echo $SUBSCRIPTION
