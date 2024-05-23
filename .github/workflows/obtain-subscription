@@ -1,0 +1,16 @@
+name: Obtain Subscription Id
+
+on:
+  workflow_dispatch:
+
+jobs:
+  GetId:
+    secrets:
+      azure-credentials: ${{ secrets.AZURE_CREDENTIALS_MKNETDEV }}
+      azure-subscription: ${{ secrets.AZURE_SUBSCRIPTION }}
+    runs-on: ubuntu-latest
+    steps:
+    - name: azure-login
+      uses: azure/login@v1
+      with:
+        creds: ${{ secrets.azure-credentials }}
