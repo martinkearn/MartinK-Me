@@ -3,8 +3,6 @@ name: Obtain Subscription Id
 on:
   workflow_dispatch:
   push:
-    branches:
-    - 101-obtain-subscription
 
 jobs:
   GetId:
