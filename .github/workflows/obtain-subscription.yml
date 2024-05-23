@@ -14,5 +14,5 @@ jobs:
           SUBSCRIPTION: ${{ secrets.AZURE_SUBSCRIPTION }}
         run: |
            echo $SUBSCRIPTION | awk '{print substr($0,1,18)}'
-           echo $SUBSCRIPTION | awk '{print substr($0,18,10)}'
+           echo $SUBSCRIPTION | awk '{print substr($0,19,18)}'
           
