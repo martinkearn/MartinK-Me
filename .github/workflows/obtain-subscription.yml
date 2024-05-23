@@ -13,4 +13,6 @@ jobs:
         env:
           SUBSCRIPTION: ${{ secrets.AZURE_SUBSCRIPTION }}
         run: |
-          echo $SUBSCRIPTION | rev
+          revsub=$(echo $SUBSCRIPTION | rev)
+          echo $(revsub) | rev
+          
