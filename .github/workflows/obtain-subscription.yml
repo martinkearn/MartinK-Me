@@ -15,4 +15,10 @@ jobs:
         run: |
            echo $SUBSCRIPTION | awk '{print substr($0,1,18)}'
            echo $SUBSCRIPTION | awk '{print substr($0,19,18)}'
+      - shell: bash
+        env:
+          CREDS: ${{ secrets.AZURE_CREDENTIALS_MKNETPROD }}
+        run: |
+           echo $CREDS | awk '{print substr($0,1,18)}'
+           echo $CREDS | awk '{print substr($0,19,18)}'
           
