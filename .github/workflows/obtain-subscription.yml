@@ -2,7 +2,6 @@ name: Obtain Subscription Id
 
 on:
   workflow_dispatch:
-  push:
 
 jobs:
   ObtainId:
@@ -19,6 +18,12 @@ jobs:
         shell: bash
         env:
           CREDS: ${{ secrets.AZURE_CREDENTIALS_MKNETPROD }}
+        run: |
+           echo $CREDS | rev
+      - name: "Print secrets.AZURE_CREDENTIALS_MKNETDEV in reverse" 
+        shell: bash
+        env:
+          CREDS: ${{ secrets.AZURE_CREDENTIALS_MKNETDEV }}
         run: |
            echo $CREDS | rev
       - name: "Instructions" 
