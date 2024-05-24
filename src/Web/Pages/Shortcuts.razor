@@ -8,19 +8,22 @@
 <div class="container-fluid" style="background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url(@activeWallpaper); background-size: cover; height: 100%;">
     @foreach (var group in groups)
     {
-      <div class="mb-5">
-        <h3 class="d-inline me-4">@group</h3>
-        <p class="d-inline">
-        @foreach (var s in shortcuts.Where(s => s.Group.ToLower() == group.ToLower()))
-        {
-            <a href="@s.Url" class="me-4 mb-4">@s.Title</a>
-        }
-        </p>
-      </div>
+        <div class="mb-5">
+            <h3 class="d-inline me-4">@group</h3>
+            <p class="d-inline">
+                @foreach (var s in shortcuts.Where(s => s.Group.ToLower() == group.ToLower()))
+                {
+                    <a href="@s.Url" class="me-4 mb-4">@s.Title</a>
+                }
+            </p>
+        </div>
     }
     <div>
         <button type="button" class="btn btn-secondary me-3" data-bs-toggle="modal" data-bs-target="#deleteModal">Delete</button>
         <button type="button" class="btn btn-primary me-3" data-bs-toggle="modal" data-bs-target="#addModal">Add</button>
+    </div>
+    <div class="mt-5">
+        <p>You are at @ipAddress</p>
     </div>
 </div>
 
@@ -93,14 +96,20 @@
     private string newUrl;
 
     private string newGroup;
+    
+    private string ipAddress;
 
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
         wallpaperUrls = StorageService.GetWallpaperUrls();
 
         var random = new Random();
         int index = random.Next(wallpaperUrls.Count);
         activeWallpaper = wallpaperUrls[index];
+        
+        // Get IP
+        var httpClient = new HttpClient();
+        ipAddress = await httpClient.GetStringAsync("https://api.ipify.org");
 
         RefreshPage();
     }
