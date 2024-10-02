@@ -82,12 +82,12 @@ resource functionApp 'Microsoft.Web/sites@2022-03-01' = {
     reserved: true
     serverFarmId: functionAppServicePlan.id
     siteConfig: {
-      linuxFxVersion: 'DOTNET-ISOLATED|7.0'
-      netFrameworkVersion:'7.0'
+      linuxFxVersion: 'DOTNET-ISOLATED|8.0'
+      netFrameworkVersion:'8.0'
       appSettings: [
         {
           name: 'APPINSIGHTS_INSTRUMENTATIONKEY'
-          value: reference(applicationInsights.id, '2020-02-02').InstrumentationKey
+          value: applicationInsights.properties.InstrumentationKey
         }
         {
           name: 'AzureWebJobsStorage'
@@ -146,11 +146,11 @@ resource webApp 'Microsoft.Web/sites@2022-03-01' = {
   properties: {
     serverFarmId: webAppServicePlan.id
     siteConfig: {
-      linuxFxVersion: 'DOTNETCORE|7.0'
+      linuxFxVersion: 'DOTNETCORE|8.0'
       appSettings: [
         {
           name: 'APPINSIGHTS_INSTRUMENTATIONKEY'
-          value: reference(applicationInsights.id, '2020-02-02').InstrumentationKey
+          value: applicationInsights.properties.InstrumentationKey
         }
         {
           name: 'StorageConfiguration__ArticlesTable'

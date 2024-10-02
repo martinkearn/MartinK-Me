@@ -65,7 +65,7 @@ jobs:
 
 # Web App code
     - name: bicep-output-webappname
-      uses: azure/CLI@v2
+      uses: azure/cli@v2
       with:
         inlineScript: |
           #!/bin/bash
@@ -86,7 +86,7 @@ jobs:
 
 # Function code
     - name: bicep-output-functionappname
-      uses: azure/CLI@v2
+      uses: azure/cli@v2
       with:
         inlineScript: |
           #!/bin/bash
