@@ -69,7 +69,10 @@ resource applicationInsights 'Microsoft.Insights/components@2020-02-02' = {
 resource functionAppServicePlan 'Microsoft.Web/serverfarms@2022-03-01' = {
   name: 'functionapp-service-${uniqueName}'
   location: location
-  sku: { tier: 'Dynamic', name: 'Y1', family: 'Y', capacity: 1 }
+  sku: { 
+    tier: 'Dynamic'
+    name: 'Y1'
+  }
   properties: { reserved: true }
 }
 
@@ -77,7 +80,7 @@ resource functionAppServicePlan 'Microsoft.Web/serverfarms@2022-03-01' = {
 resource functionApp 'Microsoft.Web/sites@2022-03-01' = {
   name: 'functionapp-${uniqueName}'
   location: location
-  kind: 'functionapp,linux'
+  kind: 'functionapp'
   properties: {
     reserved: true
     serverFarmId: functionAppServicePlan.id
@@ -99,7 +102,7 @@ resource functionApp 'Microsoft.Web/sites@2022-03-01' = {
         }
         {
           name: 'FUNCTIONS_WORKER_RUNTIME'
-          value: 'dotnet-isolated'
+          value: 'dotnet'
         }
         {
           name: 'StorageConfiguration__ArticlesTable'
