@@ -10,10 +10,6 @@ on:
           type: string
           required: true
       secrets:
-        azure-credentials:
-          required: true
-        azure-subscription:
-          required: true
         azure-client-id:
           required: true
         azure-tenant-id:
