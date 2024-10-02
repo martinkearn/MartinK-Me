@@ -31,7 +31,7 @@ jobs:
     - name: azure-login
       uses: azure/login@v2
       with:
-        creds: ${{ secrets.AZURE_CREDS_DEV }}
+        creds: ${{ secrets.azure-credentials }}
         enable-AzPSSession: true
         
     - name: setup-dotnet
@@ -46,7 +46,7 @@ jobs:
     - name: bicep-deploy
       uses: azure/arm-deploy@v1
       with:
-        subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+        subscriptionId: ${{ secrets.azure-subscription }}
         resourceGroupName: ${{ inputs.rg }}
         template: ./bicep/main.bicep
         failOnStdErr: false

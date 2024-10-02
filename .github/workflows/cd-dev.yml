@@ -13,5 +13,5 @@ jobs:
       rg: 'mknet-dev'
       uniquelabel: 'mknetdev'
     secrets:
-      azure-credentials: ${{ secrets.AZURE_CREDENTIALS_MKNETDEV }}
-      azure-subscription: ${{ secrets.AZURE_SUBSCRIPTION }}
+      azure-credentials: ${{ secrets.AZURE_CREDS_DEV }}
+      azure-subscription: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
