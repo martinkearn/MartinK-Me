@@ -15,3 +15,6 @@ jobs:
     secrets:
       azure-credentials: ${{ secrets.AZURE_CREDS_DEV }}
       azure-subscription: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+      azure-client-id: ${{ secrets.AZURE_CLIENT_ID_DEV }}
+      azure-tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+      azure-subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
