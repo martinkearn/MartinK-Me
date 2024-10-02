@@ -36,8 +36,7 @@ jobs:
       with:
         client-id: ${{ secrets.azure-client-id }}
         tenant-id: ${{ secrets.azure-tenant-id }}
-        subscription-id: 45ccf981-5c60-4d11-a39e-a9665d8272ae
-        allow-no-subscriptions: true
+        subscription-id: ${{ secrets.azure-subscription-id }}
 
     - name: azure-cli-verify
       uses: azure/cli@v2
