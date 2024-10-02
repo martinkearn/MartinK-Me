@@ -37,6 +37,7 @@ jobs:
         client-id: ${{ secrets.azure-client-id }}
         tenant-id: ${{ secrets.azure-tenant-id }}
         subscription-id: ${{ secrets.azure-subscription-id }}
+        allow-no-subscriptions: true
 
     - name: azure-cli-verify
       uses: azure/cli@v2
