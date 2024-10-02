@@ -10,7 +10,7 @@ jobs:
   CD-Dev:
     uses: ./.github/workflows/deployment.yml
     with:
-      rg: 'mknet-dev'
+      rg: 'MK-Net-Dev'
       uniquelabel: 'mknetdev'
     secrets:
       azure-client-id: ${{ secrets.AZURE_CLIENT_ID_DEV }}
