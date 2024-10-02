@@ -66,24 +66,26 @@ resource applicationInsights 'Microsoft.Insights/components@2020-02-02' = {
 }
 
 //APP SERVICE PLAN for FUNCTION APP
-resource functionAppServicePlan 'Microsoft.Web/serverfarms@2020-12-01' = {
+resource functionAppServicePlan 'Microsoft.Web/serverfarms@2022-03-01' = {
   name: 'functionapp-service-${uniqueName}'
   location: location
   sku: { 
     name: 'Y1'  // Y1 is for the Consumption plan
   }
+  kind: 'linux'
   properties: { reserved: true }
 }
 
 //FUNCTION APP
-resource functionApp 'Microsoft.Web/sites@2020-12-01' = {
+resource functionApp 'Microsoft.Web/sites@2022-03-01' = {
   name: 'functionapp-${uniqueName}'
   location: location
-  kind: 'functionapp'
+  kind: 'functionapp,linux'
   properties: {
     reserved: true
     serverFarmId: functionAppServicePlan.id
     siteConfig: {
+      linuxFxVersion: 'DOTNETCORE|8.0'
       appSettings: [
         {
           name: 'APPINSIGHTS_INSTRUMENTATIONKEY'
