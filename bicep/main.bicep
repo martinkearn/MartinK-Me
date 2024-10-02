@@ -66,18 +66,17 @@ resource applicationInsights 'Microsoft.Insights/components@2020-02-02' = {
 }
 
 //APP SERVICE PLAN for FUNCTION APP
-resource functionAppServicePlan 'Microsoft.Web/serverfarms@2022-03-01' = {
+resource functionAppServicePlan 'Microsoft.Web/serverfarms@2020-12-01' = {
   name: 'functionapp-service-${uniqueName}'
   location: location
   sku: { 
-    tier: 'Dynamic'
     name: 'Y1'  // Y1 is for the Consumption plan
   }
   properties: { reserved: true }
 }
 
 //FUNCTION APP
-resource functionApp 'Microsoft.Web/sites@2022-03-01' = {
+resource functionApp 'Microsoft.Web/sites@2020-12-01' = {
   name: 'functionapp-${uniqueName}'
   location: location
   kind: 'functionapp'
