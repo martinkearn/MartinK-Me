@@ -71,7 +71,7 @@ resource functionAppServicePlan 'Microsoft.Web/serverfarms@2022-03-01' = {
   location: location
   sku: { 
     tier: 'Dynamic'
-    name: 'Y1'
+    name: 'Y1'  // Y1 is for the Consumption plan
   }
   properties: { reserved: true }
 }
@@ -85,8 +85,6 @@ resource functionApp 'Microsoft.Web/sites@2022-03-01' = {
     reserved: true
     serverFarmId: functionAppServicePlan.id
     siteConfig: {
-      linuxFxVersion: 'DOTNET-ISOLATED|8.0'
-      netFrameworkVersion:'8.0'
       appSettings: [
         {
           name: 'APPINSIGHTS_INSTRUMENTATIONKEY'
@@ -102,7 +100,7 @@ resource functionApp 'Microsoft.Web/sites@2022-03-01' = {
         }
         {
           name: 'FUNCTIONS_WORKER_RUNTIME'
-          value: 'dotnet'
+          value: 'dotnet-isolated' // .NET isolated worker process for .NET 8
         }
         {
           name: 'StorageConfiguration__ArticlesTable'
