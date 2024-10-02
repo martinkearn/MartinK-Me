@@ -31,9 +31,8 @@ jobs:
     - name: azure-login
       uses: azure/login@v2
       with:
-        client-id: ${{ secrets.AZURE_CLIENT_ID_DEV }}
-        tenant-id: ${{ secrets.AZURE_TENANT_ID }}
-        subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+        creds: ${{ secrets.AZURE_CREDS_DEV }}
+        enable-AzPSSession: true
         
     - name: setup-dotnet
       uses: actions/setup-dotnet@v1
