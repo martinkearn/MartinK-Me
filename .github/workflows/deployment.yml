@@ -46,7 +46,7 @@ jobs:
           az account show
         
     - name: setup-dotnet
-      uses: actions/setup-dotnet@v1
+      uses: actions/setup-dotnet@v2
       with:
         dotnet-version: '8.0'
 
@@ -55,7 +55,7 @@ jobs:
       run: az bicep upgrade
 
     - name: bicep-deploy
-      uses: azure/arm-deploy@v1
+      uses: azure/arm-deploy@v2
       with:
         subscriptionId: ${{ secrets.azure-subscription-id }}
         resourceGroupName: ${{ inputs.rg }}
@@ -65,7 +65,7 @@ jobs:
 
 # Web App code
     - name: bicep-output-webappname
-      uses: azure/CLI@v1
+      uses: azure/CLI@v2
       with:
         inlineScript: |
           #!/bin/bash
@@ -86,7 +86,7 @@ jobs:
 
 # Function code
     - name: bicep-output-functionappname
-      uses: azure/CLI@v1
+      uses: azure/CLI@v2
       with:
         inlineScript: |
           #!/bin/bash
