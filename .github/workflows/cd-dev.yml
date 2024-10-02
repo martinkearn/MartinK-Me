@@ -11,7 +11,7 @@ jobs:
     uses: ./.github/workflows/deployment.yml
     with:
       rg: 'MK-Net-Dev'
-      uniquelabel: 'mknetdev'
+      uniquelabel: 'mknetdevelopment'
     secrets:
       azure-client-id: ${{ secrets.AZURE_CLIENT_ID_DEV }}
       azure-tenant-id: ${{ secrets.AZURE_TENANT_ID }}
