@@ -102,6 +102,10 @@ resource functionApp 'Microsoft.Web/sites@2022-03-01' = {
           value: 'dotnet-isolated' // .NET isolated worker process for .NET 8
         }
         {
+          name: 'DOTNET_VERSION'
+          value: '8'
+        }
+        {
           name: 'StorageConfiguration__ArticlesTable'
           value: storageAccountTableServiceArticlesTable.name
         }
