@@ -1,5 +1,5 @@
 @description('The name of the Azure Function app.')
-param uniqueName string = uniqueString(resourceGroup().id)
+param uniqueName string = uniqueString(toLower('${resourceGroup().id}${substring(newGuid(), 0, 8)}'))
 
 @description('Location for all resources.')
 param location string = resourceGroup().location
