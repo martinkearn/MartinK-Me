@@ -1,5 +1,5 @@
 @description('The name of the Azure Function app.')
-param uniqueName string = uniqueString(toLower('${resourceGroup().id}${substring(newGuid(), 0, 8)}'))
+param uniqueName string = uniqueString(toLower('${resourceGroup().id}'))
 
 @description('Location for all resources.')
 param location string = resourceGroup().location
@@ -69,10 +69,7 @@ resource applicationInsights 'Microsoft.Insights/components@2020-02-02' = {
 resource functionAppServicePlan 'Microsoft.Web/serverfarms@2022-03-01' = {
   name: 'functionapp-service-${uniqueName}'
   location: location
-  sku: { 
-    name: 'Y1'  // Y1 is for the Consumption plan
-  }
-  kind: 'linux'
+  sku: { tier: 'Dynamic', name: 'Y1', family: 'Y', capacity: 1 }
   properties: { reserved: true }
 }
 
@@ -85,7 +82,8 @@ resource functionApp 'Microsoft.Web/sites@2022-03-01' = {
     reserved: true
     serverFarmId: functionAppServicePlan.id
     siteConfig: {
-      linuxFxVersion: 'DOTNETCORE|8.0'
+      linuxFxVersion: 'DOTNET-ISOLATED|8.0'
+      netFrameworkVersion:'8.0'
       appSettings: [
         {
           name: 'APPINSIGHTS_INSTRUMENTATIONKEY'
