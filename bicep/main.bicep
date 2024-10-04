@@ -83,7 +83,7 @@ resource functionApp 'Microsoft.Web/sites@2022-03-01' = {
     serverFarmId: functionAppServicePlan.id
     siteConfig: {
       linuxFxVersion: 'DOTNET-ISOLATED|8.0'
-      netFrameworkVersion:'8.0'
+      netFrameworkVersion: '8.0'
       appSettings: [
         {
           name: 'APPINSIGHTS_INSTRUMENTATIONKEY'
@@ -112,24 +112,24 @@ resource functionApp 'Microsoft.Web/sites@2022-03-01' = {
         {
           name: 'StorageConfiguration__ShortcutsTable'
           value: storageAccountTableServiceShortcutsTable.name
-        } 
+        }
         {
           name: 'StorageConfiguration__ArticleBlobsContainer'
           value: storageAccountArticlesBlobServiceContainer.name
-        } 
+        }
         {
           name: 'StorageConfiguration__WallpaperBlobsContainer'
           value: storageAccountWallpaperBlobServiceContainer.name
-        } 
+        }
         {
           name: 'StorageConfiguration__ConnectionString'
           value: 'DefaultEndpointsProtocol=https;AccountName=${storageAccountName};EndpointSuffix=${environment().suffixes.storage};AccountKey=${listKeys(storageAccount.id, '2019-06-01').keys[0].value}'
-        }         
+        }
       ]
     }
   }
 }
-output functionAppName string  = functionApp.name
+output functionAppName string = functionApp.name
 
 //APP SERVICE PLAN for WEB APP
 resource webAppServicePlan 'Microsoft.Web/serverfarms@2022-03-01' = {
@@ -163,22 +163,22 @@ resource webApp 'Microsoft.Web/sites@2022-03-01' = {
         {
           name: 'StorageConfiguration__ShortcutsTable'
           value: storageAccountTableServiceShortcutsTable.name
-        } 
+        }
         {
           name: 'StorageConfiguration__ArticleBlobsContainer'
           value: storageAccountArticlesBlobServiceContainer.name
-        } 
+        }
         {
           name: 'StorageConfiguration__WallpaperBlobsContainer'
           value: storageAccountWallpaperBlobServiceContainer.name
-        } 
+        }
         {
           name: 'StorageConfiguration__ConnectionString'
           value: 'DefaultEndpointsProtocol=https;AccountName=${storageAccountName};EndpointSuffix=${environment().suffixes.storage};AccountKey=${listKeys(storageAccount.id, '2019-06-01').keys[0].value}'
-        } 
+        }
       ]
     }
     httpsOnly: true
   }
 }
-output webAppName string  = webApp.name
+output webAppName string = webApp.name
