@@ -69,7 +69,9 @@ resource applicationInsights 'Microsoft.Insights/components@2020-02-02' = {
 resource functionAppServicePlan 'Microsoft.Web/serverfarms@2022-03-01' = {
   name: toLower('app-service-${uniqueName}')
   location: location
-  sku: { tier: 'Dynamic', name: 'Y1', family: 'Y', capacity: 1 }
+  sku: {
+    name: 'B1'
+  }
   kind: 'linux'
   properties: { reserved: true }
 }
