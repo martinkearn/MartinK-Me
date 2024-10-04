@@ -21,6 +21,8 @@ class Program
         IConfiguration configuration = builder.Build();
         var functionUrl = configuration["FunctionUrl"];
         
+        // need to auth to GH to prevent rate limiuts: https://docs.github.com/en/rest/authentication/authenticating-to-the-rest-api?apiVersion=2022-11-28
+        
         // Get GH blogs
         var files = await GetGithubFiles("martinkearn", "Content", "Blogs"); // These values ARE case senitive
         foreach (var file in files)
