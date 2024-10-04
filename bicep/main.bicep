@@ -70,6 +70,7 @@ resource functionAppServicePlan 'Microsoft.Web/serverfarms@2022-03-01' = {
   name: toLower('functionapp-service-${uniqueName}')
   location: location
   sku: { tier: 'Dynamic', name: 'Y1', family: 'Y', capacity: 1 }
+  kind: 'linux'
   properties: { reserved: true }
 }
 
