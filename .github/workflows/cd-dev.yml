@@ -10,8 +10,9 @@ jobs:
   CD-Dev:
     uses: ./.github/workflows/deployment.yml
     with:
-      rg: 'mknet-dev'
-      uniquelabel: 'mknetdev'
+      rg: 'MartinkMe-Dev'
+      uniquelabel: 'MartinkMeDev'
     secrets:
-      azure-credentials: ${{ secrets.AZURE_CREDENTIALS_MKNETDEV }}
-      azure-subscription: ${{ secrets.AZURE_SUBSCRIPTION }}
+      azure-client-id: ${{ secrets.AZURE_CLIENT_ID }}
+      azure-tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+      azure-subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}

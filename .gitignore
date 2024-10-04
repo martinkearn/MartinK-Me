@@ -248,3 +248,4 @@ Src/Workflow/__queuestorage*
 .DS_Store
 src/Workflow/local.settings.json
 src/Web/appsettings.Development.json
+/src/.idea

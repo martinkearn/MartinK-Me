@@ -10,10 +10,17 @@ on:
           type: string
           required: true
       secrets:
-        azure-credentials:
+        azure-client-id:
           required: true
-        azure-subscription:
+        azure-tenant-id:
           required: true
+        azure-subscription-id:
+          required: true
+
+
+permissions:
+  id-token: write
+  contents: read
    
 jobs:
   Deploy-Infrastructure:
@@ -25,23 +32,32 @@ jobs:
       uses: actions/checkout@main
 
     - name: azure-login
-      uses: azure/login@v1
+      uses: azure/login@v2
       with:
-        creds: ${{ secrets.azure-credentials }}
+        client-id: ${{ secrets.azure-client-id }}
+        tenant-id: ${{ secrets.azure-tenant-id }}
+        subscription-id: ${{ secrets.azure-subscription-id }}
+
+    - name: azure-cli-verify
+      uses: azure/cli@v2
+      with:
+        azcliversion: latest
+        inlineScript: |
+          az account show
         
     - name: setup-dotnet
-      uses: actions/setup-dotnet@v1
+      uses: actions/setup-dotnet@v2
       with:
-        dotnet-version: '7.0'
+        dotnet-version: '8.0'
 
 # Bicep
     - name: bicep-install
       run: az bicep upgrade
 
     - name: bicep-deploy
-      uses: azure/arm-deploy@v1
+      uses: azure/arm-deploy@v2
       with:
-        subscriptionId: ${{ secrets.azure-subscription }}
+        subscriptionId: ${{ secrets.azure-subscription-id }}
         resourceGroupName: ${{ inputs.rg }}
         template: ./bicep/main.bicep
         failOnStdErr: false
@@ -49,7 +65,7 @@ jobs:
 
 # Web App code
     - name: bicep-output-webappname
-      uses: azure/CLI@v1
+      uses: azure/cli@v2
       with:
         inlineScript: |
           #!/bin/bash
@@ -70,7 +86,7 @@ jobs:
 
 # Function code
     - name: bicep-output-functionappname
-      uses: azure/CLI@v1
+      uses: azure/cli@v2
       with:
         inlineScript: |
           #!/bin/bash
