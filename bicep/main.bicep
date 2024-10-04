@@ -1,5 +1,5 @@
 @description('The name of the Azure Function app.')
-param uniqueName string = uniqueString(toLower('${resourceGroup().id}'))
+param uniqueName string = toLower(uniqueString('${resourceGroup().id}'))
 
 @description('Location for all resources.')
 param location string = resourceGroup().location
@@ -54,7 +54,7 @@ resource storageAccountTableServiceShortcutsTable 'Microsoft.Storage/storageAcco
 }
 
 //APP INSIGHTS
-var appInsightsName = 'appinisghts-${uniqueName}'
+var appInsightsName = toLower('appinisghts-${uniqueName}')
 resource applicationInsights 'Microsoft.Insights/components@2020-02-02' = {
   name: appInsightsName
   location: location
@@ -67,7 +67,7 @@ resource applicationInsights 'Microsoft.Insights/components@2020-02-02' = {
 
 //APP SERVICE PLAN for FUNCTION APP
 resource functionAppServicePlan 'Microsoft.Web/serverfarms@2022-03-01' = {
-  name: 'functionapp-service-${uniqueName}'
+  name: toLower('functionapp-service-${uniqueName}')
   location: location
   sku: { tier: 'Dynamic', name: 'Y1', family: 'Y', capacity: 1 }
   properties: { reserved: true }
@@ -75,7 +75,7 @@ resource functionAppServicePlan 'Microsoft.Web/serverfarms@2022-03-01' = {
 
 //FUNCTION APP
 resource functionApp 'Microsoft.Web/sites@2022-03-01' = {
-  name: 'functionapp-${uniqueName}'
+  name: toLower('functionapp-${uniqueName}')
   location: location
   kind: 'functionapp,linux'
   properties: {
@@ -133,7 +133,7 @@ output functionAppName string = functionApp.name
 
 //APP SERVICE PLAN for WEB APP
 resource webAppServicePlan 'Microsoft.Web/serverfarms@2022-03-01' = {
-  name: 'webapp-service-${uniqueName}'
+  name: toLower('webapp-service-${uniqueName}')
   location: location
   sku: {
     name: 'B1'
@@ -144,7 +144,7 @@ resource webAppServicePlan 'Microsoft.Web/serverfarms@2022-03-01' = {
 
 //WEB APP
 resource webApp 'Microsoft.Web/sites@2022-03-01' = {
-  name: 'webapp-${uniqueName}'
+  name: toLower('webapp-${uniqueName}')
   location: location
   kind: 'app,linux'
   properties: {
