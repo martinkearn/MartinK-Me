@@ -479,7 +479,7 @@ namespace Domain.Models
         public string Message { get; set; }
 
         [JsonPropertyName("timestamp")]
-        public DateTime Timestamp { get; set; }
+        public string Timestamp { get; set; }
 
         [JsonPropertyName("url")]
         public string Url { get; set; }
