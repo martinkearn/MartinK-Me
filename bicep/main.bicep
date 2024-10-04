@@ -5,7 +5,7 @@ param uniqueName string = uniqueString(toLower('${resourceGroup().id}'))
 param location string = resourceGroup().location
 
 //STORAGE ACCOUNT
-var storageAccountName = 'storage${uniqueName}'
+var storageAccountName = toLower('storage${uniqueName}')
 resource storageAccount 'Microsoft.Storage/storageAccounts@2022-09-01' = {
   name: storageAccountName
   location: location
