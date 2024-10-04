@@ -5,19 +5,27 @@
 
 <PageTitle>@WebStrings.TitlePrefix - Shortcuts</PageTitle>
 
-<div class="container-fluid" style="background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url(@activeWallpaper); background-size: cover; height: 100%;">
-    @foreach (var group in groups)
-    {
-      <div class="mb-5">
-        <h3 class="d-inline me-4">@group</h3>
-        <p class="d-inline">
-        @foreach (var s in shortcuts.Where(s => s.Group.ToLower() == group.ToLower()))
-        {
-            <a href="@s.Url" class="me-4 mb-4">@s.Title</a>
-        }
-        </p>
-      </div>
+<div class="container-fluid" style="@_activeWallpaperStyle">
+    @if (_groups.Count == 0)
+    {   
+        <p>No Shortcuts</p>
     }
+    else
+    {
+        @foreach (var group in _groups)
+        {
+            <div class="mb-5">
+                <h3 class="d-inline me-4">@group</h3>
+                <p class="d-inline">
+                    @foreach (var s in _shortcuts.Where(s => string.Equals(s.Group, group, StringComparison.CurrentCultureIgnoreCase)))
+                    {
+                        <a href="@s.Url" class="me-4 mb-4">@s.Title</a>
+                    }
+                </p>
+            </div>
+        }
+    }
+
     <div>
         <button type="button" class="btn btn-secondary me-3" data-bs-toggle="modal" data-bs-target="#deleteModal">Delete</button>
         <button type="button" class="btn btn-primary me-3" data-bs-toggle="modal" data-bs-target="#addModal">Add</button>
@@ -36,7 +44,7 @@
         <form>
             <div class="mb-3">
                 <label for="addTitle" class="form-label">Title</label>
-                <input type="text" class="form-control" id="deleteTitle" @bind-value=@deleteTitle >
+                <input type="text" class="form-control" id="deleteTitle" @bind-value=@_deleteTitle >
             </div>
         </form>
       </div>
@@ -59,15 +67,15 @@
         <form>
             <div class="mb-3">
                 <label for="addTitle" class="form-label">Title</label>
-                <input type="text" class="form-control" id="addTitle" @bind-value=@newTitle >
+                <input type="text" class="form-control" id="addTitle" @bind-value=@_newTitle >
             </div>
             <div class="mb-3">
                 <label for="addUrl" class="form-label">Url</label>
-                <input type="text" class="form-control" id="addUrl" @bind-value=@newUrl >
+                <input type="text" class="form-control" id="addUrl" @bind-value=@_newUrl >
             </div>
             <div class="mb-3">
                 <label for="addGroup" class="form-label">Group</label>
-                <input type="text" class="form-control" id="addGroup" @bind-value=@newGroup >
+                <input type="text" class="form-control" id="addGroup" @bind-value=@_newGroup >
             </div>
         </form>
       </div>
@@ -79,66 +87,68 @@
 </div>
 
 @code {
-    private List<Shortcut> shortcuts = new List<Shortcut>();
+    private List<Shortcut> _shortcuts = new();
 
-    private List<string> groups = new List<string>();
-    private List<string> wallpaperUrls = new List<string>();
+    private List<string> _groups = new();
+    
+    private string _activeWallpaperStyle;
 
-    private string activeWallpaper;
+    private string _deleteTitle;
 
-    private string deleteTitle;
+    private string _newTitle;
 
-    private string newTitle;
+    private string _newUrl;
 
-    private string newUrl;
-
-    private string newGroup;
+    private string _newGroup;
 
     protected override void OnInitialized()
     {
-        wallpaperUrls = StorageService.GetWallpaperUrls();
+        var wallpaperUrls = StorageService.GetWallpaperUrls();
 
-        var random = new Random();
-        int index = random.Next(wallpaperUrls.Count);
-        activeWallpaper = wallpaperUrls[index];
-
+        if (wallpaperUrls.Count > 0)
+        {
+            var random = new Random();
+            var index = random.Next(wallpaperUrls.Count);
+            _activeWallpaperStyle = $"background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url({wallpaperUrls[index]}); background-size: cover; height: 100%;";
+        }
+        
         RefreshPage();
     }
 
     private void Create()
     {
         // Create url object
-        byte[] titleBytes = Encoding.UTF8.GetBytes(newTitle.ToLowerInvariant());
+        var titleBytes = Encoding.UTF8.GetBytes(_newTitle.ToLowerInvariant());
         var s = new Shortcut()
         {
             Key = Convert.ToBase64String(titleBytes),
-            Group = newGroup,
-            Title = newTitle,
-            Url = newUrl
+            Group = _newGroup,
+            Title = _newTitle,
+            Url = _newUrl
         };
         StorageService.UpsertShortcut(s);
 
         // Clear
-        newTitle = string.Empty;
-        newUrl = string.Empty;
+        _newTitle = string.Empty;
+        _newUrl = string.Empty;
 
         RefreshPage();
     }
 
     private void Delete()
     {
-        var deleteShortcutKey = shortcuts.Where(s => s.Title.ToLowerInvariant() == deleteTitle.ToLowerInvariant()).FirstOrDefault().Key;
+        var deleteShortcutKey = _shortcuts.Where(s => s.Title.ToLowerInvariant() == _deleteTitle.ToLowerInvariant()).FirstOrDefault()?.Key;
         StorageService.DeleteShortcut(deleteShortcutKey);
 
         // Clear
-        deleteTitle = string.Empty;
+        _deleteTitle = string.Empty;
 
         RefreshPage();
     }
 
     private void RefreshPage()
     {
-        shortcuts = StorageService.QueryShortcuts(string.Empty, default);
-        groups = shortcuts.Select(s => s.Group).Distinct().ToList();
+        _shortcuts = StorageService.QueryShortcuts(string.Empty, default);
+        _groups = _shortcuts.Select(s => s.Group).Distinct().ToList();
     }
 }
