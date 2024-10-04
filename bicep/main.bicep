@@ -65,14 +65,11 @@ resource applicationInsights 'Microsoft.Insights/components@2020-02-02' = {
   kind: 'web'
 }
 
-//APP SERVICE PLAN
+//APP SERVICE PLAN for FUNCTION APP
 resource functionAppServicePlan 'Microsoft.Web/serverfarms@2022-03-01' = {
-  name: toLower('app-service-${uniqueName}')
+  name: toLower('functionapp-service-${uniqueName}')
   location: location
-  sku: {
-    name: 'B1'
-  }
-  kind: 'linux'
+  sku: { tier: 'Dynamic', name: 'Y1', family: 'Y', capacity: 1 }
   properties: { reserved: true }
 }
 
@@ -134,16 +131,16 @@ resource functionApp 'Microsoft.Web/sites@2022-03-01' = {
 }
 output functionAppName string = functionApp.name
 
-/* //APP SERVICE PLAN for WEB APP
+//APP SERVICE PLAN for WEB APP
 resource webAppServicePlan 'Microsoft.Web/serverfarms@2022-03-01' = {
-  name: toLower('webapp-service-${uniqueName}')
+  name: 'webapp-service-${uniqueName}'
   location: location
   sku: {
     name: 'B1'
   }
   kind: 'linux'
   properties: { reserved: true }
-} */
+}
 
 //WEB APP
 resource webApp 'Microsoft.Web/sites@2022-03-01' = {
@@ -151,7 +148,7 @@ resource webApp 'Microsoft.Web/sites@2022-03-01' = {
   location: location
   kind: 'app,linux'
   properties: {
-    serverFarmId: functionAppServicePlan.id
+    serverFarmId: webAppServicePlan.id
     siteConfig: {
       linuxFxVersion: 'DOTNETCORE|8.0'
       appSettings: [
