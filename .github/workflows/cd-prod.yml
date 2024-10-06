@@ -10,7 +10,7 @@ jobs:
   CD-Prod:
     uses: ./.github/workflows/deployment.yml
     with:
-      rg: 'MartinkMe-Prod'
+      rg: 'MartinkMeProd'
     secrets:
       azure-client-id: ${{ secrets.AZURE_CLIENT_ID }}
       azure-tenant-id: ${{ secrets.AZURE_TENANT_ID }}

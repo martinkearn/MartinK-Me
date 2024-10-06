@@ -2,12 +2,12 @@
 param githubpat string
 
 // VARS
-var uniqueName = replace(toLower('${resourceGroup().id}'), '-', '')
+var uniqueName = toLower('${resourceGroup().id}')
 output uniqueName string = uniqueName
 var location = resourceGroup().location
 
 //STORAGE ACCOUNT
-var storageAccountName = 'storagemknetdev'
+var storageAccountName = 'storage${uniqueName}'
 resource storageAccount 'Microsoft.Storage/storageAccounts@2022-09-01' = {
   name: storageAccountName
   location: location
