@@ -1,4 +1,5 @@
-﻿using System.Runtime.CompilerServices;
+﻿using System.Net.Http.Headers;
+using System.Runtime.CompilerServices;
 using Domain.Models;
 using System.Text;
 using System.Text.Json;
@@ -19,36 +20,41 @@ class Program
             .AddJsonFile("appsettings.development.json", optional: true, reloadOnChange: true) // Load development-specific settings
             .AddEnvironmentVariables(); // Optionally add environment variables
         IConfiguration configuration = builder.Build();
-        var functionUrl = configuration["FunctionUrl"];
-        
-        // need to auth to GH to prevent rate limiuts: https://docs.github.com/en/rest/authentication/authenticating-to-the-rest-api?apiVersion=2022-11-28
+        var functionUrl = configuration["FunctionUrl"]!;
+        var gitHubPat = configuration["GitHubPAT"]!;
         
         // Get GH blogs
-        var files = await GetGithubFiles("martinkearn", "Content", "Blogs"); // These values ARE case senitive
+        var files = await GetGithubFiles("martinkearn", "Content", "Blogs", gitHubPat); // These values ARE case senitive
+        Console.WriteLine($"Got {files.Count} files from GitHub");
         foreach (var file in files)
         {
-            Console.WriteLine($"File Name: {file.Path}");
+            Console.WriteLine($"Processing File: {file.Path}");
             
-            // Now get Commit details via string url = $"https://api.github.com/repos/{repoOwner}/{repoName}/commits?path={filePath}&sha={branch}";
-            var commit = await GetGithubLastCommit("martinkearn", "Content", file.Path);
+            // Get Commit
+            var commit = await GetGithubLastCommit("martinkearn", "Content", file.Path, gitHubPat);
             
-            Console.WriteLine($"Commit Url: {commit.Url}");
+            // Create Fixture
+            var fixture = CreateFixture($"Updated {file.Path}", commit.Url, file.Path);
+
+            // Send to Function
+            if (functionUrl != null) await CallFunction(functionUrl, fixture);
+            
+            await Task.Delay(2000);  // Pause for 2 seconds
+            
+            Console.WriteLine($"Processed File: {file.Path}");
         }
         
-        // Create Fixture
-        var fixture = CreateFixture("foo", "bar", "fee");
-
-        // Send to Function
-        //if (functionUrl != null) await CallFunction(functionUrl, fixture);
+        Console.WriteLine("COMPLETED");
     }
+    
 
     private static GithubPushWebhookPayload CreateFixture(string message, string commitUrl, string modifiedPath)
     {
         var fixture = new Fixture().Customize(new AutoMoqCustomization());
         var ghWh = fixture.Create<GithubPushWebhookPayload>();
         ghWh.Repository.Name = "Content";
-        ghWh.HeadCommit.Message = "Update AI Services at Future Decoded 2017.md";
-        ghWh.HeadCommit.Url = "https://github.com/martinkearn/Content/commit/56d556b7daf138231ee8dbd5c4489a095ccfabea";
+        ghWh.HeadCommit.Message = message;
+        ghWh.HeadCommit.Url = commitUrl;
         ghWh.HeadCommit.Timestamp = DateTime.UtcNow.ToString("yyyy-MM-ddTHH:mm:sszzz");
         ghWh.HeadCommit.Author = new Author()
         {
@@ -58,7 +64,7 @@ class Program
         };
         ghWh.HeadCommit.Added = [];
         ghWh.HeadCommit.Removed = [];
-        ghWh.HeadCommit.Modified = ["Blogs/AI%20Services%20at%20Future%20Decoded%202017.md"];
+        ghWh.HeadCommit.Modified = [modifiedPath];
         var commit = new Commit()
         {
             Id = ghWh.HeadCommit.Id,
@@ -81,11 +87,11 @@ class Program
         return ghWh;
     }
 
-    private static async Task<List<GithubFile>> GetGithubFiles(string repoOwner, string repoName, string folderPath)
+    private static async Task<List<GithubFile>> GetGithubFiles(string repoOwner, string repoName, string folderPath, string pat)
     {
         var url = $"https://api.github.com/repos/{repoOwner}/{repoName}/contents/{folderPath}";
         using var client = new HttpClient();
-        //client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+        client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", pat);
         client.DefaultRequestHeaders.UserAgent.ParseAdd("Mozilla/5.0 (compatible; dotnet)"); //(GitHub requires this)
         var response = await client.GetAsync(url);
         response.EnsureSuccessStatusCode();
@@ -95,11 +101,11 @@ class Program
         return files!.ToList();
     }
     
-    private static async Task<Commit> GetGithubLastCommit(string repoOwner, string repoName, string filePath)
+    private static async Task<Commit> GetGithubLastCommit(string repoOwner, string repoName, string filePath, string pat)
     {
         var url = $"https://api.github.com/repos/{repoOwner}/{repoName}/commits?path={filePath}&sha=master";
         using var client = new HttpClient();
-        //client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+        client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", pat);
         client.DefaultRequestHeaders.UserAgent.ParseAdd("Mozilla/5.0 (compatible; dotnet)"); //(GitHub requires this)
         var response = await client.GetAsync(url);
         response.EnsureSuccessStatusCode();
