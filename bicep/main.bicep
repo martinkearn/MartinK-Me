@@ -7,7 +7,7 @@ output uniqueName string = uniqueName
 var location = resourceGroup().location
 
 //STORAGE ACCOUNT
-var storageAccountName = 'storage${uniqueName}'
+var storageAccountName = 'storagemknetdev'
 resource storageAccount 'Microsoft.Storage/storageAccounts@2022-09-01' = {
   name: storageAccountName
   location: location

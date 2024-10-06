@@ -106,6 +106,6 @@ jobs:
         package: './src/Workflow/output'
 
  # Capture and log the Bicep outputs
-    - name: Output Bicep Values to Logs
+    - name: output-unique-name
       run: |
         echo "uniqueName: ${{ steps.bicep-deploy.outputs.uniqueName }}"
