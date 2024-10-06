@@ -64,8 +64,8 @@ jobs:
         template: ./bicep/main.bicep
         failOnStdErr: false
         parameters: |
-          uniqueName=${{ inputs.uniquelabel }}
           githubpat=${{ secrets.github-pat }}
+          uniqueName=${{ inputs.uniquelabel }}
 
 # Web App code
     - name: bicep-output-webappname
