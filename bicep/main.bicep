@@ -2,7 +2,7 @@
 param githubpat string
 
 // UNIQUE NAME
-var uniqueName = toLower('${resourceGroup().id}')
+var uniqueName = replace(toLower('${resourceGroup().id}'), '-', '')
 
 //STORAGE ACCOUNT
 var storageAccountName = toLower('storage${uniqueName}')
