@@ -25,6 +25,11 @@ var host = new HostBuilder()
             {
                 configuration.GetSection(nameof(StorageConfiguration)).Bind(settings);
             });
+        services.AddOptions<GithubConfiguration>()
+            .Configure<IConfiguration>((settings, configuration) =>
+            {
+                configuration.GetSection(nameof(GithubConfiguration)).Bind(settings);
+            });
     })
     .Build();
 
