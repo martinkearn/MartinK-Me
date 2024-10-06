@@ -4,6 +4,9 @@ param uniqueName string = toLower(uniqueString('${resourceGroup().id}'))
 @description('Location for all resources.')
 param location string = resourceGroup().location
 
+@description('Github PAT.')
+param githubpat string
+
 //STORAGE ACCOUNT
 var storageAccountName = toLower('storage${uniqueName}')
 resource storageAccount 'Microsoft.Storage/storageAccounts@2022-09-01' = {
@@ -124,6 +127,10 @@ resource functionApp 'Microsoft.Web/sites@2022-03-01' = {
         {
           name: 'StorageConfiguration__ConnectionString'
           value: 'DefaultEndpointsProtocol=https;AccountName=${storageAccountName};EndpointSuffix=${environment().suffixes.storage};AccountKey=${listKeys(storageAccount.id, '2019-06-01').keys[0].value}'
+        }
+        {
+          name: 'GithubConfiguration:Pat'
+          value: githubpat
         }
       ]
     }

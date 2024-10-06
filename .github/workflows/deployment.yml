@@ -16,6 +16,8 @@ on:
           required: true
         azure-subscription-id:
           required: true
+        github-pat:
+          required: true
 
 
 permissions:
@@ -61,7 +63,9 @@ jobs:
         resourceGroupName: ${{ inputs.rg }}
         template: ./bicep/main.bicep
         failOnStdErr: false
-        parameters: 'uniqueName=${{ inputs.uniquelabel }}'
+        parameters: |
+          uniqueName=${{ inputs.uniquelabel }}
+          githubpat=${{ secrets.github-pat }}
 
 # Web App code
     - name: bicep-output-webappname
