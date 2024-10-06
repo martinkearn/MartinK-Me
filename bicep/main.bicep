@@ -1,17 +1,14 @@
-@description('The name of the Azure Function app.')
-param uniqueName string = toLower(uniqueString('${resourceGroup().id}'))
-
-@description('Location for all resources.')
-param location string = resourceGroup().location
-
 @description('Github PAT.')
 param githubpat string
+
+// UNIQUE NAME
+var uniqueName = toLower('${resourceGroup().id}')
 
 //STORAGE ACCOUNT
 var storageAccountName = toLower('storage${uniqueName}')
 resource storageAccount 'Microsoft.Storage/storageAccounts@2022-09-01' = {
   name: storageAccountName
-  location: location
+  location: resourceGroup().location
   sku: {
     name: 'Standard_LRS'
   }
@@ -60,7 +57,7 @@ resource storageAccountTableServiceShortcutsTable 'Microsoft.Storage/storageAcco
 var appInsightsName = toLower('appinisghts-${uniqueName}')
 resource applicationInsights 'Microsoft.Insights/components@2020-02-02' = {
   name: appInsightsName
-  location: location
+  location: resourceGroup().location
   tags: {
     'hidden-link:${resourceId('Microsoft.Web/sites', appInsightsName)}': 'Resource'
   }
@@ -71,7 +68,7 @@ resource applicationInsights 'Microsoft.Insights/components@2020-02-02' = {
 //APP SERVICE PLAN for FUNCTION APP
 resource functionAppServicePlan 'Microsoft.Web/serverfarms@2022-03-01' = {
   name: toLower('functionapp-service-${uniqueName}')
-  location: location
+  location: resourceGroup().location
   sku: { tier: 'Dynamic', name: 'Y1', family: 'Y', capacity: 1 }
   properties: { reserved: true }
 }
@@ -79,7 +76,7 @@ resource functionAppServicePlan 'Microsoft.Web/serverfarms@2022-03-01' = {
 //FUNCTION APP
 resource functionApp 'Microsoft.Web/sites@2022-03-01' = {
   name: toLower('functionapp-${uniqueName}')
-  location: location
+  location: resourceGroup().location
   kind: 'functionapp,linux'
   properties: {
     reserved: true
@@ -141,7 +138,7 @@ output functionAppName string = functionApp.name
 //APP SERVICE PLAN for WEB APP
 resource webAppServicePlan 'Microsoft.Web/serverfarms@2022-03-01' = {
   name: 'webapp-service-${uniqueName}'
-  location: location
+  location: resourceGroup().location
   sku: {
     name: 'B1'
   }
@@ -152,7 +149,7 @@ resource webAppServicePlan 'Microsoft.Web/serverfarms@2022-03-01' = {
 //WEB APP
 resource webApp 'Microsoft.Web/sites@2022-03-01' = {
   name: toLower('webapp-${uniqueName}')
-  location: location
+  location: resourceGroup().location
   kind: 'app,linux'
   properties: {
     serverFarmId: webAppServicePlan.id
