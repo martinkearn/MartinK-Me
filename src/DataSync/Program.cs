@@ -39,9 +39,15 @@ class Program
             // Send to Function
             if (functionUrl != null) await CallFunction(functionUrl, fixture);
             
-            await Task.Delay(2000);  // Pause for 2 seconds
+            await Task.Delay(10000);  // Pause for 10 seconds
             
             Console.WriteLine($"Processed File: {file.Path}");
+            
+            //Console.WriteLine("Press any key to continue...");
+            //Console.ReadKey();  // Waits for the user to press any key
+            
+            Console.WriteLine("");
+
         }
         
         Console.WriteLine("COMPLETED");

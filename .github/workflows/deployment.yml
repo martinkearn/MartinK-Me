@@ -66,6 +66,7 @@ jobs:
         parameters: |
           githubpat=${{ secrets.github-pat }}
           uniqueName=${{ inputs.uniquelabel }}
+        deploymentMode: Incremental
 
 # Web App code
     - name: bicep-output-webappname
