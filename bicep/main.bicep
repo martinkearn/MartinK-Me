@@ -129,7 +129,7 @@ resource functionApp 'Microsoft.Web/sites@2022-03-01' = {
           value: 'DefaultEndpointsProtocol=https;AccountName=${storageAccountName};EndpointSuffix=${environment().suffixes.storage};AccountKey=${listKeys(storageAccount.id, '2019-06-01').keys[0].value}'
         }
         {
-          name: 'GithubConfiguration:Pat'
+          name: 'GithubConfiguration__Pat'
           value: githubpat
         }
       ]
