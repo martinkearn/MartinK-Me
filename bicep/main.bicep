@@ -3,6 +3,7 @@ param githubpat string
 
 // VARS
 var uniqueName = replace(toLower('${resourceGroup().id}'), '-', '')
+output uniqueName string = uniqueName
 var location = resourceGroup().location
 
 //STORAGE ACCOUNT
@@ -13,7 +14,7 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2022-09-01' = {
   sku: {
     name: 'Standard_LRS'
   }
-  kind: 'Storage'
+  kind: 'StorageV2'
 }
 
 //STORAGE BLOB CONTAINERs

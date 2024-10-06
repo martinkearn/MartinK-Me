@@ -104,3 +104,8 @@ jobs:
       with:
         app-name: ${{ env.FunctionAppName }}
         package: './src/Workflow/output'
+
+ # Capture and log the Bicep outputs
+    - name: Output Bicep Values to Logs
+      run: |
+        echo "uniqueName: ${{ steps.bicep-deploy.outputs.uniqueName }}"
