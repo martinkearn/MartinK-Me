@@ -56,7 +56,7 @@ jobs:
     - name: bicep-install
       run: az bicep upgrade
 
-    - name: generate-bicep-parameters
+    - name: bicep-parameters
       run: |
         echo "{
           \"$schema\": \"https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#\",
@@ -65,8 +65,8 @@ jobs:
             \"githubPat\": {
               \"value\": \"${{ secrets.github-pat }}\"
             },
-            \"uniqueName\": {
-              \"value\": \"${{ inputs.rg }}\"
+            \"uniqueLabel\": {
+              \"value\": \"${{ inputs.unique-label }}\"
             }
           }
         }" > parameters.json
