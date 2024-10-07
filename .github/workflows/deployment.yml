@@ -60,7 +60,7 @@ jobs:
         resourceGroupName: ${{ inputs.rg }}
         template: ./bicep/main.bicep
         failOnStdErr: false
-        parameters: 'githubpat=${{ secrets.github-pat }}'
+        parameters: 'githubPat=${{ secrets.github-pat }}'
         deploymentMode: Incremental
 
 # Web App code
