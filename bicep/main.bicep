@@ -22,9 +22,6 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2022-09-01' = {
 resource storageAccountBlobService 'Microsoft.Storage/storageAccounts/blobServices@2022-05-01' = {
   name: 'default'
   parent: storageAccount
-  dependsOn:{
-    storageAccount
-  }
 }
 
 resource storageAccountArticlesBlobServiceContainer 'Microsoft.Storage/storageAccounts/blobServices/containers@2022-05-01' = {
@@ -32,9 +29,6 @@ resource storageAccountArticlesBlobServiceContainer 'Microsoft.Storage/storageAc
   parent: storageAccountBlobService
   properties: {
     publicAccess: 'None'
-  }
-  dependsOn:{
-    storageAccountBlobService
   }
 }
 
@@ -44,34 +38,22 @@ resource storageAccountWallpaperBlobServiceContainer 'Microsoft.Storage/storageA
   properties: {
     publicAccess: 'None'
   }
-  dependsOn:{
-    storageAccountBlobService
-  }
 }
 
 //STORAGE TABLEs
 resource storageAccountTableService 'Microsoft.Storage/storageAccounts/tableServices@2022-05-01' = {
   name: 'default'
   parent: storageAccount
-  dependsOn:{
-    storageAccount
-  }
 }
 
 resource storageAccountTableServiceArticlesTable 'Microsoft.Storage/storageAccounts/tableServices/tables@2022-05-01' = {
   name: 'articles'
   parent: storageAccountTableService
-  dependsOn:{
-    storageAccountTableService
-  }
 }
 
 resource storageAccountTableServiceShortcutsTable 'Microsoft.Storage/storageAccounts/tableServices/tables@2022-05-01' = {
   name: 'shortcuts'
   parent: storageAccountTableService
-  dependsOn:{
-    storageAccountTableService
-  }
 }
 
 //APP INSIGHTS
