@@ -8,14 +8,14 @@ param uniqueName string = toLower('${resourceGroup().id}') // Nothing is being p
 param location string = resourceGroup().location // Nothing is being passed so this will use the default
 
 //STORAGE ACCOUNT
-var storageAccountName = 'storage${uniqueName}'
+var storageAccountName = toLower('storage${uniqueName}')
 resource storageAccount 'Microsoft.Storage/storageAccounts@2022-09-01' = {
   name: storageAccountName
   location: location
   sku: {
     name: 'Standard_LRS'
   }
-  kind: 'StorageV2'
+  kind: 'Storage'
 }
 
 //STORAGE BLOB CONTAINERs
