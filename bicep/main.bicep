@@ -2,7 +2,7 @@
 param githubPat string
 
 @description('A unique name for all resources.')
-param uniqueName string = toLower('${resourceGroup().id}') // Nothing is being passed so this will use the default
+param uniqueName string
 
 @description('Location for all resources.')
 param location string = resourceGroup().location // Nothing is being passed so this will use the default

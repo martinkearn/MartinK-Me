@@ -6,6 +6,9 @@ on:
         rg:
           type: string
           required: true
+        unique-label:
+          type: string
+          required: true
       secrets:
         azure-client-id:
           required: true
@@ -60,7 +63,9 @@ jobs:
         resourceGroupName: ${{ inputs.rg }}
         template: ./bicep/main.bicep
         failOnStdErr: false
-        parameters: 'githubPat=${{ secrets.github-pat }}'
+        parameters: |
+            githubPat=${{ secrets.github-pat }}
+            uniqueName=${{ inputs.unique-label }}
         deploymentMode: Incremental
 
 # Web App code

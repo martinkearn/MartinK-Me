@@ -11,6 +11,7 @@ jobs:
     uses: ./.github/workflows/deployment.yml
     with:
       rg: 'MartinkMeDev'
+      unique-label: 'foo'
     secrets:
       azure-client-id: ${{ secrets.AZURE_CLIENT_ID }}
       azure-tenant-id: ${{ secrets.AZURE_TENANT_ID }}
