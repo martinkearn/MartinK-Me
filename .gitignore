@@ -249,3 +249,4 @@ Src/Workflow/__queuestorage*
 src/Workflow/local.settings.json
 src/Web/appsettings.Development.json
 /src/.idea
+src/DataSync/appsettings.development.json

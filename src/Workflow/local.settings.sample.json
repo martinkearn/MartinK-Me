@@ -7,6 +7,7 @@
     "StorageConfiguration:ConnectionString": "storage connection string here",
     "StorageConfiguration:ArticlesTable": "articles",
     "StorageConfiguration:ShortcutsTable": "shortcuts",
-    "StorageConfiguration:WallpaperBlobsContainer": "wallpaperblobs"
+    "StorageConfiguration:WallpaperBlobsContainer": "wallpaperblobs",
+    "GithubConfiguration:Pat": ""
   }
 }

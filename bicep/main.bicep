@@ -1,11 +1,14 @@
-@description('The name of the Azure Function app.')
-param uniqueName string = toLower(uniqueString('${resourceGroup().id}'))
+@description('Github PAT.')
+param githubPat string
+
+@description('A unique name for all resources.')
+param uniqueLabel string
 
 @description('Location for all resources.')
-param location string = resourceGroup().location
+param location string = resourceGroup().location // Nothing is being passed so this will use the default
 
 //STORAGE ACCOUNT
-var storageAccountName = toLower('storage${uniqueName}')
+var storageAccountName = toLower('storage${uniqueLabel}')
 resource storageAccount 'Microsoft.Storage/storageAccounts@2022-09-01' = {
   name: storageAccountName
   location: location
@@ -54,7 +57,7 @@ resource storageAccountTableServiceShortcutsTable 'Microsoft.Storage/storageAcco
 }
 
 //APP INSIGHTS
-var appInsightsName = toLower('appinisghts-${uniqueName}')
+var appInsightsName = toLower('appinisghts-${uniqueLabel}')
 resource applicationInsights 'Microsoft.Insights/components@2020-02-02' = {
   name: appInsightsName
   location: location
@@ -67,7 +70,7 @@ resource applicationInsights 'Microsoft.Insights/components@2020-02-02' = {
 
 //APP SERVICE PLAN for FUNCTION APP
 resource functionAppServicePlan 'Microsoft.Web/serverfarms@2022-03-01' = {
-  name: toLower('functionapp-service-${uniqueName}')
+  name: toLower('functionapp-service-${uniqueLabel}')
   location: location
   sku: { tier: 'Dynamic', name: 'Y1', family: 'Y', capacity: 1 }
   properties: { reserved: true }
@@ -75,7 +78,7 @@ resource functionAppServicePlan 'Microsoft.Web/serverfarms@2022-03-01' = {
 
 //FUNCTION APP
 resource functionApp 'Microsoft.Web/sites@2022-03-01' = {
-  name: toLower('functionapp-${uniqueName}')
+  name: toLower('functionapp-${uniqueLabel}')
   location: location
   kind: 'functionapp,linux'
   properties: {
@@ -125,6 +128,10 @@ resource functionApp 'Microsoft.Web/sites@2022-03-01' = {
           name: 'StorageConfiguration__ConnectionString'
           value: 'DefaultEndpointsProtocol=https;AccountName=${storageAccountName};EndpointSuffix=${environment().suffixes.storage};AccountKey=${listKeys(storageAccount.id, '2019-06-01').keys[0].value}'
         }
+        {
+          name: 'GithubConfiguration__Pat'
+          value: githubPat
+        }
       ]
     }
   }
@@ -133,7 +140,7 @@ output functionAppName string = functionApp.name
 
 //APP SERVICE PLAN for WEB APP
 resource webAppServicePlan 'Microsoft.Web/serverfarms@2022-03-01' = {
-  name: 'webapp-service-${uniqueName}'
+  name: toLower('webapp-service-${uniqueLabel}')
   location: location
   sku: {
     name: 'B1'
@@ -144,7 +151,7 @@ resource webAppServicePlan 'Microsoft.Web/serverfarms@2022-03-01' = {
 
 //WEB APP
 resource webApp 'Microsoft.Web/sites@2022-03-01' = {
-  name: toLower('webapp-${uniqueName}')
+  name: toLower('webapp-${uniqueLabel}')
   location: location
   kind: 'app,linux'
   properties: {

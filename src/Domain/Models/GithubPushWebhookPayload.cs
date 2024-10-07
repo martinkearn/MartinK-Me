@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace Workflow.Models
+namespace Domain.Models
 {
     /// <summary>
     /// DTO class for converting GitHub push event payload json. Classes created by https://json2csharp.com/
@@ -479,7 +479,7 @@ namespace Workflow.Models
         public string Message { get; set; }
 
         [JsonPropertyName("timestamp")]
-        public DateTime Timestamp { get; set; }
+        public string Timestamp { get; set; }
 
         [JsonPropertyName("url")]
         public string Url { get; set; }
