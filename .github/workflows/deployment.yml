@@ -56,6 +56,21 @@ jobs:
     - name: bicep-install
       run: az bicep upgrade
 
+    - name: generate-bicep-parameters
+      run: |
+        echo "{
+          \"$schema\": \"https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#\",
+          \"contentVersion\": \"1.0.0.0\",
+          \"parameters\": {
+            \"githubPat\": {
+              \"value\": \"${{ secrets.github-pat }}\"
+            },
+            \"uniqueName\": {
+              \"value\": \"${{ inputs.rg }}\"
+            }
+          }
+        }" > parameters.json
+
     - name: bicep-deploy
       uses: azure/arm-deploy@v2
       with:
@@ -63,9 +78,7 @@ jobs:
         resourceGroupName: ${{ inputs.rg }}
         template: ./bicep/main.bicep
         failOnStdErr: false
-        parameters: |
-            githubPat=${{ secrets.github-pat }}
-            uniqueName=${{ inputs.unique-label }}
+        parameters: @parameters.json
         deploymentMode: Incremental
 
 # Web App code
