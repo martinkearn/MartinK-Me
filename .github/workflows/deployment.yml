@@ -77,7 +77,7 @@ jobs:
         subscriptionId: ${{ secrets.azure-subscription-id }}
         resourceGroupName: ${{ inputs.rg }}
         template: ./bicep/main.bicep
-        failOnStdErr: false
+        failOnStdErr: true
         parameters: parameters.json
         deploymentMode: Incremental
 
