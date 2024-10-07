@@ -1,10 +1,11 @@
 @description('Github PAT.')
-param githubpat string
+param githubPat string
 
-// VARS
-var uniqueName = toLower('${resourceGroup().id}')
-output uniqueName string = uniqueName
-var location = resourceGroup().location
+@description('A unique name for all resources.')
+param uniqueName string = toLower('${resourceGroup().id}') // Nothing is being passed so this will use the default
+
+@description('Location for all resources.')
+param location string = resourceGroup().location // Nothing is being passed so this will use the default
 
 //STORAGE ACCOUNT
 var storageAccountName = 'storage${uniqueName}'
@@ -129,7 +130,7 @@ resource functionApp 'Microsoft.Web/sites@2022-03-01' = {
         }
         {
           name: 'GithubConfiguration__Pat'
-          value: githubpat
+          value: githubPat
         }
       ]
     }
