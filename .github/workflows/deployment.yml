@@ -78,7 +78,7 @@ jobs:
         resourceGroupName: ${{ inputs.rg }}
         template: ./bicep/main.bicep
         failOnStdErr: false
-        parameters: @parameters.json
+        parameters: parameters.json
         deploymentMode: Incremental
 
 # Web App code
